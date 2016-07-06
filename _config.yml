@@ -3,16 +3,16 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: Grimoire.js
 subtitle:
-description:
-author: John Doe
+description: A service-oriented Web3D framework
+author: LimeStreem
 language:
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://grimoiregl.github.io/grimoire.gl/
 root: /grimoire.gl/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
