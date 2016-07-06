@@ -1,0 +1,160 @@
+@import '_partial/font'
+@import '_flex'
+
+color-inverse = #F9EFD5
+color-primary = #381794
+color-secondary = #D23881
+color-middle = #96005F
+color-black = #333
+color-black-emphasis = #ccc
+color-black-normal = #999
+
+html
+  height 100%
+
+body
+  height 100%
+  margin 0
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.5
+  letter-spacing: 0.07em
+
+#primary
+  column-center()
+  height 100%
+  min-height 570px
+  background-color color-inverse
+  box-shadow inset 0px 0px 200px rgba(0, 0, 0, .60)
+
+#primary-row
+  row-center()
+  text-align center
+
+#menu
+  display flex
+  justify-content space-around
+  list-style none
+  font-size 14px
+  color rgba(0, 0, 0, 0.4)
+  margin 0
+  margin-bottom 50px
+  padding 0
+  a
+    color rgba(0, 0, 0, 0.4)
+    position relative
+    display inline-block
+    transition .3s
+    text-decoration none
+    &::after
+      position absolute
+      bottom -2px
+      left 50%
+      content ''
+      width 0
+      height 2px
+      background-color color-primary
+      transition .3s
+      transform translateX(-50%)
+    &:hover::after
+      width 100%
+
+
+#logo-icon
+  background-image url('images/logo-icon.svg')
+  background-repeat no-repeat
+  background-position center
+  background-size contain
+  height 160px
+  width 300px
+
+#logo-font
+  margin-top -15px
+  font-family 'Banda Regular'
+  font-size 45px
+  background linear-gradient(90deg, color-primary, color-secondary 60%)
+  -webkit-background-clip text
+  -webkit-text-fill-color transparent
+
+#logo-desc
+  margin-top 50px
+  font-size 14px
+  color rgba(0, 0, 0, 0.4)
+
+button(color, color-i)
+  display block
+  text-decoration none
+  text-align center
+  box-sizing border-box
+  width 265px
+  margin 30px auto 0
+  padding 10px 20px 9px
+  border 2px solid color
+  color color
+  font-size 13px
+  cursor pointer
+  -webkit-user-select none
+  transition .3s
+  font-weight bold
+  border-radius 8px
+  &:hover
+    border-color alpha(color, 0)
+    background-color color
+    color color-i
+    transition .3s
+  &:active
+    border-color color
+    background-color alpha(color, alpha(color) - 0.2)
+
+#install-button
+  button(color-primary, color-inverse)
+
+#description
+  padding 100px 130px
+  background-color color-black
+  text-align center
+  text-shadow 0 1px 2px #000
+
+#front-description
+  .title
+    color color-black-emphasis
+    font-size 28px
+    font-weight bold
+    margin-bottom 20px
+  .content
+    color color-black-normal
+    font-size 14px
+
+#small-description
+  margin-top 80px
+  ul
+    display flex
+    list-style none
+    padding 0
+    margin 0
+  .container
+    padding 0 40px
+  .title
+    color color-black-emphasis
+    font-size 18px
+    font-weight bold
+    margin-bottom 20px
+  .content
+    color color-black-normal
+    font-size 14px
+
+#footer
+  text-align center
+  padding 60px 130px
+  background linear-gradient(90deg, color-primary, color-secondary 60%)
+
+#get-started-button
+  button(alpha(color-inverse, 0.9), color-middle)
+
+#footer-text
+  margin-top 40px
+  color alpha(color-inverse, 0.9)
+  font-size 12px
+  div
+    margin-bottom 3px
+  a
+    color alpha(color-inverse, 0.9)

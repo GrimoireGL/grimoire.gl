@@ -1,0 +1,12 @@
+<% var isIndex = page.path === 'index.html' %>
+<!DOCTYPE html>
+<html>
+<%- partial('_partial/head') %>
+<body>
+  <% if (!isIndex) { %>
+    <div>not Index</div>
+  <% } else { %>
+    <%- body %>
+  <% } %>
+</body>
+</html>
