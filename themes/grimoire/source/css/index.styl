@@ -9,6 +9,7 @@ color-middle = #96005F
 color-black = #333
 color-black-emphasis = #ccc
 color-black-normal = #999
+color-inverse-on = rgba(0, 0, 0, 0.4)
 
 html
   height 100%
@@ -35,13 +36,13 @@ body
   display flex
   justify-content space-around
   list-style none
-  font-size 14px
-  color rgba(0, 0, 0, 0.4)
+  font-size 16px
+  color color-inverse-on
   margin 0
   margin-bottom 50px
   padding 0
   a
-    color rgba(0, 0, 0, 0.4)
+    color color-inverse-on
     position relative
     display inline-block
     transition .3s
@@ -76,10 +77,26 @@ body
   -webkit-background-clip text
   -webkit-text-fill-color transparent
 
+#logo-tag-wrap
+  position relative
+
+#logo-tag
+  position absolute
+  font-size 13px
+  color color-inverse
+  right -44px
+  top -42px
+  font-weight bold
+  background-color color-inverse-on
+  padding 3px 7px
+  border-radius 4px
+  text-shadow 0 0 2px rgba(0, 0, 0, 0.3)
+  box-shadow inset 0 0 2px rgba(0, 0, 0, 0.3)
+
 #logo-desc
   margin-top 50px
-  font-size 14px
-  color rgba(0, 0, 0, 0.4)
+  font-size 16px
+  color color-inverse-on
 
 button(color, color-i)
   display block
@@ -129,10 +146,13 @@ button(color, color-i)
   margin-top 60px
   ul
     display flex
+    justify-content space-around
     list-style none
     padding 0
     margin 0
   .container
+    box-sizing border-box
+    width 300px
     padding 0 40px
   .icon
     font-size 45px
