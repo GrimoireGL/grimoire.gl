@@ -74,8 +74,13 @@ body
   font-family 'Banda Regular'
   font-size 45px
   background linear-gradient(90deg, color-primary, color-secondary 60%)
-  -webkit-background-clip text
-  -webkit-text-fill-color transparent
+  background-clip text
+  -webkit-background-clip text // auto-prefixer not working
+  -moz-background-clip text
+  -ms-background-clip text
+  -o-background-clip text
+  -webkit-text-fill-color transparent // chrome
+  color: transparent // safari, firefox
 
 #logo-tag-wrap
   position relative
@@ -110,7 +115,7 @@ button(color, color-i)
   color color
   font-size 13px
   cursor pointer
-  -webkit-user-select none
+  user-select none
   transition .3s
   font-weight bold
   border-radius 8px
