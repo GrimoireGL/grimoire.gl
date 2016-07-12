@@ -70,15 +70,20 @@ body
   width 300px
 
 #logo-font
-  margin-top -15px
-  font-family 'Banda Regular'
+  margin-top -2px
+  // font-family 'Banda Regular'
   font-size 45px
-  background linear-gradient(90deg, color-primary, color-secondary 60%)
-  background-clip text
-  -webkit-background-clip text // auto-prefixer not working
-  -moz-background-clip text
-  -ms-background-clip text
-  -o-background-clip text
+  // background linear-gradient(90deg, color-primary, color-secondary 60%)
+  background-image url('images/logo-font.svg')
+  background-repeat no-repeat
+  background-position center
+  background-size contain
+  height 46px
+  // background-clip text
+  // -webkit-background-clip text // auto-prefixer not working
+  // -moz-background-clip text
+  // -ms-background-clip text
+  // -o-background-clip text
   -webkit-text-fill-color transparent // chrome
   color: transparent // safari, firefox
 
@@ -90,7 +95,7 @@ body
   font-size 13px
   color color-inverse
   right -44px
-  top -42px
+  top -35px
   font-weight bold
   background-color color-inverse-on
   padding 3px 7px
@@ -99,7 +104,7 @@ body
   box-shadow inset 0 0 2px rgba(0, 0, 0, 0.3)
 
 #logo-desc
-  margin-top 50px
+  margin-top 60px
   font-size 16px
   color color-inverse-on
 
