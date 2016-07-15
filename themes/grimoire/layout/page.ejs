@@ -1,1 +1,5 @@
-<%- partial('_partial/article', {post: page, index: false}) %>
+<% var index %>
+<%- partial('_partial/sidebar') %>
+<div id="content">
+  <% page.content %>
+</div>
