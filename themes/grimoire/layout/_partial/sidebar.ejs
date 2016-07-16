@@ -1,5 +1,10 @@
 <aside id="sidebar">
+  <div id="doc-title"><%- doc %></div>
   <div id="list">
-    <% console.log(site.pages); %>
+    <% site.pages.filter(function(p) { return p.path.split('/')[0] === doc }).sort('order').each(function (p) { %>
+      <li>
+        <a href="/<%- p.path %>"><%- p.title %></a>
+      </li>
+    <% }) %>
   </div>
 </aside>

@@ -1,5 +1,5 @@
-<% var index %>
-<%- partial('_partial/sidebar') %>
+<% var doc = page.path.split('/')[0] %>
+<%- partial('_partial/sidebar', {doc: doc}) %>
 <div id="content">
   <% page.content %>
 </div>
