@@ -17,3 +17,6 @@ general:
   branches:
     only:
       - master
+test:
+  override:
+    - echo "Ya! No test, but all OK!!!"
