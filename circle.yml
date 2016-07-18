@@ -1,0 +1,19 @@
+machine:
+  timezone: UTC
+  node:
+    version: 5.10.0
+  post:
+    - npm install -g npm@3
+deployment:
+  production:
+    branch: master
+    commands:
+      - git config --global user.name "CircleCI"
+      - git config --global user.email "pnlybubbles+circleci@gmail.com"
+      - ./node_modules/.bin/hexo clean
+      - ./node_modules/.bin/hexo generate
+      - ./node_modules/.bin/hexo deploy
+general:
+  branches:
+    only:
+      - master
