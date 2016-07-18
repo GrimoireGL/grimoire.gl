@@ -1,0 +1,183 @@
+@import '_partial/menu'
+@import '_variables'
+@import '_util/flex'
+@import '_util/misc'
+
+body
+  margin 0
+  font-family font-sans
+  line-height line-height
+  letter-spacing letter-spacing
+  background-color color-inverse
+  color color-inverse-normal
+
+#header
+  box-sizing border-box
+  padding-top 4px
+  content-align = 'horizontal'
+  flex-init(content-align)
+  flex-center('vertical', content-align)
+  flex-separate()
+  height 90px
+  background-color color-inverse
+  box-shadow 0px 0px 5px rgba(0, 0, 0, .60)
+
+#logo-wrap
+  display block
+  margin-left 50px
+  height 50px
+  flex-init()
+
+#logo-icon
+  margin-bottom 2px
+  bg-image-alone()
+  width 50px
+  background-image logo-icon
+
+#logo-font
+  margin-top 1px
+  margin-left 13px
+  bg-image-alone()
+  width 120px
+  background-image logo-font
+
+nav
+  width 350px
+  margin-right 50px
+
+#menu
+  menu(color-inverse-normal, color-primary)
+
+#column-wrap
+  flex-init()
+  padding 20px
+
+#sidebar
+  box-sizing border-box
+  width 280px
+  min-width 280px
+  padding 20px
+
+#doc-title
+  font-weight bold
+  font-size 25px
+  text-align center
+  margin-bottom 40px
+  margin-top 10px
+  color color-primary
+
+#list
+  text-align center
+  font-size 14px
+  margin 0
+  padding 0
+  list-style none
+  li
+    border 1px solid color-inverse-normal
+    border-top 0
+    &:first-child
+      border-top 1px solid color-inverse-normal
+  a
+    box-sizing border-box
+    text-decoration none
+    display block
+    padding 12px 0 10px
+    color color-inverse-normal
+    transition .3s
+    &:hover
+      transition .3s
+      color color-inverse
+      background-color color-inverse-normal
+    &:active
+      transition .3s
+      background-color alpha(color-inverse-normal, 0.9)
+  li.active
+    a
+      color color-inverse
+      background-color color-inverse-normal
+
+#content
+  flex-grow 1
+  padding 10px 60px
+  font-size 14px
+  a
+    color color-primary
+    text-decoration none
+  hr
+    border none
+    border-top 2px dotted color-inverse-normal
+  h2, h3, h4, h5, h6
+    color color-inverse-emphasis
+    a
+      &::before
+        content '# '
+  h2
+    font-size 23px
+    border-bottom 1px solid color-inverse-normal
+    padding-bottom 8px
+    margin-top 60px
+    margin-bottom 30px
+  h3, h4, h5, h6
+    font-size 18px
+  #content-title
+    font-size 33px
+    color color-primary
+    margin-bottom 30px
+  table
+    border-collapse collapse
+    th, td
+      padding 10px 23px 8px
+    thead
+      background-color color-inverse-normal
+      color color-inverse
+    th
+      border 1px solid color-inverse-normal
+      border-left 1px solid color-inverse
+      border-right 1px solid color-inverse
+      &:first-child
+        border-left 1px solid color-inverse-normal
+      &:last-child
+        border-right 1px solid color-inverse-normal
+    td
+      border 1px solid color-inverse-normal
+  figure
+    margin 20px 0
+    padding 20px 30px
+    background-color darken(color-inverse, 5%)
+    border-radius 3px
+    .gutter
+      display none
+    pre
+      margin 0
+      font-size 12px
+      line-height line-height
+      letter-spacing 0.03em
+      font-family font-mono
+    td
+      padding 0
+      border none
+  code
+    background-color color-inverse-normal
+    color color-inverse
+    font-size 12px
+    padding 4px 6px
+    letter-spacing 0.03em
+    font-family font-mono
+    border-radius 3px
+  blockquote
+    background-color alpha(color-secondary, 10%)
+    border-left 5px solid color-secondary
+    margin 0
+    padding 5px 20px
+    p
+      margin 10px 0
+      &:first-child
+        font-weight bold
+
+#edit-page
+  margin-top 50px
+  margin-bottom 50px
+  border-top 1px solid color-inverse-normal
+  padding-top 20px
+  a
+    color color-primary

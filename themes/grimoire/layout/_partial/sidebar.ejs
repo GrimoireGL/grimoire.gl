@@ -1,10 +1,10 @@
 <aside id="sidebar">
-  <div id="doc-title"><%- doc %></div>
-  <div id="list">
+  <div id="doc-title"><%- doc.toUpperCase() %></div>
+  <ul id="list">
     <% site.pages.filter(function(p) { return p.path.split('/')[0] === doc }).sort('order').each(function (p) { %>
-      <li>
+      <li class="<%- p.path === page.path ? 'active' : '' %>">
         <a href="/<%- p.path %>"><%- p.title %></a>
       </li>
     <% }) %>
-  </div>
+  </ul>
 </aside>

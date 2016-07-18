@@ -1,0 +1,23 @@
+bg-image-alone()
+  background-repeat no-repeat
+  background-position center
+  background-size contain
+
+link-style(font-color, underline-color)
+  color font-color
+  position relative
+  display inline-block
+  transition .3s
+  text-decoration none
+  &::after
+    position absolute
+    bottom -2px
+    left 50%
+    content ''
+    width 0
+    height 2px
+    background-color underline-color
+    transition .3s
+    transform translateX(-50%)
+  &:hover::after
+    width 100%

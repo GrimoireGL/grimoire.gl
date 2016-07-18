@@ -1,11 +1,15 @@
 ---
 type: doc
-title: Getting Started
-order: 0
+title: Sample 02
+order: 2
 ---
-Markdown demo
+# Markdown Demo
 
-## Strong and Emphasize
+## Overview
+
+### Syntax
+
+#### Strong and Emphasize
 
 **strong** or __strong__
 
@@ -14,13 +18,11 @@ Markdown demo
 **Sometimes I want a lot of text to be bold.
 Like, seriously, a _LOT_ of text**
 
-## Blockquotes
+#### Blockquotes
 
-> Note:
->
 > Right angle brackets &gt; are used for block quotes.
 
-## Links and Email
+#### Links and Email
 
 An email <example@example.com> link.
 
@@ -32,7 +34,7 @@ A [reference style][id] link. Input id, then anywhere in the doc, define the lin
 
 Titles ( or called tool tips ) in the links are optional.
 
-## Images
+#### Images
 
 An inline image ![Smaller icon](http://smallerapp.com/favicon.ico "Title here"), title is optional.
 
@@ -40,14 +42,14 @@ A ![Resize icon][2] reference style image.
 
 [2]: http://resizesafari.com/favicon.ico "Title"
 
-## Inline code and Block code
+#### Inline code and Block code
 
 Inline code are surround by `backtick` key. To create a block code:
 
   Indent each line by at least 1 tab, or 4 spaces.
     var Mou = exactlyTheAppIwant;
 
-##  Ordered Lists
+####  Ordered Lists
 
 Ordered lists are created using "1." + Space:
 
@@ -55,7 +57,7 @@ Ordered lists are created using "1." + Space:
 2. Ordered list item
 3. Ordered list item
 
-## Unordered Lists
+#### Unordered Lists
 
 Unordered list are created using "*" + Space:
 
@@ -69,12 +71,12 @@ Or using "-" + Space:
 - Unordered list item
 - Unordered list item
 
-## Hard Linebreak
+#### Hard Linebreak
 
 End a line with two or more spaces will create a hard linebreak, called `<br />` in HTML. ( Control + Return )
 Above line ended with 2 spaces.
 
-## Horizontal Rules
+#### Horizontal Rules
 
 Three or more asterisks or dashes:
 
@@ -84,21 +86,36 @@ Three or more asterisks or dashes:
 
 - - - -
 
-## Headers
+#### Headers
+
+Setext-style:
+
+This is H1
+==========
+
+This is H2
+----------
 
 atx-style:
 
+# This is H1
 ## This is H2
 ### This is H3
+#### This is H4
+##### This is H5
+###### This is H6
 
-## Strikethrough
+
+### Extra Syntax
+
+#### Strikethrough
 
 Wrap with 2 tilde characters:
 
 ~~Strikethrough~~
 
 
-## Fenced Code Blocks
+#### Fenced Code Blocks
 
 Start with a line containing 3 or more backticks, and ends with the first line with the same number of backticks:
 
@@ -108,7 +125,7 @@ blocks, except that they’re not indented and instead rely on
 a start and end fence lines to delimit the code block.
 ```
 
-## Tables
+#### Tables
 
 A simple table looks like this:
 

@@ -1,5 +1,11 @@
 <% var doc = page.path.split('/')[0] %>
-<%- partial('_partial/sidebar', {doc: doc}) %>
-<div id="content">
-  <% page.content %>
+<div id="column-wrap">
+  <%- partial('_partial/sidebar', {doc: doc}) %>
+  <div id="content">
+    <h1 id="content-title"><%- page.title %></h1>
+    <%- page.content %>
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/src/<%- page.path.replace(/\.html$/, '.md') %>" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
 </div>

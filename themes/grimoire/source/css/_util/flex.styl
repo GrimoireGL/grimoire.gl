@@ -1,0 +1,19 @@
+flex-center(center-direction, content-align)
+  if (center-direction == 'vertical' || center-direction == 'horizontal') || center-direction == 'both' && (content-align == 'vertical' || content-align == 'horizontal')
+    if center-direction == 'both'
+      align-items center
+      justify-content center
+    else if center-direction == content-align
+      justify-content center
+    else if center-direction != content-align
+      align-items center
+
+flex-init(content-align = 'horizontal')
+  display flex
+  if content-align == 'horizontal'
+    flex-direction row
+  if content-align == 'vertical'
+    flex-direction column
+
+flex-separate()
+  justify-content space-between
