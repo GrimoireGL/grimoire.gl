@@ -1,0 +1,60 @@
+@import '../_variables'
+
+highlight-comment = rgba(0, 0, 0, 0.25)
+highlight-red = #BC463F
+highlight-orange = #D89369
+highlight-aqua = #4193BD
+highlight-green = #5EAF66
+highlight-blue = #5D62D2
+highlight-purple = #945BAF
+
+pre
+  color color-inverse-normal
+  .comment
+    color highlight-comment
+  .variable
+  .attribute
+  .tag
+  .regexp
+  .ruby .constant
+  .xml .tag .title
+  .xml .pi
+  .xml .doctype
+  .html .doctype
+  .css .id
+  .css .class
+  .css .pseudo
+    color highlight-red
+  .number
+  .preprocessor
+  .built_in
+  .literal
+  .params
+  .constant
+    color highlight-orange
+  .ruby .class .title
+  .css .rules .attribute
+    color highlight-green
+  .string
+  .value
+  .inheritance
+  .header
+  .ruby .symbol
+  .xml .cdata
+    color highlight-green
+  .title
+  .css .hexcolor
+    color highlight-aqua
+  .function
+  .python .decorator
+  .python .title
+  .ruby .function .title
+  .ruby .title .keyword
+  .perl .sub
+  .javascript .title
+  .coffeescript .title
+    color highlight-blue
+  .keyword
+  .javascript .function
+    color highlight-purple
+

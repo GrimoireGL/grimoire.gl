@@ -2,6 +2,7 @@
 @import '_variables'
 @import '_util/flex'
 @import '_util/misc'
+@import '_partial/syntax'
 
 body
   margin 0
@@ -117,6 +118,9 @@ nav
     padding-bottom 8px
     margin-top 60px
     margin-bottom 30px
+  h3
+    margin-top 60px
+    margin-bottom 30px
   h3, h4, h5, h6
     font-size 18px
   #content-title
@@ -160,19 +164,28 @@ nav
     background-color color-inverse-normal
     color color-inverse
     font-size 12px
-    padding 4px 6px
+    padding 3px 6px
+    margin 0 3px
     letter-spacing 0.03em
     font-family font-mono
     border-radius 3px
   blockquote
     background-color alpha(color-secondary, 10%)
     border-left 5px solid color-secondary
-    margin 0
+    margin 20px 0
     padding 5px 20px
     p
       margin 10px 0
       &:first-child
         font-weight bold
+  img
+    max-width 100%
+  ul
+    padding-left 25px
+  // li
+    // margin 10px 0
+    // p
+      // margin 10px 0
 
 #edit-page
   margin-top 50px
