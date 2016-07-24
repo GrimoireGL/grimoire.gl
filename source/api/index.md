@@ -33,10 +33,10 @@ var gr = require("grimoirejs");
 - **定義**
 
   ```typescript
-    function gr(selector: string): (name: string) => GOMLInterface;
+  function gr(selector: string): GOMLInterface;
   ```
 
-- **使い方:**
+- **使い方**
 
   GrimoireInterfaceは関数としてセレクタを渡すことができます。 このセレクタはGOMLを選択するための記法であり、`text="text/goml"`の指定されているノードを取得するためのセレクタを指定します。
 
@@ -80,9 +80,9 @@ var gr = require("grimoirejs");
   }
 
   function registerComponent(
- 	 name: string | NamespacedIdentity,
- 	 attributes: { [name: string]: IAttributeDeclaration },
- 	 component: Object | (new () => Component)
+ 	  name: string | NamespacedIdentity,
+ 	  attributes: { [name: string]: IAttributeDeclaration },
+ 	  component: Object | (new () => Component)
   ): void;
   ```
 
@@ -99,17 +99,15 @@ var gr = require("grimoirejs");
 
 - **定義**
 
-```typescript
-function registerNode(name: string | NamespacedIdentity,
-        requiredComponents: (string | NamespacedIdentity)[],
-        defaultValues?: { [key: string]: any } | NamespacedDictionary<any>,
-        superNode?: string | NamespacedIdentity,
-        requiredComponentsForChildren?: (string | NamespacedIdentity)[]): void
-```
-
-- **戻り値**
-
-  - `{void}`
+  ```typescript
+  function registerNode(
+    name: string | NamespacedIdentity,
+    requiredComponents: (string | NamespacedIdentity)[],
+    defaultValues?: { [key: string]: any } | NamespacedDictionary<any>,
+    superNode?: string | NamespacedIdentity,
+    requiredComponentsForChildren?: (string | NamespacedIdentity)[]
+  ): void
+  ```
 
 - **使い方**
 
@@ -117,7 +115,7 @@ function registerNode(name: string | NamespacedIdentity,
 
   引数`requiredComponents`はその名称のノードが初期状態のときに保持するコンポーネントの配列を持ちます。この配列は要素として`string`もしくは`NamespacedIdentity`を持つことができます。 この配列を受け取った際、`string`な要素は自動的に名前空間を**デフォルト名前空間**として処理します。
 
-  引数`defaultValues`はこのノードの各属性の初期値を表します。この引数に対して単なるプレーンオブジェクトすなわち`{[key:string]:any}`を渡した場合は、`key`を属性名として解釈し、属性の名前空間として**ノードの名前空間**を用います。もし、ノードの名前空間外の属性に対して初期値を割り当てたい場合は`NamespacedDictionary<any>`を用いてこの引数を割り当てます。
+  引数`defaultValues`はこのノードの各属性の初期値を表します。この引数に対して単なるプレーンオブジェクトすなわち`{[key: string]: any}`を渡した場合は、`key`を属性名として解釈し、属性の名前空間として**ノードの名前空間**を用います。もし、ノードの名前空間外の属性に対して初期値を割り当てたい場合は`NamespacedDictionary<any>`を用いてこの引数を割り当てます。
 
   > デフォルト値の割り当て優先順位:
 
