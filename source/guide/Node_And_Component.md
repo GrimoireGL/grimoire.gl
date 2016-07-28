@@ -1,6 +1,6 @@
 ---
 type: doc
-title: Overview for nodes and components
+title: ノード及びコンポーネントの概要
 order: 1
 ---
 
@@ -59,9 +59,9 @@ Transformerコンポーネントはシーン中のモデルの姿勢(= 平行移
 
 そのため、Transformerコンポーネントは以下のような属性を受け取ります。
 
-* position・・・座標(vector3D型)
-* rotation・・・回転(rotation3D型)
-* scale・・・拡大率(vector3D型)
+* position・・・座標(vector3型)
+* rotation・・・回転(rotation3型)
+* scale・・・拡大率(vector3型)
 
 属性は必ず型を持ちます。(型については後述します。)
 
@@ -129,7 +129,23 @@ Grimoire.jsにおける様々な処理はこのメッセージを利用して処
 6. すべてのハンドラーが解決されると、`LoadManager`は`goml`ノードの`LoopManager`コンポーネントに対してループを開始させます。
 7. 以降毎回のループで`scene`のルートから`LoopManager`が`broadcastMessage("Update")`を行います。
 
-### コンポーネントの初期値
+### 属性及び型
+
+コンポーネントは属性を0個以上持つことが可能です。
+属性は以下のようなデータ構造を持つものです。
+
+* 属性名
+* デフォルト値
+* 型名
+
+各型に対して定義されている以下のようなインターフェースを満たす関数を`コンバーター`と言います。
+
+```typescript
+function converter(rawValue:any):any;
+```
+
+通常、GOMLにより記述された属性は文字列として`converter`に渡され、コンポーネント内で利用する型に変換されます。
+例えば、型に`vector3`
 
 # より発展的な内容
 
