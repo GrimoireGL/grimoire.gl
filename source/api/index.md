@@ -4,13 +4,15 @@ title: Top-Level API
 order: 0
 ---
 
-Grimoire.jsを初めて用いる際、最初にいじるjavascriptのAPIはおそらくこれらのトップレベルAPIでしょう。 これらのAPIによってユーザーはい自身のサービスのロジックにマッチした形で3Dのビュー部分を操作することが容易になります。
+Grimoire.jsを初めて用いる際、最初に扱うjavascriptのAPIはおそらくこれらのトップレベルAPIでしょう。 これらのAPIによってユーザーは自身のサービスのロジックにマッチした形で3Dのキャンバス部分を操作することが容易になります。
 
 ![top-level-interface](./images/top-level-interface.png)
 
 トップレベルのAPIは以上の図のように主に4つに分割され、それぞれ役割が異なります。
 
-## GrimoireInterface
+---
+
+# GrimoireInterface
 
 主に**特定のGOMLソースに依存しない**対象に対して操作するAPIを提供します。
 
@@ -22,13 +24,13 @@ Grimoire.jsを初めて用いる際、最初にいじるjavascriptのAPIはお�
 
 GrimoireInterfaceは`<script>`タグを用いて単にWebページにロードされている場合、`window.gr`に代入されます。
 
-GrimoireInterfaceはnpmを用いて以下のようにしても取得することができます。この場合window以下を汚染することなくGrimoireInterfaceが利用可能です。
+GrimoireInterfaceはnpmを用いて以下のようにしても取得することができます。この場合window以下を書き換えることなくGrimoireInterfaceが利用可能です。
 
 ```javascript
 var gr = require("grimoirejs");
 ```
 
-### gr(selector)
+## gr("selector")
 
 - **定義**
 
@@ -48,9 +50,9 @@ var gr = require("grimoirejs");
 
   > 注意:
 
-  > 取得される操作対象のGOMLが一つとは限らない事に気をつけてください。 取得する対象が`canvas`ではなく`script`である事に注意してください。
+  > 取得される操作対象のGOMLが一つとは限らない事に気をつけてください。取得する対象が`canvas`ではなく`script`である事に注意してください。
 
-### gr.ns(namespace)
+## gr.ns(namespace)
 
 - **定義**
 
@@ -66,10 +68,10 @@ var gr = require("grimoirejs");
 
   ```javascript
   var g = gr.ns("http://grimoire.gl/ns/sample");
-  var id = g("TEST"); //完全修飾名 TEST|HTTP://GRIMOIRE.GL/NS/SAMPLEを意味するオブジェクトとなる。
+  var id = g("TEST"); //完全修飾名 TEST | HTTP://GRIMOIRE.GL/NS/SAMPLEを意味するオブジェクトとなる。
   ```
 
-### registerComponent
+## registerComponent
 
 - **定義**
 
@@ -80,9 +82,9 @@ var gr = require("grimoirejs");
   }
 
   function registerComponent(
- 	  name: string | NamespacedIdentity,
- 	  attributes: { [name: string]: IAttributeDeclaration },
- 	  component: Object | (new () => Component)
+       name: string | NamespacedIdentity,
+       attributes: { [name: string]: IAttributeDeclaration },
+       component: Object | (new () => Component)
   ): void;
   ```
 
@@ -90,12 +92,11 @@ var gr = require("grimoirejs");
 
   指定した名称のコンポーネントを追加します。 引数`name`が`NamespacedIdentity`として指定されると、名前空間を含んだタグとして区別されます。 一方で引数`name`が`string`である際は名前空間を**デフォルト名前空間**として処理します。
 
-  引数`attributes`はこのコンポーネントが公開する属性です。これは値として`IAttributeDeclaration`を持つプレーンオブジェクトです。このプレーンオブジェクトのkeyが属性名として用いられます。(常に名前空間はこのコンポーネントの名前空間です。)
-ユーザーはこのattributesに指定されている属性に対してGOMLを通じて代入したりattrメソッドなどを通じて値を操作できたりします。
+  引数`attributes`はこのコンポーネントが公開する属性です。これは値として`IAttributeDeclaration`を持つプレーンオブジェクトです。このプレーンオブジェクトのkeyが属性名として用いられます。(常に名前空間はこのコンポーネントの名前空間です。) ユーザーはこのattributesに指定されている属性に対してGOMLを通じて代入したりattrメソッドなどを通じて値を操作できたりします。
 
   引数`component`は新しく登録したいコンポーネントの`コンストラクタとなる関数`もしくは`プレーンオブジェクト`です。 ただし、プレーンオブジェクトはメソッド内部でコンストラクタに変換します。また、コンストラクタを指定する場合はそのコンストラクタのスーパークラスにComponentが入っていなければなりません。
 
-### registerNode
+## registerNode
 
 - **定義**
 
@@ -129,7 +130,7 @@ var gr = require("grimoirejs");
 
   引数`requiredComponentsForChildren`はこのノードの子ノードに指定されるノードに要求するコンポーネントの名称のリストを受け取ります。 この要素が指定されると、このノード以下の子ノードとしてGOML内などに記述されるすべての要素は指定されたコンポーネントを所持している必要があります。
 
-## GOMLInterface
+# GOMLInterface
 
 主に**特定のNodeに依存せず、特定のGOMLのソースに依存する**対象に対して操作するAPIを提供します。
 
@@ -139,9 +140,11 @@ var gr = require("grimoirejs");
 - rootNodeフィールド
 - ...etc
 
-### 関数として呼んだ場合
+## 関数として呼んだ場合
 
-## NodeInterface
+---
+
+# NodeInterface
 
 主に**特定のNode**に対して操作するAPIを提供します。
 
@@ -151,23 +154,29 @@ var gr = require("grimoirejs");
 - getComponentメソッド
 - ...etc
 
-### 関数として呼んだ場合
+## 関数として呼んだ場合
+## addComponent
+特定のノード群にコンポーネントを追加します。
+## append
+特定のノード群に対して、指定したタグを持つノードを子要素に追加します。
+## attr
+特定のノード群のAttributeを返します。または、特定のAttributeに値をセットします。
+## children
+特定のノード群の子要素を取得します。
+## compareClass
+このノードは特定のclassに属しているかを真偽値で判定します。
+## find
+特定のノードに対して、指定したノードを取得します。
+## off
+イベントを受け取り、特定のノードを無効化します。
+## on
+イベントを受け取り、特定のノードを有効化します。
+## remove
+特定のノード群に対して、指定した子要素のノードを取り除きます。
 
-### find
+---
 
-### append
-
-### remove
-
-### attr
-
-### children
-
-### addComponent
-
-### removeComponent
-
-## ComponentInterface
+# ComponentInterface
 
 主に**特定のNodeに属しているコンポーネント**に対する処理に利用します。
 
@@ -175,8 +184,13 @@ var gr = require("grimoirejs");
 - onメソッド
 - ...etc
 
-### attr
-
-### get
-
-### destroy
+## attr
+特定のコンポーネント群のAttributeを返します。または、特定のAttributeに値をセットします。
+## destroy
+指定したコンポーネント群を消去します。
+## get
+指定した
+## off
+イベントを受け取り、特定のコンポーネントを無効化します。
+## on
+イベントを受け取り、特定のコンポーネントを有効化します。
