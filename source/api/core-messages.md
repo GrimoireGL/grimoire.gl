@@ -4,11 +4,9 @@ title: コアメッセージ
 order: 1
 ---
 
-GrimoireJS自身が定義するメッセージ群
-=
+## GrimoireJS自身が定義するメッセージ群
 
-awake
--
+### awake
 
 定義
 
@@ -26,8 +24,7 @@ function awake():void;
 * attributes(属性群)
 * sharedObject(親ノードがツリーにアタッチされている場合のみ(それ以外はnull))
 
-treeInitialized
--
+### treeInitialized
 
 ```typescript
   treeInitialized(c: ITreeInitializedInfo): void;
