@@ -17,7 +17,7 @@ function awake():void;
 ```
 
 あるコンポーネントがインスタンス化された際、自動的に呼び出されます。
-コンストラクタとは異なり、これが呼び出される際は以下のプロパティーが挿入されることが保障されます。
+コンストラクタとは異なり、これが呼び出される際は以下のプロパティーがコンポーネントのインスタンスいん挿入されていることが保障されます。
 
 * node(親ノード)
 * name(自身のコンポーネント名)
@@ -27,7 +27,7 @@ function awake():void;
 ### treeInitialized
 
 ```typescript
-  treeInitialized(c: ITreeInitializedInfo): void;
+  function treeInitialized(c: ITreeInitializedInfo): void;
 ```
 
 ```typescript
