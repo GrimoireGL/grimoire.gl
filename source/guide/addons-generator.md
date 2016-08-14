@@ -50,3 +50,22 @@ npm start
 
 実際に作成したアドオンの動作を確認するためのサーバーを起動します。
 
+### スキャフォールディング
+
+**コンポーネントを生成する例**
+
+```shell
+npm run scafold -- -t component -name Test
+```
+
+これにより`src/TestComponent.ts`を生成します。
+
+**コンバーターを生成する例**
+
+```shell
+npm run scafold -- -t converter -name Test
+```
+
+これにより`src/TestConverter.ts`を生成します。
+
+
