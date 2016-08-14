@@ -4,6 +4,9 @@ title: コアメッセージ
 order: 1
 ---
 
+すべてのメッセージは`$`から始まるメソッドによってハンドリングされます。
+これは、通常のメソッドとして作成したつもりのコンポーネントないのメソッドが別のコンポーネントが発行するメッセージによって起動してしまうことによる馬具などを抑制するためです。
+
 ## GrimoireJS自身が定義するメッセージ群
 
 ### awake
@@ -12,7 +15,7 @@ order: 1
 
 ```typescript
 
-function awake():void;
+function $awake():void;
 
 ```
 
@@ -27,7 +30,7 @@ function awake():void;
 ### treeInitialized
 
 ```typescript
-  function treeInitialized(c: ITreeInitializedInfo): void;
+  function $treeInitialized(c: ITreeInitializedInfo): void;
 ```
 
 ```typescript
@@ -45,7 +48,7 @@ interface ITreeInitializedInfo {
 ### mount
 
 ```typescript
-  function mount():void;
+  function $mount():void;
 ```
 
 コンポーネントが属するノードがツリーに結びついた際に呼び出されます。
@@ -53,7 +56,7 @@ interface ITreeInitializedInfo {
 ### unmount
 
 ```typescript
-  function unmount():void;
+  function $unmount():void;
 ```
 
 コンポーネントが属しているノードがツリーからデタッチされた際に呼び出されます。
