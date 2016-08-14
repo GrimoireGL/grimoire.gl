@@ -42,7 +42,7 @@ interface ITreeInitializedInfo {
 
 初期化後に追加されたいかなるコンポーネントには呼び出されることはありません。
 
-### mounted
+### mount
 
 ```typescript
   function mounted():void;
@@ -50,7 +50,7 @@ interface ITreeInitializedInfo {
 
 コンポーネントが属するノードがツリーに結びついた際に呼び出されます。
 
-### unmounted
+### unmount
 
 ```typescript
   function unmounted():void;
