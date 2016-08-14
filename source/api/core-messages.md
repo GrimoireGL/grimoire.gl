@@ -45,7 +45,7 @@ interface ITreeInitializedInfo {
 ### mount
 
 ```typescript
-  function mounted():void;
+  function mount():void;
 ```
 
 コンポーネントが属するノードがツリーに結びついた際に呼び出されます。
@@ -53,7 +53,7 @@ interface ITreeInitializedInfo {
 ### unmount
 
 ```typescript
-  function unmounted():void;
+  function unmount():void;
 ```
 
 コンポーネントが属しているノードがツリーからデタッチされた際に呼び出されます。
