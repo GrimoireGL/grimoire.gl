@@ -78,11 +78,12 @@ interface ITreeInitializedInfo {
 3-2. FOR a <= すべてのcの属性
 3-2-1 aをインスタンス化してcにセット
 
-4. IF P がnullでない
+4. IF P がnullでない || Pはnullであるが、Nがgomlのルートである(ルートでもなくPがnullなものは含まない(ただのデタッチされたツリー))
 4-1. N.parent = P
 4-2. Nのすべての属性の初期値を割り当て(GOMLの値 > Nodeの初期値 > Attributeの初期値　の優先度で割り当て)
 4-3. SendMessage('awake') // <- 初のmountの前に呼び出される。どのコンポーネントに対しても必ず1回しか呼び出されない
 4-4. SendMessage('mount') 
+
 ```
 
 原則として、**マウントされていないコンポーネントはいかなる処理も呼び出されない**。これには属性の割り当ても含む。(コンストラクタを除く)
