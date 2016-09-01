@@ -111,3 +111,28 @@ Vector4
 
 * String・・・Vector4.parseにより処理されます。
 * Vector4・・・そのまま処理されます。
+
+### Color3
+
+```
+Color3
+```
+
+**入力可能なもの**
+
+* String・・・Color3.parseにより処理されます。
+* Color3・・・そのまま処理されます。
+* Color4・・・Alpha値を無視したColor3を生成して渡されます。
+
+
+### Color4
+
+```
+Color4
+```
+
+**入力可能なもの**
+
+* String・・・Color4.parseにより処理されます。
+* Color4・・・そのまま処理されます。
+* Color3・・・Alpha値を1.0としたColor4を生成して渡されます。
