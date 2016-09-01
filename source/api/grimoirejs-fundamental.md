@@ -20,7 +20,9 @@ fundamentalは以下のような特徴を持ちます。
 
 **出力型**
 
-```string```
+```
+string
+```
 
 **入力可能なもの**
 
@@ -31,7 +33,9 @@ fundamentalは以下のような特徴を持ちます。
 
 **出力型**
 
-```number```
+```
+number
+```
 
 **入力可能なもの**
 
@@ -42,7 +46,9 @@ fundamentalは以下のような特徴を持ちます。
 
 **出力型**
 
-```boolean```
+```
+boolean
+```
 
 **入力可能なもの**
 
@@ -53,7 +59,9 @@ fundamentalは以下のような特徴を持ちます。
 
 **出力型**
 
-```<T> where T extends Component```
+```
+<T> where T extends Component
+```
 
 **コンバーター引数**
 
@@ -69,7 +77,9 @@ fundamentalは以下のような特徴を持ちます。
 
 **出力型**
 
-```Vector2```
+```
+Vector2
+```
 
 **入力可能なもの**
 
@@ -80,7 +90,9 @@ fundamentalは以下のような特徴を持ちます。
 
 **出力型**
 
-```Vector3```
+```
+Vector3
+```
 
 **入力可能なもの**
 
@@ -91,7 +103,9 @@ fundamentalは以下のような特徴を持ちます。
 
 **出力型**
 
-```Vector4```
+```
+Vector4
+```
 
 **入力可能なもの**
 
