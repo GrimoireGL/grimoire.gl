@@ -132,15 +132,38 @@ var gr = require("grimoirejs");
 
 # GOMLInterface
 
-主に**特定のNodeに依存せず、特定のGOMLのソースに依存する**対象に対して操作するAPIを提供します。
+主に**特定のGOMLのソースに依存する**対象に対して操作するAPIを提供します。
+
+GOMLInterfaceを介して、ひとつまたは複数のGOMLを操作できます。
+GOMLInterfaceは、主にGrimoireInterfaceを関数として呼び出して取得できます。
+このときセレクタの対象になったGOMLが、このGOMLInterfaceの操作対象となります。
 
 **例**
 
-- sharedObjectフィールド
-- rootNodeフィールド
-- ...etc
+- (なし)
 
-## 関数として呼んだ場合
+## gr("gomlSelector")("nodeSelector")
+
+- **定義**
+
+  ```typescript
+  function(selector: string): NodeInterface;
+  ```
+
+- **使い方**
+
+  GomlInterfaceは関数としてセレクタを渡すことができます。 このセレクタはNodeを選択するための記法であり、このGOMLInterfaceが対象とするGOML群のもつNodeTreeのノードを取得するためのセレクタを指定します。
+
+  ```javascript
+  var cubes = gr("script.mainCanvas")("cube");
+  ```
+
+  例えば、上記の例では`mainCanvas`クラスが指定されたscriptタグ全てが結びついているGOMLの中で、`cube`クラスが指定された全てのノードを対象とするインターフェースが取得できます。
+
+  > 注意:
+
+  > 取得される操作対象のノードが一つとは限らない事に気をつけてください。
+
 
 ---
 
@@ -148,13 +171,36 @@ var gr = require("grimoirejs");
 
 主に**特定のNode**に対して操作するAPIを提供します。
 
+ひとつ、または複数のノードを対象とした操作を提供します。
+
 **例**
 
 - appendメソッド
 - getComponentメソッド
+- forEachメソッド
+- removeメソッド
 - ...etc
 
-## 関数として呼んだ場合
+## gr("gomlSelector")("nodeSelector")("componentSelector")
+- **定義**
+
+  ```typescript
+  function(selector: string): ComponentInterface;
+  ```
+
+- **使い方**
+
+  NodeInterfaceは関数としてセレクタを渡すことができます。 このセレクタはComponentを選択するための記法であり、対象とするノード群の中からコンポーネントを指定します
+
+  ```javascript
+  var components = gr("script.mainCanvas")("cube")("a");
+  ```
+
+## get
+対象となるノード群からノードを指定して取り出します。存在しないとnull、曖昧性があるとerrorを投げる
+引数なし：single
+１：0番ツリーのi番目。１番ツリーが存在したらerror
+2：なければ例外
 ## addComponent
 特定のノード群にコンポーネントを追加します。
 ## append
@@ -173,6 +219,16 @@ var gr = require("grimoirejs");
 対象ノードにイベントリスナを追加します。
 ## remove
 特定のノード群に対して、指定した子要素のノードを取り除きます。
+## fotrEach
+このノードインタフェースが対象とするノードに対して反復処理を行います
+## setEnable
+このノードインタフェースが対象とするノードを有効、または無効にします。
+## first
+対象のノード群の、ひとつ目のノードを返します。存在しない時、nullを返します。
+## single
+対象ノード群が唯一のノードのみを含むとき、それを返します。ノード数が０または２以上のとき、例外を発生させます。
+## count
+対象ノードの個数を数えます。
 
 ---
 
@@ -189,4 +245,11 @@ var gr = require("grimoirejs");
 ## destroy
 指定したコンポーネント群を消去します。
 ## get
+<<<<<<< HEAD
 指定した
+=======
+対象となるコンポーネント群からコンポーネントを指定して取り出します。存在しないとnull、曖昧性があるとerrorを投げる
+引数なし：single
+１：0番ツリーのi番目。１番ツリーが存在したらerror
+2：なければ例外
+>>>>>>> 97b0e52a432676ab7bff8a2fb457afd7a2d3b1e1
