@@ -51,16 +51,16 @@ Grimoire.jsの仕組みを理解するには、GOMLがどのように処理さ�
 > * UnityにおけるGameobjectはGOMLのノードにあたります。
 > * UnityにおけるGameobjectのnameはノードのidにあたります。
 > * UnityにおけるGameobjectのtagやlayerはノードのclassで実現できます。
-> * UnityにおけるコンポーネントはGrimoire.jsにおけるコンポーネントと基本的に同義ですが、UnityはTransformerを必ず持っているのが条件に対して、Grimoire.jsではどのようなノードでも持っていると保証されるコンポーネントは存在しません。
+> * UnityにおけるコンポーネントはGrimoire.jsにおけるコンポーネントと基本的に同義ですが、UnityはTransformを必ず持っているのが条件に対して、Grimoire.jsではどのようなノードでも持っていると保証されるコンポーネントは存在しません。
 > * つまり、ノードではあるが、シーン中に存在する(Unityにおけるヒエラルキー)に存在するとは限らないものが存在します。
 
-例えば、sceneの子孫要素として取り得るノード(例えば`camera`等)は必ず`Transformer`コンポーネントを所持しています。
+例えば、sceneの子要素として取り得るノード(例えば`camera`等)は必ず`Transformer`コンポーネントを所持しています。
 Transformerコンポーネントはシーン中のモデルの姿勢(= 平行移動変形 + 回転変形 + 拡大変形)を計算します。
 
 そのため、Transformerコンポーネントは以下のような属性を受け取ります。
 
 * position・・・座標(vector3型)
-* rotation・・・回転(rotation3型)
+* rotation・・・回転(vector3型)
 * scale・・・拡大率(vector3型)
 
 属性は必ず型を持ちます。(型については後述します。)
