@@ -169,3 +169,7 @@ uniform vec4 test;
 |vec4|Vector4(type変数Annotationがcolorの場合はColor4)|(0,0,0,0)|
 |float[]|NumberArray|\[0,0,....0\](配列長はシェーダー内の指定による)|
 |sampler2D|MaterialTexture|undefined|
+
+ユーザーUniform変数は、自動的にGOML側で操作できるようになります。
+例えば、Sort内に`uniform vec3 something;`というようなものがあると、これはユーザーuniform変数なのでこのSortを扱っているタグ側の属性になります。
+例えば、このマテリアルがある`mesh`タグに紐付いているならば、そのタグ内で`<mesh something="1,2,3">`と記述することにより、そのマテリアルが使われる際には、(1,2,3)のベクトルがuniform変数に代入されて用いられます。
