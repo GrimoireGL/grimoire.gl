@@ -180,7 +180,7 @@ uniform vec4 test;
 ```glsl
 @Pass
 @DepthFunc(LEQUAL)
-@CullFace(FRONT)
+@CullFace(BACK)
 attribute vec3 position;
 
 @vert{
