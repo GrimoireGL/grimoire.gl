@@ -136,7 +136,10 @@ uniform vec4 test;
 
 |変数型|コンバーター名|初期値(defaultアノテーションが存在しない際)|
 |:-:|:-:|:-:|
+|bool|boolean|false|
 |float|number|0|
 |vec2|Vector2|(0,0)|
 |vec3|Vector3(type変数Annotationがcolorの場合はColor3)|(0,0,0)|
-|vec4|Vector4|(type変数Annotationがcolorの場合はColor4)|(0,0,0,0)|
+|vec4|Vector4(type変数Annotationがcolorの場合はColor4)|(0,0,0,0)|
+|float[]|NumberArray|\[0,0,....0\](配列長はシェーダー内の指定による)|
+|sampler2D|MaterialTexture|undefined|
