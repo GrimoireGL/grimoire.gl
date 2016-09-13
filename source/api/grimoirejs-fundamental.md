@@ -139,8 +139,9 @@ Color4
 
 ## AssetLoadingManager コンポーネント
 <!-- EDIT HERE(@Component)-->
-abcde
-
+非同期的な解決を必要とするようなリソース群のロードを管理しているコンポーネント。
+このコンポーネントにより、初期時にロード画面を表示します。
+また、ロード終了後に他のコンポーネントに処理の開始を通知してレンダリングループを開始します。
 <!-- /EDIT HERE-->
 ### 属性
 <!-- DO NOT EDIT -->
@@ -158,6 +159,7 @@ abcde
  * `defaultValue`: 0
 
 <!-- EDIT HERE(loadingProgress)-->
+読み取り専用。現在のロード状況を100分率で返します。
 <!-- /EDIT HERE-->
 ### autoStart 属性
 
@@ -165,59 +167,15 @@ abcde
  * `defaultValue`: true
 
 <!-- EDIT HERE(autoStart)-->
-<!-- /EDIT HERE-->
-
-## BackBuffer コンポーネント
-<!-- EDIT HERE(@Component)-->
-
-
-
-
-
-
-
-
-
-
-
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| name | string | undefined |  |
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### name 属性
-converter: string / defaultValue: undefined
-
-<!-- EDIT HERE(name)-->
-
-
-
-
-
-
-
-
-
-
-
+リソースのロード終了後に自動的にレンダリングループを開始するかどうか。
+これがfalseの場合、ユーザーが自らLoopManagerに対してbeginメソッドを呼ばなければ、一切の描画処理は行われません。
 <!-- /EDIT HERE-->
 
 ## Camera コンポーネント
 <!-- EDIT HERE(@Component)-->
 
-
-
-
-
-
-
-
-
-
+シーンの描画をするカメラの役割をするコンポーネントです。
+シーン中の物体を描画する際にこのコンポーネントにより生成されたビュー行列や射影行列が用いられます。
 
 <!-- /EDIT HERE-->
 ### 属性
@@ -238,6 +196,8 @@ converter: string / defaultValue: undefined
  * `defaultValue`: 0.3
 
 <!-- EDIT HERE(fovy)-->
+視野角。ラジアン単位で指定します。
+1/2π以上の値は指定できません。
 <!-- /EDIT HERE-->
 ### near 属性
 
@@ -245,6 +205,8 @@ converter: string / defaultValue: undefined
  * `defaultValue`: 0.01
 
 <!-- EDIT HERE(near)-->
+近クリップ面(カメラから物体が映る最短の距離)を指定します。
+必ず、正の値を指定する必要があります。
 <!-- /EDIT HERE-->
 ### far 属性
 
@@ -252,6 +214,8 @@ converter: string / defaultValue: undefined
  * `defaultValue`: 10
 
 <!-- EDIT HERE(far)-->
+遠クリップ面(カメラから物体が映る最長の距離)を指定します。
+遠ければ遠いほどいいわけではなく、近クリップ面との差があまりにも大きすぎると、物体の前後関係が曖昧になってしまう場所が発生し得ます。
 <!-- /EDIT HERE-->
 ### aspect 属性
 
@@ -259,21 +223,13 @@ converter: string / defaultValue: undefined
  * `defaultValue`: 1.6
 
 <!-- EDIT HERE(aspect)-->
+スクリーン上のアスペクト比を指定します。
 <!-- /EDIT HERE-->
 
 ## CanvasInitializer コンポーネント
 <!-- EDIT HERE(@Component)-->
-
-
-
-
-
-
-
-
-
-
-
+キャンバスの初期化を司るコンポーネントです。
+このコンポーネントに対してtreeInitializedが呼ばれた瞬間にスクリプトタグの存在した場所に対して`<canvas>`タグの生成を試みます。
 <!-- /EDIT HERE-->
 ### 属性
 <!-- DO NOT EDIT -->
@@ -291,6 +247,7 @@ converter: string / defaultValue: undefined
  * `defaultValue`: 640
 
 <!-- EDIT HERE(width)-->
+キャンバスの幅を指します。
 <!-- /EDIT HERE-->
 ### height 属性
 
@@ -298,21 +255,13 @@ converter: string / defaultValue: undefined
  * `defaultValue`: 480
 
 <!-- EDIT HERE(height)-->
+キャンバスの高さを指します。
 <!-- /EDIT HERE-->
 
 ## Geometry コンポーネント
 <!-- EDIT HERE(@Component)-->
-
-
-
-
-
-
-
-
-
-
-
+あるプリミティブなどのジオメトリを含まれているGOML内でで使用可能にします。
+このコンポーネントは`type`属性に合わせて必要な属性値を動的に生成します。
 <!-- /EDIT HERE-->
 ### 属性
 <!-- DO NOT EDIT -->
@@ -330,6 +279,7 @@ converter: string / defaultValue: undefined
  * `defaultValue`: undefined
 
 <!-- EDIT HERE(type)-->
+生成するジオメトリのタイプです。任意のジオメトリを`GeometryFactory.addType`から追加することによりユーザーが独自のパラメーターを割り当てたジオメトリを作成することができます。
 <!-- /EDIT HERE-->
 ### name 属性
 
@@ -337,36 +287,21 @@ converter: string / defaultValue: undefined
  * `defaultValue`: undefined
 
 <!-- EDIT HERE(name)-->
+生成したジオメトリにつける名前です。これを用いて`GeometryConverter`は対象となるジオメトリを識別します。
+例えば、`MeshRenderer`の`geometry`属性などに指定する名前になります。
 <!-- /EDIT HERE-->
 
 ## GeometryRegistory コンポーネント
 <!-- EDIT HERE(@Component)-->
+Geometryの登録に関する処理をあらかじめ行うためのコンポーネントです。
 
-
-
-
-
-
-
-
-
-
-
+gomlノードにあらかじめ含められており、ユーザーが直接いじる必要はほぼありません。
 <!-- /EDIT HERE-->
 属性なし
 ## LoopManager コンポーネント
 <!-- EDIT HERE(@Component)-->
-
-
-
-
-
-
-
-
-
-
-
+レンダリングループを管理するコンポーネントです。
+loopEnabledがtrueである場合、自動的にそのブラウザのrequestAnimationFrameの際に処理を実行します。
 <!-- /EDIT HERE-->
 ### 属性
 <!-- DO NOT EDIT -->
@@ -383,6 +318,8 @@ converter: string / defaultValue: undefined
  * `defaultValue`: false
 
 <!-- EDIT HERE(loopEnabled)-->
+ループが有効かどうか。
+通常、この属性を編集する必要はありません。AssetLoadingManagerコンポーネントがロード終了時に自動的にtrueにマークします。
 <!-- /EDIT HERE-->
 
 ## Material コンポーネント
