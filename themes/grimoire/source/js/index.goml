@@ -1,4 +1,4 @@
-<goml width="900" height="570">
+<goml width="800" height="900">
   <geometry name="quad" type="quad"/>
   <import-material type="shader" src="js/index.sort"/>
   <renderer camera=".camera" viewport="0, 0, 100%, 100%">

@@ -40,9 +40,9 @@ attribute vec3 position;
 
     float j;
     float move_max = 1.0;
-    vec2 spawn_center = vec2(0.0, -0.5);
-    vec2 spawn_size = vec2(1.0, 0.6);
-    vec2 rect_size = vec2(0.03);
+    vec2 spawn_center = vec2(0.0, -0.2);
+    vec2 spawn_size = vec2(0.6, 0.5);
+    vec2 rect_size = vec2(0.023);
 
     for (int i = 0; i < _ParticlesAmount; i++)
     {
