@@ -679,2478 +679,6 @@ var index = createCommonjsModule(function (module, exports) {
 
 window.__awaiter = index;
 
-function BooleanConverter(val) {
-    if (typeof val === "boolean") {
-        return val;
-    } else if (typeof val === "string") {
-        switch (val) {
-            case "true":
-                return true;
-            case "false":
-                return false;
-            default:
-                throw new Error(`Invalid string ${ val } for parsing as boolean`);
-        }
-    }
-    throw new Error(`Parsing failed: ${ val }`);
-}
-
-class NodeUtility {
-    /**
-     * Get index of NodeList converted from index in Element
-     * @param  {HTMLElement} targetElement Parent element of search target elements
-     * @param  {number}      elementIndex  Index in element
-     * @return {number}                    Index in NodeList
-     */
-    static getNodeListIndexByElementIndex(targetElement, elementIndex) {
-        const nodeArray = Array.prototype.slice.call(targetElement.childNodes);
-        const elementArray = nodeArray.filter(v => {
-            return v.nodeType === 1;
-        });
-        elementIndex = elementIndex < 0 ? elementArray.length + elementIndex : elementIndex;
-        const index = nodeArray.indexOf(elementArray[elementIndex]);
-        return index === -1 ? null : index;
-    }
-    static getAttributes(element) {
-        const attributes = {};
-        const domAttr = element.attributes;
-        for (let i = 0; i < domAttr.length; i++) {
-            const attrNode = domAttr.item(i);
-            const name = attrNode.name;
-            attributes[name] = attrNode.value;
-        }
-        return attributes;
-    }
-}
-
-class Constants {
-    static get defaultNamespace() {
-        return "HTTP://GRIMOIRE.GL/NS/DEFAULT";
-    }
-}
-
-/**
- * The class to identity with XML namespace feature.
- */
-class NSIdentity {
-    constructor(ns, name) {
-        if (name) {
-            this.ns = ns.toUpperCase();
-            this.name = name;
-        } else {
-            this.ns = Constants.defaultNamespace;
-            this.name = ns;
-        }
-        // Ensure all of the characters are uppercase
-        this.name = NSIdentity._ensureValidIdentity(this.name, true);
-        this.ns = NSIdentity._ensureValidIdentity(this.ns);
-        this.fqn = this.name + "|" + this.ns;
-    }
-    /**
-     * Generate an instance from Full qualified name.
-     * @param  {string}             fqn [description]
-     * @return {NSIdentity}     [description]
-     */
-    static fromFQN(fqn) {
-        const splitted = fqn.split("|");
-        if (splitted.length !== 2) {
-            throw new Error("Invalid fqn was given");
-        }
-        return new NSIdentity(splitted[1], splitted[0]);
-    }
-    /**
-     * Make sure given name is valid for using in identity.
-     * | is prohibited for using in name or namespace.
-     * . is prohibited for using in name.
-     * All lowercase alphabet will be transformed into uppercase.
-     * @param  {string} name        [A name to verify]
-     * @param  {[type]} noDot=false [Ensure not using dot or not]
-     * @return {string}             [Valid name]
-     */
-    static _ensureValidIdentity(name, noDot = false) {
-        if (name.indexOf("|") > -1) {
-            throw new Error("Namespace and identity cannnot contain | ");
-        }
-        if (noDot && name.indexOf(".") > -1) {
-            throw new Error("identity cannnot contain .");
-        }
-        if (name == null) {
-            throw new Error("Specified name was null or undefined");
-        }
-        return name;
-    }
-}
-
-class NSDictionary {
-    constructor() {
-        this._nameObjectMap = new Map();
-        this._fqnObjectMap = new Map();
-    }
-    set(key, value) {
-        let namedChildMap;
-        if (this._nameObjectMap.has(key.name)) {
-            namedChildMap = this._nameObjectMap.get(key.name);
-        } else {
-            namedChildMap = new Map();
-            this._nameObjectMap.set(key.name, namedChildMap);
-        }
-        namedChildMap.set(key.fqn, value);
-        this._fqnObjectMap.set(key.fqn, value);
-    }
-    delete(key) {
-        if (this._fqnObjectMap.has(key.fqn)) {
-            const theMap = this._nameObjectMap.get(key.name);
-            if (theMap.size === 1) {
-                this._nameObjectMap.delete(key.name);
-            } else {
-                theMap.delete(key.fqn);
-            }
-            this._fqnObjectMap.delete(key.fqn);
-        }
-    }
-    get(arg1, name) {
-        if (typeof arg1 === "string") {
-            if (name) {
-                return this.get(new NSIdentity(arg1, name));
-            } else {
-                const namedMap = this._nameObjectMap.get(arg1);
-                if (!namedMap) {
-                    return null;
-                }
-                if (namedMap.size === 1) {
-                    const itr = namedMap.values();
-                    return itr.next().value;
-                } else {
-                    throw new Error(`Specified tag name ${ arg1 } is ambigious to identify.`);
-                }
-            }
-        } else {
-            if (arg1 instanceof NSIdentity) {
-                return this.fromFQN(arg1.fqn);
-            } else {
-                if (arg1.prefix) {
-                    return this.get(new NSIdentity(arg1.namespaceURI, arg1.localName));
-                } else {
-                    if (arg1.namespaceURI && this._fqnObjectMap.has(arg1.localName + "|" + arg1.namespaceURI)) {
-                        return this.get(new NSIdentity(arg1.namespaceURI, arg1.localName));
-                    }
-                    if (arg1 && arg1.ownerElement && arg1.ownerElement.namespaceURI && this._fqnObjectMap.has(arg1.localName + "|" + arg1.ownerElement.namespaceURI)) {
-                        return this.get(new NSIdentity(arg1.ownerElement.namespaceURI, arg1.localName));
-                    }
-                    return this.get(arg1.localName);
-                }
-            }
-        }
-    }
-    fromFQN(fqn) {
-        return this._fqnObjectMap.get(fqn);
-    }
-    isAmbigious(name) {
-        return this._nameObjectMap.get(name).size > 1;
-    }
-    has(name) {
-        return this._nameObjectMap.has(name);
-    }
-    pushDictionary(dict) {
-        dict._fqnObjectMap.forEach((value, keyFQN) => {
-            const id = NSIdentity.fromFQN(keyFQN);
-            this.set(id, value);
-        });
-        return this;
-    }
-    toArray() {
-        const ret = [];
-        this._fqnObjectMap.forEach(value => {
-            ret.push(value);
-        });
-        return ret;
-    }
-    clone() {
-        const dict = new NSDictionary();
-        return dict.pushDictionary(this);
-    }
-    forEach(callback) {
-        this._fqnObjectMap.forEach((val, key) => {
-            callback(val, key);
-        });
-        return this;
-    }
-    map(callback) {
-        const ret = new NSDictionary();
-        this._fqnObjectMap.forEach((val, fqn) => {
-            const id = NSIdentity.fromFQN(fqn);
-            ret.set(id, callback(val, fqn));
-        });
-        return ret;
-    }
-    clear() {
-        this._nameObjectMap.clear();
-        this._fqnObjectMap.clear();
-    }
-}
-
-/**
- * Provides static methods to ensure arguments are valid type.
- */
-class Ensure {
-    /**
-     * Ensure specified str being string
-     * @param  {string | number}      str [description]
-     * @return {string}      [description]
-     */
-    static ensureString(str) {
-        if (typeof str === "string") {
-            return str;
-        } else if (typeof str === "number") {
-            return str.toString();
-        } else {
-            throw new Error("Specified argument can not convert into string");
-        }
-    }
-    /**
-     * Ensure specified number being number
-     * @param  {string | number}      str [description]
-     * @return {string}      [description]
-     */
-    static ensureNumber(num) {
-        if (typeof num === "string") {
-            return parseInt(num, 10);
-        } else if (typeof num === "number") {
-            return num;
-        } else {
-            throw new Error("specified argument can not be converted into number");
-        }
-    }
-    static ensureTobeNSIdentity(name) {
-        if (!name) {
-            return undefined;
-        }
-        if (typeof name === "string") {
-            return new NSIdentity(name);
-        } else {
-            return name;
-        }
-    }
-    static ensureTobeNSIdentityArray(names) {
-        if (!names) {
-            return [];
-        }
-        const newArr = [];
-        for (let i = 0; i < names.length; i++) {
-            newArr.push(this.ensureTobeNSIdentity(names[i]));
-        }
-        return newArr;
-    }
-    static ensureTobeNSDictionary(dict, defaultNamespace) {
-        if (!dict) {
-            return new NSDictionary();
-        }
-        if (dict instanceof NSDictionary) {
-            return dict;
-        } else {
-            const newDict = new NSDictionary();
-            for (let key in dict) {
-                newDict.set(new NSIdentity(defaultNamespace, key), dict[key]);
-            }
-            return newDict;
-        }
-    }
-    static ensureTobeMessage(message) {
-        if (message.startsWith("$")) {
-            return message;
-        } else {
-            return "$" + message;
-        }
-    }
-}
-
-/**
- * Management a single attribute with specified type. Converter will serve a value with object with any type instead of string.
- * When attribute is changed, emit a "change" event. When attribute is requested, emit a "get" event.
- * If responsive flag is not true, event will not be emitted.
- */
-class Attribute {
-    constructor() {
-        this._handlers = [];
-    }
-    get tree() {
-        return this.component.tree;
-    }
-    get companion() {
-        return this.component.companion;
-    }
-    /**
-     * Get a value with specified type.
-     * @return {any} value with specified type.
-     */
-    get Value() {
-        try {
-            return this.converter.convert(this._value);
-        } catch (e) {
-            console.error(e); // TODO should be more convenient error handling
-        }
-    }
-    /**
-     * Set a value with any type.
-     * @param {any} val Value with string or specified type.
-     */
-    set Value(val) {
-        this._value = val;
-        this._notifyChange();
-    }
-    /**
-     * Construct a new attribute with name of key and any value with specified type. If constant flag is true, This attribute will be immutable.
-     * If converter is not served, string converter will be set as default.
-     * @param {string}        key       Key of this attribute.
-     * @param {any}           value     Value of this attribute.
-     * @param {ConverterBase} converter Converter of this attribute.
-     * @param {boolean}       constant  Whether this attribute is immutable or not. False as default.
-     */
-    static generateAttributeForComponent(name, declaration, component) {
-        const attr = new Attribute();
-        attr.name = new NSIdentity(component.name.ns, name);
-        attr.component = component;
-        attr.declaration = declaration;
-        const converterName = Ensure.ensureTobeNSIdentity(declaration.converter);
-        attr.converter = obtainGomlInterface.converters.get(converterName);
-        if (attr.converter === void 0) {
-            // When the specified converter was not found
-            throw new Error(`Specified converter ${ converterName.name } was not found from registered converters.\n Component: ${ attr.component.name.fqn }\n Attribute: ${ attr.name.name }`);
-        }
-        attr.converter = {
-            convert: attr.converter.convert.bind(attr),
-            name: attr.converter.name
-        };
-        attr.component.attributes.set(attr.name, attr);
-        return attr;
-    }
-    addObserver(handler, callFirst = false) {
-        this._handlers.push(handler);
-        if (callFirst) {
-            handler(this);
-        }
-    }
-    removeObserver(handler) {
-        let index = -1;
-        for (let i = 0; i < this._handlers.length; i++) {
-            if (handler === this._handlers[i]) {
-                index = i;
-                break;
-            }
-        }
-        if (index < 0) {
-            return;
-        }
-        this._handlers.splice(index, 1);
-    }
-    /**
-     * Bind converted value to specified field.
-     * When target object was not specified, field of owner component would be assigned.
-     * @param {string} variableName [description]
-     * @param {any} targetObject [description]
-     */
-    boundTo(variableName, targetObject = this.component) {
-        this.addObserver(v => {
-            targetObject[variableName] = v.Value;
-        });
-        targetObject[variableName] = this.Value;
-    }
-    /**
-     * Apply default value to attribute from DOM values.
-     * @param {string }} domValues [description]
-     */
-    resolveDefaultValue(domValues) {
-        if (this._value !== void 0) {
-            return;
-        }
-        let tagAttrValue = domValues[this.name.name];
-        if (tagAttrValue !== void 0) {
-            this.Value = tagAttrValue; // Dom指定値で解決
-            return;
-        }
-        const nodeDefaultValue = this.component.node.nodeDeclaration.defaultAttributes.get(this.name);
-        if (nodeDefaultValue !== void 0) {
-            this.Value = nodeDefaultValue; // Node指定値で解決
-            return;
-        }
-        const attrDefaultValue = this.declaration.defaultValue;
-        this.Value = attrDefaultValue;
-    }
-    _notifyChange() {
-        this._handlers.forEach(handler => {
-            handler(this);
-        });
-    }
-}
-
-/**
- * Most based object for any Grimoire.js related classes.
- * @type {[type]}
- */
-class IDObject {
-    constructor() {
-        this.id = IDObject.getUniqueRandom(10);
-    }
-    /**
-     * Generate random string
-     * @param  {number} length length of random string
-     * @return {string}        generated string
-     */
-    static getUniqueRandom(length) {
-        return Math.random().toString(36).slice(-length);
-    }
-    /**
-     * Obtain stringfied object.
-     * If this method was not overridden, this method return class name.
-     * @return {string} stringfied object
-     */
-    toString() {
-        return this.getTypeName();
-    }
-    /**
-     * Obtain class name
-     * @return {string} Class name of the instance.
-     */
-    getTypeName() {
-        const funcNameRegex = /function (.{1,})\(/;
-        const result = funcNameRegex.exec(this.constructor.toString());
-        return result && result.length > 1 ? result[1] : "";
-    }
-}
-
-/**
- * Base class for any components
- */
-class Component extends IDObject {
-    constructor() {
-        super(...arguments);
-        /**
-         * Whether this component was created by nodeDeclaration
-         * @type {boolean}
-         */
-        this.isDefaultComponent = false;
-        /**
-         * Flag that this component is activated or not.
-         * @type {boolean}
-         */
-        this._enabled = true;
-        this._handlers = [];
-        this._additionalAttributesNames = [];
-    }
-    get enabled() {
-        return this._enabled;
-    }
-    set enabled(val) {
-        if (this._enabled === val) {
-            return;
-        }
-        this._enabled = val;
-        this._handlers.forEach(handler => {
-            handler(this);
-        });
-    }
-    /**
-     * The dictionary which is shared in entire tree.
-     * @return {NSDictionary<any>} [description]
-     */
-    get companion() {
-        return this.node ? this.node.companion : null;
-    }
-    /**
-     * Tree interface for the tree this node is attached.
-     * @return {IGomlInterface} [description]
-     */
-    get tree() {
-        return this.node ? this.node.tree : null;
-    }
-    /**
-     * Obtain value of attribute. When the attribute is not existing, this method would return undefined.
-     * @param  {string} name [description]
-     * @return {any}         [description]
-     */
-    getValue(name) {
-        const attr = this.attributes.get(name);
-        if (attr) {
-            return attr.Value;
-        } else {
-            return undefined;
-        }
-    }
-    /**
-     * Set value of attribute
-     * @param {string} name  [description]
-     * @param {any}    value [description]
-     */
-    setValue(name, value) {
-        const attr = this.attributes.get(name); // TODO:check readonly?
-        if (attr) {
-            attr.Value = value;
-        }
-    }
-    getAttribute(name) {
-        return this.attributes.get(name);
-    }
-    addEnabledObserver(handler) {
-        this._handlers.push(handler);
-    }
-    removeEnabledObserver(handler) {
-        let index = -1;
-        for (let i = 0; i < this._handlers.length; i++) {
-            if (handler === this._handlers[i]) {
-                index = i;
-                break;
-            }
-        }
-        if (index < 0) {
-            return;
-        }
-        this._handlers.splice(index, 1);
-    }
-    resolveDefaultAttributes(nodeAttributes) {
-        if (this.isDefaultComponent) {
-            this.attributes.forEach(attr => attr.resolveDefaultValue(nodeAttributes));
-        } else {
-            const attrs = NodeUtility.getAttributes(this.element);
-            this.attributes.forEach(attr => attr.resolveDefaultValue(attrs));
-        }
-    }
-    /**
-     * Add attribute
-     * @param {string}                name      [description]
-     * @param {IAttributeDeclaration} attribute [description]
-     */
-    __addAtribute(name, attribute) {
-        if (!attribute) {
-            throw new Error("can not add attribute null or undefined.");
-        }
-        const attr = Attribute.generateAttributeForComponent(name, attribute, this);
-        if (this.isDefaultComponent) {
-            this.node.addAttribute(attr);
-        }
-        if (this.isDefaultComponent) {
-            attr.resolveDefaultValue(NodeUtility.getAttributes(this.node.element));
-        } else {
-            const attrs = NodeUtility.getAttributes(this.element);
-            attr.resolveDefaultValue(attrs);
-        }
-        this._additionalAttributesNames.push(attr.name);
-    }
-    __removeAttributes(name) {
-        if (name) {
-            const index = this._additionalAttributesNames.findIndex(id => id.name === name);
-            if (index < 0) {
-                throw new Error("can not remove attributes :" + name);
-            }
-            const attrId = this._additionalAttributesNames[index];
-            if (this.isDefaultComponent) {
-                this.node.removeAttribute(this.attributes.get(attrId));
-            }
-            this.attributes.delete(attrId);
-            this._additionalAttributesNames.splice(index, 1);
-        } else {
-            this._additionalAttributesNames.forEach(id => {
-                this.__removeAttributes(id.name);
-            });
-        }
-    }
-}
-
-class GrimoireComponent extends Component {
-    $awake() {
-        this.node.resolveAttributesValue();
-        this.getAttribute("id").addObserver(attr => {
-            this.node.element.id = attr.Value;
-        });
-        this.getAttribute("class").addObserver(attr => {
-            this.node.element.className = attr.Value.join(" ");
-        });
-        this.getAttribute("enabled").addObserver(attr => {
-            if (this.node.isActive) {
-                this.node.notifyActivenessUpdate();
-            }
-        });
-    }
-}
-GrimoireComponent.attributes = {
-    id: {
-        converter: "String",
-        defaultValue: null,
-        readonly: false
-    },
-    class: {
-        converter: "StringArray",
-        defaultValue: null,
-        readonly: false
-    },
-    enabled: {
-        converter: "Boolean",
-        defaultValue: true,
-        readonly: false
-    }
-};
-
-function StringArrayConverter(val) {
-    if (Array.isArray(val) || !val) {
-        return val;
-    }
-    if (typeof val === "string") {
-        return val.split(" ");
-    }
-    throw new Error("value is not supported by StringArrayConverter.:" + val);
-}
-
-function StringConverter(val) {
-    if (typeof val === "string") {
-        return val;
-    } else if (!val) {
-        return val;
-    } else if (typeof val.toString === "function") {
-        return val.toString();
-    }
-    throw new Error("value is not supported by StringConverter.");
-}
-
-class ComponentDeclaration {
-    constructor(name, attributes, ctor) {
-        this.name = name;
-        this.ctor = ctor;
-        this.attributes = attributes;
-    }
-    generateInstance(componentElement) {
-        componentElement = componentElement ? componentElement : document.createElementNS(this.name.ns, this.name.name);
-        const component = new this.ctor();
-        componentElement.setAttribute("x-gr-id", component.id);
-        obtainGomlInterface.componentDictionary[component.id] = component;
-        component.name = this.name;
-        component.element = componentElement;
-        component.attributes = new NSDictionary();
-        for (let key in this.attributes) {
-            Attribute.generateAttributeForComponent(key, this.attributes[key], component);
-        }
-        return component;
-    }
-}
-
-class NSSet {
-    constructor() {
-        this._contentArray = [];
-    }
-    static fromArray(array) {
-        const nSet = new NSSet();
-        nSet.pushArray(array);
-        return nSet;
-    }
-    push(item) {
-        const index = this._contentArray.findIndex(id => id.fqn === item.fqn);
-        if (index === -1) {
-            this._contentArray.push(item);
-        }
-        return this;
-    }
-    pushArray(item) {
-        item.forEach(v => {
-            this.push(v);
-        });
-        return this;
-    }
-    values() {
-        return this._contentArray.values();
-    }
-    toArray() {
-        const ret = [];
-        for (let item of this._contentArray) {
-            ret.push(item);
-        }
-        return ret;
-    }
-    clone() {
-        const newSet = new NSSet();
-        for (let i of this._contentArray) {
-            newSet.push(i);
-        }
-        return newSet;
-    }
-    merge(other) {
-        for (let elem of other._contentArray) {
-            this.push(elem);
-        }
-        return this;
-    }
-}
-
-class NodeDeclaration {
-    constructor(name, _defaultComponents, _defaultAttributes, superNode, _treeConstraints) {
-        this.name = name;
-        this._defaultComponents = _defaultComponents;
-        this._defaultAttributes = _defaultAttributes;
-        this.superNode = superNode;
-        this._treeConstraints = _treeConstraints;
-        if (!this.superNode && this.name.name.toUpperCase() !== "GRIMOIRENODEBASE") {
-            this.superNode = new NSIdentity("GrimoireNodeBase");
-        }
-    }
-    get defaultComponents() {
-        if (!this._defaultComponentsActual) {
-            this._resolveInherites();
-        }
-        return this._defaultComponentsActual;
-    }
-    get defaultAttributes() {
-        if (!this._defaultAttributesActual) {
-            this._resolveInherites();
-        }
-        return this._defaultAttributesActual;
-    }
-    get treeConstraints() {
-        return this._treeConstraints;
-    }
-    addDefaultComponent(componentName) {
-        const componentId = Ensure.ensureTobeNSIdentity(componentName);
-        this._defaultComponents.push(componentId);
-        if (this._defaultComponentsActual) {
-            this._defaultComponentsActual.push(componentId);
-        }
-    }
-    _resolveInherites() {
-        if (!this.superNode) {
-            this._defaultComponentsActual = this._defaultComponents;
-            this._defaultAttributesActual = this._defaultAttributes;
-            return;
-        }
-        const superNode = obtainGomlInterface.nodeDeclarations.get(this.superNode);
-        const inheritedDefaultComponents = superNode.defaultComponents;
-        const inheritedDefaultAttribute = superNode.defaultAttributes;
-        this._defaultComponentsActual = inheritedDefaultComponents.clone().merge(this._defaultComponents);
-        this._defaultAttributesActual = inheritedDefaultAttribute.clone().pushDictionary(this._defaultAttributes);
-    }
-}
-
-/**
- * Provides safe xml read feature.
- */
-class XMLReader {
-    static parseXML(doc, rootElementName) {
-        const parsed = XMLReader._parser.parseFromString(doc, "text/xml");
-        if (rootElementName) {
-            if (parsed.documentElement.tagName.toUpperCase() !== rootElementName.toUpperCase()) {
-                throw new Error("Specified document is invalid.");
-            } // TODO should throw more detail error
-        }
-        return [parsed.documentElement]; // TODO: implenent!
-    }
-    static getElements(elem, name) {
-        const result = [];
-        const elems = elem.getElementsByTagName(name);
-        for (let i = 0; i < elems.length; i++) {
-            result.push(elems.item(i));
-        }
-        return result;
-    }
-    static getSingleElement(elem, name, mandatory) {
-        const result = XMLReader.getElements(elem, name);
-        if (result.length === 1) {
-            return result[0];
-        } else if (result.length === 0) {
-            if (mandatory) {
-                throw new Error(`The mandatory element ${ name } was required, but not found`);
-            } else {
-                return null;
-            }
-        } else {
-            throw new Error(`The element ${ name } requires to exist in single. But there is ${ result.length } count of elements`);
-        }
-    }
-    static getAttribute(elem, name, mandatory) {
-        const result = elem.attributes.getNamedItem(name);
-        if (result) {
-            return result.value;
-        } else if (mandatory) {
-            throw new Error(`The mandatory attribute ${ name } was required, but it was not found`);
-        } else {
-            return null;
-        }
-    }
-    static getAttributeFloat(elem, name, mandatory) {
-        const resultStr = XMLReader.getAttribute(elem, name, mandatory);
-        return parseFloat(resultStr);
-    }
-    static getAttributeInt(elem, name, mandatory) {
-        const resultStr = XMLReader.getAttribute(elem, name, mandatory);
-        return parseInt(resultStr, 10);
-    }
-    static getChildElements(elem) {
-        const children = elem.childNodes;
-        const result = [];
-        for (let i = 0; i < children.length; i++) {
-            if (children.item(i) instanceof Element) {
-                result.push(children.item(i));
-            }
-        }
-        return result;
-    }
-    static getAttributes(elem, ns) {
-        const result = {};
-        const attrs = elem.attributes;
-        for (let i = 0; i < attrs.length; i++) {
-            const attr = attrs.item(i);
-            if (!ns || attr.namespaceURI === ns) {
-                result[attr.localName] = attr.value;
-            }
-        }
-        return result;
-    }
-}
-XMLReader._parser = new DOMParser();
-
-var domain;
-
-// This constructor is used to store event handlers. Instantiating this is
-// faster than explicitly calling `Object.create(null)` to get a "clean" empty
-// object (tested with v8 v4.9).
-function EventHandlers() {}
-EventHandlers.prototype = Object.create(null);
-
-function EventEmitter() {
-    EventEmitter.init.call(this);
-}
-EventEmitter.usingDomains = false;
-
-EventEmitter.prototype.domain = undefined;
-EventEmitter.prototype._events = undefined;
-EventEmitter.prototype._maxListeners = undefined;
-
-// By default EventEmitters will print a warning if more than 10 listeners are
-// added to it. This is a useful default which helps finding memory leaks.
-EventEmitter.defaultMaxListeners = 10;
-
-EventEmitter.init = function () {
-    this.domain = null;
-    if (EventEmitter.usingDomains) {
-        // if there is an active domain, then attach to it.
-        if (domain.active && !(this instanceof domain.Domain)) {
-            this.domain = domain.active;
-        }
-    }
-
-    if (!this._events || this._events === Object.getPrototypeOf(this)._events) {
-        this._events = new EventHandlers();
-        this._eventsCount = 0;
-    }
-
-    this._maxListeners = this._maxListeners || undefined;
-};
-
-// Obviously not all Emitters should be limited to 10. This function allows
-// that to be increased. Set to zero for unlimited.
-EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
-    if (typeof n !== 'number' || n < 0 || isNaN(n)) throw new TypeError('"n" argument must be a positive number');
-    this._maxListeners = n;
-    return this;
-};
-
-function $getMaxListeners(that) {
-    if (that._maxListeners === undefined) return EventEmitter.defaultMaxListeners;
-    return that._maxListeners;
-}
-
-EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
-    return $getMaxListeners(this);
-};
-
-// These standalone emit* functions are used to optimize calling of event
-// handlers for fast cases because emit() itself often has a variable number of
-// arguments and can be deoptimized because of that. These functions always have
-// the same number of arguments and thus do not get deoptimized, so the code
-// inside them can execute faster.
-function emitNone(handler, isFn, self) {
-    if (isFn) handler.call(self);else {
-        var len = handler.length;
-        var listeners = arrayClone(handler, len);
-        for (var i = 0; i < len; ++i) listeners[i].call(self);
-    }
-}
-function emitOne(handler, isFn, self, arg1) {
-    if (isFn) handler.call(self, arg1);else {
-        var len = handler.length;
-        var listeners = arrayClone(handler, len);
-        for (var i = 0; i < len; ++i) listeners[i].call(self, arg1);
-    }
-}
-function emitTwo(handler, isFn, self, arg1, arg2) {
-    if (isFn) handler.call(self, arg1, arg2);else {
-        var len = handler.length;
-        var listeners = arrayClone(handler, len);
-        for (var i = 0; i < len; ++i) listeners[i].call(self, arg1, arg2);
-    }
-}
-function emitThree(handler, isFn, self, arg1, arg2, arg3) {
-    if (isFn) handler.call(self, arg1, arg2, arg3);else {
-        var len = handler.length;
-        var listeners = arrayClone(handler, len);
-        for (var i = 0; i < len; ++i) listeners[i].call(self, arg1, arg2, arg3);
-    }
-}
-
-function emitMany(handler, isFn, self, args) {
-    if (isFn) handler.apply(self, args);else {
-        var len = handler.length;
-        var listeners = arrayClone(handler, len);
-        for (var i = 0; i < len; ++i) listeners[i].apply(self, args);
-    }
-}
-
-EventEmitter.prototype.emit = function emit(type) {
-    var er, handler, len, args, i, events, domain;
-    var needDomainExit = false;
-    var doError = type === 'error';
-
-    events = this._events;
-    if (events) doError = doError && events.error == null;else if (!doError) return false;
-
-    domain = this.domain;
-
-    // If there is no 'error' event listener then throw.
-    if (doError) {
-        er = arguments[1];
-        if (domain) {
-            if (!er) er = new Error('Uncaught, unspecified "error" event');
-            er.domainEmitter = this;
-            er.domain = domain;
-            er.domainThrown = false;
-            domain.emit('error', er);
-        } else if (er instanceof Error) {
-            throw er; // Unhandled 'error' event
-        } else {
-            // At least give some kind of context to the user
-            var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
-            err.context = er;
-            throw err;
-        }
-        return false;
-    }
-
-    handler = events[type];
-
-    if (!handler) return false;
-
-    var isFn = typeof handler === 'function';
-    len = arguments.length;
-    switch (len) {
-        // fast cases
-        case 1:
-            emitNone(handler, isFn, this);
-            break;
-        case 2:
-            emitOne(handler, isFn, this, arguments[1]);
-            break;
-        case 3:
-            emitTwo(handler, isFn, this, arguments[1], arguments[2]);
-            break;
-        case 4:
-            emitThree(handler, isFn, this, arguments[1], arguments[2], arguments[3]);
-            break;
-        // slower
-        default:
-            args = new Array(len - 1);
-            for (i = 1; i < len; i++) args[i - 1] = arguments[i];
-            emitMany(handler, isFn, this, args);
-    }
-
-    if (needDomainExit) domain.exit();
-
-    return true;
-};
-
-function _addListener(target, type, listener, prepend) {
-    var m;
-    var events;
-    var existing;
-
-    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-
-    events = target._events;
-    if (!events) {
-        events = target._events = new EventHandlers();
-        target._eventsCount = 0;
-    } else {
-        // To avoid recursion in the case that type === "newListener"! Before
-        // adding it to the listeners, first emit "newListener".
-        if (events.newListener) {
-            target.emit('newListener', type, listener.listener ? listener.listener : listener);
-
-            // Re-assign `events` because a newListener handler could have caused the
-            // this._events to be assigned to a new object
-            events = target._events;
-        }
-        existing = events[type];
-    }
-
-    if (!existing) {
-        // Optimize the case of one listener. Don't need the extra array object.
-        existing = events[type] = listener;
-        ++target._eventsCount;
-    } else {
-        if (typeof existing === 'function') {
-            // Adding the second element, need to change to array.
-            existing = events[type] = prepend ? [listener, existing] : [existing, listener];
-        } else {
-            // If we've already got an array, just append.
-            if (prepend) {
-                existing.unshift(listener);
-            } else {
-                existing.push(listener);
-            }
-        }
-
-        // Check for listener leak
-        if (!existing.warned) {
-            m = $getMaxListeners(target);
-            if (m && m > 0 && existing.length > m) {
-                existing.warned = true;
-                var w = new Error('Possible EventEmitter memory leak detected. ' + existing.length + ' ' + type + ' listeners added. ' + 'Use emitter.setMaxListeners() to increase limit');
-                w.name = 'MaxListenersExceededWarning';
-                w.emitter = target;
-                w.type = type;
-                w.count = existing.length;
-                emitWarning(w);
-            }
-        }
-    }
-
-    return target;
-}
-function emitWarning(e) {
-    typeof console.warn === 'function' ? console.warn(e) : console.log(e);
-}
-EventEmitter.prototype.addListener = function addListener(type, listener) {
-    return _addListener(this, type, listener, false);
-};
-
-EventEmitter.prototype.on = EventEmitter.prototype.addListener;
-
-EventEmitter.prototype.prependListener = function prependListener(type, listener) {
-    return _addListener(this, type, listener, true);
-};
-
-function _onceWrap(target, type, listener) {
-    var fired = false;
-    function g() {
-        target.removeListener(type, g);
-        if (!fired) {
-            fired = true;
-            listener.apply(target, arguments);
-        }
-    }
-    g.listener = listener;
-    return g;
-}
-
-EventEmitter.prototype.once = function once(type, listener) {
-    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-    this.on(type, _onceWrap(this, type, listener));
-    return this;
-};
-
-EventEmitter.prototype.prependOnceListener = function prependOnceListener(type, listener) {
-    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-    this.prependListener(type, _onceWrap(this, type, listener));
-    return this;
-};
-
-// emits a 'removeListener' event iff the listener was removed
-EventEmitter.prototype.removeListener = function removeListener(type, listener) {
-    var list, events, position, i, originalListener;
-
-    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-
-    events = this._events;
-    if (!events) return this;
-
-    list = events[type];
-    if (!list) return this;
-
-    if (list === listener || list.listener && list.listener === listener) {
-        if (--this._eventsCount === 0) this._events = new EventHandlers();else {
-            delete events[type];
-            if (events.removeListener) this.emit('removeListener', type, list.listener || listener);
-        }
-    } else if (typeof list !== 'function') {
-        position = -1;
-
-        for (i = list.length; i-- > 0;) {
-            if (list[i] === listener || list[i].listener && list[i].listener === listener) {
-                originalListener = list[i].listener;
-                position = i;
-                break;
-            }
-        }
-
-        if (position < 0) return this;
-
-        if (list.length === 1) {
-            list[0] = undefined;
-            if (--this._eventsCount === 0) {
-                this._events = new EventHandlers();
-                return this;
-            } else {
-                delete events[type];
-            }
-        } else {
-            spliceOne(list, position);
-        }
-
-        if (events.removeListener) this.emit('removeListener', type, originalListener || listener);
-    }
-
-    return this;
-};
-
-EventEmitter.prototype.removeAllListeners = function removeAllListeners(type) {
-    var listeners, events;
-
-    events = this._events;
-    if (!events) return this;
-
-    // not listening for removeListener, no need to emit
-    if (!events.removeListener) {
-        if (arguments.length === 0) {
-            this._events = new EventHandlers();
-            this._eventsCount = 0;
-        } else if (events[type]) {
-            if (--this._eventsCount === 0) this._events = new EventHandlers();else delete events[type];
-        }
-        return this;
-    }
-
-    // emit removeListener for all listeners on all events
-    if (arguments.length === 0) {
-        var keys = Object.keys(events);
-        for (var i = 0, key; i < keys.length; ++i) {
-            key = keys[i];
-            if (key === 'removeListener') continue;
-            this.removeAllListeners(key);
-        }
-        this.removeAllListeners('removeListener');
-        this._events = new EventHandlers();
-        this._eventsCount = 0;
-        return this;
-    }
-
-    listeners = events[type];
-
-    if (typeof listeners === 'function') {
-        this.removeListener(type, listeners);
-    } else if (listeners) {
-        // LIFO order
-        do {
-            this.removeListener(type, listeners[listeners.length - 1]);
-        } while (listeners[0]);
-    }
-
-    return this;
-};
-
-EventEmitter.prototype.listeners = function listeners(type) {
-    var evlistener;
-    var ret;
-    var events = this._events;
-
-    if (!events) ret = [];else {
-        evlistener = events[type];
-        if (!evlistener) ret = [];else if (typeof evlistener === 'function') ret = [evlistener.listener || evlistener];else ret = unwrapListeners(evlistener);
-    }
-
-    return ret;
-};
-
-EventEmitter.listenerCount = function (emitter, type) {
-    if (typeof emitter.listenerCount === 'function') {
-        return emitter.listenerCount(type);
-    } else {
-        return listenerCount.call(emitter, type);
-    }
-};
-
-EventEmitter.prototype.listenerCount = listenerCount;
-function listenerCount(type) {
-    var events = this._events;
-
-    if (events) {
-        var evlistener = events[type];
-
-        if (typeof evlistener === 'function') {
-            return 1;
-        } else if (evlistener) {
-            return evlistener.length;
-        }
-    }
-
-    return 0;
-}
-
-EventEmitter.prototype.eventNames = function eventNames() {
-    return this._eventsCount > 0 ? Reflect.ownKeys(this._events) : [];
-};
-
-// About 1.5x faster than the two-arg version of Array#splice().
-function spliceOne(list, index) {
-    for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1) list[i] = list[k];
-    list.pop();
-}
-
-function arrayClone(arr, i) {
-    var copy = new Array(i);
-    while (i--) copy[i] = arr[i];
-    return copy;
-}
-
-function unwrapListeners(arr) {
-    var ret = new Array(arr.length);
-    for (var i = 0; i < ret.length; ++i) {
-        ret[i] = arr[i].listener || arr[i];
-    }
-    return ret;
-}
-
-/**
- * EventEmitterをmixinしたIDObject
- */
-class EEObject extends IDObject {
-    constructor() {
-        super();
-    }
-    emitException(eventName, error) {
-        error.handled = false;
-        const listeners = this.listeners(eventName);
-        for (let i = 0; i < listeners.length; i++) {
-            listeners[listeners.length - i - 1](error);
-            if (error.handled) {
-                return;
-            }
-        }
-        if (eventName !== "error") {
-            this.emitException("error", error);
-        } else {
-            throw error;
-        }
-    }
-}
-function applyMixins(derivedCtor, baseCtors) {
-    baseCtors.forEach(baseCtor => {
-        Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
-            derivedCtor.prototype[name] = baseCtor.prototype[name];
-        });
-    });
-}
-applyMixins(EEObject, [EventEmitter]);
-
-class GomlNode extends EEObject {
-    /**
-     * 新しいインスタンスの作成
-     * @param  {NodeDeclaration} recipe  作成するノードのDeclaration
-     * @param  {Element}         element 対応するDomElement
-     * @return {[type]}                  [description]
-     */
-    constructor(recipe, element) {
-        super();
-        this.children = [];
-        this._parent = null;
-        this._root = null;
-        this._mounted = false;
-        this._messageBuffer = [];
-        this._tree = null;
-        this._companion = new NSDictionary();
-        this._deleted = false;
-        this._attrBuffer = {};
-        this._defaultValueResolved = false;
-        if (!recipe) {
-            throw new Error("recipe must not be null");
-        }
-        this.nodeDeclaration = recipe;
-        this.element = element ? element : document.createElementNS(recipe.name.ns, recipe.name.name); // TODO Could be undefined or null?
-        this.componentsElement = document.createElement("COMPONENTS");
-        this._root = this;
-        this._tree = GomlInterfaceGenerator([this]);
-        this._components = [];
-        this.attributes = new NSDictionary();
-        this.element.setAttribute("x-gr-id", this.id);
-        const defaultComponentNames = recipe.defaultComponents;
-        // instanciate default components
-        defaultComponentNames.toArray().map(id => {
-            this.addComponent(id, true);
-        });
-        // register to GrimoireInterface.
-        obtainGomlInterface.nodeDictionary[this.id] = this;
-    }
-    /**
-     * Get actual goml node from element of xml tree.
-     * @param  {Element}  elem [description]
-     * @return {GomlNode}      [description]
-     */
-    static fromElement(elem) {
-        return obtainGomlInterface.nodeDictionary[elem.getAttribute("x-gr-id")];
-    }
-    get name() {
-        return this.nodeDeclaration.name;
-    }
-    /**
-     * このノードの属するツリーのGomlInterface。unmountedならnull。
-     * @return {IGomlInterface} [description]
-     */
-    get tree() {
-        return this._tree;
-    }
-    get deleted() {
-        return this._deleted;
-    }
-    get isActive() {
-        if (this._parent) {
-            return this._parent.isActive && this.enabled;
-        } else {
-            return this.enabled;
-        }
-    }
-    get enabled() {
-        return this.attr("enabled");
-    }
-    set enabled(value) {
-        this.attr("enabled", value);
-    }
-    /**
-     * ツリーで共有されるオブジェクト。マウントされていない状態ではnull。
-     * @return {NSDictionary<any>} [description]
-     */
-    get companion() {
-        return this._companion;
-    }
-    get nodeName() {
-        return this.nodeDeclaration.name;
-    }
-    get parent() {
-        return this._parent;
-    }
-    get hasChildren() {
-        return this.children.length > 0;
-    }
-    /**
-     * Get mounted status.
-     * @return {boolean} Whether this node is mounted or not.
-     */
-    get mounted() {
-        return this._mounted;
-    }
-    getChildrenByClass(className) {
-        const nodes = this.element.getElementsByClassName(className);
-        return new Array(nodes.length).map((v, i) => GomlNode.fromElement(nodes.item(i)));
-    }
-    getChildrenByNodeName(nodeName) {
-        const nodes = this.element.getElementsByTagName(nodeName);
-        return new Array(nodes.length).map((v, i) => GomlNode.fromElement(nodes.item(i)));
-    }
-    /**
-     * ノードを削除する。使わなくなったら呼ぶ。子要素も再帰的に削除する。
-     */
-    delete() {
-        this.children.forEach(c => {
-            c.delete();
-        });
-        obtainGomlInterface.nodeDictionary[this.id] = null;
-        if (this._parent) {
-            this._parent.detachChild(this);
-        } else {
-            this.setMounted(false);
-            if (this.element.parentNode) {
-                this.element.parentNode.removeChild(this.element);
-            }
-        }
-        this._deleted = true;
-    }
-    sendMessage(message, args) {
-        if (!this.enabled || !this.mounted) {
-            return false;
-        }
-        this._components.forEach(component => {
-            this._sendMessageToComponent(component, message, false, false, args);
-        });
-        return true;
-    }
-    broadcastMessage(arg1, arg2, arg3) {
-        if (!this.enabled || !this.mounted) {
-            return;
-        }
-        if (typeof arg1 === "number") {
-            const range = arg1;
-            const message = arg2;
-            const args = arg3;
-            this.sendMessage(message, args);
-            if (range > 0) {
-                for (let i = 0; i < this.children.length; i++) {
-                    this.children[i].broadcastMessage(range - 1, message, args);
-                }
-            }
-        } else {
-            const message = arg1;
-            const args = arg2;
-            this.sendMessage(message, args);
-            for (let i = 0; i < this.children.length; i++) {
-                this.children[i].broadcastMessage(message, args);
-            }
-        }
-    }
-    /**
-     * 指定したノード名と属性で生成されたノードの新しいインスタンスを、このノードの子要素として追加
-     * @param {string |   NSIdentity} nodeName      [description]
-     * @param {any    }} attributes   [description]
-     */
-    addNode(nodeName, attributes) {
-        if (typeof nodeName === "string") {
-            this.addNode(new NSIdentity(nodeName), attributes);
-        } else {
-            const nodeDec = obtainGomlInterface.nodeDeclarations.get(nodeName);
-            const node = new GomlNode(nodeDec, null);
-            if (attributes) {
-                for (let key in attributes) {
-                    const id = key.indexOf("|") !== -1 ? NSIdentity.fromFQN(key) : new NSIdentity(key);
-                    node.attr(id, attributes[key]);
-                }
-            }
-            this.addChild(node);
-        }
-    }
-    /**
-     * Add child.
-     * @param {GomlNode} child            追加する子ノード
-     * @param {number}   index            追加位置。なければ末尾に追加
-     * @param {[type]}   elementSync=true trueのときはElementのツリーを同期させる。（Elementからパースするときはfalseにする）
-     */
-    addChild(child, index, elementSync = true) {
-        if (child._deleted) {
-            throw new Error("deleted node never use.");
-        }
-        if (index != null && typeof index !== "number") {
-            throw new Error("insert index should be number or null or undefined.");
-        }
-        child._parent = this;
-        const insertIndex = index == null ? this.children.length : index;
-        this.children.splice(insertIndex, 0, child);
-        const checkChildConstraints = child.checkTreeConstraints();
-        const checkAncestorConstraint = this._callRecursively(n => n.checkTreeConstraints(), n => n._parent ? [n._parent] : []).reduce((list, current) => list.concat(current));
-        const errors = checkChildConstraints.concat(checkAncestorConstraint).filter(m => m);
-        if (errors.length !== 0) {
-            const message = errors.reduce((m, current) => m + "\n" + current);
-            throw new Error("tree constraint is not satisfied.\n" + message);
-        }
-        // handling html
-        if (elementSync) {
-            let referenceElement = this.element[NodeUtility.getNodeListIndexByElementIndex(this.element, insertIndex)];
-            this.element.insertBefore(child.element, referenceElement);
-        }
-        child._tree = this.tree;
-        child._companion = this.companion;
-        // mounting
-        if (this.mounted) {
-            child.setMounted(true);
-        }
-    }
-    callRecursively(func) {
-        return this._callRecursively(func, n => n.children);
-    }
-    /**
-     * デタッチしてdeleteする。
-     * @param {GomlNode} child Target node to be inserted.
-     */
-    removeChild(child) {
-        const node = this.detachChild(child);
-        if (node) {
-            node.delete();
-        }
-    }
-    /**
-     * 指定したノードが子要素なら子要素から外す。
-     * @param  {GomlNode} child [description]
-     * @return {GomlNode}       [description]
-     */
-    detachChild(target) {
-        // search child.
-        const index = this.children.indexOf(target);
-        if (index === -1) {
-            return null;
-        }
-        target.setMounted(false);
-        target._parent = null;
-        this.children.splice(index, 1);
-        // html sync
-        this.element.removeChild(target.element);
-        // check ancestor constraint.
-        const errors = this._callRecursively(n => n.checkTreeConstraints(), n => n._parent ? [n._parent] : []).reduce((list, current) => list.concat(current)).filter(m => m);
-        if (errors.length !== 0) {
-            const message = errors.reduce((m, current) => m + "\n" + current);
-            throw new Error("tree constraint is not satisfied.\n" + message);
-        }
-        return target;
-    }
-    /**
-     * detach myself
-     */
-    detach() {
-        if (this.parent) {
-            this.parent.detachChild(this);
-        } else {
-            throw new Error("root Node cannot be detached.");
-        }
-    }
-    attr(attrName, value) {
-        attrName = Ensure.ensureTobeNSIdentity(attrName);
-        const attr = this.attributes.get(attrName);
-        if (value !== void 0) {
-            // setValue.
-            if (!attr) {
-                console.warn(`attribute "${ attrName.name }" is not found.`);
-                this._attrBuffer[attrName.fqn] = value;
-            } else {
-                attr.Value = value;
-            }
-        } else {
-            // getValue.
-            if (!attr) {
-                const attrBuf = this._attrBuffer[attrName.fqn];
-                if (attrBuf !== void 0) {
-                    console.log("get attrBuf!");
-                    return attrBuf;
-                }
-                console.warn(`attribute "${ attrName.name }" is not found.`);
-                return;
-            } else {
-                return attr.Value;
-            }
-        }
-    }
-    /**
-     *  Add new attribute. In most of case, users no need to call this method.
-     *  Use __addAttribute in Component should be used instead.
-     */
-    addAttribute(attr) {
-        this.attributes.set(attr.name, attr);
-        // check buffer value.
-        const attrBuf = this._attrBuffer[attr.name.fqn];
-        if (attrBuf !== void 0) {
-            attr.Value = attrBuf;
-            delete this._attrBuffer[attr.name.fqn];
-        }
-    }
-    /**
-     * Update mounted status and emit events
-     * @param {boolean} mounted Mounted status.
-     */
-    setMounted(mounted) {
-        if (this._mounted === mounted) {
-            return;
-        }
-        if (mounted) {
-            this._mounted = mounted;
-            this._clearMessageBuffer("unmount");
-            this._sendMessage("awake", true, false);
-            this._sendMessage("mount", false, true);
-            this.children.forEach(child => {
-                child.setMounted(mounted);
-            });
-        } else {
-            this._clearMessageBuffer("mount");
-            this.children.forEach(child => {
-                child.setMounted(mounted);
-            });
-            this._sendMessage("unmount", false, true);
-            this._sendMessage("dispose", true, false);
-            this._tree = null;
-            this._companion = null;
-            this._mounted = mounted;
-        }
-    }
-    /**
-     * Get index of this node from parent.
-     * @return {number} number of index.
-     */
-    index() {
-        return this._parent.children.indexOf(this);
-    }
-    removeAttribute(attr) {
-        this.attributes.delete(attr.name);
-    }
-    /**
-     * このノードにコンポーネントをアタッチする。
-     * @param {Component} component [description]
-     */
-    addComponent(component, isDefaultComponent = false) {
-        const declaration = obtainGomlInterface.componentDeclarations.get(component);
-        const instance = declaration.generateInstance();
-        this._addComponentDirectly(instance, isDefaultComponent);
-        return instance;
-    }
-    /**
-     * Internal use!
-     * Should not operate by users or plugin developpers
-     * @param {Component} component          [description]
-     * @param {boolean}   isDefaultComponent [description]
-     */
-    _addComponentDirectly(component, isDefaultComponent) {
-        if (isDefaultComponent) {
-            component.isDefaultComponent = true;
-        }
-        const insertIndex = this._components.length;
-        let referenceElement = this.componentsElement[NodeUtility.getNodeListIndexByElementIndex(this.componentsElement, insertIndex)];
-        this.componentsElement.insertBefore(component.element, referenceElement);
-        this._components.push(component);
-        component.node = this;
-        component.addEnabledObserver(c => {
-            if (c.enabled) {
-                // TODO ??
-                this._sendBufferdMessageToComponent(c, "mount", false, true);
-                this._sendBufferdMessageToComponent(c, "unmount", false, true);
-            }
-        });
-        if (isDefaultComponent) {
-            // attributes should be exposed on node
-            component.attributes.forEach(p => this.addAttribute(p));
-            if (this._defaultValueResolved) {
-                component.attributes.forEach(p => p.resolveDefaultValue(NodeUtility.getAttributes(this.element)));
-            }
-        }
-        if (this._mounted) {
-            this._sendMessageToComponent(component, "awake", true, false);
-            this._sendMessageToComponent(component, "mount", false, true);
-        }
-    }
-    getComponents() {
-        return this._components;
-    }
-    getComponent(name) {
-        if (typeof name === "string") {
-            for (let i = 0; i < this._components.length; i++) {
-                if (this._components[i].name.name === name) {
-                    return this._components[i];
-                }
-            }
-        } else {
-            for (let i = 0; i < this._components.length; i++) {
-                if (this._components[i].name.fqn === name.fqn) {
-                    return this._components[i];
-                }
-            }
-        }
-        return null;
-    }
-    /**
-     * すべてのコンポーネントの属性をエレメントかデフォルト値で初期化
-     */
-    resolveAttributesValue() {
-        this._defaultValueResolved = true;
-        this._components.forEach(component => {
-            component.resolveDefaultAttributes(NodeUtility.getAttributes(this.element));
-        });
-    }
-    /**
-     * このノードのtreeConstrainが満たされるか調べる
-     * @return {string[]} [description]
-     */
-    checkTreeConstraints() {
-        const constraints = this.nodeDeclaration.treeConstraints;
-        if (!constraints) {
-            return [];
-        }
-        const errorMesasges = constraints.map(constraint => {
-            return constraint(this);
-        }).filter(message => message !== null);
-        if (errorMesasges.length === 0) {
-            return null;
-        }
-        return errorMesasges;
-    }
-    /**
-     * バッファしていたmount,unmountが送信されるかもしれない.アクティブなら
-     */
-    notifyActivenessUpdate() {
-        if (this.isActive) {
-            this._sendBufferdMessage(this.mounted ? "mount" : "unmount", false);
-            this.children.forEach(child => {
-                child.notifyActivenessUpdate();
-            });
-        }
-    }
-    /**
-     * コンポーネントにメッセージを送る。送信したらバッファからは削除される.
-     * @param  {Component} targetComponent 対象コンポーネント
-     * @param  {string}    message         メッセージ
-     * @param  {boolean}   forced          trueでコンポーネントのenableを無視して送信
-     * @param  {boolean}   toBuffer        trueで送信失敗したらバッファに追加
-     * @param  {any}       args            [description]
-     * @return {boolean}                   送信したか
-     */
-    _sendMessageToComponent(targetComponent, message, forced, toBuffer, args) {
-        message = Ensure.ensureTobeMessage(message);
-        const bufferdIndex = this._messageBuffer.findIndex(obj => obj.message === message && obj.target === targetComponent);
-        if (!forced && (!targetComponent.enabled || !this.isActive)) {
-            if (toBuffer && bufferdIndex < 0) {
-                this._messageBuffer.push({ message: Ensure.ensureTobeMessage(message), target: targetComponent });
-            }
-            return false;
-        }
-        message = Ensure.ensureTobeMessage(message);
-        let method = targetComponent[message];
-        if (typeof method === "function") {
-            method.bind(targetComponent)(args);
-        }
-        if (bufferdIndex >= 0) {
-            this._messageBuffer.splice(bufferdIndex, 1);
-        }
-        return true;
-    }
-    /**
-     * バッファからメッセージを送信。成功したらバッファから削除
-     * @param  {Component} target  [description]
-     * @param  {string}    message [description]
-     * @param  {boolean}   forced  [description]
-     * @param  {any}       args    [description]
-     * @return {boolean}           成功したか
-     */
-    _sendBufferdMessageToComponent(target, message, forced, sendToRemove, args) {
-        if (!forced && (!target.enabled || !this.isActive)) {
-            return false;
-        }
-        message = Ensure.ensureTobeMessage(message);
-        const bufferdIndex = this._messageBuffer.findIndex(obj => obj.message === message && obj.target === target);
-        if (bufferdIndex >= 0) {
-            let method = target[message];
-            if (typeof method === "function") {
-                method.bind(target)(args);
-            }
-            if (sendToRemove) {
-                this._messageBuffer.splice(bufferdIndex, 1);
-            }
-            return true;
-        }
-        return false;
-    }
-    _sendMessage(message, forced, toBuffer, args) {
-        this._components.forEach(component => {
-            this._sendMessageToComponent(component, message, forced, toBuffer, args);
-        });
-    }
-    /**
-     * バッファのメッセージを送信可能なら送信してバッファから削除
-     */
-    _sendBufferdMessage(message, forced, args) {
-        const next = [];
-        message = Ensure.ensureTobeMessage(message);
-        this._messageBuffer.forEach(obj => {
-            if (obj.message !== message || !this._sendBufferdMessageToComponent(obj.target, message, forced, false, args)) {
-                next.push(obj);
-            }
-        });
-        this._messageBuffer = next;
-    }
-    _clearMessageBuffer(message) {
-        message = Ensure.ensureTobeMessage(message);
-        this._messageBuffer = this._messageBuffer.filter(obj => obj.message !== message);
-    }
-    _callRecursively(func, nextGenerator) {
-        const val = func(this);
-        const nexts = nextGenerator(this);
-        const nextVals = nexts.map(c => c.callRecursively(func));
-        const list = nextVals.reduce((clist, current) => clist.concat(current), []);
-        list.unshift(val);
-        return list;
-    }
-}
-
-/**
- * Parser of Goml to Node utilities.
- * This class do not store any nodes and goml properties.
- */
-class GomlParser {
-    /**
-     * Domをパースする
-     * @param  {Element}           source    [description]
-     * @param  {GomlNode}          parent    あればこのノードにaddChildされる
-     * @return {GomlNode}                    ルートノード
-     */
-    static parse(source, parent, scriptTag) {
-        const newNode = GomlParser._createNode(source);
-        if (!newNode) {
-            // when specified node could not be found
-            console.warn(`"${ source.tagName }" was not parsed.`);
-            return null;
-        }
-        // Parse children recursively
-        const children = source.childNodes;
-        const childNodeElements = []; // for parse after .Components has resolved.
-        if (children && children.length !== 0) {
-            const removeTarget = [];
-            for (let i = 0; i < children.length; i++) {
-                const child = children.item(i);
-                if (!GomlParser._isElement(child)) {
-                    removeTarget.push(child);
-                    continue;
-                }
-                if (this._isComponentsTag(child)) {
-                    // parse as components
-                    GomlParser._parseComponents(newNode, child);
-                    removeTarget.push(child);
-                } else {
-                    // parse as child node.
-                    childNodeElements.push(child);
-                }
-            }
-            // remove unused elements
-            for (let i = 0; i < removeTarget.length; i++) {
-                source.removeChild(removeTarget[i]);
-            }
-        }
-        // generate tree
-        if (parent) {
-            parent.addChild(newNode, null, false);
-        }
-        childNodeElements.forEach(child => {
-            GomlParser.parse(child, newNode, null);
-        });
-        return newNode;
-    }
-    /**
-     * GomlNodeのインスタンス化。GrimoireInterfaceへの登録
-     * @param  {HTMLElement}      elem         [description]
-     * @param  {GomlConfigurator} configurator [description]
-     * @return {GomlTreeNodeBase}              [description]
-     */
-    static _createNode(elem) {
-        const tagName = elem.localName;
-        const recipe = obtainGomlInterface.nodeDeclarations.get(elem);
-        if (!recipe) {
-            throw new Error(`Tag "${ tagName }" is not found.`);
-        }
-        return new GomlNode(recipe, elem);
-    }
-    /**
-     * .COMPONENTSのパース。
-     * @param {GomlNode} node          アタッチされるコンポーネント
-     * @param {Element}  componentsTag .COMPONENTSタグ
-     */
-    static _parseComponents(node, componentsTag) {
-        let componentNodes = componentsTag.childNodes;
-        if (!componentNodes) {
-            return;
-        }
-        for (let i = 0; i < componentNodes.length; i++) {
-            const componentNode = componentNodes.item(i);
-            if (!GomlParser._isElement(componentNode)) {
-                continue; // Skip if the node was not element
-            }
-            const componentDecl = obtainGomlInterface.componentDeclarations.get(componentNode);
-            if (!componentDecl) {
-                throw new Error(`Component ${ componentNode.tagName } is not found.`);
-            }
-            const component = componentDecl.generateInstance(componentNode);
-            node._addComponentDirectly(component, false);
-        }
-    }
-    static _isElement(node) {
-        return node.nodeType === Node.ELEMENT_NODE;
-    }
-    static _isComponentsTag(element) {
-        const regexToFindComponent = /\.COMPONENTS$/mi; // TODO might needs to fix
-        return regexToFindComponent.test(element.nodeName);
-    }
-}
-
-class ComponentInterface {
-    constructor(components) {
-        this.components = components;
-    }
-    get(i1, i2, i3) {
-        const c = this.components;
-        if (i1 === void 0) {
-            if (c.length === 0 || c[0].length === 0 || c[0][0].length === 0) {
-                return null;
-            } else if (c.length === 1 && c[0].length === 1 || c[0][0].length === 1) {
-                return c[0][0][0];
-            }
-            throw new Error("There are too many candidate");
-        } else if (i2 === void 0) {
-            if (c.length === 0 || c[0].length === 0 || c[0][0].length <= i1) {
-                return null;
-            } else if (c.length === 1 && c[0].length === 1) {
-                return c[0][0][i1];
-            }
-            throw new Error("There are too many candidate");
-        } else if (i3 === void 0) {
-            if (c.length === 0 || c[0].length <= i2 || c[0][0].length <= i1) {
-                return null;
-            } else if (c.length === 1) {
-                return c[0][i2][i1];
-            }
-            throw new Error("There are too many candidate");
-        } else {
-            if (c.length <= i3 || c[0].length <= i2 || c[0][0].length <= i1) {
-                return null;
-            }
-            return c[i3][i2][i1];
-        }
-    }
-    forEach(f) {
-        this.components.forEach((tree, ti) => {
-            tree.forEach((nodes, ni) => {
-                nodes.forEach((comp, ci) => {
-                    f(comp, ci, ni, ti);
-                });
-            });
-        });
-        return this;
-    }
-    attr(attrName, value) {
-        if (value === void 0) {
-            // return Attribute.
-            return this.components[0][0][0].getValue(attrName).Value;
-        } else {
-            // set value.
-            this.forEach(component => {
-                component.setValue(attrName, value);
-            });
-        }
-    }
-    on() {
-        // TODO implement
-        return;
-    }
-    off() {
-        // TODO implement
-        return;
-    }
-}
-
-/**
- * 複数のノードを対象とした操作を提供するインタフェース
- */
-class NodeInterface {
-    constructor(nodes) {
-        this.nodes = nodes;
-    }
-    queryFunc(query) {
-        return new ComponentInterface(this.queryComponents(query));
-    }
-    queryComponents(query) {
-        return this.nodes.map(nodes => {
-            return nodes.map(node => {
-                const componentElements = node.componentsElement.querySelectorAll(query);
-                const components = [];
-                for (let i = 0; i < componentElements.length; i++) {
-                    const elem = componentElements[i];
-                    const component = obtainGomlInterface.componentDictionary[elem.getAttribute("x-gr-id")];
-                    if (component) {
-                        components.push(component);
-                    }
-                }
-                return components;
-            });
-        });
-    }
-    get(i1, i2) {
-        const c = this.nodes;
-        if (i1 === void 0) {
-            if (c.length === 0 || c[0].length === 0) {
-                return null;
-            } else if (c.length === 1 && c[0].length === 1) {
-                return c[0][0];
-            }
-            throw new Error("There are too many candidate");
-        } else if (i2 === void 0) {
-            if (c.length === 0 || c[0].length <= i1) {
-                return null;
-            } else if (c.length === 1 && c[0].length > i1) {
-                return c[0][i1];
-            }
-            throw new Error("There are too many candidate");
-        } else {
-            if (c.length <= i1 || c[i1].length <= i2) {
-                return null;
-            } else {
-                return c[i1][i2];
-            }
-        }
-    }
-    attr(attrName, value) {
-        if (value === void 0) {
-            // return Attribute.
-            return this.nodes[0][0].attributes.get(attrName).Value;
-        } else {
-            // set value.
-            this.forEach(node => {
-                const attr = node.attributes.get(attrName);
-                if (attr.declaration.readonly) {
-                    throw new Error(`The attribute ${ attr.name.fqn } is readonly`);
-                }
-                if (attr) {
-                    attr.Value = value;
-                }
-            });
-        }
-    }
-    /**
-     * 対象ノードにイベントリスナを追加します。
-     * @param {string}   eventName [description]
-     * @param {Function} listener  [description]
-     */
-    on(eventName, listener) {
-        this.forEach(node => {
-            node.on(eventName, listener);
-        });
-        return this;
-    }
-    /**
-     * 対象ノードに指定したイベントリスナが登録されていれば削除します
-     * @param {string}   eventName [description]
-     * @param {Function} listener  [description]
-     */
-    off(eventName, listener) {
-        this.forEach(node => {
-            node.removeListener(eventName, listener);
-        });
-        return this;
-    }
-    /**
-     * このノードインタフェースが対象とするノードそれぞれに、
-     * タグで指定したノードを子要素として追加します。
-     * @param {string} tag [description]
-     */
-    append(tag) {
-        this.forEach(node => {
-            const elems = XMLReader.parseXML(tag);
-            elems.forEach(elem => GomlParser.parse(elem, node, null));
-        });
-        return this;
-    }
-    /**
-     * このノードインタフェースが対象とするノードの子に、
-     * 指定されたノードが存在すれば削除します。
-     * @param {GomlNode} child [description]
-     */
-    remove(child) {
-        this.forEach(node => {
-            node.removeChild(child);
-        });
-        return this;
-    }
-    /**
-     * このノードインタフェースが対象とするノードに対して反復処理を行います
-     * @param  {GomlNode} callback [description]
-     * @return {[type]}            [description]
-     */
-    forEach(callback) {
-        this.nodes.forEach(array => {
-            array.forEach(node => {
-                callback(node);
-            });
-        });
-        return this;
-    }
-    /**
-     * このノードインタフェースが対象とするノードを有効、または無効にします。
-     * @param {boolean} enable [description]
-     */
-    setEnable(enable) {
-        this.forEach(node => {
-            node.enabled = !!enable;
-        });
-        return this;
-    }
-    /**
-     * このノードインタフェースにアタッチされたコンポーネントをセレクタで検索します。
-     * @pram  {string}      query [description]
-     * @return {Component[]}       [description]
-     */
-    find(query) {
-        const allComponents = [];
-        this.queryComponents(query).forEach(gomlComps => {
-            gomlComps.forEach(nodeComps => {
-                nodeComps.forEach(comp => {
-                    allComponents.push(comp);
-                });
-            });
-        });
-        return allComponents;
-    }
-    /**
-     * このノードインタフェースが対象とするノードのそれぞれの子ノードを対象とする、
-     * 新しいノードインタフェースを取得します。
-     * @return {NodeInterface} [description]
-     */
-    children() {
-        const children = this.nodes.map(nodes => {
-            return nodes.map(node => {
-                return node.children;
-            }).reduce((pre, cur) => {
-                return pre.concat(cur);
-            });
-        });
-        return new NodeInterface(children);
-    }
-    /**
-     * 対象ノードにコンポーネントをアタッチします。
-     * @param {Component} component [description]
-     */
-    addCompnent(componentId) {
-        this.forEach(node => {
-            node.addComponent(componentId, false);
-        });
-        return this;
-    }
-    /**
-     * 最初の対象ノードを取得する
-     * @return {GomlNode} [description]
-     */
-    first() {
-        if (this.count() === 0) {
-            return null;
-        }
-        return this.nodes[0][0];
-    }
-    /**
-     * 対象となる唯一のノードを取得する。
-     * 対象が存在しない、あるいは複数存在するときは例外を投げる。
-     * @return {GomlNode} [description]
-     */
-    single() {
-        if (this.count() !== 1) {
-            throw new Error("this nodeInterface is not single.");
-        }
-        return this.first();
-    }
-    /**
-     * 対象となるノードの個数を取得する
-     * @return {number} [description]
-     */
-    count() {
-        if (this.nodes.length === 0) {
-            return 0;
-        }
-        const counts = this.nodes.map(nodes => nodes.length);
-        return counts.reduce((total, current) => total + current, 0);
-    }
-}
-
-/**
- * Provides interfaces to treat whole goml tree for each.
- */
-class GomlInterface {
-    constructor(rootNodes) {
-        this.rootNodes = rootNodes;
-    }
-    getNodeById(id) {
-        return new Array(this.rootNodes.length).map((v, i) => GomlNode.fromElement(this.rootNodes[i].element.ownerDocument.getElementById(id)));
-    }
-    queryFunc(query) {
-        const context = new NodeInterface(this.queryNodes(query));
-        const queryFunc = context.queryFunc.bind(context);
-        Object.setPrototypeOf(queryFunc, context);
-        return queryFunc;
-    }
-    queryNodes(query) {
-        return this.rootNodes.map(root => {
-            const nodelist = root.element.ownerDocument.querySelectorAll(query);
-            const nodes = [];
-            for (let i = 0; i < nodelist.length; i++) {
-                const node = obtainGomlInterface.nodeDictionary[nodelist.item(i).getAttribute("x-gr-id")];
-                if (node) {
-                    nodes.push(node);
-                }
-            }
-            return nodes;
-        });
-    }
-}
-
-var GomlInterfaceGenerator = function (rootNodes) {
-    const gomlContext = new GomlInterface(rootNodes);
-    const queryFunc = gomlContext.queryFunc.bind(gomlContext);
-    Object.setPrototypeOf(queryFunc, gomlContext);
-    return queryFunc;
-};
-
-class GrimoireInterfaceImpl {
-    constructor() {
-        this.nodeDeclarations = new NSDictionary();
-        this.converters = new NSDictionary();
-        this.componentDeclarations = new NSDictionary();
-        this.rootNodes = {};
-        this.loadTasks = [];
-        this.nodeDictionary = {};
-        this.componentDictionary = {};
-        this.companion = new NSDictionary();
-    }
-    /**
-     * Generate namespace helper function
-     * @param  {string} ns namespace URI to be used
-     * @return {[type]}    the namespaced identity
-     */
-    ns(ns) {
-        return name => new NSIdentity(ns, name);
-    }
-    initialize() {
-        this.registerConverter("String", StringConverter);
-        this.registerConverter("StringArray", StringArrayConverter);
-        this.registerConverter("Boolean", BooleanConverter);
-        this.registerComponent("GrimoireComponent", GrimoireComponent);
-        this.registerNode("GrimoireNodeBase", ["GrimoireComponent"]);
-    }
-    /**
-     * Register plugins
-     * @param  {(}      loadTask [description]
-     * @return {[type]}          [description]
-     */
-    register(loadTask) {
-        this.loadTasks.push(loadTask);
-    }
-    resolvePlugins() {
-        return __awaiter(this, void 0, void 0, function* () {
-            for (let i = 0; i < this.loadTasks.length; i++) {
-                yield this.loadTasks[i]();
-            }
-        });
-    }
-    /**
-     * register custom component
-     * @param  {string                |   NSIdentity} name          [description]
-     * @param  {IAttributeDeclaration }} attributes           [description]
-     * @param  {Object                |   (new                 (}           obj           [description]
-     * @return {[type]}                       [description]
-     */
-    registerComponent(name, obj) {
-        name = Ensure.ensureTobeNSIdentity(name);
-        const attrs = obj["attributes"];
-        obj = this._ensureTobeComponentConstructor(obj);
-        this.componentDeclarations.set(name, new ComponentDeclaration(name, attrs, obj));
-    }
-    registerNode(name, requiredComponents, defaultValues, superNode) {
-        name = Ensure.ensureTobeNSIdentity(name);
-        requiredComponents = Ensure.ensureTobeNSIdentityArray(requiredComponents);
-        defaultValues = Ensure.ensureTobeNSDictionary(defaultValues, name.ns);
-        superNode = Ensure.ensureTobeNSIdentity(superNode);
-        this.nodeDeclarations.set(name, new NodeDeclaration(name, NSSet.fromArray(requiredComponents), defaultValues, superNode));
-    }
-    registerConverter(name, converter) {
-        name = Ensure.ensureTobeNSIdentity(name);
-        this.converters.set(name, { name: name, convert: converter });
-    }
-    addRootNode(tag, rootNode) {
-        if (!rootNode) {
-            throw new Error("can not register null to rootNodes.");
-        }
-        this.rootNodes[rootNode.id] = rootNode;
-        rootNode.companion.set(this.ns(Constants.defaultNamespace)("scriptElement"), tag);
-        // check tree constraint.
-        const errorMessages = rootNode.callRecursively(n => n.checkTreeConstraints()).reduce((list, current) => list.concat(current)).filter(error => error);
-        if (errorMessages.length !== 0) {
-            const message = errorMessages.reduce((m, current) => m + "\n" + current);
-            throw new Error("tree constraint is not satisfied.\n" + message);
-        }
-        // awake and mount tree.
-        rootNode.setMounted(true);
-        rootNode.broadcastMessage("treeInitialized", {
-            ownerScriptTag: tag,
-            id: rootNode.id
-        });
-        tag.setAttribute("x-rootNodeId", rootNode.id);
-        return rootNode.id;
-    }
-    getRootNode(scriptTag) {
-        const id = scriptTag.getAttribute("x-rootNodeId");
-        return this.rootNodes[id];
-    }
-    queryRootNodes(query) {
-        const scriptTags = document.querySelectorAll(query);
-        const nodes = [];
-        for (let i = 0; i < scriptTags.length; i++) {
-            const node = this.getRootNode(scriptTags.item(i));
-            if (node) {
-                nodes.push(node);
-            }
-        }
-        return nodes;
-    }
-    /**
-     * This method is not for users.
-     * Just for unit testing.
-     *
-     * Clear all configuration that GrimoireInterface contain.
-     */
-    clear() {
-        this.nodeDeclarations.clear();
-        this.componentDeclarations.clear();
-        this.converters.clear();
-        for (let key in this.rootNodes) {
-            delete this.rootNodes[key];
-        }
-        this.loadTasks.splice(0, this.loadTasks.length);
-        this.initialize();
-    }
-    /**
-     * Ensure the given object or constructor to be an constructor inherits Component;
-     * @param  {Object | (new ()=> Component} obj [The variable need to be ensured.]
-     * @return {[type]}      [The constructor inherits Component]
-     */
-    _ensureTobeComponentConstructor(obj) {
-        if (typeof obj === "function") {
-            if (!(obj.prototype instanceof Component) && obj !== Component) {
-                throw new Error("Component constructor must extends Component class.");
-            }
-        } else if (typeof obj === "object") {
-            const newCtor = function () {
-                Component.call(this);
-            };
-            const properties = {};
-            for (let key in obj) {
-                if (key === "attributes") {
-                    continue;
-                }
-                properties[key] = { value: obj[key] };
-            }
-            newCtor.prototype = Object.create(Component.prototype, properties);
-            Object.defineProperty(newCtor, "attributes", {
-                value: obj["attributes"]
-            });
-            obj = newCtor;
-        } else if (!obj) {
-            obj = Component;
-        }
-        return obj;
-    }
-}
-const context = new GrimoireInterfaceImpl();
-const obtainGomlInterface = function (query) {
-    return GomlInterfaceGenerator(context.queryRootNodes(query));
-};
-// const bindedFunction = obtainGomlInterface.bind(context);
-Object.setPrototypeOf(obtainGomlInterface, context);
-
-class XMLHttpRequestAsync {
-    static send(xhr, data) {
-        return new Promise((resolve, reject) => {
-            xhr.onload = e => {
-                resolve(e);
-            };
-            xhr.onerror = e => {
-                reject(e);
-            };
-            xhr.send(data);
-        });
-    }
-}
-
-/**
- * Provides the features to fetch Goml source.
- */
-class GomlLoader {
-    /**
-     * Obtain the Goml source from specified tag.
-     * @param  {HTMLScriptElement} scriptTag [the script tag to load]
-     * @return {Promise<void>}               [the promise to wait for loading]
-     */
-    static loadFromScriptTag(scriptTag) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const srcAttr = scriptTag.getAttribute("src");
-            let source;
-            if (srcAttr) {
-                // ignore text element
-                const req = new XMLHttpRequest();
-                req.open("GET", srcAttr);
-                yield XMLHttpRequestAsync.send(req);
-                source = req.responseText;
-            } else {
-                source = scriptTag.text;
-            }
-            const doc = XMLReader.parseXML(source, "GOML");
-            const rootNode = GomlParser.parse(doc[0], null, scriptTag);
-            obtainGomlInterface.addRootNode(scriptTag, rootNode);
-        });
-    }
-    /**
-     * Load from the script tags which will be found with specified query.
-     * @param  {string}          query [the query to find script tag]
-     * @return {Promise<void[]>}       [the promise to wait for all goml loading]
-     */
-    static loadFromQuery(query) {
-        const tags = document.querySelectorAll(query);
-        const pArray = [];
-        for (let i = 0; i < tags.length; i++) {
-            pArray[i] = GomlLoader.loadFromScriptTag(tags.item(i));
-        }
-        return Promise.all(pArray);
-    }
-    /**
-     * Load all Goml sources contained in HTML.
-     * @return {Promise<void>} [the promise to wait for all goml loading]
-     */
-    static loadForPage() {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield GomlLoader.loadFromQuery('script[type="text/goml"]');
-        });
-    }
-}
-
-/**
- * Provides procedures for initializing.
- */
-class GrimoireInitializer {
-    /**
-     * Start initializing
-     * @return {Promise<void>} The promise which will be resolved when all of the Goml script was loaded.
-     */
-    static initialize() {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                GrimoireInitializer._copyGLConstants();
-                obtainGomlInterface.initialize();
-                yield GrimoireInitializer._waitForDOMLoading();
-                yield obtainGomlInterface.resolvePlugins();
-                yield GomlLoader.loadForPage();
-            } catch (e) {
-                console.error(e);
-            }
-        });
-    }
-    /**
-     * Ensure WebGLRenderingContext.[CONSTANTS] is exisiting.
-     * Some of the browsers contains them in prototype.
-     */
-    static _copyGLConstants() {
-        if (WebGLRenderingContext.ONE) {
-            // Assume the CONSTANTS are already in WebGLRenderingContext
-            // Chrome,Firefox,IE,Edge...
-            return;
-        }
-        // Otherwise like ""Safari""
-        for (let propName in WebGLRenderingContext.prototype) {
-            if (/^[A-Z]/.test(propName)) {
-                const property = WebGLRenderingContext.prototype[propName];
-                WebGLRenderingContext[propName] = property;
-            }
-        }
-    }
-    /**
-     * Obtain the promise object which will be resolved when DOMContentLoaded event was rised.
-     * @return {Promise<void>} the promise
-     */
-    static _waitForDOMLoading() {
-        return new Promise(resolve => {
-            window.addEventListener("DOMContentLoaded", () => {
-                resolve();
-            });
-        });
-    }
-}
-/**
- * Just start the process.
- */
-GrimoireInitializer.initialize();
-window["gr"] = obtainGomlInterface;
-
 class VectorBase {
     constructor() {
         this._magnitudeSquaredCache = -1;
@@ -10384,11 +7912,16 @@ class GeometryUtility {
         yield* p3.rawElements;
     }
     static *planePosition(center, up, right, divide) {
-        for (let i = 0; i < divide; i++) {
-            for (let j = 0; j < divide; j++) {
-                const vec = center.addWith(Vector3.multiply(divide / 4 - j * 2 / divide, up)).addWith(Vector3.multiply(divide / 4 - i * 2 / divide, right));
-                yield* GeometryUtility.quadPosition(vec, Vector3.multiply(1 / divide, up), Vector3.multiply(1 / divide, right));
-                yield* GeometryUtility.quadPosition(vec, Vector3.multiply(1 / divide, up), Vector3.multiply(1 / divide, right.negateThis()));
+        let x = center.addWith(right).multiplyWith(2);
+        let y = center.subtractWith(up).multiplyWith(2);
+        for (let i = -divide / 2; i < divide / 2 + 1; i++) {
+            for (let j = -divide / 2; j < divide / 2 + 1; j++) {
+                yield* x.multiplyWith(j / divide).addWith(y.multiplyWith(i / divide)).rawElements;
+            }
+        }
+        for (let i = -divide / 2; i < divide / 2 + 1; i++) {
+            for (let j = -divide / 2; j < divide / 2 + 1; j++) {
+                yield* x.multiplyWith(j / divide).addWith(y.multiplyWith(i / divide)).rawElements;
             }
         }
     }
@@ -10401,10 +7934,10 @@ class GeometryUtility {
         const temp = divide % 2 == 0 ? step / 2 : 0;
         for (let i = 0; i < divide; i++) {
             const theta = step / 2 + step * i;
-            const sin = Math.sin((Math.PI - step) / 2 - theta);
-            const cos = Math.cos((Math.PI - step) / 2 - theta);
+            const sin = Math.sin((Math.PI - step) / 2 - theta - temp);
+            const cos = Math.cos((Math.PI - step) / 2 - theta - temp);
             const currentCenter = new Vector3(d * cos, center.Y, d * sin);
-            const currentRight = new Vector3(Math.cos(-step / 2 - theta), center.Y, Math.sin(-step / 2 - theta));
+            const currentRight = new Vector3(Math.cos(-step / 2 - theta - temp), center.Y, Math.sin(-step / 2 - theta - temp));
             yield* GeometryUtility.quadPosition(currentCenter, up, Vector3.multiply(d2, currentRight));
         }
     }
@@ -10413,12 +7946,13 @@ class GeometryUtility {
         const step = 2 * Math.PI / divide;
         const d = Math.cos(step / 2) / 2;
         const d2 = Math.sin(step / 2);
+        const temp = divide % 2 == 1 ? step / 2 : 0;
         for (let i = 0; i < divide; i++) {
             const theta = step * i;
-            const sin = Math.sin((Math.PI - step) / 2 - theta);
-            const cos = Math.cos((Math.PI - step) / 2 - theta);
+            const sin = Math.sin((Math.PI - step) / 2 - theta - temp);
+            const cos = Math.cos((Math.PI - step) / 2 - theta - temp);
             const currentCenter = new Vector3(d * cos, center.Y, d * sin);
-            const currentRight = new Vector3(Math.cos(-step / 2 - theta), center.Y, Math.sin(-step / 2 - theta));
+            const currentRight = new Vector3(Math.cos(-step / 2 - theta - temp), center.Y, Math.sin(-step / 2 - theta - temp));
             yield* GeometryUtility.trianglePosition(currentCenter, up.subtractWith(currentCenter), Vector3.multiply(d2, currentRight));
         }
     }
@@ -10480,23 +8014,30 @@ class GeometryUtility {
     }
     static *coneNormal(center, up, right, forward, divide) {
         yield* GeometryUtility.ellipseNormal(up.negateThis(), divide);
-        const step = 2 * Math.PI / divide;
+        const step = Math.PI / divide;
         const d = Math.cos(step / 2) / 2;
-        for (let i = 0; i < divide; i++) {
+        let lastNormal = Vector3.cross(new Vector3(Math.cos(step / 2), center.Y, Math.sin(step / 2)), up.subtractWith(new Vector3(d * Math.cos((Math.PI + step) / 2), center.Y, d * Math.sin((Math.PI + step) / 2))));
+        for (let i = 0; i < divide * 2; i++) {
             const theta = step * i;
             const sin = Math.sin((Math.PI - step) / 2 - theta);
             const cos = Math.cos((Math.PI - step) / 2 - theta);
             const currentCenter = new Vector3(d * cos, center.Y, d * sin);
             const currentRight = new Vector3(Math.cos(-step / 2 - theta), center.Y, Math.sin(-step / 2 - theta));
-            yield* GeometryUtility.triangleNormal(Vector3.cross(currentRight, up.subtractWith(currentCenter)));
+            yield* Vector3.cross(currentRight, up.subtractWith(currentCenter)).rawElements;
+            if (i % 2 == 1) {
+                yield* lastNormal.rawElements;
+                lastNormal = Vector3.cross(currentRight, up.subtractWith(currentCenter));
+            }
         }
+        yield* Vector3.cross(new Vector3(Math.cos(step / 2), center.Y, Math.sin(step / 2)), up.subtractWith(new Vector3(d * Math.cos((Math.PI + step) / 2), center.Y, d * Math.sin((Math.PI + step) / 2)))).rawElements;
     }
     static *planeNormal(normal, divide) {
-        for (let i = 0; i < divide; i++) {
-            for (let j = 0; j < divide; j++) {
-                yield* GeometryUtility.quadNormal(normal);
-                yield* GeometryUtility.quadNormal(normal.negateThis());
-            }
+        const s = GeometryUtility.planeSize(divide) / 2;
+        for (let i = 0; i < s; i++) {
+            yield* normal.rawElements;
+        }
+        for (let i = 0; i < s; i++) {
+            yield* normal.negateThis().rawElements;
         }
     }
     static *sphereNormal(up, right, forward, rowDiv, circleDiv) {
@@ -10540,11 +8081,14 @@ class GeometryUtility {
         }
     }
     static *planeUV(divide) {
-        const p = 1 / divide;
-        for (let i = 0; i < divide; i++) {
-            for (let j = 0; j < divide; j++) {
-                yield* GeometryUtility.quadUV();
-                yield* GeometryUtility.quadUV();
+        for (let i = 0; i < divide + 1; i++) {
+            for (let j = 0; j < divide + 1; j++) {
+                yield* [j / divide, i / divide];
+            }
+        }
+        for (let i = 0; i < divide + 1; i++) {
+            for (let j = 0; j < divide + 1; j++) {
+                yield* [j / divide, i / divide];
             }
         }
     }
@@ -10552,24 +8096,21 @@ class GeometryUtility {
         yield* GeometryUtility.ellipseUV(divide);
         yield* GeometryUtility.ellipseUV(divide);
         const p = 1 / divide;
-        for (let i = 0; i < divide; i++) {
-            yield* GeometryUtility.quadUV();
-            for (let j = 0; j < divide; j++) {
-                yield* [p * j, 0];
-                yield* [p * (j + 1), 0];
-                yield* [p * (j + 1), 1];
-                yield* [p * j, 1];
-            }
+        for (let j = 0; j < divide; j++) {
+            yield* [p * j, 0];
+            yield* [p * (j + 1), 0];
+            yield* [p * (j + 1), 1];
+            yield* [p * j, 1];
         }
     }
     static *coneUV(divide) {
         yield* GeometryUtility.ellipseUV(divide);
         const step = Math.PI / 2 / divide;
         for (let i = 0; i < divide; i++) {
-            const theta = step * i;
+            const theta = -step * i;
             yield* [0, 0];
+            yield* [Math.cos(theta - step), Math.sin(theta - step)];
             yield* [Math.cos(theta), Math.sin(theta)];
-            yield* [Math.cos(theta + step), Math.sin(theta + step)];
         }
     }
     static *triangleIndex(offset) {
@@ -10632,9 +8173,21 @@ class GeometryUtility {
         }
     }
     static *planeIndex(offset, divide) {
-        const s = GeometryUtility.quadSize();
-        for (let i = 0; i < 2 * divide * divide; i++) {
-            yield* GeometryUtility.quadIndex(offset + s * i);
+        let o = offset;
+        const s = GeometryUtility.planeSize(divide) / 2;
+        for (let j = 0; j < divide; j++) {
+            for (let i = 0; i < divide; i++) {
+                o = offset + i + j * (divide + 1);
+                yield* [o, o + divide + 2, o + 1];
+                yield* [o, o + divide + 1, o + divide + 2];
+            }
+        }
+        for (let j = 0; j < divide; j++) {
+            for (let i = 0; i < divide; i++) {
+                o = offset + i + j * (divide + 1) + s;
+                yield* [o, o + 1, o + divide + 2];
+                yield* [o, o + divide + 2, o + divide + 1];
+            }
         }
     }
     static *ellipseIndex(offset, divide) {
@@ -10662,7 +8215,7 @@ class GeometryUtility {
         return GeometryUtility.ellipseSize(divide) + divide * GeometryUtility.triangleSize();
     }
     static planeSize(divide) {
-        return 2 * divide * divide * GeometryUtility.quadSize();
+        return (divide + 1) * (divide + 1) * 2;
     }
     static ellipseSize(divide) {
         return divide + 1;
@@ -10711,6 +8264,41 @@ GeometryFactory.factoryDelegates = {};
  * Argument inputs to be used for construction of geometry.
  */
 GeometryFactory.factoryArgumentDeclarations = {};
+
+/**
+ * Most based object for any Grimoire.js related classes.
+ * @type {[type]}
+ */
+class IDObject {
+    constructor() {
+        this.id = IDObject.getUniqueRandom(10);
+    }
+    /**
+     * Generate random string
+     * @param  {number} length length of random string
+     * @return {string}        generated string
+     */
+    static getUniqueRandom(length) {
+        return Math.random().toString(36).slice(-length);
+    }
+    /**
+     * Obtain stringfied object.
+     * If this method was not overridden, this method return class name.
+     * @return {string} stringfied object
+     */
+    toString() {
+        return this.getTypeName();
+    }
+    /**
+     * Obtain class name
+     * @return {string} Class name of the instance.
+     */
+    getTypeName() {
+        const funcNameRegex = /function (.{1,})\(/;
+        const result = funcNameRegex.exec(this.constructor.toString());
+        return result && result.length > 1 ? result[1] : "";
+    }
+}
 
 class ResourceBase extends IDObject {
     constructor(gl) {
@@ -11087,11 +8675,11 @@ class DefaultPrimitives {
         GeometryFactory.addType("sphere", {
             divVertical: {
                 converter: "Number",
-                defaultValue: 10
+                defaultValue: 100
             },
             divHorizontal: {
                 converter: "Number",
-                defaultValue: 10
+                defaultValue: 100
             }
         }, (gl, attrs) => {
             const dH = attrs["divHorizontal"];
@@ -11335,6 +8923,2454 @@ class DefaultPrimitives {
     }
 }
 
+function BooleanConverter(val) {
+    if (typeof val === "boolean") {
+        return val;
+    } else if (typeof val === "string") {
+        switch (val) {
+            case "true":
+                return true;
+            case "false":
+                return false;
+            default:
+                throw new Error(`Invalid string ${ val } for parsing as boolean`);
+        }
+    }
+    throw new Error(`Parsing failed: ${ val }`);
+}
+
+class NodeUtility {
+    /**
+     * Get index of NodeList converted from index in Element
+     * @param  {HTMLElement} targetElement Parent element of search target elements
+     * @param  {number}      elementIndex  Index in element
+     * @return {number}                    Index in NodeList
+     */
+    static getNodeListIndexByElementIndex(targetElement, elementIndex) {
+        const nodeArray = Array.prototype.slice.call(targetElement.childNodes);
+        const elementArray = nodeArray.filter(v => {
+            return v.nodeType === 1;
+        });
+        elementIndex = elementIndex < 0 ? elementArray.length + elementIndex : elementIndex;
+        const index = nodeArray.indexOf(elementArray[elementIndex]);
+        return index === -1 ? null : index;
+    }
+    static getAttributes(element) {
+        const attributes = {};
+        const domAttr = element.attributes;
+        for (let i = 0; i < domAttr.length; i++) {
+            const attrNode = domAttr.item(i);
+            const name = attrNode.name;
+            attributes[name] = attrNode.value;
+        }
+        return attributes;
+    }
+}
+
+class Constants {
+    static get defaultNamespace() {
+        return "HTTP://GRIMOIRE.GL/NS/DEFAULT";
+    }
+}
+
+/**
+ * The class to identity with XML namespace feature.
+ */
+class NSIdentity {
+    constructor(ns, name) {
+        if (name) {
+            this.ns = ns.toUpperCase();
+            this.name = name;
+        } else {
+            this.ns = Constants.defaultNamespace;
+            this.name = ns;
+        }
+        // Ensure all of the characters are uppercase
+        this.name = NSIdentity._ensureValidIdentity(this.name, true);
+        this.ns = NSIdentity._ensureValidIdentity(this.ns);
+        this.fqn = this.name + "|" + this.ns;
+    }
+    /**
+     * Generate an instance from Full qualified name.
+     * @param  {string}             fqn [description]
+     * @return {NSIdentity}     [description]
+     */
+    static fromFQN(fqn) {
+        const splitted = fqn.split("|");
+        if (splitted.length !== 2) {
+            throw new Error("Invalid fqn was given");
+        }
+        return new NSIdentity(splitted[1], splitted[0]);
+    }
+    /**
+     * Make sure given name is valid for using in identity.
+     * | is prohibited for using in name or namespace.
+     * . is prohibited for using in name.
+     * All lowercase alphabet will be transformed into uppercase.
+     * @param  {string} name        [A name to verify]
+     * @param  {[type]} noDot=false [Ensure not using dot or not]
+     * @return {string}             [Valid name]
+     */
+    static _ensureValidIdentity(name, noDot = false) {
+        if (name.indexOf("|") > -1) {
+            throw new Error("Namespace and identity cannnot contain | ");
+        }
+        if (noDot && name.indexOf(".") > -1) {
+            throw new Error("identity cannnot contain .");
+        }
+        if (name == null) {
+            throw new Error("Specified name was null or undefined");
+        }
+        return name;
+    }
+}
+
+class NSDictionary {
+    constructor() {
+        this._nameObjectMap = new Map();
+        this._fqnObjectMap = new Map();
+    }
+    set(key, value) {
+        let namedChildMap;
+        if (this._nameObjectMap.has(key.name)) {
+            namedChildMap = this._nameObjectMap.get(key.name);
+        } else {
+            namedChildMap = new Map();
+            this._nameObjectMap.set(key.name, namedChildMap);
+        }
+        namedChildMap.set(key.fqn, value);
+        this._fqnObjectMap.set(key.fqn, value);
+    }
+    delete(key) {
+        if (this._fqnObjectMap.has(key.fqn)) {
+            const theMap = this._nameObjectMap.get(key.name);
+            if (theMap.size === 1) {
+                this._nameObjectMap.delete(key.name);
+            } else {
+                theMap.delete(key.fqn);
+            }
+            this._fqnObjectMap.delete(key.fqn);
+        }
+    }
+    get(arg1, name) {
+        if (typeof arg1 === "string") {
+            if (name) {
+                return this.get(new NSIdentity(arg1, name));
+            } else {
+                const namedMap = this._nameObjectMap.get(arg1);
+                if (!namedMap) {
+                    return null;
+                }
+                if (namedMap.size === 1) {
+                    const itr = namedMap.values();
+                    return itr.next().value;
+                } else {
+                    throw new Error(`Specified tag name ${ arg1 } is ambigious to identify.`);
+                }
+            }
+        } else {
+            if (arg1 instanceof NSIdentity) {
+                return this.fromFQN(arg1.fqn);
+            } else {
+                if (arg1.prefix) {
+                    return this.get(new NSIdentity(arg1.namespaceURI, arg1.localName));
+                } else {
+                    if (arg1.namespaceURI && this._fqnObjectMap.has(arg1.localName + "|" + arg1.namespaceURI)) {
+                        return this.get(new NSIdentity(arg1.namespaceURI, arg1.localName));
+                    }
+                    if (arg1 && arg1.ownerElement && arg1.ownerElement.namespaceURI && this._fqnObjectMap.has(arg1.localName + "|" + arg1.ownerElement.namespaceURI)) {
+                        return this.get(new NSIdentity(arg1.ownerElement.namespaceURI, arg1.localName));
+                    }
+                    return this.get(arg1.localName);
+                }
+            }
+        }
+    }
+    fromFQN(fqn) {
+        return this._fqnObjectMap.get(fqn);
+    }
+    isAmbigious(name) {
+        return this._nameObjectMap.get(name).size > 1;
+    }
+    has(name) {
+        return this._nameObjectMap.has(name);
+    }
+    pushDictionary(dict) {
+        dict._fqnObjectMap.forEach((value, keyFQN) => {
+            const id = NSIdentity.fromFQN(keyFQN);
+            this.set(id, value);
+        });
+        return this;
+    }
+    toArray() {
+        const ret = [];
+        this._fqnObjectMap.forEach(value => {
+            ret.push(value);
+        });
+        return ret;
+    }
+    clone() {
+        const dict = new NSDictionary();
+        return dict.pushDictionary(this);
+    }
+    forEach(callback) {
+        this._fqnObjectMap.forEach((val, key) => {
+            callback(val, key);
+        });
+        return this;
+    }
+    map(callback) {
+        const ret = new NSDictionary();
+        this._fqnObjectMap.forEach((val, fqn) => {
+            const id = NSIdentity.fromFQN(fqn);
+            ret.set(id, callback(val, fqn));
+        });
+        return ret;
+    }
+    clear() {
+        this._nameObjectMap.clear();
+        this._fqnObjectMap.clear();
+    }
+}
+
+/**
+ * Provides static methods to ensure arguments are valid type.
+ */
+class Ensure {
+    /**
+     * Ensure specified str being string
+     * @param  {string | number}      str [description]
+     * @return {string}      [description]
+     */
+    static ensureString(str) {
+        if (typeof str === "string") {
+            return str;
+        } else if (typeof str === "number") {
+            return str.toString();
+        } else {
+            throw new Error("Specified argument can not convert into string");
+        }
+    }
+    /**
+     * Ensure specified number being number
+     * @param  {string | number}      str [description]
+     * @return {string}      [description]
+     */
+    static ensureNumber(num) {
+        if (typeof num === "string") {
+            return parseInt(num, 10);
+        } else if (typeof num === "number") {
+            return num;
+        } else {
+            throw new Error("specified argument can not be converted into number");
+        }
+    }
+    static ensureTobeNSIdentity(name) {
+        if (!name) {
+            return undefined;
+        }
+        if (typeof name === "string") {
+            return new NSIdentity(name);
+        } else {
+            return name;
+        }
+    }
+    static ensureTobeNSIdentityArray(names) {
+        if (!names) {
+            return [];
+        }
+        const newArr = [];
+        for (let i = 0; i < names.length; i++) {
+            newArr.push(this.ensureTobeNSIdentity(names[i]));
+        }
+        return newArr;
+    }
+    static ensureTobeNSDictionary(dict, defaultNamespace) {
+        if (!dict) {
+            return new NSDictionary();
+        }
+        if (dict instanceof NSDictionary) {
+            return dict;
+        } else {
+            const newDict = new NSDictionary();
+            for (let key in dict) {
+                newDict.set(new NSIdentity(defaultNamespace, key), dict[key]);
+            }
+            return newDict;
+        }
+    }
+    static ensureTobeMessage(message) {
+        if (message.startsWith("$")) {
+            return message;
+        } else {
+            return "$" + message;
+        }
+    }
+}
+
+/**
+ * Management a single attribute with specified type. Converter will serve a value with object with any type instead of string.
+ * When attribute is changed, emit a "change" event. When attribute is requested, emit a "get" event.
+ * If responsive flag is not true, event will not be emitted.
+ */
+class Attribute {
+    constructor() {
+        this._handlers = [];
+    }
+    get tree() {
+        return this.component.tree;
+    }
+    get companion() {
+        return this.component.companion;
+    }
+    /**
+     * Get a value with specified type.
+     * @return {any} value with specified type.
+     */
+    get Value() {
+        try {
+            return this.converter.convert(this._value);
+        } catch (e) {
+            console.error(e); // TODO should be more convenient error handling
+        }
+    }
+    /**
+     * Set a value with any type.
+     * @param {any} val Value with string or specified type.
+     */
+    set Value(val) {
+        this._value = val;
+        this._notifyChange();
+    }
+    /**
+     * Construct a new attribute with name of key and any value with specified type. If constant flag is true, This attribute will be immutable.
+     * If converter is not served, string converter will be set as default.
+     * @param {string}        key       Key of this attribute.
+     * @param {any}           value     Value of this attribute.
+     * @param {ConverterBase} converter Converter of this attribute.
+     * @param {boolean}       constant  Whether this attribute is immutable or not. False as default.
+     */
+    static generateAttributeForComponent(name, declaration, component) {
+        const attr = new Attribute();
+        attr.name = new NSIdentity(component.name.ns, name);
+        attr.component = component;
+        attr.declaration = declaration;
+        const converterName = Ensure.ensureTobeNSIdentity(declaration.converter);
+        attr.converter = obtainGomlInterface.converters.get(converterName);
+        if (attr.converter === void 0) {
+            // When the specified converter was not found
+            throw new Error(`Specified converter ${ converterName.name } was not found from registered converters.\n Component: ${ attr.component.name.fqn }\n Attribute: ${ attr.name.name }`);
+        }
+        attr.converter = {
+            convert: attr.converter.convert.bind(attr),
+            name: attr.converter.name
+        };
+        attr.component.attributes.set(attr.name, attr);
+        return attr;
+    }
+    addObserver(handler, callFirst = false) {
+        this._handlers.push(handler);
+        if (callFirst) {
+            handler(this);
+        }
+    }
+    removeObserver(handler) {
+        let index = -1;
+        for (let i = 0; i < this._handlers.length; i++) {
+            if (handler === this._handlers[i]) {
+                index = i;
+                break;
+            }
+        }
+        if (index < 0) {
+            return;
+        }
+        this._handlers.splice(index, 1);
+    }
+    /**
+     * Bind converted value to specified field.
+     * When target object was not specified, field of owner component would be assigned.
+     * @param {string} variableName [description]
+     * @param {any} targetObject [description]
+     */
+    boundTo(variableName, targetObject = this.component) {
+        this.addObserver(v => {
+            targetObject[variableName] = v.Value;
+        });
+        targetObject[variableName] = this.Value;
+    }
+    /**
+     * Apply default value to attribute from DOM values.
+     * @param {string }} domValues [description]
+     */
+    resolveDefaultValue(domValues) {
+        if (this._value !== void 0) {
+            return;
+        }
+        let tagAttrValue = domValues[this.name.name];
+        if (tagAttrValue !== void 0) {
+            this.Value = tagAttrValue; // Dom指定値で解決
+            return;
+        }
+        const nodeDefaultValue = this.component.node.nodeDeclaration.defaultAttributes.get(this.name);
+        if (nodeDefaultValue !== void 0) {
+            this.Value = nodeDefaultValue; // Node指定値で解決
+            return;
+        }
+        const attrDefaultValue = this.declaration.defaultValue;
+        this.Value = attrDefaultValue;
+    }
+    _notifyChange() {
+        this._handlers.forEach(handler => {
+            handler(this);
+        });
+    }
+}
+
+/**
+ * Base class for any components
+ */
+class Component extends IDObject {
+    constructor() {
+        super(...arguments);
+        /**
+         * Whether this component was created by nodeDeclaration
+         * @type {boolean}
+         */
+        this.isDefaultComponent = false;
+        /**
+         * Flag that this component is activated or not.
+         * @type {boolean}
+         */
+        this._enabled = true;
+        this._handlers = [];
+        this._additionalAttributesNames = [];
+    }
+    get enabled() {
+        return this._enabled;
+    }
+    set enabled(val) {
+        if (this._enabled === val) {
+            return;
+        }
+        this._enabled = val;
+        this._handlers.forEach(handler => {
+            handler(this);
+        });
+    }
+    /**
+     * The dictionary which is shared in entire tree.
+     * @return {NSDictionary<any>} [description]
+     */
+    get companion() {
+        return this.node ? this.node.companion : null;
+    }
+    /**
+     * Tree interface for the tree this node is attached.
+     * @return {IGomlInterface} [description]
+     */
+    get tree() {
+        return this.node ? this.node.tree : null;
+    }
+    /**
+     * Obtain value of attribute. When the attribute is not existing, this method would return undefined.
+     * @param  {string} name [description]
+     * @return {any}         [description]
+     */
+    getValue(name) {
+        const attr = this.attributes.get(name);
+        if (attr) {
+            return attr.Value;
+        } else {
+            return undefined;
+        }
+    }
+    /**
+     * Set value of attribute
+     * @param {string} name  [description]
+     * @param {any}    value [description]
+     */
+    setValue(name, value) {
+        const attr = this.attributes.get(name); // TODO:check readonly?
+        if (attr) {
+            attr.Value = value;
+        }
+    }
+    getAttribute(name) {
+        return this.attributes.get(name);
+    }
+    addEnabledObserver(handler) {
+        this._handlers.push(handler);
+    }
+    removeEnabledObserver(handler) {
+        let index = -1;
+        for (let i = 0; i < this._handlers.length; i++) {
+            if (handler === this._handlers[i]) {
+                index = i;
+                break;
+            }
+        }
+        if (index < 0) {
+            return;
+        }
+        this._handlers.splice(index, 1);
+    }
+    resolveDefaultAttributes(nodeAttributes) {
+        if (this.isDefaultComponent) {
+            this.attributes.forEach(attr => attr.resolveDefaultValue(nodeAttributes));
+        } else {
+            const attrs = NodeUtility.getAttributes(this.element);
+            this.attributes.forEach(attr => attr.resolveDefaultValue(attrs));
+        }
+    }
+    /**
+     * Add attribute
+     * @param {string}                name      [description]
+     * @param {IAttributeDeclaration} attribute [description]
+     */
+    __addAtribute(name, attribute) {
+        if (!attribute) {
+            throw new Error("can not add attribute null or undefined.");
+        }
+        const attr = Attribute.generateAttributeForComponent(name, attribute, this);
+        if (this.isDefaultComponent) {
+            this.node.addAttribute(attr);
+        }
+        if (this.isDefaultComponent) {
+            attr.resolveDefaultValue(NodeUtility.getAttributes(this.node.element));
+        } else {
+            const attrs = NodeUtility.getAttributes(this.element);
+            attr.resolveDefaultValue(attrs);
+        }
+        this._additionalAttributesNames.push(attr.name);
+    }
+    __removeAttributes(name) {
+        if (name) {
+            const index = this._additionalAttributesNames.findIndex(id => id.name === name);
+            if (index < 0) {
+                throw new Error("can not remove attributes :" + name);
+            }
+            const attrId = this._additionalAttributesNames[index];
+            if (this.isDefaultComponent) {
+                this.node.removeAttribute(this.attributes.get(attrId));
+            }
+            this.attributes.delete(attrId);
+            this._additionalAttributesNames.splice(index, 1);
+        } else {
+            this._additionalAttributesNames.forEach(id => {
+                this.__removeAttributes(id.name);
+            });
+        }
+    }
+}
+
+class GrimoireComponent extends Component {
+    $awake() {
+        this.node.resolveAttributesValue();
+        this.getAttribute("id").addObserver(attr => {
+            this.node.element.id = attr.Value;
+        });
+        this.getAttribute("class").addObserver(attr => {
+            this.node.element.className = attr.Value.join(" ");
+        });
+        this.getAttribute("enabled").addObserver(attr => {
+            if (this.node.isActive) {
+                this.node.notifyActivenessUpdate();
+            }
+        });
+    }
+}
+GrimoireComponent.attributes = {
+    id: {
+        converter: "String",
+        defaultValue: null,
+        readonly: false
+    },
+    class: {
+        converter: "StringArray",
+        defaultValue: null,
+        readonly: false
+    },
+    enabled: {
+        converter: "Boolean",
+        defaultValue: true,
+        readonly: false
+    }
+};
+
+function StringArrayConverter(val) {
+    if (Array.isArray(val) || !val) {
+        return val;
+    }
+    if (typeof val === "string") {
+        return val.split(" ");
+    }
+    throw new Error("value is not supported by StringArrayConverter.:" + val);
+}
+
+function StringConverter(val) {
+    if (typeof val === "string") {
+        return val;
+    } else if (!val) {
+        return val;
+    } else if (typeof val.toString === "function") {
+        return val.toString();
+    }
+    throw new Error("value is not supported by StringConverter.");
+}
+
+class ComponentDeclaration {
+    constructor(name, attributes, ctor) {
+        this.name = name;
+        this.ctor = ctor;
+        this.attributes = attributes;
+    }
+    generateInstance(componentElement) {
+        componentElement = componentElement ? componentElement : document.createElementNS(this.name.ns, this.name.name);
+        const component = new this.ctor();
+        componentElement.setAttribute("x-gr-id", component.id);
+        obtainGomlInterface.componentDictionary[component.id] = component;
+        component.name = this.name;
+        component.element = componentElement;
+        component.attributes = new NSDictionary();
+        for (let key in this.attributes) {
+            Attribute.generateAttributeForComponent(key, this.attributes[key], component);
+        }
+        return component;
+    }
+}
+
+class NSSet {
+    constructor() {
+        this._contentArray = [];
+    }
+    static fromArray(array) {
+        const nSet = new NSSet();
+        nSet.pushArray(array);
+        return nSet;
+    }
+    push(item) {
+        const index = this._contentArray.findIndex(id => id.fqn === item.fqn);
+        if (index === -1) {
+            this._contentArray.push(item);
+        }
+        return this;
+    }
+    pushArray(item) {
+        item.forEach(v => {
+            this.push(v);
+        });
+        return this;
+    }
+    values() {
+        return this._contentArray.values();
+    }
+    toArray() {
+        const ret = [];
+        for (let item of this._contentArray) {
+            ret.push(item);
+        }
+        return ret;
+    }
+    clone() {
+        const newSet = new NSSet();
+        for (let i of this._contentArray) {
+            newSet.push(i);
+        }
+        return newSet;
+    }
+    merge(other) {
+        for (let elem of other._contentArray) {
+            this.push(elem);
+        }
+        return this;
+    }
+}
+
+class NodeDeclaration {
+    constructor(name, _defaultComponents, _defaultAttributes, superNode, _treeConstraints) {
+        this.name = name;
+        this._defaultComponents = _defaultComponents;
+        this._defaultAttributes = _defaultAttributes;
+        this.superNode = superNode;
+        this._treeConstraints = _treeConstraints;
+        if (!this.superNode && this.name.name.toUpperCase() !== "GRIMOIRENODEBASE") {
+            this.superNode = new NSIdentity("GrimoireNodeBase");
+        }
+    }
+    get defaultComponents() {
+        if (!this._defaultComponentsActual) {
+            this._resolveInherites();
+        }
+        return this._defaultComponentsActual;
+    }
+    get defaultAttributes() {
+        if (!this._defaultAttributesActual) {
+            this._resolveInherites();
+        }
+        return this._defaultAttributesActual;
+    }
+    get treeConstraints() {
+        return this._treeConstraints;
+    }
+    addDefaultComponent(componentName) {
+        const componentId = Ensure.ensureTobeNSIdentity(componentName);
+        this._defaultComponents.push(componentId);
+        if (this._defaultComponentsActual) {
+            this._defaultComponentsActual.push(componentId);
+        }
+    }
+    _resolveInherites() {
+        if (!this.superNode) {
+            this._defaultComponentsActual = this._defaultComponents;
+            this._defaultAttributesActual = this._defaultAttributes;
+            return;
+        }
+        const superNode = obtainGomlInterface.nodeDeclarations.get(this.superNode);
+        const inheritedDefaultComponents = superNode.defaultComponents;
+        const inheritedDefaultAttribute = superNode.defaultAttributes;
+        this._defaultComponentsActual = inheritedDefaultComponents.clone().merge(this._defaultComponents);
+        this._defaultAttributesActual = inheritedDefaultAttribute.clone().pushDictionary(this._defaultAttributes);
+    }
+}
+
+/**
+ * Provides safe xml read feature.
+ */
+class XMLReader {
+    static parseXML(doc, rootElementName) {
+        const parsed = XMLReader._parser.parseFromString(doc, "text/xml");
+        if (rootElementName) {
+            if (parsed.documentElement.tagName.toUpperCase() !== rootElementName.toUpperCase()) {
+                throw new Error("Specified document is invalid.");
+            } // TODO should throw more detail error
+        }
+        return [parsed.documentElement]; // TODO: implenent!
+    }
+    static getElements(elem, name) {
+        const result = [];
+        const elems = elem.getElementsByTagName(name);
+        for (let i = 0; i < elems.length; i++) {
+            result.push(elems.item(i));
+        }
+        return result;
+    }
+    static getSingleElement(elem, name, mandatory) {
+        const result = XMLReader.getElements(elem, name);
+        if (result.length === 1) {
+            return result[0];
+        } else if (result.length === 0) {
+            if (mandatory) {
+                throw new Error(`The mandatory element ${ name } was required, but not found`);
+            } else {
+                return null;
+            }
+        } else {
+            throw new Error(`The element ${ name } requires to exist in single. But there is ${ result.length } count of elements`);
+        }
+    }
+    static getAttribute(elem, name, mandatory) {
+        const result = elem.attributes.getNamedItem(name);
+        if (result) {
+            return result.value;
+        } else if (mandatory) {
+            throw new Error(`The mandatory attribute ${ name } was required, but it was not found`);
+        } else {
+            return null;
+        }
+    }
+    static getAttributeFloat(elem, name, mandatory) {
+        const resultStr = XMLReader.getAttribute(elem, name, mandatory);
+        return parseFloat(resultStr);
+    }
+    static getAttributeInt(elem, name, mandatory) {
+        const resultStr = XMLReader.getAttribute(elem, name, mandatory);
+        return parseInt(resultStr, 10);
+    }
+    static getChildElements(elem) {
+        const children = elem.childNodes;
+        const result = [];
+        for (let i = 0; i < children.length; i++) {
+            if (children.item(i) instanceof Element) {
+                result.push(children.item(i));
+            }
+        }
+        return result;
+    }
+    static getAttributes(elem, ns) {
+        const result = {};
+        const attrs = elem.attributes;
+        for (let i = 0; i < attrs.length; i++) {
+            const attr = attrs.item(i);
+            if (!ns || attr.namespaceURI === ns) {
+                result[attr.localName] = attr.value;
+            }
+        }
+        return result;
+    }
+}
+XMLReader._parser = new DOMParser();
+
+var domain;
+
+// This constructor is used to store event handlers. Instantiating this is
+// faster than explicitly calling `Object.create(null)` to get a "clean" empty
+// object (tested with v8 v4.9).
+function EventHandlers() {}
+EventHandlers.prototype = Object.create(null);
+
+function EventEmitter() {
+    EventEmitter.init.call(this);
+}
+EventEmitter.usingDomains = false;
+
+EventEmitter.prototype.domain = undefined;
+EventEmitter.prototype._events = undefined;
+EventEmitter.prototype._maxListeners = undefined;
+
+// By default EventEmitters will print a warning if more than 10 listeners are
+// added to it. This is a useful default which helps finding memory leaks.
+EventEmitter.defaultMaxListeners = 10;
+
+EventEmitter.init = function () {
+    this.domain = null;
+    if (EventEmitter.usingDomains) {
+        // if there is an active domain, then attach to it.
+        if (domain.active && !(this instanceof domain.Domain)) {
+            this.domain = domain.active;
+        }
+    }
+
+    if (!this._events || this._events === Object.getPrototypeOf(this)._events) {
+        this._events = new EventHandlers();
+        this._eventsCount = 0;
+    }
+
+    this._maxListeners = this._maxListeners || undefined;
+};
+
+// Obviously not all Emitters should be limited to 10. This function allows
+// that to be increased. Set to zero for unlimited.
+EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
+    if (typeof n !== 'number' || n < 0 || isNaN(n)) throw new TypeError('"n" argument must be a positive number');
+    this._maxListeners = n;
+    return this;
+};
+
+function $getMaxListeners(that) {
+    if (that._maxListeners === undefined) return EventEmitter.defaultMaxListeners;
+    return that._maxListeners;
+}
+
+EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
+    return $getMaxListeners(this);
+};
+
+// These standalone emit* functions are used to optimize calling of event
+// handlers for fast cases because emit() itself often has a variable number of
+// arguments and can be deoptimized because of that. These functions always have
+// the same number of arguments and thus do not get deoptimized, so the code
+// inside them can execute faster.
+function emitNone(handler, isFn, self) {
+    if (isFn) handler.call(self);else {
+        var len = handler.length;
+        var listeners = arrayClone(handler, len);
+        for (var i = 0; i < len; ++i) listeners[i].call(self);
+    }
+}
+function emitOne(handler, isFn, self, arg1) {
+    if (isFn) handler.call(self, arg1);else {
+        var len = handler.length;
+        var listeners = arrayClone(handler, len);
+        for (var i = 0; i < len; ++i) listeners[i].call(self, arg1);
+    }
+}
+function emitTwo(handler, isFn, self, arg1, arg2) {
+    if (isFn) handler.call(self, arg1, arg2);else {
+        var len = handler.length;
+        var listeners = arrayClone(handler, len);
+        for (var i = 0; i < len; ++i) listeners[i].call(self, arg1, arg2);
+    }
+}
+function emitThree(handler, isFn, self, arg1, arg2, arg3) {
+    if (isFn) handler.call(self, arg1, arg2, arg3);else {
+        var len = handler.length;
+        var listeners = arrayClone(handler, len);
+        for (var i = 0; i < len; ++i) listeners[i].call(self, arg1, arg2, arg3);
+    }
+}
+
+function emitMany(handler, isFn, self, args) {
+    if (isFn) handler.apply(self, args);else {
+        var len = handler.length;
+        var listeners = arrayClone(handler, len);
+        for (var i = 0; i < len; ++i) listeners[i].apply(self, args);
+    }
+}
+
+EventEmitter.prototype.emit = function emit(type) {
+    var er, handler, len, args, i, events, domain;
+    var needDomainExit = false;
+    var doError = type === 'error';
+
+    events = this._events;
+    if (events) doError = doError && events.error == null;else if (!doError) return false;
+
+    domain = this.domain;
+
+    // If there is no 'error' event listener then throw.
+    if (doError) {
+        er = arguments[1];
+        if (domain) {
+            if (!er) er = new Error('Uncaught, unspecified "error" event');
+            er.domainEmitter = this;
+            er.domain = domain;
+            er.domainThrown = false;
+            domain.emit('error', er);
+        } else if (er instanceof Error) {
+            throw er; // Unhandled 'error' event
+        } else {
+            // At least give some kind of context to the user
+            var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
+            err.context = er;
+            throw err;
+        }
+        return false;
+    }
+
+    handler = events[type];
+
+    if (!handler) return false;
+
+    var isFn = typeof handler === 'function';
+    len = arguments.length;
+    switch (len) {
+        // fast cases
+        case 1:
+            emitNone(handler, isFn, this);
+            break;
+        case 2:
+            emitOne(handler, isFn, this, arguments[1]);
+            break;
+        case 3:
+            emitTwo(handler, isFn, this, arguments[1], arguments[2]);
+            break;
+        case 4:
+            emitThree(handler, isFn, this, arguments[1], arguments[2], arguments[3]);
+            break;
+        // slower
+        default:
+            args = new Array(len - 1);
+            for (i = 1; i < len; i++) args[i - 1] = arguments[i];
+            emitMany(handler, isFn, this, args);
+    }
+
+    if (needDomainExit) domain.exit();
+
+    return true;
+};
+
+function _addListener(target, type, listener, prepend) {
+    var m;
+    var events;
+    var existing;
+
+    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
+
+    events = target._events;
+    if (!events) {
+        events = target._events = new EventHandlers();
+        target._eventsCount = 0;
+    } else {
+        // To avoid recursion in the case that type === "newListener"! Before
+        // adding it to the listeners, first emit "newListener".
+        if (events.newListener) {
+            target.emit('newListener', type, listener.listener ? listener.listener : listener);
+
+            // Re-assign `events` because a newListener handler could have caused the
+            // this._events to be assigned to a new object
+            events = target._events;
+        }
+        existing = events[type];
+    }
+
+    if (!existing) {
+        // Optimize the case of one listener. Don't need the extra array object.
+        existing = events[type] = listener;
+        ++target._eventsCount;
+    } else {
+        if (typeof existing === 'function') {
+            // Adding the second element, need to change to array.
+            existing = events[type] = prepend ? [listener, existing] : [existing, listener];
+        } else {
+            // If we've already got an array, just append.
+            if (prepend) {
+                existing.unshift(listener);
+            } else {
+                existing.push(listener);
+            }
+        }
+
+        // Check for listener leak
+        if (!existing.warned) {
+            m = $getMaxListeners(target);
+            if (m && m > 0 && existing.length > m) {
+                existing.warned = true;
+                var w = new Error('Possible EventEmitter memory leak detected. ' + existing.length + ' ' + type + ' listeners added. ' + 'Use emitter.setMaxListeners() to increase limit');
+                w.name = 'MaxListenersExceededWarning';
+                w.emitter = target;
+                w.type = type;
+                w.count = existing.length;
+                emitWarning(w);
+            }
+        }
+    }
+
+    return target;
+}
+function emitWarning(e) {
+    typeof console.warn === 'function' ? console.warn(e) : console.log(e);
+}
+EventEmitter.prototype.addListener = function addListener(type, listener) {
+    return _addListener(this, type, listener, false);
+};
+
+EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+
+EventEmitter.prototype.prependListener = function prependListener(type, listener) {
+    return _addListener(this, type, listener, true);
+};
+
+function _onceWrap(target, type, listener) {
+    var fired = false;
+    function g() {
+        target.removeListener(type, g);
+        if (!fired) {
+            fired = true;
+            listener.apply(target, arguments);
+        }
+    }
+    g.listener = listener;
+    return g;
+}
+
+EventEmitter.prototype.once = function once(type, listener) {
+    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
+    this.on(type, _onceWrap(this, type, listener));
+    return this;
+};
+
+EventEmitter.prototype.prependOnceListener = function prependOnceListener(type, listener) {
+    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
+    this.prependListener(type, _onceWrap(this, type, listener));
+    return this;
+};
+
+// emits a 'removeListener' event iff the listener was removed
+EventEmitter.prototype.removeListener = function removeListener(type, listener) {
+    var list, events, position, i, originalListener;
+
+    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
+
+    events = this._events;
+    if (!events) return this;
+
+    list = events[type];
+    if (!list) return this;
+
+    if (list === listener || list.listener && list.listener === listener) {
+        if (--this._eventsCount === 0) this._events = new EventHandlers();else {
+            delete events[type];
+            if (events.removeListener) this.emit('removeListener', type, list.listener || listener);
+        }
+    } else if (typeof list !== 'function') {
+        position = -1;
+
+        for (i = list.length; i-- > 0;) {
+            if (list[i] === listener || list[i].listener && list[i].listener === listener) {
+                originalListener = list[i].listener;
+                position = i;
+                break;
+            }
+        }
+
+        if (position < 0) return this;
+
+        if (list.length === 1) {
+            list[0] = undefined;
+            if (--this._eventsCount === 0) {
+                this._events = new EventHandlers();
+                return this;
+            } else {
+                delete events[type];
+            }
+        } else {
+            spliceOne(list, position);
+        }
+
+        if (events.removeListener) this.emit('removeListener', type, originalListener || listener);
+    }
+
+    return this;
+};
+
+EventEmitter.prototype.removeAllListeners = function removeAllListeners(type) {
+    var listeners, events;
+
+    events = this._events;
+    if (!events) return this;
+
+    // not listening for removeListener, no need to emit
+    if (!events.removeListener) {
+        if (arguments.length === 0) {
+            this._events = new EventHandlers();
+            this._eventsCount = 0;
+        } else if (events[type]) {
+            if (--this._eventsCount === 0) this._events = new EventHandlers();else delete events[type];
+        }
+        return this;
+    }
+
+    // emit removeListener for all listeners on all events
+    if (arguments.length === 0) {
+        var keys = Object.keys(events);
+        for (var i = 0, key; i < keys.length; ++i) {
+            key = keys[i];
+            if (key === 'removeListener') continue;
+            this.removeAllListeners(key);
+        }
+        this.removeAllListeners('removeListener');
+        this._events = new EventHandlers();
+        this._eventsCount = 0;
+        return this;
+    }
+
+    listeners = events[type];
+
+    if (typeof listeners === 'function') {
+        this.removeListener(type, listeners);
+    } else if (listeners) {
+        // LIFO order
+        do {
+            this.removeListener(type, listeners[listeners.length - 1]);
+        } while (listeners[0]);
+    }
+
+    return this;
+};
+
+EventEmitter.prototype.listeners = function listeners(type) {
+    var evlistener;
+    var ret;
+    var events = this._events;
+
+    if (!events) ret = [];else {
+        evlistener = events[type];
+        if (!evlistener) ret = [];else if (typeof evlistener === 'function') ret = [evlistener.listener || evlistener];else ret = unwrapListeners(evlistener);
+    }
+
+    return ret;
+};
+
+EventEmitter.listenerCount = function (emitter, type) {
+    if (typeof emitter.listenerCount === 'function') {
+        return emitter.listenerCount(type);
+    } else {
+        return listenerCount.call(emitter, type);
+    }
+};
+
+EventEmitter.prototype.listenerCount = listenerCount;
+function listenerCount(type) {
+    var events = this._events;
+
+    if (events) {
+        var evlistener = events[type];
+
+        if (typeof evlistener === 'function') {
+            return 1;
+        } else if (evlistener) {
+            return evlistener.length;
+        }
+    }
+
+    return 0;
+}
+
+EventEmitter.prototype.eventNames = function eventNames() {
+    return this._eventsCount > 0 ? Reflect.ownKeys(this._events) : [];
+};
+
+// About 1.5x faster than the two-arg version of Array#splice().
+function spliceOne(list, index) {
+    for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1) list[i] = list[k];
+    list.pop();
+}
+
+function arrayClone(arr, i) {
+    var copy = new Array(i);
+    while (i--) copy[i] = arr[i];
+    return copy;
+}
+
+function unwrapListeners(arr) {
+    var ret = new Array(arr.length);
+    for (var i = 0; i < ret.length; ++i) {
+        ret[i] = arr[i].listener || arr[i];
+    }
+    return ret;
+}
+
+/**
+ * EventEmitterをmixinしたIDObject
+ */
+class EEObject extends IDObject {
+    constructor() {
+        super();
+    }
+    emitException(eventName, error) {
+        error.handled = false;
+        const listeners = this.listeners(eventName);
+        for (let i = 0; i < listeners.length; i++) {
+            listeners[listeners.length - i - 1](error);
+            if (error.handled) {
+                return;
+            }
+        }
+        if (eventName !== "error") {
+            this.emitException("error", error);
+        } else {
+            throw error;
+        }
+    }
+}
+function applyMixins(derivedCtor, baseCtors) {
+    baseCtors.forEach(baseCtor => {
+        Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
+            derivedCtor.prototype[name] = baseCtor.prototype[name];
+        });
+    });
+}
+applyMixins(EEObject, [EventEmitter]);
+
+class GomlNode extends EEObject {
+    /**
+     * 新しいインスタンスの作成
+     * @param  {NodeDeclaration} recipe  作成するノードのDeclaration
+     * @param  {Element}         element 対応するDomElement
+     * @return {[type]}                  [description]
+     */
+    constructor(recipe, element) {
+        super();
+        this.children = [];
+        this._parent = null;
+        this._root = null;
+        this._mounted = false;
+        this._messageBuffer = [];
+        this._tree = null;
+        this._companion = new NSDictionary();
+        this._deleted = false;
+        this._attrBuffer = {};
+        this._defaultValueResolved = false;
+        if (!recipe) {
+            throw new Error("recipe must not be null");
+        }
+        this.nodeDeclaration = recipe;
+        this.element = element ? element : document.createElementNS(recipe.name.ns, recipe.name.name); // TODO Could be undefined or null?
+        this.componentsElement = document.createElement("COMPONENTS");
+        this._root = this;
+        this._tree = GomlInterfaceGenerator([this]);
+        this._components = [];
+        this.attributes = new NSDictionary();
+        this.element.setAttribute("x-gr-id", this.id);
+        const defaultComponentNames = recipe.defaultComponents;
+        // instanciate default components
+        defaultComponentNames.toArray().map(id => {
+            this.addComponent(id, true);
+        });
+        // register to GrimoireInterface.
+        obtainGomlInterface.nodeDictionary[this.id] = this;
+    }
+    /**
+     * Get actual goml node from element of xml tree.
+     * @param  {Element}  elem [description]
+     * @return {GomlNode}      [description]
+     */
+    static fromElement(elem) {
+        return obtainGomlInterface.nodeDictionary[elem.getAttribute("x-gr-id")];
+    }
+    get name() {
+        return this.nodeDeclaration.name;
+    }
+    /**
+     * このノードの属するツリーのGomlInterface。unmountedならnull。
+     * @return {IGomlInterface} [description]
+     */
+    get tree() {
+        return this._tree;
+    }
+    get deleted() {
+        return this._deleted;
+    }
+    get isActive() {
+        if (this._parent) {
+            return this._parent.isActive && this.enabled;
+        } else {
+            return this.enabled;
+        }
+    }
+    get enabled() {
+        return this.attr("enabled");
+    }
+    set enabled(value) {
+        this.attr("enabled", value);
+    }
+    /**
+     * ツリーで共有されるオブジェクト。マウントされていない状態ではnull。
+     * @return {NSDictionary<any>} [description]
+     */
+    get companion() {
+        return this._companion;
+    }
+    get nodeName() {
+        return this.nodeDeclaration.name;
+    }
+    get parent() {
+        return this._parent;
+    }
+    get hasChildren() {
+        return this.children.length > 0;
+    }
+    /**
+     * Get mounted status.
+     * @return {boolean} Whether this node is mounted or not.
+     */
+    get mounted() {
+        return this._mounted;
+    }
+    getChildrenByClass(className) {
+        const nodes = this.element.getElementsByClassName(className);
+        return new Array(nodes.length).map((v, i) => GomlNode.fromElement(nodes.item(i)));
+    }
+    getChildrenByNodeName(nodeName) {
+        const nodes = this.element.getElementsByTagName(nodeName);
+        return new Array(nodes.length).map((v, i) => GomlNode.fromElement(nodes.item(i)));
+    }
+    /**
+     * ノードを削除する。使わなくなったら呼ぶ。子要素も再帰的に削除する。
+     */
+    delete() {
+        this.children.forEach(c => {
+            c.delete();
+        });
+        obtainGomlInterface.nodeDictionary[this.id] = null;
+        if (this._parent) {
+            this._parent.detachChild(this);
+        } else {
+            this.setMounted(false);
+            if (this.element.parentNode) {
+                this.element.parentNode.removeChild(this.element);
+            }
+        }
+        this._deleted = true;
+    }
+    sendMessage(message, args) {
+        if (!this.enabled || !this.mounted) {
+            return false;
+        }
+        this._components.forEach(component => {
+            this._sendMessageToComponent(component, message, false, false, args);
+        });
+        return true;
+    }
+    broadcastMessage(arg1, arg2, arg3) {
+        if (!this.enabled || !this.mounted) {
+            return;
+        }
+        if (typeof arg1 === "number") {
+            const range = arg1;
+            const message = arg2;
+            const args = arg3;
+            this.sendMessage(message, args);
+            if (range > 0) {
+                for (let i = 0; i < this.children.length; i++) {
+                    this.children[i].broadcastMessage(range - 1, message, args);
+                }
+            }
+        } else {
+            const message = arg1;
+            const args = arg2;
+            this.sendMessage(message, args);
+            for (let i = 0; i < this.children.length; i++) {
+                this.children[i].broadcastMessage(message, args);
+            }
+        }
+    }
+    /**
+     * 指定したノード名と属性で生成されたノードの新しいインスタンスを、このノードの子要素として追加
+     * @param {string |   NSIdentity} nodeName      [description]
+     * @param {any    }} attributes   [description]
+     */
+    addNode(nodeName, attributes) {
+        if (typeof nodeName === "string") {
+            this.addNode(new NSIdentity(nodeName), attributes);
+        } else {
+            const nodeDec = obtainGomlInterface.nodeDeclarations.get(nodeName);
+            const node = new GomlNode(nodeDec, null);
+            if (attributes) {
+                for (let key in attributes) {
+                    const id = key.indexOf("|") !== -1 ? NSIdentity.fromFQN(key) : new NSIdentity(key);
+                    node.attr(id, attributes[key]);
+                }
+            }
+            this.addChild(node);
+        }
+    }
+    /**
+     * Add child.
+     * @param {GomlNode} child            追加する子ノード
+     * @param {number}   index            追加位置。なければ末尾に追加
+     * @param {[type]}   elementSync=true trueのときはElementのツリーを同期させる。（Elementからパースするときはfalseにする）
+     */
+    addChild(child, index, elementSync = true) {
+        if (child._deleted) {
+            throw new Error("deleted node never use.");
+        }
+        if (index != null && typeof index !== "number") {
+            throw new Error("insert index should be number or null or undefined.");
+        }
+        child._parent = this;
+        const insertIndex = index == null ? this.children.length : index;
+        this.children.splice(insertIndex, 0, child);
+        const checkChildConstraints = child.checkTreeConstraints();
+        const checkAncestorConstraint = this._callRecursively(n => n.checkTreeConstraints(), n => n._parent ? [n._parent] : []).reduce((list, current) => list.concat(current));
+        const errors = checkChildConstraints.concat(checkAncestorConstraint).filter(m => m);
+        if (errors.length !== 0) {
+            const message = errors.reduce((m, current) => m + "\n" + current);
+            throw new Error("tree constraint is not satisfied.\n" + message);
+        }
+        // handling html
+        if (elementSync) {
+            let referenceElement = this.element[NodeUtility.getNodeListIndexByElementIndex(this.element, insertIndex)];
+            this.element.insertBefore(child.element, referenceElement);
+        }
+        child._tree = this.tree;
+        child._companion = this.companion;
+        // mounting
+        if (this.mounted) {
+            child.setMounted(true);
+        }
+    }
+    callRecursively(func) {
+        return this._callRecursively(func, n => n.children);
+    }
+    /**
+     * デタッチしてdeleteする。
+     * @param {GomlNode} child Target node to be inserted.
+     */
+    removeChild(child) {
+        const node = this.detachChild(child);
+        if (node) {
+            node.delete();
+        }
+    }
+    /**
+     * 指定したノードが子要素なら子要素から外す。
+     * @param  {GomlNode} child [description]
+     * @return {GomlNode}       [description]
+     */
+    detachChild(target) {
+        // search child.
+        const index = this.children.indexOf(target);
+        if (index === -1) {
+            return null;
+        }
+        target.setMounted(false);
+        target._parent = null;
+        this.children.splice(index, 1);
+        // html sync
+        this.element.removeChild(target.element);
+        // check ancestor constraint.
+        const errors = this._callRecursively(n => n.checkTreeConstraints(), n => n._parent ? [n._parent] : []).reduce((list, current) => list.concat(current)).filter(m => m);
+        if (errors.length !== 0) {
+            const message = errors.reduce((m, current) => m + "\n" + current);
+            throw new Error("tree constraint is not satisfied.\n" + message);
+        }
+        return target;
+    }
+    /**
+     * detach myself
+     */
+    detach() {
+        if (this.parent) {
+            this.parent.detachChild(this);
+        } else {
+            throw new Error("root Node cannot be detached.");
+        }
+    }
+    attr(attrName, value) {
+        attrName = Ensure.ensureTobeNSIdentity(attrName);
+        const attr = this.attributes.get(attrName);
+        if (value !== void 0) {
+            // setValue.
+            if (!attr) {
+                console.warn(`attribute "${ attrName.name }" is not found.`);
+                this._attrBuffer[attrName.fqn] = value;
+            } else {
+                attr.Value = value;
+            }
+        } else {
+            // getValue.
+            if (!attr) {
+                const attrBuf = this._attrBuffer[attrName.fqn];
+                if (attrBuf !== void 0) {
+                    console.log("get attrBuf!");
+                    return attrBuf;
+                }
+                console.warn(`attribute "${ attrName.name }" is not found.`);
+                return;
+            } else {
+                return attr.Value;
+            }
+        }
+    }
+    /**
+     *  Add new attribute. In most of case, users no need to call this method.
+     *  Use __addAttribute in Component should be used instead.
+     */
+    addAttribute(attr) {
+        this.attributes.set(attr.name, attr);
+        // check buffer value.
+        const attrBuf = this._attrBuffer[attr.name.fqn];
+        if (attrBuf !== void 0) {
+            attr.Value = attrBuf;
+            delete this._attrBuffer[attr.name.fqn];
+        }
+    }
+    /**
+     * Update mounted status and emit events
+     * @param {boolean} mounted Mounted status.
+     */
+    setMounted(mounted) {
+        if (this._mounted === mounted) {
+            return;
+        }
+        if (mounted) {
+            this._mounted = mounted;
+            this._clearMessageBuffer("unmount");
+            this._sendMessage("awake", true, false);
+            this._sendMessage("mount", false, true);
+            this.children.forEach(child => {
+                child.setMounted(mounted);
+            });
+        } else {
+            this._clearMessageBuffer("mount");
+            this.children.forEach(child => {
+                child.setMounted(mounted);
+            });
+            this._sendMessage("unmount", false, true);
+            this._sendMessage("dispose", true, false);
+            this._tree = null;
+            this._companion = null;
+            this._mounted = mounted;
+        }
+    }
+    /**
+     * Get index of this node from parent.
+     * @return {number} number of index.
+     */
+    index() {
+        return this._parent.children.indexOf(this);
+    }
+    removeAttribute(attr) {
+        this.attributes.delete(attr.name);
+    }
+    /**
+     * このノードにコンポーネントをアタッチする。
+     * @param {Component} component [description]
+     */
+    addComponent(component, isDefaultComponent = false) {
+        const declaration = obtainGomlInterface.componentDeclarations.get(component);
+        const instance = declaration.generateInstance();
+        this._addComponentDirectly(instance, isDefaultComponent);
+        return instance;
+    }
+    /**
+     * Internal use!
+     * Should not operate by users or plugin developpers
+     * @param {Component} component          [description]
+     * @param {boolean}   isDefaultComponent [description]
+     */
+    _addComponentDirectly(component, isDefaultComponent) {
+        if (isDefaultComponent) {
+            component.isDefaultComponent = true;
+        }
+        const insertIndex = this._components.length;
+        let referenceElement = this.componentsElement[NodeUtility.getNodeListIndexByElementIndex(this.componentsElement, insertIndex)];
+        this.componentsElement.insertBefore(component.element, referenceElement);
+        this._components.push(component);
+        component.node = this;
+        component.addEnabledObserver(c => {
+            if (c.enabled) {
+                // TODO ??
+                this._sendBufferdMessageToComponent(c, "mount", false, true);
+                this._sendBufferdMessageToComponent(c, "unmount", false, true);
+            }
+        });
+        if (isDefaultComponent) {
+            // attributes should be exposed on node
+            component.attributes.forEach(p => this.addAttribute(p));
+            if (this._defaultValueResolved) {
+                component.attributes.forEach(p => p.resolveDefaultValue(NodeUtility.getAttributes(this.element)));
+            }
+        }
+        if (this._mounted) {
+            this._sendMessageToComponent(component, "awake", true, false);
+            this._sendMessageToComponent(component, "mount", false, true);
+        }
+    }
+    getComponents() {
+        return this._components;
+    }
+    getComponent(name) {
+        if (typeof name === "string") {
+            for (let i = 0; i < this._components.length; i++) {
+                if (this._components[i].name.name === name) {
+                    return this._components[i];
+                }
+            }
+        } else {
+            for (let i = 0; i < this._components.length; i++) {
+                if (this._components[i].name.fqn === name.fqn) {
+                    return this._components[i];
+                }
+            }
+        }
+        return null;
+    }
+    /**
+     * すべてのコンポーネントの属性をエレメントかデフォルト値で初期化
+     */
+    resolveAttributesValue() {
+        this._defaultValueResolved = true;
+        this._components.forEach(component => {
+            component.resolveDefaultAttributes(NodeUtility.getAttributes(this.element));
+        });
+    }
+    /**
+     * このノードのtreeConstrainが満たされるか調べる
+     * @return {string[]} [description]
+     */
+    checkTreeConstraints() {
+        const constraints = this.nodeDeclaration.treeConstraints;
+        if (!constraints) {
+            return [];
+        }
+        const errorMesasges = constraints.map(constraint => {
+            return constraint(this);
+        }).filter(message => message !== null);
+        if (errorMesasges.length === 0) {
+            return null;
+        }
+        return errorMesasges;
+    }
+    /**
+     * バッファしていたmount,unmountが送信されるかもしれない.アクティブなら
+     */
+    notifyActivenessUpdate() {
+        if (this.isActive) {
+            this._sendBufferdMessage(this.mounted ? "mount" : "unmount", false);
+            this.children.forEach(child => {
+                child.notifyActivenessUpdate();
+            });
+        }
+    }
+    /**
+     * コンポーネントにメッセージを送る。送信したらバッファからは削除される.
+     * @param  {Component} targetComponent 対象コンポーネント
+     * @param  {string}    message         メッセージ
+     * @param  {boolean}   forced          trueでコンポーネントのenableを無視して送信
+     * @param  {boolean}   toBuffer        trueで送信失敗したらバッファに追加
+     * @param  {any}       args            [description]
+     * @return {boolean}                   送信したか
+     */
+    _sendMessageToComponent(targetComponent, message, forced, toBuffer, args) {
+        message = Ensure.ensureTobeMessage(message);
+        const bufferdIndex = this._messageBuffer.findIndex(obj => obj.message === message && obj.target === targetComponent);
+        if (!forced && (!targetComponent.enabled || !this.isActive)) {
+            if (toBuffer && bufferdIndex < 0) {
+                this._messageBuffer.push({ message: Ensure.ensureTobeMessage(message), target: targetComponent });
+            }
+            return false;
+        }
+        message = Ensure.ensureTobeMessage(message);
+        let method = targetComponent[message];
+        if (typeof method === "function") {
+            method.bind(targetComponent)(args);
+        }
+        if (bufferdIndex >= 0) {
+            this._messageBuffer.splice(bufferdIndex, 1);
+        }
+        return true;
+    }
+    /**
+     * バッファからメッセージを送信。成功したらバッファから削除
+     * @param  {Component} target  [description]
+     * @param  {string}    message [description]
+     * @param  {boolean}   forced  [description]
+     * @param  {any}       args    [description]
+     * @return {boolean}           成功したか
+     */
+    _sendBufferdMessageToComponent(target, message, forced, sendToRemove, args) {
+        if (!forced && (!target.enabled || !this.isActive)) {
+            return false;
+        }
+        message = Ensure.ensureTobeMessage(message);
+        const bufferdIndex = this._messageBuffer.findIndex(obj => obj.message === message && obj.target === target);
+        if (bufferdIndex >= 0) {
+            let method = target[message];
+            if (typeof method === "function") {
+                method.bind(target)(args);
+            }
+            if (sendToRemove) {
+                this._messageBuffer.splice(bufferdIndex, 1);
+            }
+            return true;
+        }
+        return false;
+    }
+    _sendMessage(message, forced, toBuffer, args) {
+        this._components.forEach(component => {
+            this._sendMessageToComponent(component, message, forced, toBuffer, args);
+        });
+    }
+    /**
+     * バッファのメッセージを送信可能なら送信してバッファから削除
+     */
+    _sendBufferdMessage(message, forced, args) {
+        const next = [];
+        message = Ensure.ensureTobeMessage(message);
+        this._messageBuffer.forEach(obj => {
+            if (obj.message !== message || !this._sendBufferdMessageToComponent(obj.target, message, forced, false, args)) {
+                next.push(obj);
+            }
+        });
+        this._messageBuffer = next;
+    }
+    _clearMessageBuffer(message) {
+        message = Ensure.ensureTobeMessage(message);
+        this._messageBuffer = this._messageBuffer.filter(obj => obj.message !== message);
+    }
+    _callRecursively(func, nextGenerator) {
+        const val = func(this);
+        const nexts = nextGenerator(this);
+        const nextVals = nexts.map(c => c.callRecursively(func));
+        const list = nextVals.reduce((clist, current) => clist.concat(current), []);
+        list.unshift(val);
+        return list;
+    }
+}
+
+/**
+ * Parser of Goml to Node utilities.
+ * This class do not store any nodes and goml properties.
+ */
+class GomlParser {
+    /**
+     * Domをパースする
+     * @param  {Element}           source    [description]
+     * @param  {GomlNode}          parent    あればこのノードにaddChildされる
+     * @return {GomlNode}                    ルートノード
+     */
+    static parse(source, parent, scriptTag) {
+        const newNode = GomlParser._createNode(source);
+        if (!newNode) {
+            // when specified node could not be found
+            console.warn(`"${ source.tagName }" was not parsed.`);
+            return null;
+        }
+        // Parse children recursively
+        const children = source.childNodes;
+        const childNodeElements = []; // for parse after .Components has resolved.
+        if (children && children.length !== 0) {
+            const removeTarget = [];
+            for (let i = 0; i < children.length; i++) {
+                const child = children.item(i);
+                if (!GomlParser._isElement(child)) {
+                    removeTarget.push(child);
+                    continue;
+                }
+                if (this._isComponentsTag(child)) {
+                    // parse as components
+                    GomlParser._parseComponents(newNode, child);
+                    removeTarget.push(child);
+                } else {
+                    // parse as child node.
+                    childNodeElements.push(child);
+                }
+            }
+            // remove unused elements
+            for (let i = 0; i < removeTarget.length; i++) {
+                source.removeChild(removeTarget[i]);
+            }
+        }
+        // generate tree
+        if (parent) {
+            parent.addChild(newNode, null, false);
+        }
+        childNodeElements.forEach(child => {
+            GomlParser.parse(child, newNode, null);
+        });
+        return newNode;
+    }
+    /**
+     * GomlNodeのインスタンス化。GrimoireInterfaceへの登録
+     * @param  {HTMLElement}      elem         [description]
+     * @param  {GomlConfigurator} configurator [description]
+     * @return {GomlTreeNodeBase}              [description]
+     */
+    static _createNode(elem) {
+        const tagName = elem.localName;
+        const recipe = obtainGomlInterface.nodeDeclarations.get(elem);
+        if (!recipe) {
+            throw new Error(`Tag "${ tagName }" is not found.`);
+        }
+        return new GomlNode(recipe, elem);
+    }
+    /**
+     * .COMPONENTSのパース。
+     * @param {GomlNode} node          アタッチされるコンポーネント
+     * @param {Element}  componentsTag .COMPONENTSタグ
+     */
+    static _parseComponents(node, componentsTag) {
+        let componentNodes = componentsTag.childNodes;
+        if (!componentNodes) {
+            return;
+        }
+        for (let i = 0; i < componentNodes.length; i++) {
+            const componentNode = componentNodes.item(i);
+            if (!GomlParser._isElement(componentNode)) {
+                continue; // Skip if the node was not element
+            }
+            const componentDecl = obtainGomlInterface.componentDeclarations.get(componentNode);
+            if (!componentDecl) {
+                throw new Error(`Component ${ componentNode.tagName } is not found.`);
+            }
+            const component = componentDecl.generateInstance(componentNode);
+            node._addComponentDirectly(component, false);
+        }
+    }
+    static _isElement(node) {
+        return node.nodeType === Node.ELEMENT_NODE;
+    }
+    static _isComponentsTag(element) {
+        const regexToFindComponent = /\.COMPONENTS$/mi; // TODO might needs to fix
+        return regexToFindComponent.test(element.nodeName);
+    }
+}
+
+class ComponentInterface {
+    constructor(components) {
+        this.components = components;
+    }
+    get(i1, i2, i3) {
+        const c = this.components;
+        if (i1 === void 0) {
+            if (c.length === 0 || c[0].length === 0 || c[0][0].length === 0) {
+                return null;
+            } else if (c.length === 1 && c[0].length === 1 || c[0][0].length === 1) {
+                return c[0][0][0];
+            }
+            throw new Error("There are too many candidate");
+        } else if (i2 === void 0) {
+            if (c.length === 0 || c[0].length === 0 || c[0][0].length <= i1) {
+                return null;
+            } else if (c.length === 1 && c[0].length === 1) {
+                return c[0][0][i1];
+            }
+            throw new Error("There are too many candidate");
+        } else if (i3 === void 0) {
+            if (c.length === 0 || c[0].length <= i2 || c[0][0].length <= i1) {
+                return null;
+            } else if (c.length === 1) {
+                return c[0][i2][i1];
+            }
+            throw new Error("There are too many candidate");
+        } else {
+            if (c.length <= i3 || c[0].length <= i2 || c[0][0].length <= i1) {
+                return null;
+            }
+            return c[i3][i2][i1];
+        }
+    }
+    forEach(f) {
+        this.components.forEach((tree, ti) => {
+            tree.forEach((nodes, ni) => {
+                nodes.forEach((comp, ci) => {
+                    f(comp, ci, ni, ti);
+                });
+            });
+        });
+        return this;
+    }
+    attr(attrName, value) {
+        if (value === void 0) {
+            // return Attribute.
+            return this.components[0][0][0].getValue(attrName).Value;
+        } else {
+            // set value.
+            this.forEach(component => {
+                component.setValue(attrName, value);
+            });
+        }
+    }
+    on() {
+        // TODO implement
+        return;
+    }
+    off() {
+        // TODO implement
+        return;
+    }
+}
+
+/**
+ * 複数のノードを対象とした操作を提供するインタフェース
+ */
+class NodeInterface {
+    constructor(nodes) {
+        this.nodes = nodes;
+    }
+    queryFunc(query) {
+        return new ComponentInterface(this.queryComponents(query));
+    }
+    queryComponents(query) {
+        return this.nodes.map(nodes => {
+            return nodes.map(node => {
+                const componentElements = node.componentsElement.querySelectorAll(query);
+                const components = [];
+                for (let i = 0; i < componentElements.length; i++) {
+                    const elem = componentElements[i];
+                    const component = obtainGomlInterface.componentDictionary[elem.getAttribute("x-gr-id")];
+                    if (component) {
+                        components.push(component);
+                    }
+                }
+                return components;
+            });
+        });
+    }
+    get(i1, i2) {
+        const c = this.nodes;
+        if (i1 === void 0) {
+            if (c.length === 0 || c[0].length === 0) {
+                return null;
+            } else if (c.length === 1 && c[0].length === 1) {
+                return c[0][0];
+            }
+            throw new Error("There are too many candidate");
+        } else if (i2 === void 0) {
+            if (c.length === 0 || c[0].length <= i1) {
+                return null;
+            } else if (c.length === 1 && c[0].length > i1) {
+                return c[0][i1];
+            }
+            throw new Error("There are too many candidate");
+        } else {
+            if (c.length <= i1 || c[i1].length <= i2) {
+                return null;
+            } else {
+                return c[i1][i2];
+            }
+        }
+    }
+    attr(attrName, value) {
+        if (value === void 0) {
+            // return Attribute.
+            return this.nodes[0][0].attributes.get(attrName).Value;
+        } else {
+            // set value.
+            this.forEach(node => {
+                const attr = node.attributes.get(attrName);
+                if (attr.declaration.readonly) {
+                    throw new Error(`The attribute ${ attr.name.fqn } is readonly`);
+                }
+                if (attr) {
+                    attr.Value = value;
+                }
+            });
+        }
+    }
+    /**
+     * 対象ノードにイベントリスナを追加します。
+     * @param {string}   eventName [description]
+     * @param {Function} listener  [description]
+     */
+    on(eventName, listener) {
+        this.forEach(node => {
+            node.on(eventName, listener);
+        });
+        return this;
+    }
+    /**
+     * 対象ノードに指定したイベントリスナが登録されていれば削除します
+     * @param {string}   eventName [description]
+     * @param {Function} listener  [description]
+     */
+    off(eventName, listener) {
+        this.forEach(node => {
+            node.removeListener(eventName, listener);
+        });
+        return this;
+    }
+    /**
+     * このノードインタフェースが対象とするノードそれぞれに、
+     * タグで指定したノードを子要素として追加します。
+     * @param {string} tag [description]
+     */
+    append(tag) {
+        this.forEach(node => {
+            const elems = XMLReader.parseXML(tag);
+            elems.forEach(elem => GomlParser.parse(elem, node, null));
+        });
+        return this;
+    }
+    /**
+     * このノードインタフェースが対象とするノードの子に、
+     * 指定されたノードが存在すれば削除します。
+     * @param {GomlNode} child [description]
+     */
+    remove(child) {
+        this.forEach(node => {
+            node.removeChild(child);
+        });
+        return this;
+    }
+    /**
+     * このノードインタフェースが対象とするノードに対して反復処理を行います
+     * @param  {GomlNode} callback [description]
+     * @return {[type]}            [description]
+     */
+    forEach(callback) {
+        this.nodes.forEach(array => {
+            array.forEach(node => {
+                callback(node);
+            });
+        });
+        return this;
+    }
+    /**
+     * このノードインタフェースが対象とするノードを有効、または無効にします。
+     * @param {boolean} enable [description]
+     */
+    setEnable(enable) {
+        this.forEach(node => {
+            node.enabled = !!enable;
+        });
+        return this;
+    }
+    /**
+     * このノードインタフェースにアタッチされたコンポーネントをセレクタで検索します。
+     * @pram  {string}      query [description]
+     * @return {Component[]}       [description]
+     */
+    find(query) {
+        const allComponents = [];
+        this.queryComponents(query).forEach(gomlComps => {
+            gomlComps.forEach(nodeComps => {
+                nodeComps.forEach(comp => {
+                    allComponents.push(comp);
+                });
+            });
+        });
+        return allComponents;
+    }
+    /**
+     * このノードインタフェースが対象とするノードのそれぞれの子ノードを対象とする、
+     * 新しいノードインタフェースを取得します。
+     * @return {NodeInterface} [description]
+     */
+    children() {
+        const children = this.nodes.map(nodes => {
+            return nodes.map(node => {
+                return node.children;
+            }).reduce((pre, cur) => {
+                return pre.concat(cur);
+            });
+        });
+        return new NodeInterface(children);
+    }
+    /**
+     * 対象ノードにコンポーネントをアタッチします。
+     * @param {Component} component [description]
+     */
+    addCompnent(componentId) {
+        this.forEach(node => {
+            node.addComponent(componentId, false);
+        });
+        return this;
+    }
+    /**
+     * 最初の対象ノードを取得する
+     * @return {GomlNode} [description]
+     */
+    first() {
+        if (this.count() === 0) {
+            return null;
+        }
+        return this.nodes[0][0];
+    }
+    /**
+     * 対象となる唯一のノードを取得する。
+     * 対象が存在しない、あるいは複数存在するときは例外を投げる。
+     * @return {GomlNode} [description]
+     */
+    single() {
+        if (this.count() !== 1) {
+            throw new Error("this nodeInterface is not single.");
+        }
+        return this.first();
+    }
+    /**
+     * 対象となるノードの個数を取得する
+     * @return {number} [description]
+     */
+    count() {
+        if (this.nodes.length === 0) {
+            return 0;
+        }
+        const counts = this.nodes.map(nodes => nodes.length);
+        return counts.reduce((total, current) => total + current, 0);
+    }
+}
+
+/**
+ * Provides interfaces to treat whole goml tree for each.
+ */
+class GomlInterface {
+    constructor(rootNodes) {
+        this.rootNodes = rootNodes;
+    }
+    getNodeById(id) {
+        return new Array(this.rootNodes.length).map((v, i) => GomlNode.fromElement(this.rootNodes[i].element.ownerDocument.getElementById(id)));
+    }
+    queryFunc(query) {
+        const context = new NodeInterface(this.queryNodes(query));
+        const queryFunc = context.queryFunc.bind(context);
+        Object.setPrototypeOf(queryFunc, context);
+        return queryFunc;
+    }
+    queryNodes(query) {
+        return this.rootNodes.map(root => {
+            const nodelist = root.element.ownerDocument.querySelectorAll(query);
+            const nodes = [];
+            for (let i = 0; i < nodelist.length; i++) {
+                const node = obtainGomlInterface.nodeDictionary[nodelist.item(i).getAttribute("x-gr-id")];
+                if (node) {
+                    nodes.push(node);
+                }
+            }
+            return nodes;
+        });
+    }
+}
+
+var GomlInterfaceGenerator = function (rootNodes) {
+    const gomlContext = new GomlInterface(rootNodes);
+    const queryFunc = gomlContext.queryFunc.bind(gomlContext);
+    Object.setPrototypeOf(queryFunc, gomlContext);
+    return queryFunc;
+};
+
+class GrimoireInterfaceImpl {
+    constructor() {
+        this.nodeDeclarations = new NSDictionary();
+        this.converters = new NSDictionary();
+        this.componentDeclarations = new NSDictionary();
+        this.rootNodes = {};
+        this.loadTasks = [];
+        this.nodeDictionary = {};
+        this.componentDictionary = {};
+        this.companion = new NSDictionary();
+        this.initializedEventHandler = [];
+    }
+    /**
+     * Generate namespace helper function
+     * @param  {string} ns namespace URI to be used
+     * @return {[type]}    the namespaced identity
+     */
+    ns(ns) {
+        return name => new NSIdentity(ns, name);
+    }
+    initialize() {
+        this.registerConverter("String", StringConverter);
+        this.registerConverter("StringArray", StringArrayConverter);
+        this.registerConverter("Boolean", BooleanConverter);
+        this.registerComponent("GrimoireComponent", GrimoireComponent);
+        this.registerNode("GrimoireNodeBase", ["GrimoireComponent"]);
+    }
+    /**
+     * Register plugins
+     * @param  {(}      loadTask [description]
+     * @return {[type]}          [description]
+     */
+    register(loadTask) {
+        this.loadTasks.push(loadTask);
+    }
+    resolvePlugins() {
+        return __awaiter(this, void 0, void 0, function* () {
+            for (let i = 0; i < this.loadTasks.length; i++) {
+                yield this.loadTasks[i]();
+            }
+        });
+    }
+    /**
+     * register custom component
+     * @param  {string                |   NSIdentity} name          [description]
+     * @param  {IAttributeDeclaration }} attributes           [description]
+     * @param  {Object                |   (new                 (}           obj           [description]
+     * @return {[type]}                       [description]
+     */
+    registerComponent(name, obj) {
+        name = Ensure.ensureTobeNSIdentity(name);
+        const attrs = obj["attributes"];
+        obj = this._ensureTobeComponentConstructor(obj);
+        this.componentDeclarations.set(name, new ComponentDeclaration(name, attrs, obj));
+    }
+    registerNode(name, requiredComponents, defaultValues, superNode) {
+        name = Ensure.ensureTobeNSIdentity(name);
+        requiredComponents = Ensure.ensureTobeNSIdentityArray(requiredComponents);
+        defaultValues = Ensure.ensureTobeNSDictionary(defaultValues, name.ns);
+        superNode = Ensure.ensureTobeNSIdentity(superNode);
+        this.nodeDeclarations.set(name, new NodeDeclaration(name, NSSet.fromArray(requiredComponents), defaultValues, superNode));
+    }
+    registerConverter(name, converter) {
+        name = Ensure.ensureTobeNSIdentity(name);
+        this.converters.set(name, { name: name, convert: converter });
+    }
+    addRootNode(tag, rootNode) {
+        if (!rootNode) {
+            throw new Error("can not register null to rootNodes.");
+        }
+        this.rootNodes[rootNode.id] = rootNode;
+        rootNode.companion.set(this.ns(Constants.defaultNamespace)("scriptElement"), tag);
+        // check tree constraint.
+        const errorMessages = rootNode.callRecursively(n => n.checkTreeConstraints()).reduce((list, current) => list.concat(current)).filter(error => error);
+        if (errorMessages.length !== 0) {
+            const message = errorMessages.reduce((m, current) => m + "\n" + current);
+            throw new Error("tree constraint is not satisfied.\n" + message);
+        }
+        // awake and mount tree.
+        rootNode.setMounted(true);
+        rootNode.broadcastMessage("treeInitialized", {
+            ownerScriptTag: tag,
+            id: rootNode.id
+        });
+        this._onTreeInitialized(tag);
+        tag.setAttribute("x-rootNodeId", rootNode.id);
+        return rootNode.id;
+    }
+    getRootNode(scriptTag) {
+        const id = scriptTag.getAttribute("x-rootNodeId");
+        return this.rootNodes[id];
+    }
+    queryRootNodes(query) {
+        const scriptTags = document.querySelectorAll(query);
+        const nodes = [];
+        for (let i = 0; i < scriptTags.length; i++) {
+            const node = this.getRootNode(scriptTags.item(i));
+            if (node) {
+                nodes.push(node);
+            }
+        }
+        return nodes;
+    }
+    /**
+     * This method is not for users.
+     * Just for unit testing.
+     *
+     * Clear all configuration that GrimoireInterface contain.
+     */
+    clear() {
+        this.nodeDeclarations.clear();
+        this.componentDeclarations.clear();
+        this.converters.clear();
+        for (let key in this.rootNodes) {
+            delete this.rootNodes[key];
+        }
+        this.loadTasks.splice(0, this.loadTasks.length);
+        this.initialize();
+    }
+    /**
+     * Ensure the given object or constructor to be an constructor inherits Component;
+     * @param  {Object | (new ()=> Component} obj [The variable need to be ensured.]
+     * @return {[type]}      [The constructor inherits Component]
+     */
+    _ensureTobeComponentConstructor(obj) {
+        if (typeof obj === "function") {
+            if (!(obj.prototype instanceof Component) && obj !== Component) {
+                throw new Error("Component constructor must extends Component class.");
+            }
+        } else if (typeof obj === "object") {
+            const newCtor = function () {
+                Component.call(this);
+            };
+            const properties = {};
+            for (let key in obj) {
+                if (key === "attributes") {
+                    continue;
+                }
+                properties[key] = { value: obj[key] };
+            }
+            newCtor.prototype = Object.create(Component.prototype, properties);
+            Object.defineProperty(newCtor, "attributes", {
+                value: obj["attributes"]
+            });
+            obj = newCtor;
+        } else if (!obj) {
+            obj = Component;
+        }
+        return obj;
+    }
+    _onTreeInitialized(tag) {
+        this.initializedEventHandler.forEach(h => {
+            h(tag.id, tag.className, tag);
+        });
+    }
+}
+const context = new GrimoireInterfaceImpl();
+const obtainGomlInterface = function (query) {
+    if (typeof query === "string") {
+        return GomlInterfaceGenerator(context.queryRootNodes(query));
+    } else {
+        context.initializedEventHandler.push(query);
+    }
+};
+// const bindedFunction = obtainGomlInterface.bind(context);
+Object.setPrototypeOf(obtainGomlInterface, context);
+
+class XMLHttpRequestAsync {
+    static send(xhr, data) {
+        return new Promise((resolve, reject) => {
+            xhr.onload = e => {
+                resolve(e);
+            };
+            xhr.onerror = e => {
+                reject(e);
+            };
+            xhr.send(data);
+        });
+    }
+}
+
+/**
+ * Provides the features to fetch Goml source.
+ */
+class GomlLoader {
+    /**
+     * Obtain the Goml source from specified tag.
+     * @param  {HTMLScriptElement} scriptTag [the script tag to load]
+     * @return {Promise<void>}               [the promise to wait for loading]
+     */
+    static loadFromScriptTag(scriptTag) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const srcAttr = scriptTag.getAttribute("src");
+            let source;
+            if (srcAttr) {
+                // ignore text element
+                const req = new XMLHttpRequest();
+                req.open("GET", srcAttr);
+                yield XMLHttpRequestAsync.send(req);
+                source = req.responseText;
+            } else {
+                source = scriptTag.text;
+            }
+            const doc = XMLReader.parseXML(source, "GOML");
+            const rootNode = GomlParser.parse(doc[0], null, scriptTag);
+            obtainGomlInterface.addRootNode(scriptTag, rootNode);
+        });
+    }
+    /**
+     * Load from the script tags which will be found with specified query.
+     * @param  {string}          query [the query to find script tag]
+     * @return {Promise<void[]>}       [the promise to wait for all goml loading]
+     */
+    static loadFromQuery(query) {
+        const tags = document.querySelectorAll(query);
+        const pArray = [];
+        for (let i = 0; i < tags.length; i++) {
+            pArray[i] = GomlLoader.loadFromScriptTag(tags.item(i));
+        }
+        return Promise.all(pArray);
+    }
+    /**
+     * Load all Goml sources contained in HTML.
+     * @return {Promise<void>} [the promise to wait for all goml loading]
+     */
+    static loadForPage() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield GomlLoader.loadFromQuery('script[type="text/goml"]');
+        });
+    }
+}
+
+/**
+ * Provides procedures for initializing.
+ */
+class GrimoireInitializer {
+    /**
+     * Start initializing
+     * @return {Promise<void>} The promise which will be resolved when all of the Goml script was loaded.
+     */
+    static initialize() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                GrimoireInitializer._copyGLConstants();
+                obtainGomlInterface.initialize();
+                yield GrimoireInitializer._waitForDOMLoading();
+                yield obtainGomlInterface.resolvePlugins();
+                yield GomlLoader.loadForPage();
+            } catch (e) {
+                console.error(e);
+            }
+        });
+    }
+    /**
+     * Ensure WebGLRenderingContext.[CONSTANTS] is exisiting.
+     * Some of the browsers contains them in prototype.
+     */
+    static _copyGLConstants() {
+        if (WebGLRenderingContext.ONE) {
+            // Assume the CONSTANTS are already in WebGLRenderingContext
+            // Chrome,Firefox,IE,Edge...
+            return;
+        }
+        // Otherwise like ""Safari""
+        for (let propName in WebGLRenderingContext.prototype) {
+            if (/^[A-Z]/.test(propName)) {
+                const property = WebGLRenderingContext.prototype[propName];
+                WebGLRenderingContext[propName] = property;
+            }
+        }
+    }
+    /**
+     * Obtain the promise object which will be resolved when DOMContentLoaded event was rised.
+     * @return {Promise<void>} the promise
+     */
+    static _waitForDOMLoading() {
+        return new Promise(resolve => {
+            window.addEventListener("DOMContentLoaded", () => {
+                resolve();
+            });
+        });
+    }
+}
+/**
+ * Just start the process.
+ */
+GrimoireInitializer.initialize();
+window["gr"] = obtainGomlInterface;
+
 /**
  * Provides managing all promise on initializing resources.
  */
@@ -11419,25 +11455,23 @@ class AssetLoadingManagerComponent extends Component {
         this.loader.register(new Promise(resolve => {
             this._documentResolver = resolve;
         }));
-        const canvas = this.companion.get("canvasElement");
-        canvas.style.position = "absolute";
-        canvas.style.top = "0px";
-        const canvasContainer = document.createElement("div");
-        canvasContainer.style.width = canvas.width + "px";
-        canvasContainer.style.height = canvas.height + "px";
-        canvasContainer.style.position = "relative";
+        const canvasContainer = this.companion.get("canvasContainer");
+        if (!this.getValue("enableLoader")) {
+            return;
+        }
         const loaderContainer = document.createElement("div");
         loaderContainer.innerHTML = DefaultLoaderChunk;
         loaderContainer.style.width = loaderContainer.style.height = "100%";
         canvasContainer.appendChild(loaderContainer);
-        canvas.parentElement.replaceChild(canvasContainer, canvas);
-        canvasContainer.appendChild(canvas);
         this._loaderElement = loaderContainer;
     }
     _autoStart() {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.loader.promise;
-            this._loaderElement.remove();
+            if (this._loaderElement) {
+                this._loaderElement.remove();
+            }
+            this.node.emit("asset-load-completed");
             this.tree("goml").attr("loopEnabled", true);
         });
     }
@@ -11449,6 +11483,10 @@ AssetLoadingManagerComponent.attributes = {
     },
     autoStart: {
         defaultValue: true,
+        converter: "Boolean"
+    },
+    anableLoader: {
+        defaultValue: false,
         converter: "Boolean"
     }
 };
@@ -11564,10 +11602,20 @@ class CameraComponent extends Component {
         const c = this.camera = new PerspectiveCamera();
         this.transform = this.node.getComponent("Transform");
         this.$transformUpdated(this.transform);
-        c.setFar(this.attributes.get("far").Value);
-        c.setNear(this.attributes.get("near").Value);
-        c.setFovy(this.attributes.get("fovy").Value);
-        c.setAspect(this.attributes.get("aspect").Value);
+        this.getAttribute("far").addObserver(v => {
+            console.log("far", v.Value);
+            c.setFar(v.Value);
+        }, true);
+        this.getAttribute("near").addObserver(v => {
+            c.setNear(v.Value);
+        }, true);
+        this.getAttribute("fovy").addObserver(v => {
+            c.setFovy(v.Value);
+        }, true);
+        this.getAttribute("aspect").addObserver(v => {
+            c.setAspect(v.Value);
+        }, true);
+        this.getAttribute("autoAspect").boundTo("_autoAspect");
     }
     updateContainedScene(loopIndex) {
         if (this.containedScene) {
@@ -11576,6 +11624,7 @@ class CameraComponent extends Component {
     }
     renderScene(args) {
         if (this.containedScene) {
+            this._justifyAspect(args);
             args.sceneDescription = this.containedScene.sceneDescription;
             this.containedScene.node.broadcastMessage("render", args);
         }
@@ -11583,6 +11632,15 @@ class CameraComponent extends Component {
     $transformUpdated(t) {
         if (this.camera) {
             this.camera.updateTransform(t);
+        }
+    }
+    _justifyAspect(args) {
+        if (this._autoAspect) {
+            const asp = args.viewport.Width / args.viewport.Height;
+            if (this._aspectCache !== asp) {
+                this.setValue("aspect", asp);
+                this._aspectCache = asp;
+            }
         }
     }
 }
@@ -11602,6 +11660,10 @@ CameraComponent.attributes = {
     aspect: {
         defaultValue: 1.6,
         converter: "Number"
+    },
+    autoAspect: {
+        defaultValue: true,
+        converter: "Boolean"
     }
 };
 
@@ -11695,6 +11757,12 @@ GLExtRequestor._customExtensionResolvers["WEBGL_color_buffer_float"] = gl => {
 };
 
 const ns = obtainGomlInterface.ns("HTTP://GRIMOIRE.GL/NS/DEFAULT");
+var ResizeMode;
+(function (ResizeMode) {
+    ResizeMode[ResizeMode["Aspect"] = 0] = "Aspect";
+    ResizeMode[ResizeMode["Fit"] = 1] = "Fit";
+    ResizeMode[ResizeMode["Manual"] = 2] = "Manual";
+})(ResizeMode || (ResizeMode = {}));
 class CanvasInitializerComponent extends Component {
     $awake() {
         this._scriptTag = this.companion.get("scriptElement");
@@ -11704,10 +11772,10 @@ class CanvasInitializerComponent extends Component {
         } else {}
         // apply sizes on changed
         this.attributes.get("width").addObserver(v => {
-            this.canvas.width = v.Value;
+            this._resize();
         });
         this.attributes.get("height").addObserver(v => {
-            this.canvas.height = v.Value;
+            this._resize();
         });
     }
     /**
@@ -11716,16 +11784,108 @@ class CanvasInitializerComponent extends Component {
      * @return {HTMLCanvasElement}        [description]
      */
     _generateCanvas(scriptTag) {
-        const generatedCanvas = document.createElement("canvas");
-        generatedCanvas.width = this.attributes.get("width").Value;
-        generatedCanvas.height = this.attributes.get("height").Value;
-        const gl = this._getContext(generatedCanvas);
+        this.canvas = document.createElement("canvas");
+        window.addEventListener("resize", () => this._onWindowResize());
+        this._configureCanvas(this.canvas, scriptTag);
+        const gl = this._getContext(this.canvas);
         this.companion.set(ns("gl"), gl);
-        this.companion.set(ns("canvasElement"), generatedCanvas);
+        this.companion.set(ns("canvasElement"), this.canvas);
         this.companion.set(ns("GLExtRequestor"), new GLExtRequestor(gl));
-        scriptTag.parentElement.insertBefore(generatedCanvas, scriptTag.nextSibling);
-        this.canvas = generatedCanvas;
-        return generatedCanvas;
+        return this.canvas;
+    }
+    _resize(supressBroadcast) {
+        const canvas = this.companion.get("canvasElement");
+        const widthRaw = this.getValue("width");
+        const heightRaw = this.getValue("height");
+        this._widthMode = this._asResizeMode(widthRaw);
+        this._heightMode = this._asResizeMode(heightRaw);
+        if (this._widthMode === this._heightMode && this._widthMode === ResizeMode.Aspect) {
+            throw new Error("Width and height could not have aspect mode in same time!");
+        }
+        if (this._widthMode === ResizeMode.Aspect) {
+            this._ratio = widthRaw.aspect;
+        }
+        if (this._heightMode === ResizeMode.Aspect) {
+            this._ratio = heightRaw.aspect;
+        }
+        if (this._widthMode === ResizeMode.Manual) {
+            this._applyManualWidth(widthRaw.size, supressBroadcast);
+        }
+        if (this._heightMode === ResizeMode.Manual) {
+            this._applyManualHeight(heightRaw.size, supressBroadcast);
+        }
+        this._onWindowResize(supressBroadcast);
+    }
+    _onWindowResize(supressBroadcast) {
+        const size = this._getParentSize();
+        if (this._widthMode === ResizeMode.Fit) {
+            this._applyManualWidth(size.width, supressBroadcast);
+        }
+        if (this._heightMode === ResizeMode.Fit) {
+            this._applyManualHeight(size.height, supressBroadcast);
+        }
+    }
+    _applyManualWidth(width, supressBroadcast) {
+        if (width === this.canvas.width) {
+            return;
+        }
+        this.canvas.width = width;
+        this._canvasContainer.style.width = width + "px";
+        if (!supressBroadcast) {
+            this.node.broadcastMessage(1, "resizeCanvas");
+        }
+        if (this._heightMode === ResizeMode.Aspect) {
+            this._applyManualHeight(width / this._ratio, supressBroadcast);
+        }
+    }
+    _applyManualHeight(height, supressBroadcast) {
+        if (height === this.canvas.height) {
+            return;
+        }
+        this.canvas.height = height;
+        this._canvasContainer.style.height = height + "px";
+        if (!supressBroadcast) {
+            this.node.broadcastMessage(1, "resizeCanvas");
+        }
+        if (this._widthMode === ResizeMode.Aspect) {
+            this._applyManualWidth(height * this._ratio, supressBroadcast);
+        }
+    }
+    _getParentSize() {
+        const parent = this._canvasContainer.parentElement;
+        const boundingBox = parent.getBoundingClientRect();
+        return boundingBox;
+    }
+    /**
+     * Get resize mode from raw attribute of height or width
+     * @param  {string  | number}      mode [description]
+     * @return {ResizeMode}   [description]
+     */
+    _asResizeMode(cso) {
+        if (cso.mode === "fit") {
+            return ResizeMode.Fit;
+        } else if (cso.mode === "aspect") {
+            return ResizeMode.Aspect;
+        } else {
+            return ResizeMode.Manual;
+        }
+    }
+    _configureCanvas(canvas, scriptTag) {
+        canvas.style.position = "absolute";
+        canvas.style.top = "0px";
+        canvas.style.left = "0px";
+        this._canvasContainer = document.createElement("div");
+        this._canvasContainer.style.position = "relative";
+        this._canvasContainer.appendChild(canvas);
+        if (this.getValue("containerId")) {
+            this._canvasContainer.id = this.getValue("containerId");
+        }
+        if (this.getValue("containerClass")) {
+            this._canvasContainer.className = this.getValue("containerClass");
+        }
+        this.companion.set(ns("canvasContainer"), this._canvasContainer);
+        scriptTag.parentElement.insertBefore(this._canvasContainer, scriptTag.nextSibling);
+        this._resize(true);
     }
     _getContext(canvas) {
         let context = canvas.getContext("webgl");
@@ -11751,12 +11911,77 @@ class CanvasInitializerComponent extends Component {
 }
 CanvasInitializerComponent.attributes = {
     width: {
-        defaultValue: 640,
-        converter: "Number"
+        defaultValue: "fit",
+        converter: "CanvasSize"
     },
     height: {
         defaultValue: 480,
-        converter: "Number"
+        converter: "CanvasSize"
+    },
+    containerId: {
+        defaultValue: undefined,
+        converter: "String"
+    },
+    containerClass: {
+        defaultValue: "gr-container",
+        converter: "String"
+    }
+};
+
+class FullscreenComponent extends Component {
+    constructor() {
+        super(...arguments);
+        this._fullscreen = false;
+    }
+    $awake() {
+        this.getAttribute("fullscreen").addObserver(attr => {
+            if (this._fullscreen === attr.Value) {
+                return;
+            }
+            this._fullscreen = attr.Value;
+            this._switchFullscreen();
+        });
+    }
+    _switchFullscreen() {
+        if (this._fullscreen) {
+            this.requestFullscreen(this.companion.get("canvasContainer"));
+        } else {
+            this.exitFullscreen();
+        }
+    }
+    requestFullscreen(target) {
+        if (target.webkitRequestFullscreen) {
+            target.webkitRequestFullscreen(); //Chrome15+, Safari5.1+, Opera15+
+        } else if (target["mozRequestFullScreen"]) {
+            target["mozRequestFullScreen"](); //FF10+
+        } else if (target["msRequestFullscreen"]) {
+            target["msRequestFullscreen"](); //IE11+
+        } else if (target.requestFullscreen) {
+            target.requestFullscreen(); // HTML5 Fullscreen API仕様
+        } else {
+            console.error('ご利用のブラウザはフルスクリーン操作に対応していません');
+            return;
+        }
+    }
+    /*フルスクリーン終了用ファンクション*/
+    exitFullscreen() {
+        if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen(); //Chrome15+, Safari5.1+, Opera15+
+        } else if (document["mozCancelFullScreen"]) {
+            document["mozCancelFullScreen"](); //FF10+
+        } else if (document["msExitFullscreen"]) {
+            document["msExitFullscreen"](); //IE11+
+        } else if (document["cancelFullScreen"]) {
+            document["cancelFullScreen"](); //Gecko:FullScreenAPI仕様
+        } else if (document.exitFullscreen) {
+            document.exitFullscreen(); // HTML5 Fullscreen API仕様
+        }
+    }
+}
+FullscreenComponent.attributes = {
+    fullscreen: {
+        converter: "Boolean",
+        defaultValue: false
     }
 };
 
@@ -13857,7 +14082,6 @@ class MouseCameraControlComponent extends Component {
     $mount() {
         this._scriptTag.addEventListener("mousemove", this._mouseMove.bind(this));
         this._scriptTag.addEventListener("contextmenu", this._contextMenu.bind(this));
-        this._scriptTag.addEventListener("mousewheel", this._mouseWheel.bind(this));
         this._distance = Math.sqrt(Vector3.dot(this._transform.localPosition.subtractWith(this._origin), this._transform.localPosition.subtractWith(this._origin)));
     }
     _contextMenu(m) {
@@ -13871,13 +14095,15 @@ class MouseCameraControlComponent extends Component {
                 x: m.screenX,
                 y: m.screenY
             };
+            return;
         }
         let updated = false;
         const diffX = m.screenX - this._lastScreenPos.x,
               diffY = m.screenY - this._lastScreenPos.y;
         if ((m.buttons & 1) > 0) {
-            this._xsum += diffX;
-            this._ysum += diffY;
+            this._xsum += diffX * this._rotateX;
+            this._ysum += diffY * this._rotateY * 0.2;
+            this._ysum = Math.min(this.getValue("maxY"), Math.max(this.getValue("minY"), this._ysum));
             updated = true;
         }
         if ((m.buttons & 2) > 0) {
@@ -13885,22 +14111,16 @@ class MouseCameraControlComponent extends Component {
             updated = true;
             this._distance = Math.sqrt(Vector3.dot(this._transform.localPosition.subtractWith(this._origin), this._transform.localPosition.subtractWith(this._origin)));
         }
+        const degToPi = Math.PI / 180;
         if (updated) {
-            const rotation = Quaternion.euler(this._ysum * 0.01, this._xsum * 0.01, 0);
+            const rotation = Quaternion.eulerXYZ(this._ysum * degToPi, this._xsum * degToPi, 0);
             const rotationMat = Matrix.rotationQuaternion(rotation);
-            const direction = Matrix.transformNormal(rotationMat, this._initialDirection);
-            this._transform.localPosition = this._origin.addWith(Vector3.normalize(direction).multiplyWith(this._distance));
             this._transform.localRotation = Quaternion.multiply(this._initialRotation, rotation);
         }
         this._lastScreenPos = {
             x: m.screenX,
             y: m.screenY
         };
-    }
-    _mouseWheel(m) {
-        this._distance -= m.deltaY * this._moveZ * MouseCameraControlComponent.moveCoefficient;
-        this._transform.localPosition = this._transform.localPosition.addWith(this._transform.forward.multiplyWith(m.deltaY * this._moveZ * MouseCameraControlComponent.moveCoefficient));
-        m.preventDefault();
     }
 }
 MouseCameraControlComponent.rotateCoefficient = 0.003;
@@ -13921,6 +14141,14 @@ MouseCameraControlComponent.attributes = {
     },
     moveSpeed: {
         defaultValue: 1,
+        converter: "Number"
+    },
+    maxY: {
+        defaultValue: 89,
+        converter: "Number"
+    },
+    minY: {
+        defaultValue: -89,
         converter: "Number"
     }
 };
@@ -13956,7 +14184,7 @@ class RenderBufferComponent extends Component {
         if (!this.getValue("name")) {
             throw new Error(`Attribute 'name' must be specified.`);
         }
-        this.buffer.update(WebGLRenderingContext.DEPTH_COMPONENT16, arg.width, arg.height);
+        this.buffer.update(WebGLRenderingContext.DEPTH_COMPONENT16, arg.widthPowerOf2, arg.heightPowerOf2);
         arg.buffers[this.getValue("name")] = this.buffer;
     }
 }
@@ -13976,17 +14204,28 @@ class RendererComponent extends Component {
         this._gl = this.companion.get("gl");
         this._canvas = this.companion.get("canvasElement");
         this._camera = this.getValue("camera");
-        this.attributes.get("camera").addObserver(v => this._camera = v.Value);
-        this._viewport = this.getValue("viewport");
-        this.attributes.get("viewport").addObserver(v => this._viewport = v.Value);
+        this.getAttribute("camera").addObserver(v => this._camera = v.Value);
+        this.getAttribute("viewport").addObserver(v => {
+            this._viewportSizeGenerator = v.Value;
+            this.$resizeCanvas();
+        });
+        this._viewportSizeGenerator = this.getValue("viewport");
     }
     $treeInitialized() {
+        // This should be called after mounting all of tree nodes in children
+        this.$resizeCanvas();
+    }
+    $resizeCanvas() {
+        this._viewportCache = this._viewportSizeGenerator(this._canvas);
+        const newSizes = this._getSizePowerOf2(this._viewportCache.Width, this._viewportCache.Height);
         if (this.node.children.length === 0) {
             this.node.addNode("render-scene", {});
         }
         this.node.broadcastMessage("resizeBuffer", {
-            width: this._viewport.Width,
-            height: this._viewport.Height,
+            widthPowerOf2: newSizes.width,
+            heightPowerOf2: newSizes.height,
+            width: this._viewportCache.Width,
+            height: this._viewportCache.Height,
             buffers: this._buffers
         });
         this.node.broadcastMessage("bufferUpdated", {
@@ -13996,10 +14235,18 @@ class RendererComponent extends Component {
     $renderViewport(args) {
         this.node.broadcastMessage("render", {
             camera: this._camera,
-            viewport: this._viewport,
+            viewport: this._viewportCache,
             buffers: this._buffers,
             loopIndex: args.loopIndex
         });
+    }
+    _getSizePowerOf2(width, height) {
+        const nw = Math.pow(2, Math.log(width) / Math.LN2 | 0); // largest 2^n integer that does not exceed s
+        const nh = Math.pow(2, Math.log(height) / Math.LN2 | 0); // largest 2^n integer that does not exceed s
+        return {
+            width: nw,
+            height: nh
+        };
     }
 }
 RendererComponent.attributes = {
@@ -14452,7 +14699,7 @@ class TextureBufferComponent extends Component {
         if (!this.getValue("name")) {
             throw new Error(`Attribute 'name' must be specified.`);
         }
-        this.buffer.update(0, arg.width, arg.height, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, null);
+        this.buffer.update(0, arg.widthPowerOf2, arg.heightPowerOf2, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, null);
         arg.buffers[this.getValue("name")] = this.buffer;
     }
 }
@@ -14837,6 +15084,27 @@ function BooleanConverter$2(val) {
     throw new Error("Parsing failed");
 }
 
+function CanvasSizeConverter(val) {
+    if (val === "fit") {
+        return {
+            mode: "fit"
+        };
+    }
+    if (typeof val === "string") {
+        const matched = /aspect\(([\d+(?.\d*)?]+)\)/.exec(val);
+        if (matched) {
+            return {
+                mode: "aspect",
+                aspect: Number.parseFloat(matched[1])
+            };
+        }
+    }
+    return {
+        mode: "manual",
+        size: Number.parseFloat(val)
+    };
+}
+
 function Color3Converter(val) {
     if (val instanceof Color3) {
         return val;
@@ -15040,18 +15308,17 @@ function _toPixel(parentSize, rep) {
 }
 function ViewportConverter(val) {
     if (val instanceof Rectangle) {
-        return val;
+        return () => val;
     }
     if (typeof val === "string") {
-        const canvas = this.companion.get("canvasElement");
         if (val === "auto") {
-            return new Rectangle(0, 0, canvas.width, canvas.height);
+            return canvas => new Rectangle(0, 0, canvas.width, canvas.height);
         } else {
             const sizes = val.split(",");
             if (sizes.length !== 4) {
                 throw new Error("Invalid viewport size was specified.");
             } else {
-                return new Rectangle(_toPixel(canvas.width, sizes[0]), _toPixel(canvas.height, sizes[1]), _toPixel(canvas.width, sizes[2]), _toPixel(canvas.height, sizes[3]));
+                return canvas => new Rectangle(_toPixel(canvas.width, sizes[0]), _toPixel(canvas.height, sizes[1]), _toPixel(canvas.width, sizes[2]), _toPixel(canvas.height, sizes[3]));
             }
         }
     }
@@ -15063,6 +15330,7 @@ obtainGomlInterface.register(() => __awaiter(undefined, void 0, void 0, function
     obtainGomlInterface.registerComponent(_$ns("AssetLoadingManager"), AssetLoadingManagerComponent);
     obtainGomlInterface.registerComponent(_$ns("Camera"), CameraComponent);
     obtainGomlInterface.registerComponent(_$ns("CanvasInitializer"), CanvasInitializerComponent);
+    obtainGomlInterface.registerComponent(_$ns("Fullscreen"), FullscreenComponent);
     obtainGomlInterface.registerComponent(_$ns("Geometry"), GeometryComponent);
     obtainGomlInterface.registerComponent(_$ns("GeometryRegistory"), GeometryRegistoryComponent);
     obtainGomlInterface.registerComponent(_$ns("LoopManager"), LoopManagerComponent);
@@ -15083,6 +15351,7 @@ obtainGomlInterface.register(() => __awaiter(undefined, void 0, void 0, function
     obtainGomlInterface.registerComponent(_$ns("Transform"), TransformComponent);
     obtainGomlInterface.registerConverter(_$ns("Angle2D"), Angle2DConverter);
     obtainGomlInterface.registerConverter(_$ns("Boolean"), BooleanConverter$2);
+    obtainGomlInterface.registerConverter(_$ns("CanvasSize"), CanvasSizeConverter);
     obtainGomlInterface.registerConverter(_$ns("Color3"), Color3Converter);
     obtainGomlInterface.registerConverter(_$ns("Color4"), Color4Converter);
     obtainGomlInterface.registerConverter(_$ns("Component"), ComponentConverter);
@@ -15101,7 +15370,7 @@ obtainGomlInterface.register(() => __awaiter(undefined, void 0, void 0, function
     obtainGomlInterface.registerConverter(_$ns("Vector3"), Vector3Converter);
     obtainGomlInterface.registerConverter(_$ns("Vector4"), Vector4Converter);
     obtainGomlInterface.registerConverter(_$ns("Viewport"), ViewportConverter);
-    obtainGomlInterface.registerNode("goml", ["CanvasInitializer", "LoopManager", "AssetLoadingManager", "GeometryRegistory", "MaterialManager", "RendererManager"]);
+    obtainGomlInterface.registerNode("goml", ["CanvasInitializer", "LoopManager", "AssetLoadingManager", "GeometryRegistory", "MaterialManager", "RendererManager", "Fullscreen"]);
     obtainGomlInterface.registerNode("renderer", ["Renderer"]);
     obtainGomlInterface.registerNode("scene", ["Scene"]);
     obtainGomlInterface.registerNode("camera", ["Transform", "Camera"]);
@@ -15116,12 +15385,6 @@ obtainGomlInterface.register(() => __awaiter(undefined, void 0, void 0, function
     obtainGomlInterface.registerNode("render-scene", ["MaterialContainer", "RenderScene"]);
     obtainGomlInterface.registerNode("render-quad", ["MaterialContainer", "RenderQuad"]);
     DefaultPrimitives.register();
-}));
-
-obtainGomlInterface.register(() => __awaiter(undefined, void 0, void 0, function* () {
-    // REGISTER would be replaced to actual codes to register components.
-    const _$ns = obtainGomlInterface.ns("HTTP://GRIMOIRE.GL/NS/DEFAULT");
-    // You can edit code here.
 }));
 //# sourceMappingURL=grimoire.es2016.js.map
 
