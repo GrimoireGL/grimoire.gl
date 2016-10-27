@@ -1,7 +1,7 @@
 ---
 type: doc
 title: ノード及びコンポーネントの概要
-order: 1
+order: 0
 ---
 
 # GOML概要

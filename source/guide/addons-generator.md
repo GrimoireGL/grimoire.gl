@@ -1,7 +1,7 @@
 ---
 type: doc
 title: アドオンジェネレータ
-order: 2
+order: 3
 ---
 
 Grimoire.jsのアドオンを作成するにあたっては、ジェネレータの使用が便利です。

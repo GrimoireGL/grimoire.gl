@@ -1,7 +1,7 @@
 ---
 type: doc
 title: Grimoire.jsのシェーダー
-order: 1
+order: 2
 ---
 
 **この記事はgrimoirejs-fundamentalを前提**とした記事です。
