@@ -169,3 +169,102 @@ uniform vec4 test;
 |vec4|Vector4(type変数Annotationがcolorの場合はColor4)|(0,0,0,0)|
 |float[]|NumberArray|\[0,0,....0\](配列長はシェーダー内の指定による)|
 |sampler2D|MaterialTexture|undefined|
+
+ユーザーUniform変数は、自動的にGOML側で操作できるようになります。
+例えば、Sort内に`uniform vec3 something;`というようなものがあると、これはユーザーuniform変数なのでこのSortを扱っているタグ側の属性になります。
+例えば、このマテリアルがある`mesh`タグに紐付いているならば、そのタグ内で`<mesh something="1,2,3">`と記述することにより、そのマテリアルが使われる際には、(1,2,3)のベクトルがuniform変数に代入されて用いられます。
+
+## 例
+
+### edge-sprite.sort
+```glsl
+@Pass
+@DepthFunc(LEQUAL)
+@CullFace(BACK)
+attribute vec3 position;
+
+@vert{
+   uniform mat4 _matPVM;
+   void main(){
+      gl_Position = _matPVM * vec4(position,1);
+   }
+}
+
+@frag{
+  @{type:"color", default:"pink"}
+  uniform vec4 color;
+
+  void main(){
+     gl_FragColor = color;
+  }
+}
+@Pass
+@DepthFunc(LEQUAL)
+@CullFace(FRONT)
+attribute vec3 position;
+
+@vert{
+   uniform mat4 _matPVM;
+
+   @{default:"1.1"}
+   uniform float edgeScale;
+   void main(){
+      gl_Position = _matPVM * vec4(position * edgeScale,1);
+   }
+}
+
+@frag{
+  @{type:"color", default:"black"}
+  uniform vec4 edgeColor;
+
+  void main(){
+     gl_FragColor = edgeColor;
+  }
+}
+
+```
+
+### 扱っているgoml
+
+```xml
+<goml width="512" height="512">
+  <import-material type="edgeSprite" src="./edge-sprite.sort"/>
+  <geometry name="sphere" type="sphere" divHorizontal="40" divVertical="40"/>
+
+  <renderers bgColor="#0000">
+    <renderer camera=".camera" viewport="0,0,100%,100%">
+      <render-scene/>
+    </renderer>
+  </renderers>
+    <scene>
+      <camera class="camera" near="0.01" far="40.0" aspect="1.0" fovy="45d" position="0,0,10" rotation="y(0d)">
+        <camera.components>
+          <MouseCameraControl rotateX="10" moveSpeed="0.1"/>
+        </camera.components>
+      </camera>
+      <mesh geometry="sphere" material="new(edgeSprite)" edgeColor="red"/>
+    </scene>
+</goml>
+
+```
+
+### 読み込み側のhtml
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type="text/javascript" src="../product/index.es2016.js"></script> <!--Grimoire.js本体-->
+</head>
+<body>
+  <script id="main" type="text/goml" src="./sample.goml"></script>
+</body>
+
+</html>
+
+```
+
+### 結果画像
+
+![https://i.gyazo.com/c78686bc267070f39e55c4c2e23e1f78.png](https://i.gyazo.com/c78686bc267070f39e55c4c2e23e1f78.png)

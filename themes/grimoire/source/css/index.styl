@@ -22,12 +22,29 @@ body
   background-color color-inverse
   box-shadow inset 0px 0px 200px rgba(0, 0, 0, .60)
   text-align center
+  position relative
+
+.abs
+
+#bg
+  position absolute
+  z-index 0
+  top 30%
+  left 50%
+  transform translate(-50%, -50%)
+
+canvas
+  left 0px
 
 nav
   width 350px
   margin-bottom 50px
+  position relative
 
 #menu
+  width 350px
+  position absolute
+  z-index 10
   menu(color-inverse-normal, color-primary)
 
 #logo-icon
@@ -99,7 +116,13 @@ button(color, color-i)
     border-color color
     background-color alpha(color, alpha(color) - 0.2)
 
+#primary-buttons
+  width 265px
+  position relative
+
 #install-button
+  position absolute
+  z-index 10
   button(color-primary, color-inverse)
 
 #description
