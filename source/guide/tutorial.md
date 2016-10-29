@@ -76,7 +76,7 @@ gr(#main)(.cube).attr("position","0,3,0");
 
 以上の記述で、`id="main"`を指定したgoml内の`class="cube"`属性を持つものを取得しています。attrメソッドでは指定したattributeに対して値を動的に指定することができます。 JavaScriptのsetTimeoutメソッドやsetIntervalメソッドを使用することで、動的にattributeを変化させて、簡易的なアニメーションを作成できます。
 
-### 1\. canvasを表示する
+### 1. canvasを表示する
 
 Grimoire.jsでは3D表現を扱う際にHTML5の仕様である`<canvas>`タグを使用しています。`canvas`はGrimoire.jsとgomlを読み込むことにより、自動的に生成されます。まずはこのcanvasを表示してみましょう。
 
@@ -156,7 +156,7 @@ attribute vec3 position;
 }
 ```
 
-> grimoirejs-fundamentalがサポートしている`Sort`の仕様に関して詳しくは[Grimoire.jsのシェーダーを](https://grimoire.gl/guide/sort.html)を参照してください。
+> grimoirejs-fundamentalがサポートしている`Sort`の仕様に関して詳しくは[Grimoire.jsのシェーダー](https://grimoire.gl/guide/sort.html)を参照してください。
 
 以下のgomlを読み込むことで下図のようなcubeがcanvas上に表示されるはずです。
 
@@ -178,4 +178,51 @@ rendererは省略可能で、以下のようにgomlにはsceneとcameraを記述
 </goml>
 ```
 
+grimoirejs-fundamentalでは基本的なプリミティブ型のメッシュを扱うことができます。
+`mesh`タグを読み込むためには、goml内で`geometry`と`material`を宣言することが必要です。
+
+```html
+<mesh position="0,0,0" geometry="cube" material="new(color)"/>
+```
+のように読み込んだSortを元にmaterialを作成することも出来ますが、同様のmaterialを使い回す場合等、以下のような記法が与えられます。
+
+```html
+<goml width="480" height="320">
+    <import-material type="color" src="./color.sort" />
+    <material id="color" type="color"/>
+    <geometry name="cube" type="cube" />
+    <scene>
+        <camera class="camera"
+        near="0.01" far="40.0" aspect="1.5" fovy="45d" position="0,0,10" rotation="y(0d)" />
+        <mesh position="0,0,0" geometry="cube" material="#cube"/>
+        <mesh position="0,3,0" geometry="cube" material="#cube"/>
+    </scene>
+</goml>
+```
+
+現在対応している型は以下のモノになります。各プリミティブジオメトリーに応じて、分割数等を指定することが出来ます。
+また、`targetBuffer`属性を`wireframe`にすることで、wireframeのみを表示させることが可能になります。
+
+* quad
+* cube
+* cone
+* cylinder
+* triangle
+* plane
+* circle
+
+<img src="./images/image04.png" width="320">
+
+## JavaScript側からのsceneの操作
+
+Grimoire.jsでは、容易にcanvas内の表現に対して操作可能なインターフェースを備えています。
+ここではGrimoire.jsインターフェースで扱えるトップレベルAPIを扱います。
+
+> トップレベルAPIの仕様に関して詳しくは[APIリファレンス](https://grimoire.gl/api/)を参照してください。
+
+```javascript
+
+```
+
+## コンポーネント作成
 
