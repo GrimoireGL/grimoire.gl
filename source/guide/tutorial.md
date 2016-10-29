@@ -74,7 +74,7 @@ JavaScript側では以下のような記法でgomlのノードを取得するこ
 gr(#main)(.cube).attr("position","0,3,0");
 ```
 
-以上の記述で、`id="main"`を指定したgoml内の`class="cube"`属性を持つものを取得しています。attrメソッドでは指定したattributeに対して値を動的に指定することができます。 JavaScriptのsetTimeoutメソッドやsetIntervalメソッドを使用することで、動的にattributeを変化させて、簡易的なアニメーションを作成できます。
+以上の記述で、`id="main"`を指定したgoml内の`class="cube"`属性を持つものを取得しています。attrメソッドでは指定したattributeに対して値を動的に指定することができます。
 
 ### 1. canvasを表示する
 
