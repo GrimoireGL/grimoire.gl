@@ -1,7 +1,7 @@
 ---
 type: doc
-title: Try out!
+title:clover
 order: 1
 ---
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#index"></iframe>
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#clover"></iframe>

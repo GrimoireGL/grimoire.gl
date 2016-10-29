@@ -1,6 +1,6 @@
 ---
 type: doc
-title: Try out!
+title: cube
 order: 3
 ---
 
