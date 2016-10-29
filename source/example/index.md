@@ -4,4 +4,4 @@ title: clover
 order: 1
 ---
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#shader"></iframe>
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#index"></iframe>

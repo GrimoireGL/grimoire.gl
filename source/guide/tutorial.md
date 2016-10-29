@@ -160,7 +160,7 @@ attribute vec3 position;
 
 以下のgomlを読み込むことで下図のようなcubeがcanvas上に表示されるはずです。
 
-![image03](./images/image03.png)
+<img src=""./images/image03.png" width="480">
 
 rendererは省略可能で、以下のようにgomlにはsceneとcameraを記述することでも動作します。
 
@@ -220,9 +220,39 @@ Grimoire.jsでは、容易にcanvas内の表現に対して操作可能なイン
 
 > トップレベルAPIの仕様に関して詳しくは[APIリファレンス](https://grimoire.gl/api/)を参照してください。
 
-```javascript
 
+```javascript
+gr("#main")("#cube").attr("position","0,0,1");
 ```
+
+上記の例では、`id="main"`を持つgomlの`id="cube"`を持つノードの、Transformコンポーネントのattribute(position)を`"0,0,1"(Vector3)`に上書きしています。
 
 ## コンポーネント作成
 
+Grimoire.jsではコンポーネントの作成とタグの拡張が可能です。ユーザーはGrimoire.jsのaddons-generatorを用いることにより、コンポーネント開発環境を整備することができます。
+
+> アドオンジェネレータ関して詳しくは[Guide/アドオンジェネレータ](https://grimoire.gl/guide/addons-generator.html)を参照してください。
+
+### 1. プラグイン開発に必要な開発環境
+
+* Node.jsが動作する環境
+
+```
+brew install yo -g
+mkdir grimoirejs-sample-component
+cd grimoirejs-sample-component
+yo grimoirejs-addons
+npm start
+```
+
+> Grimoire.jsでは、基本的にes2015でのjavascriptファイルが出力されますが、esに下げる必要がある場合、下記のbabelオプションを用いて、es5でのバンドリング後のファイルが出力されます。
+
+```
+npm start -- -babel
+```
+
+### 2. コンポーネント開発の基本
+
+### 3. プラグイン公開に必要な手順
+
+現在(2016/10/1)、Grimoire.jsではnpmにプラグインを公開することができます。
