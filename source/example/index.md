@@ -1,7 +1,7 @@
 ---
 type: doc
-title: clover
+title: cube
 order: 1
 ---
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#index"></iframe>
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#cube"></iframe>
