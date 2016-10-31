@@ -8,8 +8,6 @@ order: 1
 
 Grimoire.jsはWeb3Dを扱うJavaScriptライブラリです。ユーザーはXMLに準拠した記法であるGOML(Grimoire-Object-Markup-Language)を用いて、簡易にWeb上に3Dの演出を加えることができます。 また、宣言的に記述した3Dの表現はJavaScript側から、属性を指定することにより操作することができます。
 
-![sample](./images/sample01.gif)
-
 コンポーネントを作成することにより、GOMLは拡張可能です。基本的なコンポーネントは基本プラグインであるgrimoirejs-fundamentalに含まれています。grimoirejs-fundamentalを利用することによりユーザは3D空間の記述に必要になるであろうcameraやsceneタグを扱うことができるようになります。
 
 ## Grimoire.jsの基本
@@ -18,7 +16,7 @@ Grimoire.jsはWeb3Dを扱うJavaScriptライブラリです。ユーザーはXML
 
 - ユーザーが必要とするコンポーネントを含んだGrimoire.js本体(JavaScript)
 - GOML
-- GOMLを操作するためのJavaScript（動的な表現をここで記述する）
+- GOMLを操作するためのJavaScript
 
 が必要になります。
 
@@ -71,7 +69,7 @@ Grimoire.jsはWeb3Dを扱うJavaScriptライブラリです。ユーザーはXML
 JavaScript側では以下のような記法でgomlのノードを取得することができるようになっています。
 
 ```javascript
-gr(#main)(.cube).attr("position","0,3,0");
+gr("#main")(".cube").attr("position","0,3,0");
 ```
 
 以上の記述で、`id="main"`を指定したgoml内の`class="cube"`属性を持つものを取得しています。attrメソッドでは指定したattributeに対して値を動的に指定することができます。
@@ -104,8 +102,6 @@ Grimoire.jsでは3D表現を扱う際にHTML5の仕様である`<canvas>`タグ�
 </goml>
 ```
 
-> 標準(grimoirejs-fundamental)のカメラコンポーネントはリサイズ時のcanvasのアスペクト比を自動で変更する仕様になっていますが、リサイズの際にはアスペクト比の調整に留意することが推奨されます。
-
 canvasのフルスクリーン表示にも対応しており、fullscreen属性を`true`にすることで扱えます。
 
 ```html
@@ -113,7 +109,7 @@ canvasのフルスクリーン表示にも対応しており、fullscreen属性�
 </goml>
 ```
 
-canvas生成の際に、loadingのアニメーションが表示されますが、enableLoader属性を`true`にすることでその表示を消すことができます。
+canvas生成の際に、loadingのアニメーションが表示されますが、enableLoader属性を`true`にすることでその表示を消すことが可能です。
 
 ### 2.カメラをシーンに配置し、図形を配置する
 
@@ -184,6 +180,7 @@ grimoirejs-fundamentalでは基本的なプリミティブ型のメッシュを�
 ```html
 <mesh position="0,0,0" geometry="cube" material="new(color)"/>
 ```
+
 のように読み込んだSortを元にmaterialを作成することも出来ますが、同様のmaterialを使い回す場合等、以下のような記法が与えられます。
 
 ```html
@@ -225,6 +222,13 @@ Grimoire.jsでは、容易にcanvas内の表現に対して操作可能なイン
 gr("#main")("#cube").attr("position","0,0,1");
 ```
 
+もしくは
+
+```javascript
+var $$ = gr("#main");
+$$("#cube").attr("position","0,0,1");
+```
+
 上記の例では、`id="main"`を持つgomlの`id="cube"`を持つノードの、Transformコンポーネントのattribute(position)を`"0,0,1"(Vector3)`に上書きしています。
 
 ## コンポーネント作成
@@ -238,7 +242,7 @@ Grimoire.jsではコンポーネントの作成とタグの拡張が可能です
 * Node.jsが動作する環境
 
 ```
-brew install yo -g
+npm install yo generator-grimoire-addons -g
 mkdir grimoirejs-sample-component
 cd grimoirejs-sample-component
 yo grimoirejs-addons
@@ -254,5 +258,3 @@ npm start -- -babel
 ### 2. コンポーネント開発の基本
 
 ### 3. プラグイン公開に必要な手順
-
-現在(2016/10/1)、Grimoire.jsではnpmにプラグインを公開することができます。
