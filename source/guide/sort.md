@@ -152,7 +152,7 @@ uniform vec4 test;
 |:-:|:-:|:-:|
 |float|_time|Grimoire.js読み込み時からの時間|
 |vec2|_viewportSize|レンダリング対象のビューポートサイズ(px単位)|
-|mat4|_matPVM|レンダリング対象のモデルのプロジェクション行列 * ビュー行列 * モデル行列|
+|mat4|_matPVM|レンダリング対象のモデルのプロジェクション行列 \* ビュー行列 \* モデル行列|
 
 
 ## ユーザーUniform変数
