@@ -4,35 +4,31 @@ title: ToC
 order: 0
 ---
 
-# ハンズオン資料のやつ
-
-@ハンズオンなし
-
 * 使ってみる getting-started
-    * Grimoire.jsの読み込みGOMLの読み込み
+  * Grimoire.jsの読み込みGOMLの読み込み
 * Gomlを扱う handle-goml
-    * 属性を変更するやつ
+  * 属性を変更する
 * jsからGomlを扱う handle-goml-with-js;
-    * setAttrを使って属性を入れる
-    * appendとか
+  * setAttrを使って属性を入れる
+  * appendなど
 * コンポーネントを使ってみる handle-component
-    * Optional Component の使用
+  * Optional Component の使用
 * コンポーネントの属性を操作してみる handle-component-with-js
-    * jsでaddComponentとか...
-    * コンポーネントインターフェースの使用
+  * jsでaddComponentなど
+  * コンポーネントインターフェースの使用
 * ノードとコンポーネントの本質@ node-and-component
 * コンポーネントの作成 create-component
-    * 回転に関する簡単なコンポーネント
+  * 回転に関する簡単なコンポーネント
 * （$mountとか）ノードのライフサイクル node-lifecycle
 * メッセージング@ messaging
 * ノードを作ってみる create-node
-    * registerNodeのやつ
-
----
-* プラグイン環境を入れてみよう
-*
+  * registerNode
 
 order-title.md
-1から書く
+ファイル名でのorderは2桁に揃える
 
-sub-sub-sub-title.md
+orderはハイフンつなぎでネスト可能
+
+例:
+ファイル名: 01-01-01-sample.md
+order: 1-1-1
