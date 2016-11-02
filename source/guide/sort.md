@@ -1,6 +1,6 @@
 ---
 type: doc
-title: Grimoire.jsのシェーダー
+title: sortシェーダー
 order: 2
 ---
 
