@@ -64,7 +64,7 @@ FS_PREC(mediump,float)
 まずは上記のコードを読み込んだ以下のコードを読んで、uniform変数としてマテリアルに記述
 されている`color`がマテリアルタグから操作できることを見て欲しい。
 
-**ここにサンプル**
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t11-01" allowfllscreen></iframe>
 
 ### sortのuniform変数
 
@@ -138,7 +138,7 @@ sortのuniform変数はその変数名の付け方によって2つに大別さ�
 
 違う変数を使って見たり、初期値を変えて実際に試してみよう。
 
-**ここにサンプル**
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t11-02" allowfllscreen></iframe>
 
 ### プリファレンス
 
@@ -164,8 +164,7 @@ sortのuniform変数はその変数名の付け方によって2つに大別さ�
 
 以下の例はブレンド設定をSORTからいじったものである。違う設定を使って見たりして実験してみよう。
 
-**ここにサンプル**
-
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t11-03" allowfllscreen></iframe>
 ### マルチパスレンダリング
 
 エッジの描画のシェーダーなどでは、1回の描画だけでは目的の画が得られないことがある。その際、複数回の描画(マルチパスレンダリング)をする必要がある。
