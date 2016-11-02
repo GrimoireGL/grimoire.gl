@@ -32,42 +32,90 @@ SortはGLSLに独自の構文を複数追加することで、GOML側への連�
 ```
 @Pass
  // First Pass
- @vert{
+ #ifdef VS
      // ....
- }
- @frag{
+ #endif
+ #ifdef FS
      // ....
- }
+ #endif
 @Pass
  // SecoundPass
- @vert{
+ #ifdef VS
      // ....
- }
- @frag{
+ #endif
+ #ifdef FS
      // ....
- }
+ #endif
 ```
 
 ## パス制御構文
 
 Sortには複数個の、シングルパスをどのように構築するかを記述するための構文が存在します。この項ではこれらについて記述します。
 
-### @vert/@fragブロック
+### 頂点シェーダーとフラグメントシェーダー
 
-**文法**
+sortとして読み込んだ際は、頂点シェーダーとして用いる場合、`#define VS`が、フラグメントシェーダーとして用いる場合は`#define FS`が挿入されます。
+これを用いることで同一ファイルで双方のシェーダーを用いることが可能になります。
+
+例
+
+```glsl
+
+#ifdef VS
+  void main(){
+    gl_Position = ~~~
+  }
+#endif
+
+#ifdef FS
+  void main(){
+    gl_FragColor = ~~~
+  }
+#endif
 
 ```
-// 両方に含まれるコード
-@vert{
-    // 頂点シェーダーのみに含めたいコード
-}
-@frag{
-    // フラグメントシェーダーのみに含めたいコード
-}
+
+あくまで、GLSLのマクロを利用したものなので、これらの`VS`で区切られたセクションや`FS`で区切られたセクションは複数回登場することもできます。
+
+#### フラグメントシェーダー内でのprecision
+
+varying変数を用いる際に、以下のような記述をするとフラグメントシェーダーでの精度修飾子がついていないため問題が起きます。
+
+```glsl
+varying vec2 vValue;
+
+#ifdef VS
+  void main(){
+    gl_Position = ~~~
+  }
+#endif
+
+#ifdef FS
+  void main(){
+    gl_FragColor = ~~~
+  }
+#endif
 ```
 
-@vert及び@fragはSortの最も基本的な文法の一つです。ほとんどのシェーダーでは必ずこれら二つが必要です。
-さらに、ほとんどのシェーダーでは`@frag,@vertそれぞれの中でmain関数が存在する`ことになるでしょう。
+これは、頂点シェーダー、フラグメントシェーダーともに使われる`varying vec2 vValue`が先頭にあるためにfloatの精度修飾がないため問題になるからです。
+しかし、単に`precision mediump float;`と先頭に記述してしまえば、VSでも読み込まれてしまうのでエラーになってしまう。
+そこで、`FS_PRECマクロ`や`VS_PRECマクロ`があらかじめシェーダーの先頭に追加される。
+
+それぞれの定義は以下のようになっている。
+
+```glsl
+#ifdef FS
+  #define FS_PREC(prec,type) precision prec type;
+  #define VS_PREC(prec,type)
+#endif
+#ifdef VS
+  #define VS_PREC(prec,type) precision prec type;
+  #define FS_PREC(prec,type)
+#endif
+```
+
+すなわち、シェーダーファイルの先頭に`FS_PREC(mediump,float)`と記述しておけば、実際にはフラグメントシェーダーの時にはmediump精度が用いられるようになる。
+
 
 ### @import文
 
@@ -152,7 +200,15 @@ uniform vec4 test;
 |:-:|:-:|:-:|
 |float|_time|Grimoire.js読み込み時からの時間|
 |vec2|_viewportSize|レンダリング対象のビューポートサイズ(px単位)|
+|mat4|_matM|モデル行列|
+|mat4|_matV|ビュー行列|
+|mat4|_matP|プロジェクション行列|
+|mat4|_matPV|プロジェクション \* ビュー行列|
+|mat4|_matVM|ビュー行列 \* モデル行列|
 |mat4|_matPVM|レンダリング対象のモデルのプロジェクション行列 \* ビュー行列 \* モデル行列|
+|vec3|_cameraPosition|カメラ座標(ワールド座標系)|
+|vec3|_cameraDirection|カメラ向き(ワールド座標系)|
+
 
 
 ## ユーザーUniform変数
@@ -173,6 +229,59 @@ uniform vec4 test;
 ユーザーUniform変数は、自動的にGOML側で操作できるようになります。
 例えば、Sort内に`uniform vec3 something;`というようなものがあると、これはユーザーuniform変数なのでこのSortを扱っているタグ側の属性になります。
 例えば、このマテリアルがある`mesh`タグに紐付いているならば、そのタグ内で`<mesh something="1,2,3">`と記述することにより、そのマテリアルが使われる際には、(1,2,3)のベクトルがuniform変数に代入されて用いられます。
+
+また、vec3,vec4の変数アノテーションとして`type`アノテーションに`color`を指定するとユーザーがタグから色としてベクトルに値を渡すことができるようになります。
+
+例
+
+```glsl
+
+@{type:"color"}
+uniform vec3 specularColor;
+
+@{type:"color"}
+uniform vec4 albedoColor;
+```
+
+### texture使用フラグ
+
+テクスチャを利用する場合、テクスチャが指定されていなかった場合の処理も記述したいことがある。
+そのような場合のために、`sampler2D`型の変数のアノテーションには`usedFlag`アノテーションがあり、テクスチャが使用されているかどうかのフラグを別の変数に代入することができる。
+
+```glsl
+@{usedFlag:"flagOfTexture"}
+uniform sampler2D texture;
+
+uniform bool flagOfTexture; // textureがタグから挿入されている場合のみtrueが代入される。
+```
+
+## 挿入済みマクロ
+
+よく使う定数などいくつかのマクロはデフォルトでヘッダーとしてシェーダーに挿入される。
+以下は、初期状態で挿入されるヘッダーのコードである。
+
+```glsl
+/*Header start*/
+// helper macros
+#ifdef FS
+  #define FS_PREC(prec,type) precision prec type;
+  #define VS_PREC(prec,type)
+#endif
+#ifdef VS
+#define VS_PREC(prec,type) precision prec type;
+#define FS_PREC(prec,type)
+#endif
+// constants
+#define PI 3.141592653589793
+#define E 2.718281828459045
+#define LN2 0.6931471805599453
+#define LN10 2.302585092994046
+#define LOG2E 1.4426950408889634
+#define LOG10E 0.4342944819032518
+#define SQRT2 1.4142135623730951
+#define SQRT1_2 0.7071067811865476
+/*Header end*/
+```
 
 ## 例
 
