@@ -32,6 +32,8 @@ gr(function() {
 
 以下のようにセレクタを用いて、Grimoire.jsが扱うキャンバス部分を取得できます。複数のGOMLを読み込んでいる場合等、これを利用することにより、書くキャンバスに対して明示的な操作を行うことが可能になります。
 
+### meshの属性を変更してみる
+
 それでは、まず`<mesh>`ノードに対して`position`属性を上書きしてみましょう。
 
 ノードに対して、デフォルトコンポーネントの属性を変化させるためには`setAttribute("属性名", value)`を用います。valueには,書く属性が対応しているコンバーターに適した値を指定することが可能です。
@@ -69,6 +71,8 @@ gr(function() {
 * count
 
 現在は上記のメソッドがサポートされています。
+
+### 動的にmeshを追加してみる
 
 <iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t03-02" allowfllscreen></iframe>
 
