@@ -61,3 +61,11 @@ order: 0
 ### 11. マテリアルを作ってみる
 
 [チュートリアルをはじめる](/tutorial/11-create-material.html)
+
+### 12. ポストエフェクトを作ってみる
+
+[チュートリアルをはじめる](/tutorial/12-create-post-effect.html)
+
+### 13. プラグインを作成してみる
+
+[チュートリアルをはじめる](/tutorial/13-create-plugin.html)
