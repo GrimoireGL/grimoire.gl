@@ -195,41 +195,88 @@ GOMLInterfaceは、主にGrimoireInterfaceを関数として呼び出して取�
   ```javascript
   var components = gr("script.mainCanvas")("cube")("a");
   ```
-
+## isEmpty
+このNodeInterfaceの対象が一つ以上存在するか確認します。
+存在すればtrue,一つも存在しなければfalseを返します。
+  ```typescript
+  if(gr("script.mainCanvas")("cube").isEmpty()){
+    //nodeInterface is empty!
+  }
+  ```
 ## get
-対象となるノード群からノードを指定して取り出します。存在しないとnull、曖昧性があるとerrorを投げる
-引数なし：single
-１：0番ツリーのi番目。１番ツリーが存在したらerror
-2：なければ例外
+対象となるノード群からノードを指定して取り出します。
+gomlとノードのインデックスを指定することができます。
+gomlのインデックスを省略すると、すべてのgomlに渡って指定したインデックスのノードを返します。
+引数を指定しないと、最初のノードを返します。
+どの場合も、指定した位置にノードが存在しないときは例外を投げます。
+  ```typescript
+  var nodeInterface = gr("script.mainCanvas")("cube");
+  var gomlIndex = 2;
+  var nodeIndex = 1;
+  if(nodeInterface.isEmpty()){
+    var firstNode = nodeInterface.get();//error: this NodeInterface is empty.
+    var secondNode = nodeInterface.get(nodeIndex);//error: index out of range.
+  }else{
+    var firstNode = nodeInterface.get();
+    var secondNode = nodeInterface.get(nodeIndex);
+    var secondNodeIsThirdGOML = nodeInterface.get(gomlIndex,nodeIndex);
+  }
+  ```
+## getAttribute
+属性名を指定して、対象ノードの**最初のノードの**属性を取得します。
+  ```typescript
+  var cube_position = gr("script.mainCanvas")("cube").getAttribute("position");
+  console.log(cube_position.X);
+  console.log(cube_position.Y);
+  console.log(cube_position.Z);
+  ```
+## setAttribute
+属性名を指定して、**すべての対象ノードの**属性を設定します
+  ```typescript
+  gr("script.mainCanvas")("cube").setAttribute("color","red");
+  ```
 ## addComponent
-特定のノード群にコンポーネントを追加します。
+すべての対象ノードにコンポーネントを追加します。
+  ```typescript
+  gr("script.mainCanvas")("cube").addComponent("rotateAround");
+  ```
 ## append
-特定のノード群に対して、指定したタグを持つノードを子要素に追加します。
-## attr
-特定のノード群のAttributeを返します。または、特定のAttributeに値をセットします。
+すべての対象ノードに対して、指定したタグを持つノードを子要素に追加します。
+  ```typescript
+  gr("script.mainCanvas")("cube").append("<mesh geometry="quad" color="brown" />");
+  ```
 ## children
-特定のノード群の子要素を取得します。
-## compareClass
-このノードは特定のclassに属しているかを真偽値で判定します。
-## find
-特定のノードに対して、指定したノードを取得します。
+特定のノード群の子要素を対象とする、新しいnodeInterfaceを取得します。
 ## off
 対象ノードに指定したイベントリスナが登録されていれば削除します
 ## on
 対象ノードにイベントリスナを追加します。
 ## remove
-特定のノード群に対して、指定した子要素のノードを取り除きます。
+対象ノードをすべて削除します。
+  ```typescript
+  gr("script.mainCanvas")("cube").remove();
+  ```
 ## forEach
-このノードインタフェースが対象とするノードに対して反復処理を行います
+このノードインタフェースが対象とするすべてのノードに対して反復処理を行います。
+  ```typescript
+  gr("script.mainCanvas")("cube").forEach((node)=>{
+    node.setAttribute("position","0,0,0");
+  });
+  ```
 ## setEnable
 このノードインタフェースが対象とするノードを有効、または無効にします。
+  ```typescript
+  gr("script.mainCanvas")("cube").setEnabled(false);
+  ```
 ## first
 対象のノード群の、ひとつ目のノードを返します。存在しない時、nullを返します。
 ## single
-対象ノード群が唯一のノードのみを含むとき、それを返します。ノード数が０または２以上のとき、例外を発生させます。
+対象ノード群が唯一のノードのみを含むとき、それを返します。ノード数が０または２以上のとき、例外を投げます。
 ## count
 対象ノードの個数を数えます。
-
+  ```typescript
+  var count = gr("script.mainCanvas")("cube").count();
+  ```
 ---
 
 # ComponentInterface
