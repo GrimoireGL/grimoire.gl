@@ -48,7 +48,7 @@ Git管理する場合には`.gitignore`がジェネレータにより生成さ�
 npm run scaffold -- -t component -n LinaerMotion
 ```
 
-`src/Components`以下に
+`src/Components`以下に`LinearMotionComponent.ts`が生成されます。
 
 ### コンバーターを生成してみる
 
@@ -61,6 +61,6 @@ npm run scaffold -- -t component -n LinaerMotion
 
 ### 作成したプラグインを公開してみる
 
-作成したコンポーネントを公開するにはnpmを通じでpublishすることにより可能です。
+作成したコンポーネントを公開するにはnpmを通じてpublishすることにより可能です。
 
 
