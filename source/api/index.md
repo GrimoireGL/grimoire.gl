@@ -258,9 +258,10 @@ gomlのインデックスを省略すると、すべてのgomlに渡って指定
   ```
 ## forEach
 このノードインタフェースが対象とするすべてのノードに対して反復処理を行います。
+ノードと、そのノードのgomlのインデックス、goml上でのインデックスを参照できます。
   ```typescript
-  gr("script.mainCanvas")("cube").forEach((node)=>{
-    node.setAttribute("position","0,0,0");
+  gr("script.mainCanvas")("cube").forEach((node,gomlIndex,nodeIndex)=>{
+    node.setAttribute("position",`${gomlIndex},${nodeIndex},0`);
   });
   ```
 ## setEnable
@@ -287,12 +288,16 @@ gomlのインデックスを省略すると、すべてのgomlに渡って指定
 - destroyメソッド
 - ...etc
 
-## attr
+## getAttribute
 特定のコンポーネント群のAttributeを返します。または、特定のAttributeに値をセットします。
+## setAttribute
 ## destroy
 指定したコンポーネント群を消去します。
+## count
+対象ノードの個数を数えます。
+  ```typescript
+  var count = gr("script.mainCanvas")("cube").count();
+  ```
 ## get
 対象となるコンポーネント群からコンポーネントを指定して取り出します。存在しないとnull、曖昧性があるとerrorを投げる
-引数なし：single
-１：0番ツリーのi番目。１番ツリーが存在したらerror
-2：なければ例外
+
