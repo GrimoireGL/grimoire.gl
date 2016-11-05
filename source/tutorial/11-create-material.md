@@ -176,6 +176,42 @@ attribute変数はジオメトリー内の同名のバッファとして登録�
 以下の例はブレンド設定をSORTからいじったものである。違う設定を使って見たりして実験してみよう。
 
 <iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t11-03" allowfllscreen></iframe>
+
+#### マクロ値の公開
+
+ループ回数など、uniform変数だけでは渡せない変数の場合に動的にシェーダーのマクロを書き換えたい場合がある。
+そのような場合、`@ExposeMacro`プリファレンスを使うと特定のマクロの値をタグ側から操作可能になる。
+
+```glsl
+  @ExposeMacro(型,GOML側の属性名,マクロ名,初期値)
+```
+
+現状では型として取れるものは以下の二つである。
+
+* int
+* bool
+
+boolが指定された際、初期値に利用可能な値はtrueもしくはfalseのみである。intが指定された場合、整数が指定可能である。(小数が指定された場合切り捨てられる)
+
+例えば、以下のように指定する。
+```glsl
+@ExposeMacro(int,loopCount,LOOP_COUNT,5)
+@ExposeMacro(bool,useTexture,USE_TEXTURE,true)
+```
+
+また、上記の例ではタグに値が特に存在しなかった場合以下のようなマクロが挿入される。
+
+```glsl
+  #define LOOP_COUNT 5
+  #define USE_TEXTURE
+```
+
+**bool型はその値ではなくフラグの存在、非存在によってその値を表現することに注意。**
+
+以下の例は、球体の法線を描画したものであるが、法線の計算手法をワールド空間にするかビュー空間にするかをタグ側から設定できるようになっている。
+
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t11-05" allowfllscreen></iframe>
+
 ### マルチパスレンダリング
 
 エッジの描画のシェーダーなどでは、1回の描画だけでは目的の画が得られないことがある。その際、複数回の描画(マルチパスレンダリング)をする必要がある。
