@@ -48,7 +48,51 @@ Git管理する場合には`.gitignore`がジェネレータにより生成さ�
 npm run scaffold -- -t component -n LinaerMotion
 ```
 
-`src/Components`以下に`LinearMotionComponent.ts`が生成されます。
+`src/Components`以下に`LinearMotionComponent.ts`が生成されます。ジェネレータが基本的な部分が作成されます。ユーザーはコンポーネントに必要な属性とコンポーネントに必要なロジックを構築するだけです。TransformComponentなど依存するコンポーネントを利用する場合には、必要なプラグインを導入して開発しましょう。
+
+以下は定めた方向に一定速度で進むコンポーネントを作成した例です。attributeには`direction`と`speed`の二つを定めています。
+
+
+```javascript
+import Component from "grimoirejs/lib/Node/Component";
+import IAttributeDeclaration from "grimoirejs/lib/Node/IAttributeDeclaration";
+import {Vector3} from "grimoirejs-math"
+import TransformComponent from "grimoirejs-fundamental/lib/Components/TransformComponent";
+import Attribute from "grimoirejs/lib/Node/Attribute";
+export default class LinearMotionComponent extends Component {
+
+    public static componentName: string = "LinearMotionComponent";
+
+    public static attributes: { [key: string]: IAttributeDeclaration } = {
+        // Specify the attributes user can intaract
+        direction: {
+            defaultValue: "1,0,0",
+            converter: "Vector3"
+        },
+        speed: {
+            defaultValue: 1,
+            converter: "Number"
+        }
+    };
+
+    private _transform: TransformComponent;
+    private _direction: Vector3;
+    private _speed: number;
+    public $awake(): void {
+        this.getAttribute("direction").boundTo("_direction");
+        this.getAttribute("speed").boundTo("_speed");
+        this._transform = this.node.getComponent("Transform") as TransformComponent;
+    }
+    public $mount(): void {
+    }
+    public $update(): void {
+        this._transform.localPosition = this._transform.localPosition.addWith(this._direction.normalized.multiplyWith(this._speed * 0.05));
+    }
+
+}
+```
+
+`$awake()`や`$mount()`は、Grimoire.jsからメッセージを受け取る
 
 ### コンバーターを生成してみる
 

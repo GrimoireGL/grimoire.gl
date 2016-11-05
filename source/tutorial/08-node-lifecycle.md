@@ -8,8 +8,11 @@ order: 8
 
 ## 学べること
 
-* `$mount():void`や`$awake():void`について
-* 
+* `$mount(): void`について
+* `$awake(): void`について
+* `$update(): void`について
+
+
 
 ### ノードのライフサイクル
 

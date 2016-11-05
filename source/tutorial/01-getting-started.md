@@ -1,22 +1,28 @@
 ---
 type: doc
-title: 使ってみる
+title: Grimorie.jsを使ってみる
 order: 1
 ---
 
 ## 概要
 
-Grimoire.jsをまず使ってみましょう
+Grimoire.jsはWeb3Dライブラリです。Grimoire.jsではWeb開発フローにマッチした形で、3D表現を作ることができます。3D表現はHTML5のCanvasを使用することにより表示されます。
 
 ## 学べること
 
 * Grimoire.jsの読み込み
 * GOMLの読み込み
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#tutorial"></iframe>
+### Grimoire.jsを使ってみるには
 
-`script`タグを用いてただgrimoire.jsを読み込むだけです
+使用方法は簡単です。Grimoire.jsの本体のscriptと3Dの表現を行うGOML(Grimorie Object Markup Language)をHTML内で読み込むことにより使用することができます。Grimoire.jsでは必要な機能だけをライブラリに取り込んで使用することができます。
 
-> 次は読み込んだGOMLの使い方を学びます
+では、`index.html`に`grimoire.js`と`index.goml`を読み込んでみます。
+
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t01-01"></iframe>
+
+Grimoire.jsを使用するために必要な準備はこれだけです。それでは、これからGrimoire.jsを使って様々なweb3D表現を始めましょう。
+
+> 次は読み込んだGOMLの使い方を学びます。
 >
-> [GOMLを扱う](/tutorial/2-handle-goml)
+> [GOMLを扱う](/tutorial/02-handle-goml.html)

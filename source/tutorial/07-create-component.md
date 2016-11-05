@@ -18,11 +18,35 @@ order: 7
 
 
 ```javascript
-
+gr(function() {
+    var $$ = gr("#main");
+    debugger;
+    gr.registerComponent("Print", {
+        attributes: {
+            test: {
+                defaultValue: "HELLO WORLD!",
+                converter: "String"
+            }
+        },
+        $awake:()=>{
+          console.log("This is test!");
+        }
+    });
+   $$("mesh").addComponent("Print");
+   var data = $$("mesh")("Print").getAttribute("test");
+    console.log(gr.componentDeclarations);
+    console.log(data);
+});
 ```
 
 
+それでは確認してみましょう。
 
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t07-01"></iframe>
+
+
+基本的なコンポーネントの制作に関しては以下の通りです。Grimoire.jsではコンポーネント制作のためのジェネレータも用意しています。この場合コンポーネントはTypeScriptを通じてNode.js環境で開発することになるでしょう。
+詳しくは、[こちら](tutorial/13-create-plugin.html)を参照してください。
 
 > 次はGOMLのノードのライフサイクルについて考えます
 >
