@@ -11,7 +11,7 @@ order: 12
 
 例えば以下の例は入力の画像の色を反転して出力するだけのコードである。
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t11-05" allowfllscreen></iframe>
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t12-01" allowfllscreen></iframe>
 
 ### rendererタグの中身
 
