@@ -57,31 +57,30 @@ grimoirejs-fundamentalがサポートしているタグには他にも、
 
 などがあります。
 
-### テクスチャを表示してみる。
+### 円錐を表示してみる
 
-それでは実際にgrimoire-fundamentalで定められたタグを使用してみましょう。今回は画像をキャンバス内に表示してみます。
+それでは実際にgrimoire-fundamentalで定められたタグを使用してみましょう。
+円錐(cone)を表示するためにはジオメトリを`<geometry>`タグを用いて読み込む必要があります。ジオメトリの定義は`<scene>`の外に書きましょう。
 
-
-```javascript
-
+```xml
+<geometry name="cone" type="cone" divide="30" />
 ```
 
-それでは、確認してみましょう。
+ジオメトリを読み込んだら実際に表示するために`<mesh>`タグが必要です。`<geometry>`タグにconeが指定して、下のようにタグを`<scene>`以下に追加してみましょう。
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t02-02"></iframe>
-
-
-今度は全天球画像を利用して360度画像を表示してみましょう。
-
-```javascript
+```xml
+<mesh geometry="cone" position="1,1,0" color="#99f" />
 ```
 
-それでは確認してみましょう。
+### テクスチャを表示してみる
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t02-03"></iframe>
+次は画像をキャンバス内に表示してみます。下記のように`texture`属性に画像へのパスを指定することで、メッシュに画像を貼り付ける事ができます。
 
+```xml
+<mesh geometry="cube" position="0,0,0" texture="t02-01/img1.jpg" />
+```
 
-Grimorire.jsを利用することにより、キャンバス内の3D表現を宣言的に記述できます。
+このようにGrimorire.jsを利用することにより、キャンバス内の3D表現を宣言的に記述できます。
 
 
 > 次は読み込んだGOMLをJavaScriptから操作する方法を学びます。これによりGOMLで記述したタグやその属性を動的に変更することが可能になります。イベントハンドラを利用して、特定のタイミングで動作させることも可能です。
