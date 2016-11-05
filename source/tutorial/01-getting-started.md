@@ -23,6 +23,15 @@ Grimoire.jsはWeb3Dライブラリです。Grimoire.jsではWeb開発フロー�
 
 Grimoire.jsを使用するために必要な準備はこれだけです。それでは、これからGrimoire.jsを使って様々なweb3D表現を始めましょう。
 
+またGrimoire.jsではGOMLを読み込んだ数に応じて、canvasが生成されます。確認してみましょう。
+
+//TODO キャンバスが二つ表示されない
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t01-02"></iframe>
+
+GOMLを二つ読み込むとキャンバスが二つ表示されていることがわかります。
+第3章で行いますが、ユーザはセレクタを用いて、各キャンバスに存在するGrimorieインターフェースを取得することができます。これにより対象のGOMLに対してのみGOMLのタグを操作することが可能になっています。
+
+
 > 次は読み込んだGOMLの使い方を学びます。
 >
 > [GOMLを扱う](/tutorial/02-handle-goml.html)
