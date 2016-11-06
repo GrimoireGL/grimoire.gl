@@ -16,29 +16,32 @@ order: 7
 
 コンポーネントを定義するにはregisterComponentメソッドを用います。javascriptからコンポーネントを定義してみましょう。
 
+* attributes - コンポーネントの属性を定義します
+    * defaultValue - 属性の初期値を設定します
+    * converter - 属性値の型を定義します。下の例では`Number`を指定しているので、数字として扱われます。
+* $awake - コンポーネントの初期化時に呼び出されます
+* $update - 毎フレーム呼び出されます
+
+`this.node`でコンポーネントの属しているノードを取得できます。
 
 ```javascript
-gr(function() {
-    var $$ = gr("#main");
-    debugger;
-    gr.registerComponent("Print", {
-        attributes: {
-            test: {
-                defaultValue: "HELLO WORLD!",
-                converter: "String"
-            }
-        },
-        $awake:()=>{
-          console.log("This is test!");
-        }
-    });
-   $$("mesh").addComponent("Print");
-   var data = $$("mesh")("Print").getAttribute("test");
-    console.log(gr.componentDeclarations);
-    console.log(data);
+gr.registerComponent('Rotate', {
+  attributes: {
+    speed: {
+      defaultValue: '1',
+      converter: 'Number',
+    },
+  },
+  $awake: function() {
+    this.phi = 0;
+    // console.log(this.node.getAttribute('speed'));
+  },
+  $update: function() {
+    this.phi += this.node.getAttribute('speed');
+    this.node.setAttribute('rotation', this.phi + ',' + this.phi + ',' + this.phi);
+  },
 });
 ```
-
 
 それでは確認してみましょう。
 
