@@ -6,20 +6,31 @@ order: 2
 
 ## 概要
 
-Grimoire.jsでは扱う
-GOMLを変更することでシーンを組み立ててみましょう。
+Grimoire.jsでは扱う3D空間をXML記法を用いて宣言的に記述することが可能です。ここでは基本的な3D空間の描画に必要なタグを含んでいる`grimoirejs-fundamental`プラグインを用いて、GOMLの基本的に記述について学びましょう。基本的にはユーザーはこの`grimoirejs-fundamental`プラグインを用いてWeb3Dの表現を組み立てることになります。
+`grimoirejs-fundamental`プラグインは[リファレンス](https://grimoire.gl/api/grimoirejs-fundamental.html)を参照することで詳細を知ることができます。今回はこのプラグインの中から基本的な3D表現に必要なタグの使い方を学びます。
 
 ## 学べること
 
 * GOMLとは何か
 * GOMLタグの扱い方
 * GOMLタグの属性の扱い方
+* `grimoire-fundamental`プラグインを用いたシーンの記述方法
+
+
+
+以下に示すのが、基本的な3D表現を行うために必要な機能を記述したGOMLです。
 
 <iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t02-01"></iframe>
 
 GOMLはGrimoire Object Markup Languageの略であり、描画するキャンバス内の状態をXMLで記述するための言語です。Grimoire.jsが定義しています。これから上記のサンプルを例にGOMLのタグについて確認してみましょう。
 
-`<goml>`タグは一番基本となるタグです。キャンバス自体の状態に関わります。`width`や`height`属性でカンバスの大きさを指定できます。また、`fullscreen`にも対応しています。
+`<goml>`タグは一番基本となるタグです。キャンバス自体の状態に関わります。`width`や`height`属性でキャンバスの大きさを指定できます。また、`fullscreen`にも対応しています。セレクタにも対応しており、
+
+```html
+<goml containerId="main">
+```
+
+とすることでGOMLに対応するキャンバスを囲む`<div>`要素が取得されます。
 
 `<geometry>`タグはジオメトリを定義します。`name`属性でジオメトリの識別子を設定し、それらを`<mesh>`タグの`geometry`属性で指定することで、使うことができます。
 
@@ -29,7 +40,7 @@ GOMLはGrimoire Object Markup Languageの略であり、描画するキャンバ
 
 * `name`属性 - 識別子
 * `type`属性 - ジオメトリの種類。`cube`, `quad`, `triangle`, `sphere`, `corn`などがデフォルトで用意されています。
-その他にも各プリミティブ型ではそれに応じて、属性を持つことがあります。`cone`型では`divide`属性を持つことができます。これはメッシュの分割数を指定します。これはジオメトリの種類に依存した属性であり、各ジオメトリーに応じた属性を設定することが、可能です。
+その他にも各プリミティブ型ではそれに応じて、属性を持つことがあります。`cone`型では`divide`属性を持つことができます。これはメッシュの分割数を指定します。これはジオメトリの種類に依存した属性であり、各ジオメトリーに応じた属性を設定することが可能です。
 
 `<render>`タグは描画に関するタグです。sceneを描写する際に必要です。基本的な3Dの空間を描画する際には、この`<render>`のタグは省略することが可能です。
 
@@ -85,4 +96,4 @@ grimoirejs-fundamentalがサポートしているタグには他にも、
 
 > 次は読み込んだGOMLをJavaScriptから操作する方法を学びます。これによりGOMLで記述したタグやその属性を動的に変更することが可能になります。イベントハンドラを利用して、特定のタイミングで動作させることも可能です。
 >
-> [JavaScriptからGOMLを扱う](/tutorial/3-handle-goml-with-js)
+> [JavaScriptからGOMLを扱う](/tutorial/03-handle-goml-with-js.html)
