@@ -12,7 +12,7 @@ Grimoire.jsを初めて用いる際、最初に扱うjavascriptのAPIはおそ�
 
 ---
 
-# GrimoireInterface
+## GrimoireInterface
 
 主に**特定のGOMLソースに依存しない**対象に対して操作するAPIを提供します。
 
@@ -30,7 +30,7 @@ GrimoireInterfaceはnpmを用いて以下のようにしても取得すること
 var gr = require("grimoirejs");
 ```
 
-## gr("selector")
+### gr("selector")
 
 - **定義**
 
@@ -52,7 +52,7 @@ var gr = require("grimoirejs");
 
   > 取得される操作対象のGOMLが一つとは限らない事に気をつけてください。取得する対象が`canvas`ではなく`script`である事に注意してください。
 
-## gr.ns(namespace)
+### gr.ns(namespace)
 
 - **定義**
 
@@ -71,7 +71,7 @@ var gr = require("grimoirejs");
   var id = g("TEST"); //完全修飾名 TEST | HTTP://GRIMOIRE.GL/NS/SAMPLEを意味するオブジェクトとなる。
   ```
 
-## registerComponent
+### registerComponent
 
 - **定義**
 
@@ -96,7 +96,7 @@ var gr = require("grimoirejs");
 
   引数`component`は新しく登録したいコンポーネントの`コンストラクタとなる関数`もしくは`プレーンオブジェクト`です。 ただし、プレーンオブジェクトはメソッド内部でコンストラクタに変換します。また、コンストラクタを指定する場合はそのコンストラクタのスーパークラスにComponentが入っていなければなりません。
 
-## registerNode
+### registerNode
 
 - **定義**
 
@@ -130,7 +130,7 @@ var gr = require("grimoirejs");
 
   引数`requiredComponentsForChildren`はこのノードの子ノードに指定されるノードに要求するコンポーネントの名称のリストを受け取ります。 この要素が指定されると、このノード以下の子ノードとしてGOML内などに記述されるすべての要素は指定されたコンポーネントを所持している必要があります。
 
-# GOMLInterface
+## GOMLInterface
 
 主に**特定のGOMLのソースに依存する**対象に対して操作するAPIを提供します。
 
@@ -142,7 +142,7 @@ GOMLInterfaceは、主にGrimoireInterfaceを関数として呼び出して取�
 
 - (なし)
 
-## gr("gomlSelector")("nodeSelector")
+### gr("gomlSelector")("nodeSelector")
 
 - **定義**
 
@@ -167,7 +167,7 @@ GOMLInterfaceは、主にGrimoireInterfaceを関数として呼び出して取�
 
 ---
 
-# NodeInterface
+## NodeInterface
 
 主に**特定のNode**に対して操作するAPIを提供します。
 
@@ -181,7 +181,7 @@ GOMLInterfaceは、主にGrimoireInterfaceを関数として呼び出して取�
 - removeメソッド
 - ...etc
 
-## gr("gomlSelector")("nodeSelector")("componentSelector")
+### gr("gomlSelector")("nodeSelector")("componentSelector")
 - **定義**
 
   ```typescript
@@ -195,7 +195,7 @@ GOMLInterfaceは、主にGrimoireInterfaceを関数として呼び出して取�
   ```javascript
   var components = gr("script.mainCanvas")("cube")("a");
   ```
-## isEmpty
+### isEmpty
 このNodeInterfaceの対象が一つ以上存在するか確認します。
 存在すればtrue,一つも存在しなければfalseを返します。
   ```typescript
@@ -203,7 +203,7 @@ GOMLInterfaceは、主にGrimoireInterfaceを関数として呼び出して取�
     //nodeInterface is empty!
   }
   ```
-## get
+### get
 対象となるノード群からノードを指定して取り出します。
 gomlとノードのインデックスを指定することができます。
 gomlのインデックスを省略すると、すべてのgomlに渡って指定したインデックスのノードを返します。
@@ -222,7 +222,7 @@ gomlのインデックスを省略すると、すべてのgomlに渡って指定
     var secondNodeIsThirdGOML = nodeInterface.get(gomlIndex,nodeIndex);
   }
   ```
-## getAttribute
+### getAttribute
 属性名を指定して、対象ノードの**最初のノードの**属性を取得します。
   ```typescript
   var cube_position = gr("script.mainCanvas")("cube").getAttribute("position");
@@ -230,33 +230,33 @@ gomlのインデックスを省略すると、すべてのgomlに渡って指定
   console.log(cube_position.Y);
   console.log(cube_position.Z);
   ```
-## setAttribute
+### setAttribute
 属性名を指定して、**すべての対象ノードの**属性を設定します
   ```typescript
   gr("script.mainCanvas")("cube").setAttribute("color","red");
   ```
-## addComponent
+### addComponent
 すべての対象ノードにコンポーネントを追加します。
   ```typescript
   gr("script.mainCanvas")("cube").addComponent("rotateAround");
   ```
-## append
+### append
 すべての対象ノードに対して、指定したタグを持つノードを子要素に追加します。
   ```typescript
   gr("script.mainCanvas")("cube").append("<mesh geometry="quad" color="brown" />");
   ```
-## children
+### children
 特定のノード群の子要素を対象とする、新しいnodeInterfaceを取得します。
-## off
+### off
 対象ノードに指定したイベントリスナが登録されていれば削除します
-## on
+### on
 対象ノードにイベントリスナを追加します。
-## remove
+### remove
 対象ノードをすべて削除します。
   ```typescript
   gr("script.mainCanvas")("cube").remove();
   ```
-## forEach
+### forEach
 このノードインタフェースが対象とするすべてのノードに対して反復処理を行います。
 ノードと、そのノードのgomlのインデックス、goml上でのインデックスを参照できます。
   ```typescript
@@ -264,23 +264,23 @@ gomlのインデックスを省略すると、すべてのgomlに渡って指定
     node.setAttribute("position",`${gomlIndex},${nodeIndex},0`);
   });
   ```
-## setEnable
+### setEnable
 このノードインタフェースが対象とするノードを有効、または無効にします。
   ```typescript
   gr("script.mainCanvas")("cube").setEnabled(false);
   ```
-## first
+### first
 対象のノード群の、ひとつ目のノードを返します。存在しない時、nullを返します。
-## single
+### single
 対象ノード群が唯一のノードのみを含むとき、それを返します。ノード数が０または２以上のとき、例外を投げます。
-## count
+### count
 対象ノードの個数を数えます。
   ```typescript
   var count = gr("script.mainCanvas")("cube").count();
   ```
 ---
 
-# ComponentInterface
+## ComponentInterface
 
 主に**特定のNodeに属しているコンポーネント**に対する処理に利用します。
 
@@ -288,16 +288,16 @@ gomlのインデックスを省略すると、すべてのgomlに渡って指定
 - destroyメソッド
 - ...etc
 
-## getAttribute
+### getAttribute
 特定のコンポーネント群のAttributeを返します。または、特定のAttributeに値をセットします。
-## setAttribute
-## destroy
+### setAttribute
+### destroy
 指定したコンポーネント群を消去します。
-## count
+### count
 対象ノードの個数を数えます。
   ```typescript
   var count = gr("script.mainCanvas")("cube").count();
   ```
-## get
+### get
 対象となるコンポーネント群からコンポーネントを指定して取り出します。存在しないとnull、曖昧性があるとerrorを投げる
 
