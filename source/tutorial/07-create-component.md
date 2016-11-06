@@ -32,15 +32,28 @@ gr.registerComponent('Rotate', {
       converter: 'Number',
     },
   },
-  $awake: function() {
+  $mount: function() {
     this.phi = 0;
     // console.log(this.node.getAttribute('speed'));
   },
   $update: function() {
-    this.phi += this.node.getAttribute('speed');
+    this.phi += this.getValue('speed');
     this.node.setAttribute('rotation', this.phi + ',' + this.phi + ',' + this.phi);
   },
 });
+
+gr.registerNode("rotate", ["Rotate"], {}, "mesh");
+
+gr(function() {
+  var $$ = gr('#main');
+});
+```
+
+最後に作ったコンポーネントを既存の`mesh`に動的に追加するために、ノードに対して`addComponent`を行います。
+この操作はGOMLがパースされてから行うべきなので、`gr(function() {})`の中で行います。
+
+```
+$$('mesh').addComponent('Rotate');
 ```
 
 それでは確認してみましょう。
