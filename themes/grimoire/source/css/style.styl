@@ -98,7 +98,8 @@ nav
       background-color color-inverse-normal
 
 #content
-  flex-grow 1
+  width 700px
+  box-sizing border-box
   padding 10px 60px
   font-size 14px
   a
@@ -107,6 +108,8 @@ nav
   hr
     border none
     border-top 2px dotted color-inverse-normal
+  h1
+    margin-bottom 50px
   h2, h3, h4, h5, h6
     color color-inverse-emphasis
     a
@@ -149,6 +152,9 @@ nav
     padding 20px 30px
     background-color darken(color-inverse, 5%)
     border-radius 3px
+    overflow scroll
+    &::-webkit-scrollbar
+      display none
     .gutter
       display none
     pre
@@ -196,7 +202,7 @@ nav
     color color-primary
 
 .editor
-  width 1200px
-  height 600px
+  width 100%
+  height 450px
   border 6px solid #ddd
   background-color #fff
