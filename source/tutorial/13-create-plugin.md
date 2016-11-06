@@ -17,7 +17,7 @@ order: 13
 
 Grimoire.jsではコンポーネントやノードの作成のためにプラグインジェネレータを提供しています。これによりユーザーは簡単にプラグインを作成し、公開することが可能になります。ジェネレータに関する詳細は[プラグインジェネレータ](../guide/addons-generator.html)を参照してください。ここでは、簡単なノードとコンポーネントを制作することを行い、プラグイン制作の方法を学びます。
 
-> Grimoire.jsのプラグインを制作、公開するためには現在(2016/10)Node.js環境が必要です。
+> Grimoire.jsのプラグインを制作、公開するためには現在(2016/10)Node.js環境が必要です。プラグインの制作にはTypeScriptを用いられます。
 
 Grimoire.jsのプラグインジェネレータはyoemanを使って導入されます。
 
@@ -92,16 +92,29 @@ export default class LinearMotionComponent extends Component {
 }
 ```
 
-`$awake()`や`$mount()`は、Grimoire.jsからメッセージを受け取る
+`$awake()`や`$mount()`は、Grimoire.jsからメッセージを受け取ります。`$update()`は1フレームに一回呼び出されます。
 
 ### コンバーターを生成してみる
 
 コンバーターを作成してみましょう。
+カスタムコンバータを使用するためには以下のコマンドによります。
 
+```
+npm scaffold -- -t converer -n ConverterName
+```
+
+これによりConverterNameConverter.tsとテスト環境が生成されます。
+デフォルトでgrimoirejs-fundamentalにコンバーターはいくつか用意されていますが、必要な場合には制作することが必要でしょう。
 
 ### ノードを作成してみる
 
 ノードを作成してみます。
+ユーザーはindex.ts内に作成したいタグを書くことにより可能です。
+
+```
+  GrimoireInterface.registerNode("l-mesh", ["LinearMotion"], {}, "mesh");
+```
+
 
 ### 作成したプラグインを公開してみる
 
