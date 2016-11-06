@@ -29,7 +29,6 @@ gr.registerComponent('Rotate', {
   },
   $mount: function() {
     this.phi = 0;
-    // console.log(this.node.getAttribute('speed'));
   },
   $update: function() {
     this.phi += this.getValue('speed');
