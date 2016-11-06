@@ -39,6 +39,12 @@ gr.registerComponent('Rotate', {
 gr.registerNode("rotate", ["Rotate"], {}, "mesh");
 ```
 
+登録したノードはGOMLにタグとして使用可能になります。デフォルトコンポーネントとして追加したので、`speed`属性も指定可能です。
+
+```
+<rotate geometry="cube" position="0,0,0" color="#0000FF" speed="1" />
+```
+
 それでは確認してみましょう。
 
 <iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t10-01"></iframe>
