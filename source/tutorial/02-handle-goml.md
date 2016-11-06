@@ -85,4 +85,4 @@ grimoirejs-fundamentalがサポートしているタグには他にも、
 
 > 次は読み込んだGOMLをJavaScriptから操作する方法を学びます。これによりGOMLで記述したタグやその属性を動的に変更することが可能になります。イベントハンドラを利用して、特定のタイミングで動作させることも可能です。
 >
-> [JavaScriptからGOMLを扱う](/tutorial/3-handle-goml-with-js)
+> [JavaScriptからGOMLを扱う](/tutorial/03-handle-goml-with-js)
