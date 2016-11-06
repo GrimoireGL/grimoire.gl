@@ -18,28 +18,23 @@ registerNodeメソッドでは第一引数にノードの名前、第二引数�
 基本的には以上により、Grimoireインターフェースで定義したタグを記述することができるようになります。
 
 ```javascript
-gr(function() {
-    var $$ = gr("#main");
-    debugger;
-    gr.registerComponent("Print", {
-        attributes: {
-            test: {
-                defaultValue: "HELLO WORLD!",
-                converter: "String"
-            }
-        },
-        $awake:()=>{
-          console.log("This is test!");
+gr.registerComponent("Print", {
+    attributes: {
+        test: {
+            defaultValue: "HELLO WORLD!",
+            converter: "String"
         }
-    });
-   $$("mesh").addComponent("Print");
-   var data = $$("mesh")("Print").getAttribute("test");
-    console.log(gr.componentDeclarations);
-    console.log(data);
+    }
+});
+gr.registerNode("print",["Print"]);
+gr(function() {
 });
 ```
 
+
 それでは確認してみましょう。
+
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t10-01"></iframe>
 
 > 次はマテリアルの自作を学びます。マテリアルは物体の質感を設定するために重要です。Grimoire.jsではマテリアルの作成とインポートを強くサポートしています。マテリアルを作成して、3D表現に幅をもたせましょう。
 >

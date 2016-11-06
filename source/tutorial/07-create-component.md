@@ -22,7 +22,7 @@ order: 7
 * $awake - コンポーネントの初期化時に呼び出されます
 * $update - 毎フレーム呼び出されます
 
-`this.node`でコンポーネントの属しているノードを取得できます。
+`$awake`や`$update`などのライフサイクルイベントの中では`this.node`でコンポーネントの属しているノードを取得できます。
 
 ```javascript
 gr.registerComponent('Rotate', {
