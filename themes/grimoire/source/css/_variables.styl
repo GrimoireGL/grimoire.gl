@@ -29,7 +29,17 @@ font-size = 14px
 line-height = 1.6em
 letter-spacing = 0.07em
 
+// layout
+sidebar-width = 360px
+content-width = 640px
+header-height = 90px
+mobile-header-height = 40px
+h-spacing = 60px
+v-spacing = 50px
+side-spacing = 30px
+
 // Media queries
-mq-mobile = "screen and (max-width: 479px)"
-mq-tablet = "screen and (min-width: 480px) and (max-width: 767px)"
-mq-normal = "screen and (min-width: 768px)"
+mq-mobile = "screen and (max-width %s)" % (content-width + side-spacing * 2)
+mq-tablet = "screen and (min-width %s) and (max-width %s)" % ((content-width + side-spacing * 2) (content-width + sidebar-width + side-spacing * 2))
+mq-small-pc = "screen and (min-width %s) and (max-width %s)" % ((content-width + sidebar-width + side-spacing * 2) (content-width + sidebar-width * 2))
+// mq-small-pc = "screen and (max-width %s)" % (content-width + sidebar-width * 2)

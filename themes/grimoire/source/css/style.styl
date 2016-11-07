@@ -13,13 +13,17 @@ body
   color color-inverse-normal
 
 #header
+  position fixed
+  top 0
+  left 0
+  right 0
   box-sizing border-box
   padding-top 4px
   content-align = 'horizontal'
   flex-init(content-align)
   flex-center('vertical', content-align)
   flex-separate()
-  height 90px
+  height header-height
   background-color color-inverse
   box-shadow 0px 0px 5px rgba(0, 0, 0, .60)
 
@@ -50,18 +54,26 @@ nav
   menu(color-inverse-normal, color-primary)
 
 #column-wrap
-  flex-init()
-  padding 20px
+  content-align = 'horizontal'
+  flex-init(content-align)
+  flex-center('horizontal', content-align)
 
 #sidebar
+  position fixed
+  left 0
+  top header-height
   box-sizing border-box
-  width 280px
-  min-width 280px
-  padding 20px
+  width sidebar-width
+  min-width sidebar-width
+  padding v-spacing h-spacing
+  overflow-y scroll
+  height 'calc(100% - %s)' % header-height
+  &::-webkit-scrollbar
+    display none
 
 #doc-title
   font-weight bold
-  font-size 25px
+  font-size 22px
   text-align center
   margin-bottom 40px
   margin-top 10px
@@ -69,7 +81,7 @@ nav
 
 #list
   text-align center
-  font-size 14px
+  font-size 13px
   margin 0
   padding 0
   list-style none
@@ -98,9 +110,10 @@ nav
       background-color color-inverse-normal
 
 #content
-  width 700px
+  margin-top header-height
+  width content-width
   box-sizing border-box
-  padding 10px 60px
+  padding v-spacing 0
   font-size 14px
   a
     color color-primary
@@ -116,7 +129,7 @@ nav
       &::before
         content '# '
   h2
-    font-size 23px
+    font-size 18px
     border-bottom 1px solid color-inverse-normal
     padding-bottom 8px
     margin-top 60px
@@ -125,11 +138,13 @@ nav
     margin-top 60px
     margin-bottom 30px
   h3, h4, h5, h6
-    font-size 18px
+    font-size 16px
   #content-title
-    font-size 33px
+    font-size 26px
     color color-primary
+    line-height 1.3em
     margin-bottom 30px
+    margin-top 0
   table
     border-collapse collapse
     th, td
@@ -175,6 +190,7 @@ nav
     letter-spacing 0.03em
     font-family font-mono
     border-radius 3px
+    word-wrap break-word
   blockquote
     background-color alpha(color-secondary, 10%)
     border-left 5px solid color-secondary
@@ -206,3 +222,44 @@ nav
   height 450px
   border 6px solid #ddd
   background-color #fff
+
+// @media (max-width (content-width + sidebar-width * 2))
+  // #column-wrap
+  //   justify-content flex-start
+@media mq-small-pc
+  #column-wrap
+    justify-content flex-start
+    #content
+      margin-left sidebar-width
+
+@media mq-tablet
+  #column-wrap
+    justify-content center
+    #content
+      margin-left 0
+  #sidebar
+    display none
+
+@media mq-mobile
+  #column-wrap
+    justify-content center
+    #content
+      padding-top 25px
+      margin-top mobile-header-height
+      margin-left side-spacing
+      margin-right side-spacing
+      width 'calc(100% - %s)' % (side-spacing * 2)
+  #sidebar
+    display none
+  #header
+    justify-content center
+    height mobile-header-height
+    #logo-wrap
+      margin-left 0
+      height 30px
+      #logo-icon
+        width 30px
+      #logo-font
+        display none
+    #menu-wrap
+      display none
