@@ -310,9 +310,10 @@ attribute vec3 position;
 @Pass
 @DepthFunc(LEQUAL)
 @CullFace(FRONT)
-attribute vec3 position;
+FS_PREC(mediump,float)
 
-@vert{
+#ifdef VS
+   attribute vec3 position;
    uniform mat4 _matPVM;
 
    @{default:"1.1"}
@@ -320,16 +321,16 @@ attribute vec3 position;
    void main(){
       gl_Position = _matPVM * vec4(position * edgeScale,1);
    }
-}
+#endif
 
-@frag{
+#ifdef FS
   @{type:"color", default:"black"}
   uniform vec4 edgeColor;
 
   void main(){
      gl_FragColor = edgeColor;
   }
-}
+#endif
 
 ```
 
@@ -337,7 +338,7 @@ attribute vec3 position;
 
 ```xml
 <goml width="512" height="512">
-  <import-material type="edgeSprite" src="./edge-sprite.sort"/>
+  <import-material typeName="edgeSprite" src="./edge-sprite.sort"/>
   <geometry name="sphere" type="sphere" divHorizontal="40" divVertical="40"/>
 
   <renderers bgColor="#0000">
