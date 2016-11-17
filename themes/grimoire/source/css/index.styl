@@ -37,30 +37,31 @@ canvas
   left 0px
 
 nav
-  width 350px
+  width 450px
   margin-bottom 50px
   position relative
 
 #menu
-  width 350px
+  width 450px
   position absolute
   z-index 10
   menu(color-inverse-normal, color-primary)
 
 #logo-icon
+  z-index 10
   background-image logo-icon
   bg-image-alone()
-  height 160px
-  width 300px
+  height 300px
+  width 450px
 
 #logo-font
   margin-top -2px
   // font-family 'Banda Regular'
-  font-size 45px
+  font-size 80px
   // background linear-gradient(90deg, color-primary, color-secondary 60%)
   background-image logo-font
   bg-image-alone()
-  height 46px
+  height 70px
   // background-clip text
   // -webkit-background-clip text // auto-prefixer not working
   // -moz-background-clip text
@@ -95,9 +96,9 @@ button(color, color-i)
   text-decoration none
   text-align center
   box-sizing border-box
-  width 265px
+  width 230px
   margin 30px auto 0
-  padding 10px 20px 9px
+  padding 2px 5px 3px
   border 2px solid color
   color color
   font-size 13px
@@ -116,14 +117,23 @@ button(color, color-i)
     border-color color
     background-color alpha(color, alpha(color) - 0.2)
 
-#primary-buttons
-  width 265px
-  position relative
+.primary-container
+  display: webkit-flex;
+  display: flex;
 
-#install-button
-  position absolute
-  z-index 10
-  button(color-primary, color-inverse)
+
+.primary-buttons
+  width 230px
+  height 50px
+  margin 0 10px
+  position relative
+  a
+    position absolute
+    z-index 10
+    button(color-primary, color-inverse)
+.social-buttons
+  padding-left 100px
+  margin-top 50px
 
 #description
   padding 100px 130px
@@ -138,8 +148,8 @@ button(color, color-i)
     font-weight bold
     margin-bottom 20px
   .content
-    color color-black-normal
-    font-size 14px
+    color color-black-emphasis
+    font-size 17px
 
 #small-description
   margin-top 60px
@@ -156,6 +166,7 @@ button(color, color-i)
   .icon
     font-size 45px
     color color-black-emphasis
+    margin-bottom 20px
   .title
     color color-black-emphasis
     font-size 18px

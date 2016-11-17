@@ -1,7 +1,7 @@
 ---
 type: doc
 title: 入門チュートリアル
-order: 1
+order: 10
 ---
 
 # Grimoire.jsの概要
