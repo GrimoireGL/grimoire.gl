@@ -147,6 +147,7 @@ button(color, color-i)
     font-size 28px
     font-weight bold
     margin-bottom 20px
+    line-height 1.2
   .content
     color color-black-emphasis
     font-size 17px
@@ -173,7 +174,7 @@ button(color, color-i)
     font-weight bold
     margin-bottom 20px
   .content
-    color color-black-normal
+    color color-black-emphasis
     font-size 14px
 
 #footer
@@ -192,3 +193,13 @@ button(color, color-i)
     margin-bottom 3px
   a
     color alpha(color-inverse, 0.9)
+
+@media(max-width:640px){
+  .download-container{
+    display: none;
+  }
+
+  #description{
+    padding 100px 30px
+  }
+}
