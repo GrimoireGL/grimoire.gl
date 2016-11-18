@@ -1,6 +1,6 @@
 ---
 type: doc
-title: インストール
+title: ダウンロード
 order: 0
 ---
 

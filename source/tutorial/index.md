@@ -4,6 +4,9 @@ title: 目次
 order: 0
 ---
 
+チュートリアルを始めましょう。このチュートリアルではWebエディタを活用して簡単にGrimoire.jsを試すことができます。
+
+
 ### 1. Grimoire.jsを使ってみる
   * Grimoire.jsの読み込み
   * GOMLの読み込み

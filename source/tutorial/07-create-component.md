@@ -57,6 +57,6 @@ $$('mesh').addComponent('Rotate');
 基本的なコンポーネントの制作に関しては以下の通りです。Grimoire.jsではコンポーネント制作のためのジェネレータも用意しています。この場合コンポーネントはTypeScriptを通じてNode.js環境で開発することになるでしょう。
 詳しくは、[こちら](tutorial/13-create-plugin.html)を参照してください。
 
-> 次はGOMLのノードのライフサイクルについて考えます
+> 次はGOMLのノードを実際に作成してみます。
 >
-> [ノードのライフサイクルを学ぶ](/tutorial/08-node-lifecycle.html)
+> [ノードを作ってみる](/tutorial/10-create-node.html)
