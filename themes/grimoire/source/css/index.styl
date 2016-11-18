@@ -5,6 +5,7 @@
 
 html
   height 100%
+  overflow: auto
 
 body
   height 100%
@@ -12,6 +13,7 @@ body
   font-family: font-sans
   line-height: line-height
   letter-spacing: letter-spacing
+  overflow-x: hidden
 
 #primary
   content-align = 'vertical'
@@ -153,17 +155,18 @@ button(color, color-i)
     font-size 17px
 
 #small-description
-  margin-top 60px
   ul
     display flex
     justify-content space-around
+    flex-wrap wrap
+    -webkit-flex-wrap wrap
     list-style none
     padding 0
     margin 0
   .container
     box-sizing border-box
     width 300px
-    padding 0 40px
+    padding 60px 0 0 0
   .icon
     font-size 45px
     color color-black-emphasis
@@ -202,4 +205,16 @@ button(color, color-i)
   #description{
     padding 100px 30px
   }
+
+  nav{
+    width:300px
+  }
+
+  #menu{
+    width: 300px
+  }
+}
+
+@media(max-width:800px){
+
 }
