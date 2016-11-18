@@ -4,8 +4,6 @@ title: grimoirejs-math
 order: 5
 ---
 
-# Grimoireで使用可能な基本
-
 ## AABB
 
 Width of this AABB

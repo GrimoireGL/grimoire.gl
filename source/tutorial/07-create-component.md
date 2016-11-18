@@ -54,8 +54,10 @@ $$('mesh').addComponent('Rotate');
 <iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t07-01"></iframe>
 
 
-基本的なコンポーネントの制作に関しては以下の通りです。Grimoire.jsではコンポーネント制作のためのジェネレータも用意しています。この場合コンポーネントはTypeScriptを通じてNode.js環境で開発することになるでしょう。
-詳しくは、[こちら](tutorial/13-create-plugin.html)を参照してください。
+基本的なコンポーネントの制作に関しては以下の通りです。コンポーネント開発はユーザーの好きな環境で行うことができます。TypeScriptを用いた開発も可能です。
+
+
+詳しくは、[こちら](/tutorial/13-create-plugin.html)を参照してください。
 
 > 次はGOMLのノードを実際に作成してみます。
 >
