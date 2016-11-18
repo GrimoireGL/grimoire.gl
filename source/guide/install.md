@@ -8,9 +8,7 @@ order: 0
 
 scriptタグで読み込んですぐに利用するためには、スタンドアロン版の使用が便利です。`GrimoireGL`及び`gr`がグローバル変数として登録されます。(`gr`は`noConflict`を用いて利用しないことも可能です。)
 
-<div class="primary-buttons">
-<a>ダウンロード</a>
-</div>
+<div class="primary-buttons"><a>ダウンロード</a></div>
 
 ### CDN
 
