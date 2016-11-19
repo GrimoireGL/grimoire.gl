@@ -123,7 +123,18 @@ nav
 #sample
   // height 300px
   background-color color-black
-  padding 60px 40px 0
+  padding 50px 40px 0
+
+  .front
+    padding 0 60px
+    .title
+      color color-black-emphasis
+      font-size 28px
+      font-weight bold
+      margin-bottom 30px
+      line-height 1.4
+      text-align center
+
 
   .wrap
     flex-init('horizontal')
@@ -245,12 +256,16 @@ nav
 
 @media mq-mobile
   #sample
-    padding 60px 10px 0
+    padding-left 10px
+    padding-right 10px
+
   #primary-buttons
     .install
       display none
   #description
-    padding 60px 30px 100px
+    padding-right 30px
+    padding-left 30px
+
     .front
       padding 0
   nav
