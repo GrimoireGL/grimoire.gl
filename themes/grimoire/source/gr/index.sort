@@ -1,13 +1,15 @@
+@Pass
 @DepthFunc(LEQUAL)
 @BlendFunc(SRC_ALPHA, ONE_MINUS_SRC_ALPHA)
+FS_PREC(mediump,float)
+#ifdef VS
 attribute vec3 position;
-@vert{
   void main(){
     gl_Position = vec4(position, 1.);
   }
-}
+#endif
 
-@frag{
+#ifdef FS
   const int _ParticlesAmount = 6;
 
   uniform float _time;
@@ -64,4 +66,4 @@ attribute vec3 position;
       gl_FragColor = alphaBlend(gl_FragColor, vec4(vec3(0.0, 0.0, 0.0), 0.5 * opacity * drawRect(center, rect_size * -1.0, rect_size, 0.01)));
     }
   }
-}
+#endif

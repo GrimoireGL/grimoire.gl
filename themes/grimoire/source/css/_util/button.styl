@@ -1,0 +1,25 @@
+button(color, color-i)
+  display block
+  text-decoration none
+  text-align center
+  box-sizing border-box
+  width 230px
+  margin 30px auto 0
+  padding 4px 5px 3px
+  border 2px solid color
+  color color
+  font-size 13px
+  cursor pointer
+  user-select none
+  transition .3s
+  font-weight bold
+  border-radius 8px
+  &:hover
+    border-color alpha(color, 0)
+    background-color color
+    color color-i
+    transition .3s
+  &:active
+    transition .3s
+    border-color color
+    background-color alpha(color, alpha(color) - 0.2)
