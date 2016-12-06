@@ -17,7 +17,7 @@ scriptタグで読み込んですぐに利用するためには、スタンド�
 
 ### CDN
 
-unpkg上で提供されているパッケージは常に最新版になっています。[こちら](https://github.com/GrimoireGL/grimoirejs-basic/blob/master/release/grimoirejs-preset-basic.zip)を利用すれば、手軽に組み込むことが可能です。
+unpkg上で提供されているパッケージは常に最新版になっています。[こちら](https://unpkg.com/grimoirejs-preset-basic/register/grimoire-preset-basic.min.js)を利用すれば、手軽に組み込むことが可能です。
 
 > Note:
 >
