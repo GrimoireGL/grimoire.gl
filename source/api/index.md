@@ -6,7 +6,7 @@ order: 0
 
 Grimoire.jsを初めて用いる際、最初に扱うjavascriptのAPIはおそらくこれらのトップレベルAPIでしょう。 これらのAPIによってユーザーは自身のサービスのロジックにマッチした形で3Dのキャンバス部分を操作することが容易になります。
 
-![top-level-interface](./images/top-level-interface.png)
+![top-level-interface](./images/Grimoire-interface-describe.png)
 
 トップレベルのAPIは以上の図のように主に4つに分割され、それぞれ役割が異なります。
 

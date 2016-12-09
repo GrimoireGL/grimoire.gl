@@ -8,7 +8,7 @@ order: 0
 
 scriptタグで読み込んですぐに利用するためには、スタンドアロン版の使用が便利です。`GrimoireJS`及び`gr`がグローバル変数として登録されます。(`gr`は`noConflict`を用いて利用しないことも可能です。)
 
-<div class="primary-buttons"><a download href="https://unpkg.com/grimoirejs-preset-basic/register/grimoire-preset-basic.min.js">ダウンロード</a></div>
+<div class="primary-buttons"><a download href="https://github.com/GrimoireGL/grimoirejs-basic/blob/master/release/grimoirejs-preset-basic.zip">ダウンロード</a></div>
 
 > Note:
 >
