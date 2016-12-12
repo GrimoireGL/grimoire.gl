@@ -1,7 +1,7 @@
 ---
 type: doc
 title: コアメッセージ
-order: 1
+order: 4
 ---
 
 すべてのメッセージは`$`から始まるメソッドによってハンドリングされます。
@@ -76,7 +76,7 @@ interface ITreeInitializedInfo {
 (GOMLの値 > Attributeの初期値の優先度で割り当て)
 8-3. FOR c = Nに属するすべてのenabledなコンポーネント
 8-3-1. c.$awake(); // <- 初のmountの前に呼び出される。どのコンポーネントに対しても必ず1回しか呼び出されない
-8-4. SendMessage('mount') 
+8-4. SendMessage('mount')
 ```
 
 原則として、**マウントされていないコンポーネントはいかなる処理も呼び出されない**。これには属性の割り当ても含む。(コンストラクタを除く)
