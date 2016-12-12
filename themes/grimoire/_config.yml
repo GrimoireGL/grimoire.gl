@@ -30,7 +30,7 @@ show_count: false
 # Miscellaneous
 google_analytics: UA-80429415-1
 favicon: /favicon.png
-twitter:@grimoire_js
+twitter: "@grimoire_js"
 google_plus:
 fb_admins:
 fb_app_id:
