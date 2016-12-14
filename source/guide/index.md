@@ -1,160 +1,256 @@
 ---
 type: doc
-title: ノード及びコンポーネントの概要
+title: はじめに
 order: 1
 ---
 
-# GOML概要
+## Grimoire.jsとは?
 
-Grimoire.jsの仕組みを理解するには、GOMLがどのように処理され、ノードやコンポーネントが構築されるのか、また属性がどのようにコンポーネントに割り当てられるのかを理解しなければなりません。
-この仕組みはXMLに準拠した記法であるGOMLであるがゆえに見た目上HTMLに非常に近いものとなっていますが、より一貫した思想を持って作成されています。
+**Grimoire(グリモア).js** は、一言で言えば、**Web開発のためのWebGLフレームワーク** です。 高度な知識が要求され、既存のWebの開発フローに乗りにくい`WebGL`表現を、**既存のWeb開発のフローで** 、 **最小限のコードで** 、**簡単に** 、**プロダクションレベルで** 扱うためのフレームワークです。
 
-## GOMLにおけるノード
+`WebGL`を扱うための技術は、つい最近までアプリケーションやゲーム開発のために進化したものでした。多くのライブラリは、それらに触れてきた開発者が、Web上で同様の機能を実装し、ユーザーもでこれに倣ってWebGLを扱うのが普通でした。
+
+`WebGL`もWebの一つの選択肢であり、他の画像や動画と同じようなレベルで簡単に扱えなければなりません。Webフロントエンドは日々フレームワークの進化によりその難しさは日々増しています。このような中でどうして`WebGL`のためだけに全く違う書き方をするということを押し付けることができるでしょうか?
+
+`Grimoire.js`は、このWebにおける`WebGL`のあり方を変えます。Webの人がWebの書き方流で扱え、もともとCGなどをいじっていた方は従来に似た書き方をすると、その部品はすぐにWeb畑の人が使えるようになる。**WebGLが画像や動画に次ぐWebエンジニアが持つ筆の一つにする。** それがGrimoire.jsの成し遂げることです。
+
+## はじめに
+
+`Grimoire.js`を試すには、まず単純な`.html`を作成して以下の`<script>`でロードします。
+
+```html
+<script src="https://unpkg.com/grimoirejs-preset-basic/register/grimoire-preset-basic.js"></script>
+```
+
+このスクリプトは単なる`Grimoire.js`ではなく、いくつかのプラグインが入っているものです。このスクリプトで最初に必要な最低限の機能が利用できます。
+
+もし`minify`されたjsや、`npm`からの利用をしたいなら[ダウンロード](/guide/download.html)を参考にしてください。 **ただし、初心者にはまず`<script>`を用いての利用を推奨します。何事もシンプルなことから入るのが一番です**
+
+## 宣言的なWebGLマークアップ
+
+`Grimoire.js`では、WebGLを記述するためのマークアップ(GOML)を記述します。例えば、埋め込みたい位置に以下のように記述します。
 
 ```xml
-<goml>
-  <renderers>
-    <renderer id="main" camera=".camera"/>
-  </renderers>
-  <scenes>
-    <scene>
-      <camera class="camera"/>
-    </scene>
-  </scenes>
-</goml>
+<script type="text/goml">
+  <goml>
+   <scene>
+    <camera/>
+    <mesh color="red" position="0,0,0"/>
+   </scene>
+  </goml>
+</script>
 ```
 
-> 例1: GOMLの例
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-01">
+</iframe>
 
-例えば、以上のような例をみるとGOMLにおけるノードとは`goml`、`renderers`、`renderer`、`scenes`、`scene`や`camera`になります。
-どのようなノードであれ、`id`及び`class`を属性として持てます。
+このように、**`type='text/goml'`が指定されている`<script>`のある部分に`<canvas>`が挿入されて表示されます**
 
-ノードは以下のような要素を持つデータ構造です。
+`<mesh>`の`position`属性を操作すれば、表示されている赤い四角形が動くのがわかります。一般的なHTMLの文章をいじるように このように宣言的に操作できるのです。
 
-* 子要素(0個以上)
-* 親要素(0または1個)
-* コンポーネント(0個以上)
-* DOMParserによりパースされた対応するElement
+> GOMLファイルの読み込み
 
-**親要素**と**子要素**は言うまでもなく、ただのノードのツリー構造を表すためのものにすぎません。
+> javascriptファイルを読み込む際の`<script>`のように、`src="外部ファイルのURL"`を指定しても外部からgomlファイルを読み込むことができます。 このチュートリアルでは、簡略な説明のためhtmlに埋め込んでいますが、**通常は外部読み込みにすることを推奨します。**
 
-### コンポーネントの概説
+当然、以下のように記述すれば複数個のキャンバスを扱うこともできます。
 
-ノードはコンポーネントを持ちます。コンポーネントはGrimoire.jsにおける一定の処理を行う単位になります。
-コンポーネントはノードからAttributeあるいは属性と呼ばれる値を受け取り、それに合わせた処理を行います。
-**この概念は基本的にゲームエンジンであるUnityに近い思想なので、これを理解しているとこの概念の理解は早いでしょう。**
-
-> UnityにおけるコンポーネントとGrimoire.jsにおけるコンポーネントの違い
->
-> 以下のような関係を考えるとGrimoire.jsのコンポーネントは理解しやすいです。
->
-> * UnityにおけるGameobjectはGOMLのノードにあたります。
-> * UnityにおけるGameobjectのnameはノードのidにあたります。
-> * UnityにおけるGameobjectのtagやlayerはノードのclassで実現できます。
-> * UnityにおけるコンポーネントはGrimoire.jsにおけるコンポーネントと基本的に同義ですが、UnityはTransformを必ず持っているのが条件に対して、Grimoire.jsではどのようなノードでも持っていると保証されるコンポーネントは存在しません。
-> * つまり、ノードではあるが、シーン中に存在する(Unityにおけるヒエラルキー)に存在するとは限らないものが存在します。
-
-例えば、sceneの子要素として取り得るノード(例えば`camera`等)は必ず`Transformer`コンポーネントを所持しています。
-Transformerコンポーネントはシーン中のモデルの姿勢(= 平行移動変形 + 回転変形 + 拡大変形)を計算します。
-
-そのため、Transformerコンポーネントは以下のような属性を受け取ります。
-
-* position・・・座標(vector3型)
-* rotation・・・回転(vector3型)
-* scale・・・拡大率(vector3型)
-
-属性は必ず型を持ちます。(型については後述します。)
-
-### ノードの定義
-
-HTMLにおいては、近年のVirtual-DOMブームを除けば基本的にエンジニアが新たなHTMLタグを定義することはありません。
-GOMLにおけるタグの定義は以下のような要素で成り立ちます。
-
-* ノード名
-* デフォルトコンポーネントリスト
-* デフォルト値
-
-デフォルトコンポーネントとはそのノードをインスタンス化した際に自動でコンポーネントとしてそのノードに割り当てられるコンポーネントです。
-例えば、`goml`ノードには以下のようなコンポーネントがデフォルトコンポーネントリストに含まれています。(これが全てではありません)
-
-* CanvasInitiator・・・対象となる位置に`<canvas>`タグを配置し、`WebGLコンテキスト`を初期化するコンポーネント
-* LoopManager・・・レンダリングなどの処理のためにGrimoire.js中で行われるループを管理し、適切に更新を呼び出すためのコンポーネント
-* ...etc
-
-通常、デフォルトコンポーネントリストが空なノードは何の役割も持ちません。新たなノードを作るということは、**複数個のコンポーネントからなるノードがどう振る舞うか**をノードのデフォルトノードのリストに追加することと同義になります。
-
-ノードはデフォルト値の連想配列を同時に所持します。このデフォルト値はコンポーネントの属性に同名の属性があり、かつユーザーがGOML側から新たな値を指定しない場合に用いられる値です。
-
-### コンポーネントの定義
-
-Grimoire.jsにおけるコンポーネントの定義は以下のような要素を持ちます。
-
-* コンポーネント名
-* 属性のリスト
-* メソッドのリスト
-
-属性のリストとは、そのコンポーネントがどのような値を入力として受け取るかの、名称と型の連想配列です。
-
-メソッドのリストとは、そのコンポーネントの振る舞いを記述するためのメソッドです。詳しくは次の"メッセージのブロードキャスト"をみるとより概要が把握できるでしょう。
-
-### メッセージのブロードキャスト
-
-メッセージのブロードキャストはノードが持つ機能の一つです。あるノードにたいしてメッセージ"Update"を引数Xでブロードキャストするとは、あるノード及びその子孫全てにおいて、そのノードが持つコンポーネントの中に"Update"というメソッドがある場合これを引数Xを用いてこのメソッド呼びます。
-
-例えば、ノードに対するブロードキャストは以下のような関数の定義になっています。
-
-```typescript
-function GomlNode#broadcastMessage(layer:number,message:string,...args:any[]);
-function GomlNode#broadcastMessage(message:string,...args:[]);
+```xml
+<script type="text/goml">
+  <goml>
+   <scene>
+    <camera/>
+    <mesh color="red" position="0,0,0"/>
+   </scene>
+  </goml>
+</script>
+<script type="text/goml">
+  <goml>
+   <scene>
+    <camera/>
+    <mesh color="green" position="0,0,0"/>
+   </scene>
+  </goml>
+</script>
 ```
 
-注) `X#A`とはクラスXにおけるインスタンスメソッドAを指すものとします。
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-02">
+</iframe>
 
-上記の定義を見ればわかる通り、第一引数に数値を受け取ることがあります。この数値layerは非負の整数であり、layer番目までの子要素に対してメッセージを送ることを意味します。
-このため、`broadcastMessage(1,"Update",X)`は自分と自分の直下の子供の要素に対してのみ、Updateメソッドが存在する場合呼び出します。
+## Javascriptによる操作
 
-このことからわかる通り、layerを省略してメッセージ名から記述を始めた際、つまり`broadcastMessage("Update",X)`を呼び出したような状況下においては、これは`broadcastMessage(Number.MAX_VAUE,"Update",X)`と全く同値です。
-
-また、自分自身のコンポーネントだけを対象とする`broadcastMessage(0,"Update",X)`のエイリアスとして`sendMessage("Update",X)`が存在します。
-
-Grimoire.jsにおける様々な処理はこのメッセージを利用して処理しています。
-
-例えば、最初にScene内のUpdateが呼ばれるまで以下のようなメッセージのブロードキャストを通して初期化が行われます。
-
-1. GOMLの読み込みによってすべてのノードの構築が終了すると、GomlParserは"TreeInitialized"メッセージをルート要素にsendMessageします。
-2. `goml`ノード内にある`CanvasInitiator`がこのメッセージを受け取ると対象となるHTMLの位置に`<canvas>`を差し込みます。
-3. 初期状態で読み込まなければいけないGOMLがすべて読み込まれると、`treePrepare`メッセージをルート要素からbroadcastMessageします。
-4. この際、`goml`要素内の`LoadManager`が`canvas`上にロード画面を表示します。
-5. その他の初期ロード時なければならないリソースはこの際に`LoadManager`コンポーネントに対してリソースの読み込み終了のためのハンドラーを登録します。
-6. すべてのハンドラーが解決されると、`LoadManager`は`goml`ノードの`LoopManager`コンポーネントに対してループを開始させます。
-7. 以降毎回のループで`scene`のルートから`LoopManager`が`broadcastMessage("Update")`を行います。
-
-### 属性及び型
-
-コンポーネントは属性を0個以上持つことが可能です。
-属性は以下のようなデータ構造を持つものです。
-
-* 属性名
-* デフォルト値
-* 型名
-
-各型に対して定義されている以下のようなインターフェースを満たす関数を`コンバーター`と言います。
-
-```typescript
-function converter(rawValue:any):any;
+```xml
+<script type="text/goml" id="canvas1">
+  <goml>
+   <scene>
+    <camera/>
+    <mesh color="red" position="0,0,0"/>
+   </scene>
+  </goml>
+</script>
+<script type="text/goml">
+  <goml>
+   <scene>
+    <camera/>
+    <mesh color="green" position="0,0,0"/>
+   </scene>
+  </goml>
+</script>
 ```
 
-通常、GOMLにより記述された属性は文字列として`converter`に渡され、コンポーネント内で利用する型に変換されます。
-例えば、型に`vector3`を指定した場合はコンポーネント内部では、自動的にVector3クラスに変換されて取得できます。
+に対して、以下のようなJSを実行すると、`Grimoire.js`が読み込まれてから1秒後に上の立方体だけ青くなります。
 
-> クエリと属性
->
-> jQueryのようなクエリで検索できるNodeは、属性で検索する際にはいろいろな問題があります。
-> jQueryとは異なり、属性名と属性値での検索(例えば`camera[target='text']`)はできません。
-> これはコンバーターが逆変換が必ず可能とは限らないことと、すべての値が一意な表現と定まるとは限らないからです。
-> これは例えばrotation3がオイラー角か四元数あるいは任意軸回転により表現された文字列か定まらず、それらを同一視することが難しい、あるいはパフォーマンス的に望ましくない場合が多く想定されるからです。
-> ただし、クラスやidに関しては問題なく
+```javascript
+gr(function(){
+  setTimeout(function(){
+    gr("#canvas1")("mesh").setAttribute("color","blue");
+  },1000);
+});
+```
 
-# より発展的な内容
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-03">
+</iframe>
 
-### ノードの継承
+`jQuery`を扱ったことがある人がいれば、似たようなAPIであると気がつくことでしょう。 `gr`は、`Grimoire.js`が定義するオブジェクトで、すべてのAPIはこれを通じてアクセスすることができます。
+
+**`gr`に`function`を渡した時には、`Grimoire.js`の初期化が終わったタイミングで呼ばれます**
+
+また、**`gr`に文字列を渡してクエリで`<script>`を指定し、それにたいして操作したいノードを取得するためのクエリを指定します** (grの最初の括弧で帰ってくるのは、ある`<script>`へのクエリということに注意してください。これは初めて使う方が陥りやすい最も多いミスの一つです。)
+
+## Grimoire.jsのノード・コンポーネントシステム
+
+これまでの議論は、他のタグベースのWebGLライブラリのものと変わりありません。 しかし、`Grimoire`におけるノードやコンポーネントのシステムを一度理解すれば、いかにこのノードのシステムがよくできているかわかることでしょう。
+
+一般的にXMLやHTMLのDOMのシステムは、各ノードの親子関係を示すことができます。これはGOMLに於いても同じです。
+
+![](./images/nodes.png)
+
+実は、あるノードは **コンポーネント** と呼ばれる **一つの機能の集まり** によって構成されています。
+
+![](./images/node-have-components.png)
+
+例えば、`<mesh>`は常に、`Transform`という、座標や回転量などを管理するコンポーネントと`MeshRenderer`という、表示部分を管理しているコンポーネントの組みを意味します。
+
+`<camera>`は`Transform`と、カメラの変換の仕組みなどを管理している`Camera`コンポーネントの組を意味します。
+
+これらのコンポーネントは入力として**属性**を受け取ります。例えば、座標や回転量を管理する`Transform`は当然、`position`や`rotation`などの属性を持っています。
+
+![](./images/component-have-attributes.png)
+
+`<mesh>`に渡した、`position`属性は、この`<mesh>`が持っている`Transform`コンポーネントに渡され、パラメーターとして使用されます。このような属性は全て同様にjavascriptで操作ができます。
+
+ここで、コンポーネントの力を把握するために、以下のように記述してカメラを動かせるようにしてみましょう。
+
+```xml
+<script type="text/goml" id="canvas1">
+  <goml>
+   <scene>
+    <camera>
+      <camera.components>
+        <MouseCameraControl/>
+      </camera.components>
+    </camera>
+    <mesh color="red" position="0,0,0"/>
+   </scene>
+  </goml>
+</script>
+```
+
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-04">
+</iframe>
+
+以上のように、`<camera>`の子要素である`<camera.components>`の中に`<MouseCameraControl>`を入れたことにより、普段`<camera>`が持つ`Transform`と`Camera`の他に、`MouseCameraControl`をつけたことになります。
+
+![](./images/optional-component.png)
+
+### コンポーネントを書いてみる
+
+まだ、コンポーネントが何か議論していませんでしたね。ここでは例えばくっつけた対象を回転させ続けるコンポーネント、`Rotate`を作ってみることにしましょう。
+
+```javascript
+gr.registerComponent("Rotate",{
+  attributes:{
+    speed:
+    {
+      defaultValue:1,
+      converter:"Number"
+    }
+  },
+  $mount:function(){
+    this.phi = 0;
+  },
+  $update:function(){
+    this.phi += this.getValue("speed");
+    this.node.setAttribute("rotation",this.phi + "," + this.phi + "," + this.phi);
+  }
+})
+```
+`attributes`内の要素はこのコンポーネントが受け取れるパラメーター名とその詳細になります。
+ここでは、深く触れないことにしますが、パラメータ名から分かる通り、数値であって、初期値が`1`であることを指し示しています。
+
+これを書いた上で、いかのようなgomlを書いてみましょう。
+
+```xml
+<script type="text/goml" id="canvas1">
+  <goml>
+   <scene>
+    <camera>
+      <camera.components>
+        <MouseCameraControl/>
+      </camera.components>
+    </camera>
+    <mesh color="red" position="0,0,0">
+      <mesh.components>
+        <Rotate/>
+      </mesh.components>
+    </mesh>
+   </scene>
+  </goml>
+</script>
+```
+
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-05">
+</iframe>
+
+以下の図は、あるコンポーネントのライフサイクルを表します。今全てを理解する必要はありませんが、この図は将来あなたの役に立つことでしょう。
+
+![](./images/message-order.png)
+
+$から始まる関数は **メッセージハンドラー** と呼ばれ、コンポーネントのライフサイクルの随所で呼ばれることになります。
+このメッセージハンドラー内の`this`はそれぞれのインスタンスにバインドされます。
+
+メッセージハンドラーに関してはまだまだ触れなくてはならないことも多いのですが、ここでは単なるイベントハンドラーという程度の理解で問題ありません。
+
+### ノードを定義してみる
+
+もし、回転する`<mesh>`を大量に描きたいなら上のように書くのは不便ですね。ここで、`<rotated-mesh/>`なるものを用意するようにしてみましょう。
+
+```javascript
+gr.registerNode("rotated-mesh",["Rotate"],{},"mesh");
+```
+
+```xml
+<script type="text/goml" id="canvas1">
+  <goml>
+   <scene>
+    <camera>
+      <camera.components>
+        <MouseCameraControl/>
+      </camera.components>
+    </camera>
+    <rotated-mesh color="red" position="-2,0,0"/>
+    <rotated-mesh color="green" position="0,0,0" speed="2"/>
+    <rotated-mesh color="blue" position="2,0,0" speed="3"/>
+   </scene>
+  </goml>
+</script>
+```
+
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-06">
+</iframe>
+
+## 次は
+
+ここまで理解したあなたは`Grimoire.js`の最も基本的な仕組みを理解しています。全てはこの上に成り立っているのです。例外はありません。
+
+このような構造を把握した上で、あなたが恐らく聞きたくて聴きたくてたまらないのは描画周りでしょう。どうしたら、モデルが書けるのか、テクスチャが貼れるのか。
+そんなあなたは[チュートリアル](/tutorial)をする準備ができています。さあ、次の一歩へ進みましょう。
