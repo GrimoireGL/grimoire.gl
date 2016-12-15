@@ -24,7 +24,7 @@ order: 5
 ここでは`<camera>`タグについている`MouseCameraControl`コンポーネントの属性を変更してみましょう。
 
 ```javascript
-$$("camera")("MouseCameraControl").setAttribute("zoomSpeed", 1);
+$$("camera").first().getComponent("MouseCameraControl").setAttribute("zoomSpeed", 1);
 ```
 
 <iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t05-02"></iframe>
