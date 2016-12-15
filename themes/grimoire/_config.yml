@@ -3,6 +3,8 @@ menu:
   Home: /
   Archives: /archives
 rss: /atom.xml
+sitemap:
+  path: sitemap.xml
 
 # Content
 excerpt_link: Read More

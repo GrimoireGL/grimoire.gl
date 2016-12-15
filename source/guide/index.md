@@ -14,6 +14,37 @@ order: 1
 
 `Grimoire.js`は、このWebにおける`WebGL`のあり方を変えます。Webの人がWebの書き方流で扱え、もともとCGなどをいじっていた方は従来に似た書き方をすると、その部品はすぐにWeb畑の人が使えるようになる。**WebGLが画像や動画に次ぐWebエンジニアが持つ筆の一つにする。** それがGrimoire.jsの成し遂げることです。
 
+## Grimoire.jsで何ができるの?
+
+さて、では具体的に **Grimoire.js** を用いてどのようなことができるのでしょうか?
+
+例えば、単純に **3Dモデルを表示することもできます** し、
+
+![](https://i.gyazo.com/2c6f811b72d565d76ef2b0f846af28bd.gif)
+
+https://cx20.github.io/gltf-test/examples/grimoiregl/index.html?model=VC&scale=0.2
+
+> glTF表示テスト by [@cx20](https://github.com/cx20)
+
+高度な **シェーダーアートを簡単に表示すること** もできます。
+
+
+![ポストエフェクト](https://pnlybubbles-gomibako.github.io/grimoirejs-advent-calendar-7/)
+
+http://qiita.com/pnlybubbles/items/c87e8e7466ecdc11a23c
+
+> [ポストエフェクトする(Grimoire.js Advent Calender 2016)](http://qiita.com/pnlybubbles/items/c87e8e7466ecdc11a23c)[@pnlybubbles](https://github.com/pnlybubbles)
+
+あるいは、**WebCamのようなHTML5の様々な機能と連携** したアプリケーションも作れます。
+
+![Webカメラサンプル](https://i.gyazo.com/b4ff87de431cf756f65e716525f41418.gif)
+
+https://grimoiregl.github.io/grimoire.gl-example/#webcam
+
+> 公式サンプル
+
+あなたがどのように、使いたいかにせよ、もしそれが`WebGL`の表現力を必要とするなら、十分に`Grimoire.js`の恩恵を受けることができるでしょう。
+
 ## はじめに
 
 `Grimoire.js`を試すには、まず単純な`.html`を作成して以下の`<script>`でロードします。
@@ -253,4 +284,4 @@ gr.registerNode("rotated-mesh",["Rotate"],{},"mesh");
 ここまで理解したあなたは`Grimoire.js`の最も基本的な仕組みを理解しています。全てはこの上に成り立っているのです。例外はありません。
 
 このような構造を把握した上で、あなたが恐らく聞きたくて聴きたくてたまらないのは描画周りでしょう。どうしたら、モデルが書けるのか、テクスチャが貼れるのか。
-そんなあなたは[チュートリアル](/tutorial)をする準備ができています。さあ、次の一歩へ進みましょう。
+そんなあなたは **[チュートリアル](/tutorial)** をする準備ができています。さあ、次の一歩へ進みましょう。
