@@ -1,7 +1,7 @@
 gr.registerComponent('Rotate', {
   attributes: {
     speed: {
-      defaultValue: '1',
+      default: '1',
       converter: 'Number',
     },
   },
@@ -9,7 +9,7 @@ gr.registerComponent('Rotate', {
     this.phi = 0;
   },
   $update: function () {
-    this.phi += this.getValue('speed');
+    this.phi += this.getAttribute('speed');
     this.node.setAttribute('rotation', this.phi + ',' + this.phi + ',' + this.phi);
   },
 });
