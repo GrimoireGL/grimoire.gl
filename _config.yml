@@ -3,9 +3,9 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Grimoire.js
+title: Grimoire.js - WebGL framework for Web development -
 subtitle:
-description: A service-oriented Web3D framework
+description: Grimoire(グリモア).js - Highly extensible tag based WebGL framework developed for Web development.
 author: LimeStreem
 language: ja-jp
 timezone:
