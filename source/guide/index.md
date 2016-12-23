@@ -202,7 +202,7 @@ gr.registerComponent("Rotate",{
   attributes:{
     speed:
     {
-      defaultValue:1,
+      default:1,
       converter:"Number"
     }
   },
