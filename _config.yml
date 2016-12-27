@@ -13,8 +13,8 @@ timezone:
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 # url: http://grimoire.gl
-url: https://grimoiregl.github.io/grimoire.gl/
-root: /
+url: https://grimoiregl.github.io
+root: /grimoire.gl/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
