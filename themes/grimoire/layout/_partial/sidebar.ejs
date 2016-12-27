@@ -3,7 +3,7 @@
   <ul id="list">
     <% site.pages.filter(function(p) { return p.path.split('/')[0] === doc }).sort('order').each(function (p) { %>
       <li class="<%- p.path === page.path ? 'active' : '' %>">
-        <a href="/<%- p.path %>"><%- p.title %></a>
+        <a href="<%- url_for(p.path) %>"><%- p.title %></a>
       </li>
     <% }) %>
   </ul>
