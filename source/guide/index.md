@@ -31,7 +31,7 @@ https://cx20.github.io/gltf-test/examples/grimoiregl/index.html?model=VC&scale=0
 
 ![ポストエフェクト](https://i.gyazo.com/9d519c71b24ae27fccd35413e44a5b73.gif)
 
-http://qiita.com/pnlybubbles/items/c87e8e7466ecdc11a2
+http://qiita.com/pnlybubbles/items/c87e8e7466ecdc11a23c
 
 > [ポストエフェクトする(Grimoire.js Advent Calender 2016)](http://qiita.com/pnlybubbles/items/c87e8e7466ecdc11a23c)[@pnlybubbles](https://github.com/pnlybubbles)
 
