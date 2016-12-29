@@ -599,3 +599,46 @@ Grimoire.jsではこのマクロを、GOML側の変化によって動的に変�
 また、遠くから描画する描画順序の場合は、同じ描画順序の時、遠い方を優先し、そうでないときは近い方から描画されます。
 
 通常、アルファ値を使う場合、遠くから描画しないと透けて見えなくなってしまいますが、使わない場合、近くから描画した方が深度テストで落ちるピクセルが多いため通常パフォーマンスが向上するはずです。
+
+## 拡張
+
+この項では、以上で定義されたデフォルトの扱いについてそれぞれの拡張の方法について議論する。
+
+### 新しいUniform変数のセマンティクスを追加する
+
+新しいUniform変数のセマンティクスを追加するには、`UniformResolverRegistry`クラスを用います。
+
+以下のようにインポートします。
+
+```javascript
+import UniformResolverRegistry from "grimoirejs-fundamental/ref/Material/UniformResolverRegistry";
+```
+
+あるいは、
+
+```javascript
+var UniformResolverRegistry = gr.lib.fundamental.Material.UniformResolverRegistry;
+```
+
+さらに、`UniformResolverRegistry.add`メソッドを用います。
+
+```javascript
+UniformResolverRegistry.add("新しいセマンティクス名",変数レジスターを返す関数);
+```
+
+例えば、
+
+```javascript
+UniformResolverRegistry.add("新しいセマンティクス名",(valInfo)=>{
+  return (proxy,args)=>{
+    proxy.uniformFloat(valInfo.name,0);
+  };
+});
+```
+
+のようなことを記述すれば、このセマンティクスに対しては0が代入されることになります。
+
+例えば、オーディオの変数を取れるようにしたりなど、この拡張性は非常に便利です。
+実際には以下のコードが非常に参考になるでしょう。
+
+https://github.com/GrimoireGL/grimoirejs-fundamental/tree/master/src/Material/Uniforms
