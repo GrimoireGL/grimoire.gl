@@ -50,6 +50,19 @@ SlackやIssueで聞けば、あなたの今悩んでいる内容に解決でき�
 
 是非[Github](https://github.com/GrimoireGL/GrimoireJS)から伝えてください。明日の安定性はあなたのバグ報告から誕生します。
 
+### ドキュメントの翻訳
+
+Grimoire.jsでは、現状ではGithub上を除く公式サイト上のドキュメントは日本語で記されています。  
+しかし、これは最終的には英語になるべきであり、現状はコアチームの開発速度とドキュメントの維持の折衷案としてこの方法になっています。
+
+このプロジェクトでは、ドキュメントを翻訳する協力をしていただける方を募集しています。日本発のOSSが海外へ羽ばたくのに協力していただける方は是非ご協力ください。
+(この場合、お手数ですがまずslackにお入りください。)
+
+We are now looking for translators! Currently our documents are written in Japanese except some documents on Github.
+This is just for performance to write documents of core development team.  But we really want to translate all our documents in English.
+
+If you are interested in our team, please join our slack by the link above.
+
 ### ドキュメントを書く
 
 これらのページはGithub上の`md`ファイルから自動生成されています。誰でも以下のページから編集ができます。
