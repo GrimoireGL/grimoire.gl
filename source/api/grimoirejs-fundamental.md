@@ -40,7 +40,7 @@ $ npm install grimoirejs-fundamental --save
 
 ### コンポーネント
 
-  |コンバーター名|説明|
+  |コンポーネント名|説明|
   |:-:|:-:|
   |[`<AssetLoadingManagerComponent>`](#AssetLoadingManagerComponentコンポーネント)||
   |[`<CameraComponent>`](#CameraComponentコンポーネント)||
@@ -65,7 +65,7 @@ $ npm install grimoirejs-fundamental --save
 
 ### コンバーター
 
-  |ノード名|説明|
+  |コンバーター名|説明|
   |:-:|:-:|
   |[`<CanvasSizeConverter>`](#CanvasSizeConverterコンバーター)||
   |[`<GeometryConverter>`](#GeometryConverterコンバーター)||
