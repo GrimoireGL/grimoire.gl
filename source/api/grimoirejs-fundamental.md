@@ -3,962 +3,1056 @@ type: doc
 title: grimoirejs-fundamental
 order: 2
 ---
+## 概要
 
-この記事は**grimoirejs-fundamental**プラグイン(以降、fundamental)について記述したものです。
-このプラグインはGrimoire.jsが提供する最も基本的なプラグインの一つであり、3D描画関連の基礎になる共通のレイヤーを提供します。
+WIP
 
-**特別な事情がない限り、任意の3D描画を前提とするプラグインはこのプラグインを前提プラグインとし、fundamentalに含まれているAPIを活用して3D描画を実装すべきです。**
+## インストール
 
-fundamentalは以下のような特徴を持ちます。
-
-* 拡張可能性
-* 高い分業性(シェーダーやシーン構築など)
-
-## コンバーター
-
-### String
-
-**出力型**
-
-```
-string
+```sh
+$ npm install grimoirejs-fundamental --save
 ```
 
-**入力可能なもの**
+[unpkg.com](https://unpkg.com)によるCDNも利用可能。
 
-* String ・・・ そのまま出力されます。
-* Object ・・・ toString関数が存在する場合それが呼び出されます。
+** [CDN - grimoirejs-fundamental - ](https://unpkg.com/grimoirejs-fundamental/register/.js) **
 
-### Number
+## 一覧
 
-**出力型**
+### ノード
 
-```
-number
-```
+  |ノード名|説明|
+  |:-:|:-:|
+  |[`<goml>`](#gomlノード)|ツリーに唯一一つ必要なコンポーネントなどをつけておくためのノード。|
+  |[`<scene>`](#sceneノード)|カメラや、ライト、メッシュなど空間に配置するためのノードです。|
+  |[`<object>`](#objectノード)|メッシュやカメラなどのベースとなるノードです。このノードの子要素には親要素の変型量(`position`や`rotation`)などが伝搬します。|
+  |[`<camera>`](#cameraノード)|3D空間を撮影するためのカメラを意味するノードです。シーンをレンダリングするには最低一つのカメラがシーンに属していなければなりません。|
+  |[`<mesh>`](#meshノード)|3D空間上に存在する映るものを意味するノードです。シーンに何かを写すには最低一つのメッシュがシーンに属していなければなりません。|
+  |[`<renderer>`](#rendererノード)|キャンバス上の領域をどのように描画するかを示すためのノードです。gomlの読み込み時に一つも存在しない場合は、自動的にgoml直下に生成されます。|
+  |[`<geometry>`](#geometryノード)| |
+  |[`<texture>`](#textureノード)|テクスチャを読み込むためのノードです。通常、テクスチャはurlをマテリアルに指定するなどして読み込まれますが、|
+  |[`<material>`](#materialノード)|マテリアルを生成するためのノードです。メッシュからこのノードを参照して利用することにより、複数のメッシュで共通のマテリアルのインスタンスを参照させることができます。|
+  |[`<import-material>`](#import-materialノード)| |
+  |[`<texture-buffer>`](#texture-bufferノード)|`<renderer>`ノードの直下に含まれうるノードの一つです。|
+  |[`<render-buffer>`](#render-bufferノード)|`<renderer>`ノードの直下に含まれうるノードの一つです。|
+  |[`<render-scene>`](#render-sceneノード)|`<renderer>`ノードの直下に含まれうるノードの一つです。|
+  |[`<render-quad>`](#render-quadノード)|`<renderer>`ノードの直下に含まれうるノードの一つです。|
 
-**入力可能なもの**
+### コンポーネント
 
-* String・・・Number.parseNumberにより処理され出力されます。
-* Number・・・そのまま出力されます。
+  |コンバーター名|説明|
+  |:-:|:-:|
+  |[`<CanvasSizeConverter>`](#CanvasSizeConverterコンポーネント)| |
+  |[`<GeometryConverter>`](#GeometryConverterコンポーネント)| |
+  |[`<MaterialConverter>`](#MaterialConverterコンポーネント)| |
+  |[`<NodeConverter>`](#NodeConverterコンポーネント)| |
+  |[`<PositionConverter>`](#PositionConverterコンポーネント)| |
+  |[`<TextureConverter>`](#TextureConverterコンポーネント)| |
+  |[`<ViewportConverter>`](#ViewportConverterコンポーネント)| |
 
-### Boolean
+### コンバーター
 
-**出力型**
+  |ノード名|説明|
+  |:-:|:-:|
+  |[`<AssetLoadingManagerComponent>`](#AssetLoadingManagerComponentコンバーター)| |
+  |[`<CameraComponent>`](#CameraComponentコンバーター)| |
+  |[`<FullscreenComponent>`](#FullscreenComponentコンバーター)| |
+  |[`<GeometryComponent>`](#GeometryComponentコンバーター)| |
+  |[`<GeometryRegistoryComponent>`](#GeometryRegistoryComponentコンバーター)| |
+  |[`<HTMLBinderComponent>`](#HTMLBinderComponentコンバーター)| |
+  |[`<MaterialComponent>`](#MaterialComponentコンバーター)| |
+  |[`<MaterialContainerComponent>`](#MaterialContainerComponentコンバーター)| |
+  |[`<MaterialImporterComponent>`](#MaterialImporterComponentコンバーター)| |
+  |[`<MeshRenderer>`](#MeshRendererコンバーター)| |
+  |[`<MouseCameraControlComponent>`](#MouseCameraControlComponentコンバーター)| |
+  |[`<RenderBufferComponent>`](#RenderBufferComponentコンバーター)| |
+  |[`<RendererComponent>`](#RendererComponentコンバーター)| |
+  |[`<RendererManagerComponent>`](#RendererManagerComponentコンバーター)| |
+  |[`<RenderQuadComponent>`](#RenderQuadComponentコンバーター)| |
+  |[`<RenderSceneComponent>`](#RenderSceneComponentコンバーター)| |
+  |[`<SceneComponent>`](#SceneComponentコンバーター)| |
+  |[`<TextureBufferComponent>`](#TextureBufferComponentコンバーター)| |
+  |[`<TextureComponent>`](#TextureComponentコンバーター)| |
+  |[`<TransformComponent>`](#TransformComponentコンバーター)| |
 
-```
-boolean
-```
+## ノード詳細
 
-**入力可能なもの**
 
-* String・・・"true"もしくは"false"のみ
-* Boolean・・・そのまま出力されます。
+### gomlノード
 
-### Component
 
-**出力型**
 
-```
-<T> where T extends Component
-```
 
-**コンバーター引数**
+ツリーに唯一一つ必要なコンポーネントなどをつけておくためのノード。
+特に、`<canvas>`の初期化やループの管理など、最初の初期化時のパラメーターを受け取るためのコンポーネントとともに、
+`<canvas>`の設定(`width`や`height`)またはフルスクリーンなどのコンポーネントを含む。
 
-* target・・・取得対象のコンポーネント名
+#### コンポーネント
 
-**入力可能なもの**
+* CanvasInitializer
+* LoopManager
+* AssetLoadingManager
+* GeometryRegistory
+* RendererManager
+* Fullscreen
 
-* String・・・クエリとして解釈されます。属するツリーから該当する**最初の一つ**の**ノード**を見つけ出し、そこから`target`に合致するコンポーネントを取得します。
-* GomlNode・・・対象となるノードの中から最初の`target`に合致するコンポーネントを取り出します。
-* Component・・・そのまま渡されます(名称が`target`に指定されたものでない時例外がでます)
 
-### Vector2
+### sceneノード
 
-**出力型**
 
-```
-Vector2
-```
 
-**入力可能なもの**
 
-* String・・・Vector2.parseにより処理されます。
-* Vector2・・・そのまま渡されます。
+カメラや、ライト、メッシュなど空間に配置するためのノードです。
+全ての場面に存在する座標を持ちうるノード(`TransformComponent`を含むノード)は必ずこのノードの子ノードのとして存在する必要があります。
 
-### Vector3
+#### コンポーネント
 
-**出力型**
+* Scene
 
-```
-Vector3
-```
 
-**入力可能なもの**
+### objectノード
 
-* String・・・Vector3.parseにより処理されます。
-* Vector3・・・そのまま処理されます。
 
-### Vector4
 
-**出力型**
 
-```
-Vector4
-```
+メッシュやカメラなどのベースとなるノードです。このノードの子要素には親要素の変型量(`position`や`rotation`)などが伝搬します。
+詳しくは`TransformComponent`を参照すると良いでしょう。
 
-**入力可能なもの**
+#### コンポーネント
 
-* String・・・Vector4.parseにより処理されます。
-* Vector4・・・そのまま処理されます。
+* Transform
 
-### Color3
 
-```
-Color3
-```
+### cameraノード
 
-**入力可能なもの**
+**継承元:&lt;object&gt;**
 
-* String・・・Color3.parseにより処理されます。
-* Color3・・・そのまま処理されます。
-* Color4・・・Alpha値を無視したColor3を生成して渡されます。
 
 
-### Color4
-
-```
-Color4
-```
-
-**入力可能なもの**
-
-* String・・・Color4.parseにより処理されます。
-* Color4・・・そのまま処理されます。
-* Color3・・・Alpha値を1.0としたColor4を生成して渡されます。
-
-## AssetLoadingManager コンポーネント
-<!-- EDIT HERE(@Component)-->
-非同期的な解決を必要とするようなリソース群のロードを管理しているコンポーネント。
-このコンポーネントにより、初期時にロード画面を表示します。
-また、ロード終了後に他のコンポーネントに処理の開始を通知してレンダリングループを開始します。
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| loadingProgress | number | 0 | なし |
-| autoStart | boolean | true | なし |
-
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### loadingProgress 属性
-
- * `converter`: number
- * `defaultValue`: 0
-
-<!-- EDIT HERE(loadingProgress)-->
-読み取り専用。現在のロード状況を100分率で返します。
-<!-- /EDIT HERE-->
-### autoStart 属性
-
- * `converter`: boolean
- * `defaultValue`: true
-
-<!-- EDIT HERE(autoStart)-->
-リソースのロード終了後に自動的にレンダリングループを開始するかどうか。
-これがfalseの場合、ユーザーが自らLoopManagerに対してbeginメソッドを呼ばなければ、一切の描画処理は行われません。
-<!-- /EDIT HERE-->
-
-## Camera コンポーネント
-<!-- EDIT HERE(@Component)-->
-
-シーンの描画をするカメラの役割をするコンポーネントです。
-シーン中の物体を描画する際にこのコンポーネントにより生成されたビュー行列や射影行列が用いられます。
-
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| fovy | number | 0.3 | なし |
-| near | number | 0.01 | なし |
-| far | number | 10 | なし |
-| aspect | number | 1.6 | なし |
-
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### fovy 属性
-
- * `converter`: number
- * `defaultValue`: 0.3
-
-<!-- EDIT HERE(fovy)-->
-視野角。ラジアン単位で指定します。
-1/2π以上の値は指定できません。
-<!-- /EDIT HERE-->
-### near 属性
-
- * `converter`: number
- * `defaultValue`: 0.01
-
-<!-- EDIT HERE(near)-->
-近クリップ面(カメラから物体が映る最短の距離)を指定します。
-必ず、正の値を指定する必要があります。
-<!-- /EDIT HERE-->
-### far 属性
-
- * `converter`: number
- * `defaultValue`: 10
-
-<!-- EDIT HERE(far)-->
-遠クリップ面(カメラから物体が映る最長の距離)を指定します。
-遠ければ遠いほどいいわけではなく、近クリップ面との差があまりにも大きすぎると、物体の前後関係が曖昧になってしまう場所が発生し得ます。
-<!-- /EDIT HERE-->
-### aspect 属性
-
- * `converter`: number
- * `defaultValue`: 1.6
-
-<!-- EDIT HERE(aspect)-->
-スクリーン上のアスペクト比を指定します。
-<!-- /EDIT HERE-->
-
-## CanvasInitializer コンポーネント
-<!-- EDIT HERE(@Component)-->
-キャンバスの初期化を司るコンポーネントです。
-このコンポーネントに対してtreeInitializedが呼ばれた瞬間にスクリプトタグの存在した場所に対して`<canvas>`タグの生成を試みます。
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| width | number | 640 | なし |
-| height | number | 480 | なし |
-
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### width 属性
-
- * `converter`: number
- * `defaultValue`: 640
-
-<!-- EDIT HERE(width)-->
-キャンバスの幅を指します。
-<!-- /EDIT HERE-->
-### height 属性
-
- * `converter`: number
- * `defaultValue`: 480
-
-<!-- EDIT HERE(height)-->
-キャンバスの高さを指します。
-<!-- /EDIT HERE-->
-
-## Geometry コンポーネント
-<!-- EDIT HERE(@Component)-->
-あるプリミティブなどのジオメトリを含まれているGOML内でで使用可能にします。
-このコンポーネントは`type`属性に合わせて必要な属性値を動的に生成します。
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| type | string | undefined | なし |
-| name | string | undefined | なし |
+3D空間を撮影するためのカメラを意味するノードです。シーンをレンダリングするには最低一つのカメラがシーンに属していなければなりません。
 
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### type 属性
 
- * `converter`: string
- * `defaultValue`: undefined
+#### コンポーネント
 
-<!-- EDIT HERE(type)-->
-生成するジオメトリのタイプです。任意のジオメトリを`GeometryFactory.addType`から追加することによりユーザーが独自のパラメーターを割り当てたジオメトリを作成することができます。
-<!-- /EDIT HERE-->
-### name 属性
+* Camera
 
- * `converter`: string
- * `defaultValue`: undefined
 
-<!-- EDIT HERE(name)-->
-生成したジオメトリにつける名前です。これを用いて`GeometryConverter`は対象となるジオメトリを識別します。
-例えば、`MeshRenderer`の`geometry`属性などに指定する名前になります。
-<!-- /EDIT HERE-->
+### meshノード
 
-## GeometryRegistory コンポーネント
-<!-- EDIT HERE(@Component)-->
-Geometryの登録に関する処理をあらかじめ行うためのコンポーネントです。
+**継承元:&lt;object&gt;**
 
-gomlノードにあらかじめ含められており、ユーザーが直接いじる必要はほぼありません。
-<!-- /EDIT HERE-->
-属性なし
-## LoopManager コンポーネント
-<!-- EDIT HERE(@Component)-->
-レンダリングループを管理するコンポーネントです。
-loopEnabledがtrueである場合、自動的にそのブラウザのrequestAnimationFrameの際に処理を実行します。
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| loopEnabled | boolean | false | なし |
 
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### loopEnabled 属性
 
- * `converter`: boolean
- * `defaultValue`: false
+3D空間上に存在する映るものを意味するノードです。シーンに何かを写すには最低一つのメッシュがシーンに属していなければなりません。
 
-<!-- EDIT HERE(loopEnabled)-->
-ループが有効かどうか。
-通常、この属性を編集する必要はありません。AssetLoadingManagerコンポーネントがロード終了時に自動的にtrueにマークします。
-<!-- /EDIT HERE-->
+メッシュは、マテリアル(材質)とジオメトリ(形状)からなります。この2つの指定を変えることで、様々な表現が3D空間上で可能になります。
 
-## Material コンポーネント
-<!-- EDIT HERE(@Component)-->
+#### コンポーネント
 
+* MaterialContainer
+* MeshRenderer
 
 
+### rendererノード
 
 
 
 
+キャンバス上の領域をどのように描画するかを示すためのノードです。gomlの読み込み時に一つも存在しない場合は、自動的にgoml直下に生成されます。
 
+1つ以上のレンダラーを含むことで、キャンバスの複数の領域をレンダリングしたりすることができるようになります。
+また、この子要素に指定する`<render-XXX>`ノードなどによって、どのようにその領域を描画するかが決定されます。
 
+通常、`<renderer>`の子ノードに何も存在しない場合、自動的に`<render-scene>`タグが生成されます。
 
+#### コンポーネント
 
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| type | string | undefined | なし |
+* Renderer
 
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### type 属性
 
- * `converter`: string
- * `defaultValue`: undefined
+### geometryノード
 
-<!-- EDIT HERE(type)-->
-<!-- /EDIT HERE-->
 
-## MaterialContainer コンポーネント
-<!-- EDIT HERE(@Component)-->
 
 
+単純な変形(`scale`、`position`、`rotation`だけで表せない)、例えば円の分割数などを指定したい別の形状を明示的に生成するためのノードです。
 
+#### コンポーネント
 
+* Geometry
 
 
+### textureノード
 
 
 
 
+テクスチャを読み込むためのノードです。通常、テクスチャはurlをマテリアルに指定するなどして読み込まれますが、
+サンプラの指定などをしたい場合、このタグで明示的に読み込むことにより読み込むことができます。
 
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| material | material | undefined | `componentBoundTo`</br> "_materialComponent" </br>    </br>  </br> |
+#### コンポーネント
 
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### material 属性
+* Texture
 
- * `converter`: material
- * `defaultValue`: undefined
 
-<!-- EDIT HERE(material)-->
-<!-- /EDIT HERE-->
+### materialノード
 
-## MaterialImporter コンポーネント
-<!-- EDIT HERE(@Component)-->
 
 
 
+マテリアルを生成するためのノードです。メッシュからこのノードを参照して利用することにより、複数のメッシュで共通のマテリアルのインスタンスを参照させることができます。
 
+これは、同時にマテリアルの値が編集できるだけでなく、パフォーマンス的にも大きな利点をもたらします。
 
+#### コンポーネント
 
+* Material
 
 
+### import-materialノード
 
 
 
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| type | string | undefined | なし |
-| src | string | undefined | なし |
 
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### type 属性
+Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテリアルを読み込むためのノードです。
 
- * `converter`: string
- * `defaultValue`: undefined
+#### コンポーネント
 
-<!-- EDIT HERE(type)-->
-<!-- /EDIT HERE-->
-### src 属性
+* MaterialImporter
 
- * `converter`: string
- * `defaultValue`: undefined
 
-<!-- EDIT HERE(src)-->
-<!-- /EDIT HERE-->
+### texture-bufferノード
 
-## MaterialManager コンポーネント
-<!-- EDIT HERE(@Component)-->
 
 
 
+`<renderer>`ノードの直下に含まれうるノードの一つです。
 
+このノードによってレンダリングに用いるカラーバッファを生成することができます。
+カラーバッファはオフスクリーンレンダリングなどへの利用など様々な面で利用することができます。
 
+#### コンポーネント
 
+* TextureBuffer
 
 
+### render-bufferノード
 
 
 
-<!-- /EDIT HERE-->
-属性なし
-## MeshRenderer コンポーネント
-<!-- EDIT HERE(@Component)-->
 
+`<renderer>`ノードの直下に含まれうるノードの一つです。
 
+このノードによってレンダリングに用いる深度バッファやステンシルバッファを生成することができます。
 
+#### コンポーネント
 
+* RenderBuffer
 
 
+### render-sceneノード
 
 
 
 
+`<renderer>`ノードの直下に含まれうるノードの一つです。
 
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| geometry | geometry | "quad" | なし |
-| targetBuffer | string | "default" | なし |
-| layer | string | "default" | なし |
-| drawCount | number | Number.MAX_VALUE | なし |
-| drawOffset | number | 0 | なし |
+このノードは`out`に指定されたテクスチャ(デフォルトではキャンバス自身)に対して、シーンの内容を描画します。
 
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### geometry 属性
+#### コンポーネント
 
- * `converter`: geometry
- * `defaultValue`: "quad"
+* RenderScene
 
-<!-- EDIT HERE(geometry)-->
-<!-- /EDIT HERE-->
-### targetBuffer 属性
 
- * `converter`: string
- * `defaultValue`: "default"
+### render-quadノード
 
-<!-- EDIT HERE(targetBuffer)-->
-<!-- /EDIT HERE-->
-### layer 属性
 
- * `converter`: string
- * `defaultValue`: "default"
 
-<!-- EDIT HERE(layer)-->
-<!-- /EDIT HERE-->
-### drawCount 属性
 
- * `converter`: number
- * `defaultValue`: Number.MAX_VALUE
+`<renderer>`ノードの直下に含まれうるノードの一つです。
 
-<!-- EDIT HERE(drawCount)-->
-<!-- /EDIT HERE-->
-### drawOffset 属性
+このノードは`out`に指定されたテクスチャ(デフォルトではキャンバス自身)に対して、単純な四角形(`quad`)を指定されたマテリアルで描画します。
 
- * `converter`: number
- * `defaultValue`: 0
+#### コンポーネント
 
-<!-- EDIT HERE(drawOffset)-->
-<!-- /EDIT HERE-->
+* MaterialContainer
+* RenderQuad
 
-## MouseCameraControl コンポーネント
-<!-- EDIT HERE(@Component)-->
 
 
 
+## コンポーネント詳細
 
 
+### AssetLoadingManagerComponentコンポーネント
 
 
 
 
+#### 属性
 
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+|loadingProgress|Number| |
+|autoStart|Boolean| |
+|enableLoader|Boolean| |
 
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| rotateX | number | 1 | なし |
-| rotateY | number | 1 | なし |
-| moveZ | number | 1 | なし |
-| moveSpeed | number | 1 | なし |
 
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### rotateX 属性
+##### loadingProgress属性
 
- * `converter`: number
- * `defaultValue`: 1
+**初期値** ・・・ `0`  
+**コンバーター** ・・・ `Number`
 
-<!-- EDIT HERE(rotateX)-->
-<!-- /EDIT HERE-->
-### rotateY 属性
 
- * `converter`: number
- * `defaultValue`: 1
 
-<!-- EDIT HERE(rotateY)-->
-<!-- /EDIT HERE-->
-### moveZ 属性
 
- * `converter`: number
- * `defaultValue`: 1
+##### autoStart属性
 
-<!-- EDIT HERE(moveZ)-->
-<!-- /EDIT HERE-->
-### moveSpeed 属性
+**初期値** ・・・ `true`  
+**コンバーター** ・・・ `Boolean`
 
- * `converter`: number
- * `defaultValue`: 1
 
-<!-- EDIT HERE(moveSpeed)-->
-<!-- /EDIT HERE-->
 
-## RenderBuffer コンポーネント
-<!-- EDIT HERE(@Component)-->
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| name | string | undefined | なし |
 
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### name 属性
+##### enableLoader属性
 
- * `converter`: string
- * `defaultValue`: undefined
+**初期値** ・・・ `true`  
+**コンバーター** ・・・ `Boolean`
 
-<!-- EDIT HERE(name)-->
-<!-- /EDIT HERE-->
 
-## Renderer コンポーネント
-<!-- EDIT HERE(@Component)-->
 
 
 
+### CameraComponentコンポーネント
 
 
 
 
+#### 属性
 
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+|fovy|Angle2D| |
+|near|Number| |
+|far|Number| |
+|aspect|Number| |
+|autoAspect|Boolean| |
+|orthoSize|Number| |
+|orthogonal|Boolean| |
 
 
+##### fovy属性
 
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| camera | component | "camera" | `target`</br> "CAMERA"</br>    </br> |
-| viewport | viewport | "auto" | なし |
+**初期値** ・・・ `45d`  
+**コンバーター** ・・・ `Angle2D`
 
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### camera 属性
 
- * `converter`: component
- * `defaultValue`: "camera"
 
-<!-- EDIT HERE(camera)-->
-<!-- /EDIT HERE-->
-### viewport 属性
 
- * `converter`: viewport
- * `defaultValue`: "auto"
+##### near属性
 
-<!-- EDIT HERE(viewport)-->
-<!-- /EDIT HERE-->
+**初期値** ・・・ `0.01`  
+**コンバーター** ・・・ `Number`
 
-## RendererManager コンポーネント
-<!-- EDIT HERE(@Component)-->
 
 
 
+##### far属性
 
+**初期値** ・・・ `100`  
+**コンバーター** ・・・ `Number`
 
 
 
 
+##### aspect属性
 
+**初期値** ・・・ `1.6`  
+**コンバーター** ・・・ `Number`
 
 
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| bgColor | color4 | new Color4(0, 0, 0, 1) | なし |
 
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### bgColor 属性
 
- * `converter`: color4
- * `defaultValue`: new Color4(0, 0, 0, 1)
+##### autoAspect属性
 
-<!-- EDIT HERE(bgColor)-->
-<!-- /EDIT HERE-->
+**初期値** ・・・ `true`  
+**コンバーター** ・・・ `Boolean`
 
-## RenderQuad コンポーネント
-<!-- EDIT HERE(@Component)-->
 
 
 
+##### orthoSize属性
 
+**初期値** ・・・ `100`  
+**コンバーター** ・・・ `Number`
 
 
 
 
+##### orthogonal属性
 
+**初期値** ・・・ `false`  
+**コンバーター** ・・・ `Boolean`
 
 
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| out | string | "default" | なし |
-| depthBuffer | string | undefined | なし |
-| targetBuffer | string | "default" | なし |
-| clearColor | color4 | "#0000" | なし |
-| clearColorEnabled | boolean | true | なし |
-| clearDepthEnabled | boolean | true | なし |
-| clearDepth | number | 1.0 | なし |
 
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### out 属性
 
- * `converter`: string
- * `defaultValue`: "default"
 
-<!-- EDIT HERE(out)-->
-<!-- /EDIT HERE-->
-### depthBuffer 属性
+### FullscreenComponentコンポーネント
 
- * `converter`: string
- * `defaultValue`: undefined
 
-<!-- EDIT HERE(depthBuffer)-->
-<!-- /EDIT HERE-->
-### targetBuffer 属性
 
- * `converter`: string
- * `defaultValue`: "default"
 
-<!-- EDIT HERE(targetBuffer)-->
-<!-- /EDIT HERE-->
-### clearColor 属性
+#### 属性
 
- * `converter`: color4
- * `defaultValue`: "#0000"
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+|fullscreen|Boolean| |
+|fullscreenTarget|String| |
 
-<!-- EDIT HERE(clearColor)-->
-<!-- /EDIT HERE-->
-### clearColorEnabled 属性
 
- * `converter`: boolean
- * `defaultValue`: true
+##### fullscreen属性
 
-<!-- EDIT HERE(clearColorEnabled)-->
-<!-- /EDIT HERE-->
-### clearDepthEnabled 属性
+**初期値** ・・・ `false`  
+**コンバーター** ・・・ `Boolean`
 
- * `converter`: boolean
- * `defaultValue`: true
 
-<!-- EDIT HERE(clearDepthEnabled)-->
-<!-- /EDIT HERE-->
-### clearDepth 属性
 
- * `converter`: number
- * `defaultValue`: 1.0
 
-<!-- EDIT HERE(clearDepth)-->
-<!-- /EDIT HERE-->
+##### fullscreenTarget属性
 
-## RenderScene コンポーネント
-<!-- EDIT HERE(@Component)-->
+**初期値** ・・・ `null`  
+**コンバーター** ・・・ `String`
 
 
 
 
 
+### GeometryComponentコンポーネント
 
 
 
 
+#### 属性
 
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+|type|String| |
+|name|String| |
 
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| layer | string | "default" | なし |
-| depthBuffer | string | undefined | なし |
-| out | string | "default" | なし |
-| clearColor | color4 | "#0000" | なし |
-| clearColorEnabled | boolean | true | なし |
-| clearDepthEnabled | boolean | true | なし |
-| clearDepth | number | 1.0 | なし |
-| material | material | undefined | `componentBoundTo`</br> "_materialComponent"</br>    </br> |
 
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### layer 属性
+##### type属性
 
- * `converter`: string
- * `defaultValue`: "default"
+**初期値** ・・・ `null`  
+**コンバーター** ・・・ `String`
 
-<!-- EDIT HERE(layer)-->
-<!-- /EDIT HERE-->
-### depthBuffer 属性
 
- * `converter`: string
- * `defaultValue`: undefined
 
-<!-- EDIT HERE(depthBuffer)-->
-<!-- /EDIT HERE-->
-### out 属性
 
- * `converter`: string
- * `defaultValue`: "default"
+##### name属性
 
-<!-- EDIT HERE(out)-->
-<!-- /EDIT HERE-->
-### clearColor 属性
+**初期値** ・・・ `null`  
+**コンバーター** ・・・ `String`
 
- * `converter`: color4
- * `defaultValue`: "#0000"
 
-<!-- EDIT HERE(clearColor)-->
-<!-- /EDIT HERE-->
-### clearColorEnabled 属性
 
- * `converter`: boolean
- * `defaultValue`: true
 
-<!-- EDIT HERE(clearColorEnabled)-->
-<!-- /EDIT HERE-->
-### clearDepthEnabled 属性
 
- * `converter`: boolean
- * `defaultValue`: true
+### GeometryRegistoryComponentコンポーネント
 
-<!-- EDIT HERE(clearDepthEnabled)-->
-<!-- /EDIT HERE-->
-### clearDepth 属性
 
- * `converter`: number
- * `defaultValue`: 1.0
 
-<!-- EDIT HERE(clearDepth)-->
-<!-- /EDIT HERE-->
-### material 属性
 
- * `converter`: material
- * `defaultValue`: undefined
+#### 属性
 
-<!-- EDIT HERE(material)-->
-<!-- /EDIT HERE-->
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+|defaultGeometry|StringArray| |
 
-## Scene コンポーネント
-<!-- EDIT HERE(@Component)-->
 
+##### defaultGeometry属性
 
+**初期値** ・・・ `quad,cube,sphere`  
+**コンバーター** ・・・ `StringArray`
 
 
 
 
 
+### HTMLBinderComponentコンポーネント
 
 
 
 
-<!-- /EDIT HERE-->
-属性なし
-## Texture コンポーネント
-<!-- EDIT HERE(@Component)-->
+#### 属性
 
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+|htmlQuery|String| |
+|targetRenderer|String| |
 
 
+##### htmlQuery属性
 
+**初期値** ・・・ `null`  
+**コンバーター** ・・・ `String`
 
 
 
 
+##### targetRenderer属性
 
+**初期値** ・・・ `render-scene`  
+**コンバーター** ・・・ `String`
 
 
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| src | string | undefined | なし |
-| minFilter | enum | "LINEAR" | `table`</br> </br>        LINEAR: WebGLRenderingContext.LINEAR,</br>        NEAREST: WebGLRenderingContext.NEAREST,</br>        NEAREST_MIPMAP_NEAREST: WebGLRenderingContext.NEAREST_MIPMAP_NEAREST,</br>        NEAREST_MIPMAP_LINEAR: WebGLRenderingContext.NEAREST_MIPMAP_LINEAR,</br>        LINEAR_MIPMAP_NEAREST: WebGLRenderingContext.LINEAR_MIPMAP_NEAREST,</br>        LINEAR_MIPMAP_LINEAR: WebGLRenderingContext.LINEAR_MIPMAP_LINEAR</br>      </br>    </br> |
-| magFilter | enum | "LINEAR" | `table`</br> </br>        LINEAR: WebGLRenderingContext.LINEAR,</br>        NEAREST: WebGLRenderingContext.NEAREST</br>      </br>    </br> |
-| wrapS | enum | "REPEAT" | `table`</br> </br>        REPEAT: WebGLRenderingContext.REPEAT,</br>        MIRRORED_REPEAT: WebGLRenderingContext.MIRRORED_REPEAT,</br>        CLAMP_TO_EDGE: WebGLRenderingContext.CLAMP_TO_EDGE</br>      </br>    </br> |
-| wrapT | enum | "REPEAT" | `table`</br> </br>        REPEAT: WebGLRenderingContext.REPEAT,</br>        MIRRORED_REPEAT: WebGLRenderingContext.MIRRORED_REPEAT,</br>        CLAMP_TO_EDGE: WebGLRenderingContext.CLAMP_TO_EDGE</br>      </br>    </br>  </br> |
 
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### src 属性
 
- * `converter`: string
- * `defaultValue`: undefined
 
-<!-- EDIT HERE(src)-->
-<!-- /EDIT HERE-->
-### minFilter 属性
+### MaterialComponentコンポーネント
 
- * `converter`: enum
- * `defaultValue`: "LINEAR"
 
-<!-- EDIT HERE(minFilter)-->
-<!-- /EDIT HERE-->
-### magFilter 属性
 
- * `converter`: enum
- * `defaultValue`: "LINEAR"
 
-<!-- EDIT HERE(magFilter)-->
-<!-- /EDIT HERE-->
-### wrapS 属性
+#### 属性
 
- * `converter`: enum
- * `defaultValue`: "REPEAT"
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+|type|String| |
 
-<!-- EDIT HERE(wrapS)-->
-<!-- /EDIT HERE-->
-### wrapT 属性
 
- * `converter`: enum
- * `defaultValue`: "REPEAT"
+##### type属性
 
-<!-- EDIT HERE(wrapT)-->
-<!-- /EDIT HERE-->
+**初期値** ・・・ `null`  
+**コンバーター** ・・・ `String`
 
-## TextureBuffer コンポーネント
-<!-- EDIT HERE(@Component)-->
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| name | string | undefined | なし |
-| format | enum | WebGLRenderingContext.RGBA | `table`</br> </br>        RGBA: WebGLRenderingContext.RGBA,</br>        RGB: WebGLRenderingContext.RGB</br>      </br>    </br>  </br> |
 
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### name 属性
 
- * `converter`: string
- * `defaultValue`: undefined
 
-<!-- EDIT HERE(name)-->
-<!-- /EDIT HERE-->
-### format 属性
 
- * `converter`: enum
- * `defaultValue`: WebGLRenderingContext.RGBA
+### MaterialContainerComponentコンポーネント
 
-<!-- EDIT HERE(format)-->
-<!-- /EDIT HERE-->
 
-## Transform コンポーネント
-<!-- EDIT HERE(@Component)-->
 
 
+#### 属性
 
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+|material|Material| |
+|drawOrder|String| |
 
 
+##### material属性
 
+**初期値** ・・・ `new(unlit)`  
+**コンバーター** ・・・ `Material`
 
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| "position" | vector3 | Vector3.Zero | なし |
-| "rotation" | rotation3 | Quaternion.Identity | なし |
-| "scale" | vector3 | Vector3.One | なし |
 
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### "position" 属性
 
- * `converter`: vector3
- * `defaultValue`: Vector3.Zero
 
-<!-- EDIT HERE("position")-->
-<!-- /EDIT HERE-->
-### "rotation" 属性
+##### drawOrder属性
 
- * `converter`: rotation3
- * `defaultValue`: Quaternion.Identity
+**初期値** ・・・ `null`  
+**コンバーター** ・・・ `String`
 
-<!-- EDIT HERE("rotation")-->
-<!-- /EDIT HERE-->
-### "scale" 属性
 
- * `converter`: vector3
- * `defaultValue`: Vector3.One
 
-<!-- EDIT HERE("scale")-->
-<!-- /EDIT HERE-->
 
-## ノード
+
+### MaterialImporterComponentコンポーネント
+
+
+
+
+#### 属性
+
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+|typeName|String| |
+|src|String| |
+
+
+##### typeName属性
+
+**初期値** ・・・ `null`  
+**コンバーター** ・・・ `String`
+
+
+
+
+##### src属性
+
+**初期値** ・・・ `null`  
+**コンバーター** ・・・ `String`
+
+
+
+
+
+### MeshRendererコンポーネント
+
+
+
+
+#### 属性
+
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+|geometry|Geometry| |
+|targetBuffer|String| |
+|layer|String| |
+|drawCount|Number| |
+|drawOffset|Number| |
+
+
+##### geometry属性
+
+**初期値** ・・・ `quad`  
+**コンバーター** ・・・ `Geometry`
+
+
+
+
+##### targetBuffer属性
+
+**初期値** ・・・ `default`  
+**コンバーター** ・・・ `String`
+
+
+
+
+##### layer属性
+
+**初期値** ・・・ `default`  
+**コンバーター** ・・・ `String`
+
+
+
+
+##### drawCount属性
+
+**初期値** ・・・ `1.7976931348623157e+308`  
+**コンバーター** ・・・ `Number`
+
+
+
+
+##### drawOffset属性
+
+**初期値** ・・・ `0`  
+**コンバーター** ・・・ `Number`
+
+
+
+
+
+### MouseCameraControlComponentコンポーネント
+
+
+
+
+#### 属性
+
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+|rotateSpeed|Number| |
+|zoomSpeed|Number| |
+|moveSpeed|Number| |
+|center|Vector3| |
+|distance|Number| |
+
+
+##### rotateSpeed属性
+
+**初期値** ・・・ `1`  
+**コンバーター** ・・・ `Number`
+
+
+
+
+##### zoomSpeed属性
+
+**初期値** ・・・ `1`  
+**コンバーター** ・・・ `Number`
+
+
+
+
+##### moveSpeed属性
+
+**初期値** ・・・ `1`  
+**コンバーター** ・・・ `Number`
+
+
+
+
+##### center属性
+
+**初期値** ・・・ `0,0,0`  
+**コンバーター** ・・・ `Vector3`
+
+
+
+
+##### distance属性
+
+**初期値** ・・・ `null`  
+**コンバーター** ・・・ `Number`
+
+
+
+
+
+### RenderBufferComponentコンポーネント
+
+
+
+
+#### 属性
+
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+|name|String| |
+
+
+##### name属性
+
+**初期値** ・・・ `null`  
+**コンバーター** ・・・ `String`
+
+
+
+
+
+### RendererComponentコンポーネント
+
+
+
+
+#### 属性
+
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+|camera|Component| |
+|viewport|Viewport| |
+
+
+##### camera属性
+
+**初期値** ・・・ `camera`  
+**コンバーター** ・・・ `Component`
+
+
+
+
+##### viewport属性
+
+**初期値** ・・・ `auto`  
+**コンバーター** ・・・ `Viewport`
+
+
+
+
+
+### RendererManagerComponentコンポーネント
+
+
+
+
+#### 属性
+
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+
+
+
+### RenderQuadComponentコンポーネント
+
+
+
+
+#### 属性
+
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+|out|String| |
+|depthBuffer|String| |
+|targetBuffer|String| |
+|clearColor|Color4| |
+|clearColorEnabled|Boolean| |
+|clearDepthEnabled|Boolean| |
+|clearDepth|Number| |
+|technique|String| |
+
+
+##### out属性
+
+**初期値** ・・・ `default`  
+**コンバーター** ・・・ `String`
+
+
+
+
+##### depthBuffer属性
+
+**初期値** ・・・ `null`  
+**コンバーター** ・・・ `String`
+
+
+
+
+##### targetBuffer属性
+
+**初期値** ・・・ `default`  
+**コンバーター** ・・・ `String`
+
+
+
+
+##### clearColor属性
+
+**初期値** ・・・ `#0000`  
+**コンバーター** ・・・ `Color4`
+
+
+
+
+##### clearColorEnabled属性
+
+**初期値** ・・・ `true`  
+**コンバーター** ・・・ `Boolean`
+
+
+
+
+##### clearDepthEnabled属性
+
+**初期値** ・・・ `true`  
+**コンバーター** ・・・ `Boolean`
+
+
+
+
+##### clearDepth属性
+
+**初期値** ・・・ `1`  
+**コンバーター** ・・・ `Number`
+
+
+
+
+##### technique属性
+
+**初期値** ・・・ `default`  
+**コンバーター** ・・・ `String`
+
+
+
+
+
+### RenderSceneComponentコンポーネント
+
+
+
+
+#### 属性
+
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+|layer|String| |
+|depthBuffer|String| |
+|out|String| |
+|clearColor|Color4| |
+|clearColorEnabled|Boolean| |
+|clearDepthEnabled|Boolean| |
+|clearDepth|Number| |
+|camera|Component| |
+|technique|String| |
+
+
+##### layer属性
+
+**初期値** ・・・ `default`  
+**コンバーター** ・・・ `String`
+
+
+
+
+##### depthBuffer属性
+
+**初期値** ・・・ `null`  
+**コンバーター** ・・・ `String`
+
+
+
+
+##### out属性
+
+**初期値** ・・・ `default`  
+**コンバーター** ・・・ `String`
+
+
+
+
+##### clearColor属性
+
+**初期値** ・・・ `#0000`  
+**コンバーター** ・・・ `Color4`
+
+
+
+
+##### clearColorEnabled属性
+
+**初期値** ・・・ `true`  
+**コンバーター** ・・・ `Boolean`
+
+
+
+
+##### clearDepthEnabled属性
+
+**初期値** ・・・ `true`  
+**コンバーター** ・・・ `Boolean`
+
+
+
+
+##### clearDepth属性
+
+**初期値** ・・・ `1`  
+**コンバーター** ・・・ `Number`
+
+
+
+
+##### camera属性
+
+**初期値** ・・・ `null`  
+**コンバーター** ・・・ `Component`
+
+
+
+
+##### technique属性
+
+**初期値** ・・・ `default`  
+**コンバーター** ・・・ `String`
+
+
+
+
+
+### SceneComponentコンポーネント
+
+
+
+
+#### 属性
+
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+
+
+
+### TextureBufferComponentコンポーネント
+
+
+
+
+#### 属性
+
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+
+
+
+### TextureComponentコンポーネント
+
+
+
+
+#### 属性
+
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+
+
+
+### TransformComponentコンポーネント
+
+
+
+
+#### 属性
+
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+|position|Vector3| |
+|rotation|Rotation3| |
+|scale|Vector3| |
+|rawMatrix|Object| |
+
+
+##### position属性
+
+**初期値** ・・・ `0,0,0`  
+**コンバーター** ・・・ `Vector3`
+
+
+
+
+##### rotation属性
+
+**初期値** ・・・ `0,0,0,1`  
+**コンバーター** ・・・ `Rotation3`
+
+
+
+
+##### scale属性
+
+**初期値** ・・・ `1,1,1`  
+**コンバーター** ・・・ `Vector3`
+
+
+
+
+##### rawMatrix属性
+
+**初期値** ・・・ `null`  
+**コンバーター** ・・・ `Object`
+
+
+
+
+
+
+## コンバーター詳細
+
+### CanvasSizeConverterコンバーター
+
+
+
+### GeometryConverterコンバーター
+
+
+
+### MaterialConverterコンバーター
+
+
+
+### NodeConverterコンバーター
+
+
+
+### PositionConverterコンバーター
+
+
+
+### TextureConverterコンバーター
+
+
+
+### ViewportConverterコンバーター
