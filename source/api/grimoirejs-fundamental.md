@@ -15,7 +15,7 @@ $ npm install grimoirejs-fundamental --save
 
 [unpkg.com](https://unpkg.com)によるCDNも利用可能。
 
-** [CDN - grimoirejs-fundamental - ](https://unpkg.com/grimoirejs-fundamental/register/.js) **
+** [CDN - grimoirejs-fundamental - ](https://unpkg.com/grimoirejs-fundamental/register/grimoire-fundamental.js) **
 
 ## 一覧
 
@@ -29,10 +29,10 @@ $ npm install grimoirejs-fundamental --save
   |[`<camera>`](#cameraノード)|3D空間を撮影するためのカメラを意味するノードです。シーンをレンダリングするには最低一つのカメラがシーンに属していなければなりません。|
   |[`<mesh>`](#meshノード)|3D空間上に存在する映るものを意味するノードです。シーンに何かを写すには最低一つのメッシュがシーンに属していなければなりません。|
   |[`<renderer>`](#rendererノード)|キャンバス上の領域をどのように描画するかを示すためのノードです。gomlの読み込み時に一つも存在しない場合は、自動的にgoml直下に生成されます。|
-  |[`<geometry>`](#geometryノード)| |
+  |[`<geometry>`](#geometryノード)|単純な変形(`scale`、`position`、`rotation`だけで表せない)、例えば円の分割数などを指定したい別の形状を明示的に生成するためのノードです。|
   |[`<texture>`](#textureノード)|テクスチャを読み込むためのノードです。通常、テクスチャはurlをマテリアルに指定するなどして読み込まれますが、|
   |[`<material>`](#materialノード)|マテリアルを生成するためのノードです。メッシュからこのノードを参照して利用することにより、複数のメッシュで共通のマテリアルのインスタンスを参照させることができます。|
-  |[`<import-material>`](#import-materialノード)| |
+  |[`<import-material>`](#import-materialノード)|Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテリアルを読み込むためのノードです。|
   |[`<texture-buffer>`](#texture-bufferノード)|`<renderer>`ノードの直下に含まれうるノードの一つです。|
   |[`<render-buffer>`](#render-bufferノード)|`<renderer>`ノードの直下に含まれうるノードの一つです。|
   |[`<render-scene>`](#render-sceneノード)|`<renderer>`ノードの直下に含まれうるノードの一つです。|
@@ -42,38 +42,38 @@ $ npm install grimoirejs-fundamental --save
 
   |コンバーター名|説明|
   |:-:|:-:|
-  |[`<CanvasSizeConverter>`](#CanvasSizeConverterコンポーネント)| |
-  |[`<GeometryConverter>`](#GeometryConverterコンポーネント)| |
-  |[`<MaterialConverter>`](#MaterialConverterコンポーネント)| |
-  |[`<NodeConverter>`](#NodeConverterコンポーネント)| |
-  |[`<PositionConverter>`](#PositionConverterコンポーネント)| |
-  |[`<TextureConverter>`](#TextureConverterコンポーネント)| |
-  |[`<ViewportConverter>`](#ViewportConverterコンポーネント)| |
+  |[`<CanvasSizeConverter>`](#CanvasSizeConverterコンポーネント)||
+  |[`<GeometryConverter>`](#GeometryConverterコンポーネント)||
+  |[`<MaterialConverter>`](#MaterialConverterコンポーネント)||
+  |[`<NodeConverter>`](#NodeConverterコンポーネント)||
+  |[`<PositionConverter>`](#PositionConverterコンポーネント)||
+  |[`<TextureConverter>`](#TextureConverterコンポーネント)||
+  |[`<ViewportConverter>`](#ViewportConverterコンポーネント)||
 
 ### コンバーター
 
   |ノード名|説明|
   |:-:|:-:|
-  |[`<AssetLoadingManagerComponent>`](#AssetLoadingManagerComponentコンバーター)| |
-  |[`<CameraComponent>`](#CameraComponentコンバーター)| |
-  |[`<FullscreenComponent>`](#FullscreenComponentコンバーター)| |
-  |[`<GeometryComponent>`](#GeometryComponentコンバーター)| |
-  |[`<GeometryRegistoryComponent>`](#GeometryRegistoryComponentコンバーター)| |
-  |[`<HTMLBinderComponent>`](#HTMLBinderComponentコンバーター)| |
-  |[`<MaterialComponent>`](#MaterialComponentコンバーター)| |
-  |[`<MaterialContainerComponent>`](#MaterialContainerComponentコンバーター)| |
-  |[`<MaterialImporterComponent>`](#MaterialImporterComponentコンバーター)| |
-  |[`<MeshRenderer>`](#MeshRendererコンバーター)| |
-  |[`<MouseCameraControlComponent>`](#MouseCameraControlComponentコンバーター)| |
-  |[`<RenderBufferComponent>`](#RenderBufferComponentコンバーター)| |
-  |[`<RendererComponent>`](#RendererComponentコンバーター)| |
-  |[`<RendererManagerComponent>`](#RendererManagerComponentコンバーター)| |
-  |[`<RenderQuadComponent>`](#RenderQuadComponentコンバーター)| |
-  |[`<RenderSceneComponent>`](#RenderSceneComponentコンバーター)| |
-  |[`<SceneComponent>`](#SceneComponentコンバーター)| |
-  |[`<TextureBufferComponent>`](#TextureBufferComponentコンバーター)| |
-  |[`<TextureComponent>`](#TextureComponentコンバーター)| |
-  |[`<TransformComponent>`](#TransformComponentコンバーター)| |
+  |[`<AssetLoadingManagerComponent>`](#AssetLoadingManagerComponentコンバーター)||
+  |[`<CameraComponent>`](#CameraComponentコンバーター)||
+  |[`<FullscreenComponent>`](#FullscreenComponentコンバーター)||
+  |[`<GeometryComponent>`](#GeometryComponentコンバーター)||
+  |[`<GeometryRegistoryComponent>`](#GeometryRegistoryComponentコンバーター)||
+  |[`<HTMLBinderComponent>`](#HTMLBinderComponentコンバーター)||
+  |[`<MaterialComponent>`](#MaterialComponentコンバーター)||
+  |[`<MaterialContainerComponent>`](#MaterialContainerComponentコンバーター)||
+  |[`<MaterialImporterComponent>`](#MaterialImporterComponentコンバーター)||
+  |[`<MeshRenderer>`](#MeshRendererコンバーター)||
+  |[`<MouseCameraControlComponent>`](#MouseCameraControlComponentコンバーター)||
+  |[`<RenderBufferComponent>`](#RenderBufferComponentコンバーター)||
+  |[`<RendererComponent>`](#RendererComponentコンバーター)||
+  |[`<RendererManagerComponent>`](#RendererManagerComponentコンバーター)||
+  |[`<RenderQuadComponent>`](#RenderQuadComponentコンバーター)||
+  |[`<RenderSceneComponent>`](#RenderSceneComponentコンバーター)||
+  |[`<SceneComponent>`](#SceneComponentコンバーター)||
+  |[`<TextureBufferComponent>`](#TextureBufferComponentコンバーター)||
+  |[`<TextureComponent>`](#TextureComponentコンバーター)||
+  |[`<TransformComponent>`](#TransformComponentコンバーター)||
 
 ## ノード詳細
 
@@ -293,9 +293,9 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
-|loadingProgress|Number| |
-|autoStart|Boolean| |
-|enableLoader|Boolean| |
+|loadingProgress|Number||
+|autoStart|Boolean||
+|enableLoader|Boolean||
 
 
 ##### loadingProgress属性
@@ -332,13 +332,13 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
-|fovy|Angle2D| |
-|near|Number| |
-|far|Number| |
-|aspect|Number| |
-|autoAspect|Boolean| |
-|orthoSize|Number| |
-|orthogonal|Boolean| |
+|fovy|Angle2D||
+|near|Number||
+|far|Number||
+|aspect|Number||
+|autoAspect|Boolean||
+|orthoSize|Number||
+|orthogonal|Boolean||
 
 
 ##### fovy属性
@@ -407,8 +407,8 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
-|fullscreen|Boolean| |
-|fullscreenTarget|String| |
+|fullscreen|Boolean||
+|fullscreenTarget|String||
 
 
 ##### fullscreen属性
@@ -437,8 +437,8 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
-|type|String| |
-|name|String| |
+|type|String||
+|name|String||
 
 
 ##### type属性
@@ -467,7 +467,7 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
-|defaultGeometry|StringArray| |
+|defaultGeometry|StringArray||
 
 
 ##### defaultGeometry属性
@@ -488,8 +488,8 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
-|htmlQuery|String| |
-|targetRenderer|String| |
+|htmlQuery|String||
+|targetRenderer|String||
 
 
 ##### htmlQuery属性
@@ -518,7 +518,7 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
-|type|String| |
+|type|String||
 
 
 ##### type属性
@@ -539,8 +539,8 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
-|material|Material| |
-|drawOrder|String| |
+|material|Material||
+|drawOrder|String||
 
 
 ##### material属性
@@ -569,8 +569,8 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
-|typeName|String| |
-|src|String| |
+|typeName|String||
+|src|String||
 
 
 ##### typeName属性
@@ -599,11 +599,11 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
-|geometry|Geometry| |
-|targetBuffer|String| |
-|layer|String| |
-|drawCount|Number| |
-|drawOffset|Number| |
+|geometry|Geometry||
+|targetBuffer|String||
+|layer|String||
+|drawCount|Number||
+|drawOffset|Number||
 
 
 ##### geometry属性
@@ -656,11 +656,11 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
-|rotateSpeed|Number| |
-|zoomSpeed|Number| |
-|moveSpeed|Number| |
-|center|Vector3| |
-|distance|Number| |
+|rotateSpeed|Number||
+|zoomSpeed|Number||
+|moveSpeed|Number||
+|center|Vector3||
+|distance|Number||
 
 
 ##### rotateSpeed属性
@@ -713,7 +713,7 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
-|name|String| |
+|name|String||
 
 
 ##### name属性
@@ -734,8 +734,8 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
-|camera|Component| |
-|viewport|Viewport| |
+|camera|Component||
+|viewport|Viewport||
 
 
 ##### camera属性
@@ -776,14 +776,14 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
-|out|String| |
-|depthBuffer|String| |
-|targetBuffer|String| |
-|clearColor|Color4| |
-|clearColorEnabled|Boolean| |
-|clearDepthEnabled|Boolean| |
-|clearDepth|Number| |
-|technique|String| |
+|out|String||
+|depthBuffer|String||
+|targetBuffer|String||
+|clearColor|Color4||
+|clearColorEnabled|Boolean||
+|clearDepthEnabled|Boolean||
+|clearDepth|Number||
+|technique|String||
 
 
 ##### out属性
@@ -860,15 +860,15 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
-|layer|String| |
-|depthBuffer|String| |
-|out|String| |
-|clearColor|Color4| |
-|clearColorEnabled|Boolean| |
-|clearDepthEnabled|Boolean| |
-|clearDepth|Number| |
-|camera|Component| |
-|technique|String| |
+|layer|String||
+|depthBuffer|String||
+|out|String||
+|clearColor|Color4||
+|clearColorEnabled|Boolean||
+|clearDepthEnabled|Boolean||
+|clearDepth|Number||
+|camera|Component||
+|technique|String||
 
 
 ##### layer属性
@@ -989,10 +989,10 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
-|position|Vector3| |
-|rotation|Rotation3| |
-|scale|Vector3| |
-|rawMatrix|Object| |
+|position|Vector3||
+|rotation|Rotation3||
+|scale|Vector3||
+|rawMatrix|Object||
 
 
 ##### position属性
