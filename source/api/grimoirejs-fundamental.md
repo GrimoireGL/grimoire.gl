@@ -42,38 +42,38 @@ $ npm install grimoirejs-fundamental --save
 
   |コンバーター名|説明|
   |:-:|:-:|
-  |[`<CanvasSizeConverter>`](#CanvasSizeConverterコンポーネント)||
-  |[`<GeometryConverter>`](#GeometryConverterコンポーネント)||
-  |[`<MaterialConverter>`](#MaterialConverterコンポーネント)||
-  |[`<NodeConverter>`](#NodeConverterコンポーネント)||
-  |[`<PositionConverter>`](#PositionConverterコンポーネント)||
-  |[`<TextureConverter>`](#TextureConverterコンポーネント)||
-  |[`<ViewportConverter>`](#ViewportConverterコンポーネント)||
+  |[`<AssetLoadingManagerComponent>`](#AssetLoadingManagerComponentコンポーネント)||
+  |[`<CameraComponent>`](#CameraComponentコンポーネント)||
+  |[`<FullscreenComponent>`](#FullscreenComponentコンポーネント)||
+  |[`<GeometryComponent>`](#GeometryComponentコンポーネント)||
+  |[`<GeometryRegistoryComponent>`](#GeometryRegistoryComponentコンポーネント)||
+  |[`<HTMLBinderComponent>`](#HTMLBinderComponentコンポーネント)||
+  |[`<MaterialComponent>`](#MaterialComponentコンポーネント)||
+  |[`<MaterialContainerComponent>`](#MaterialContainerComponentコンポーネント)||
+  |[`<MaterialImporterComponent>`](#MaterialImporterComponentコンポーネント)||
+  |[`<MeshRenderer>`](#MeshRendererコンポーネント)||
+  |[`<MouseCameraControlComponent>`](#MouseCameraControlComponentコンポーネント)||
+  |[`<RenderBufferComponent>`](#RenderBufferComponentコンポーネント)||
+  |[`<RendererComponent>`](#RendererComponentコンポーネント)||
+  |[`<RendererManagerComponent>`](#RendererManagerComponentコンポーネント)||
+  |[`<RenderQuadComponent>`](#RenderQuadComponentコンポーネント)||
+  |[`<RenderSceneComponent>`](#RenderSceneComponentコンポーネント)||
+  |[`<SceneComponent>`](#SceneComponentコンポーネント)||
+  |[`<TextureBufferComponent>`](#TextureBufferComponentコンポーネント)||
+  |[`<TextureComponent>`](#TextureComponentコンポーネント)||
+  |[`<TransformComponent>`](#TransformComponentコンポーネント)||
 
 ### コンバーター
 
   |ノード名|説明|
   |:-:|:-:|
-  |[`<AssetLoadingManagerComponent>`](#AssetLoadingManagerComponentコンバーター)||
-  |[`<CameraComponent>`](#CameraComponentコンバーター)||
-  |[`<FullscreenComponent>`](#FullscreenComponentコンバーター)||
-  |[`<GeometryComponent>`](#GeometryComponentコンバーター)||
-  |[`<GeometryRegistoryComponent>`](#GeometryRegistoryComponentコンバーター)||
-  |[`<HTMLBinderComponent>`](#HTMLBinderComponentコンバーター)||
-  |[`<MaterialComponent>`](#MaterialComponentコンバーター)||
-  |[`<MaterialContainerComponent>`](#MaterialContainerComponentコンバーター)||
-  |[`<MaterialImporterComponent>`](#MaterialImporterComponentコンバーター)||
-  |[`<MeshRenderer>`](#MeshRendererコンバーター)||
-  |[`<MouseCameraControlComponent>`](#MouseCameraControlComponentコンバーター)||
-  |[`<RenderBufferComponent>`](#RenderBufferComponentコンバーター)||
-  |[`<RendererComponent>`](#RendererComponentコンバーター)||
-  |[`<RendererManagerComponent>`](#RendererManagerComponentコンバーター)||
-  |[`<RenderQuadComponent>`](#RenderQuadComponentコンバーター)||
-  |[`<RenderSceneComponent>`](#RenderSceneComponentコンバーター)||
-  |[`<SceneComponent>`](#SceneComponentコンバーター)||
-  |[`<TextureBufferComponent>`](#TextureBufferComponentコンバーター)||
-  |[`<TextureComponent>`](#TextureComponentコンバーター)||
-  |[`<TransformComponent>`](#TransformComponentコンバーター)||
+  |[`<CanvasSizeConverter>`](#CanvasSizeConverterコンバーター)||
+  |[`<GeometryConverter>`](#GeometryConverterコンバーター)||
+  |[`<MaterialConverter>`](#MaterialConverterコンバーター)||
+  |[`<NodeConverter>`](#NodeConverterコンバーター)||
+  |[`<PositionConverter>`](#PositionConverterコンバーター)||
+  |[`<TextureConverter>`](#TextureConverterコンバーター)||
+  |[`<ViewportConverter>`](#ViewportConverterコンバーター)||
 
 ## ノード詳細
 
