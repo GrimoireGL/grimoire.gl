@@ -3,11 +3,11 @@ type: doc
 title: grimoirejs-fundamental
 order: 2
 ---
-## 概要
+# 概要
 
 WIP
 
-## インストール
+# インストール
 
 ```sh
 $ npm install grimoirejs-fundamental --save
@@ -17,9 +17,9 @@ $ npm install grimoirejs-fundamental --save
 
 ** [CDN - grimoirejs-fundamental - ](https://unpkg.com/grimoirejs-fundamental/register/grimoire-fundamental.js) **
 
-## 一覧
+# 一覧
 
-### ノード
+## ノード
 
   |ノード名|説明|
   |:-:|:-:|
@@ -38,7 +38,7 @@ $ npm install grimoirejs-fundamental --save
   |[`<render-scene>`](#render-sceneノード)|`<renderer>`ノードの直下に含まれうるノードの一つです。|
   |[`<render-quad>`](#render-quadノード)|`<renderer>`ノードの直下に含まれうるノードの一つです。|
 
-### コンポーネント
+## コンポーネント
 
   |コンポーネント名|説明|
   |:-:|:-:|
@@ -63,7 +63,7 @@ $ npm install grimoirejs-fundamental --save
   |[`<TextureComponent>`](#TextureComponentコンポーネント)||
   |[`<TransformComponent>`](#TransformComponentコンポーネント)||
 
-### コンバーター
+## コンバーター
 
   |コンバーター名|説明|
   |:-:|:-:|
@@ -75,10 +75,10 @@ $ npm install grimoirejs-fundamental --save
   |[`<TextureConverter>`](#TextureConverterコンバーター)||
   |[`<ViewportConverter>`](#ViewportConverterコンバーター)||
 
-## ノード詳細
+# ノード詳細
 
 
-### gomlノード
+## gomlノード
 
 
 
@@ -87,7 +87,7 @@ $ npm install grimoirejs-fundamental --save
 特に、`<canvas>`の初期化やループの管理など、最初の初期化時のパラメーターを受け取るためのコンポーネントとともに、
 `<canvas>`の設定(`width`や`height`)またはフルスクリーンなどのコンポーネントを含む。
 
-#### コンポーネント
+### コンポーネント
 
 * CanvasInitializer
 * LoopManager
@@ -97,7 +97,7 @@ $ npm install grimoirejs-fundamental --save
 * Fullscreen
 
 
-### sceneノード
+## sceneノード
 
 
 
@@ -105,12 +105,12 @@ $ npm install grimoirejs-fundamental --save
 カメラや、ライト、メッシュなど空間に配置するためのノードです。
 全ての場面に存在する座標を持ちうるノード(`TransformComponent`を含むノード)は必ずこのノードの子ノードのとして存在する必要があります。
 
-#### コンポーネント
+### コンポーネント
 
 * Scene
 
 
-### objectノード
+## objectノード
 
 
 
@@ -118,12 +118,12 @@ $ npm install grimoirejs-fundamental --save
 メッシュやカメラなどのベースとなるノードです。このノードの子要素には親要素の変型量(`position`や`rotation`)などが伝搬します。
 詳しくは`TransformComponent`を参照すると良いでしょう。
 
-#### コンポーネント
+### コンポーネント
 
 * Transform
 
 
-### cameraノード
+## cameraノード
 
 **継承元:&lt;object&gt;**
 
@@ -132,12 +132,12 @@ $ npm install grimoirejs-fundamental --save
 3D空間を撮影するためのカメラを意味するノードです。シーンをレンダリングするには最低一つのカメラがシーンに属していなければなりません。
 
 
-#### コンポーネント
+### コンポーネント
 
 * Camera
 
 
-### meshノード
+## meshノード
 
 **継承元:&lt;object&gt;**
 
@@ -147,13 +147,13 @@ $ npm install grimoirejs-fundamental --save
 
 メッシュは、マテリアル(材質)とジオメトリ(形状)からなります。この2つの指定を変えることで、様々な表現が3D空間上で可能になります。
 
-#### コンポーネント
+### コンポーネント
 
 * MaterialContainer
 * MeshRenderer
 
 
-### rendererノード
+## rendererノード
 
 
 
@@ -165,24 +165,24 @@ $ npm install grimoirejs-fundamental --save
 
 通常、`<renderer>`の子ノードに何も存在しない場合、自動的に`<render-scene>`タグが生成されます。
 
-#### コンポーネント
+### コンポーネント
 
 * Renderer
 
 
-### geometryノード
+## geometryノード
 
 
 
 
 単純な変形(`scale`、`position`、`rotation`だけで表せない)、例えば円の分割数などを指定したい別の形状を明示的に生成するためのノードです。
 
-#### コンポーネント
+### コンポーネント
 
 * Geometry
 
 
-### textureノード
+## textureノード
 
 
 
@@ -190,12 +190,12 @@ $ npm install grimoirejs-fundamental --save
 テクスチャを読み込むためのノードです。通常、テクスチャはurlをマテリアルに指定するなどして読み込まれますが、
 サンプラの指定などをしたい場合、このタグで明示的に読み込むことにより読み込むことができます。
 
-#### コンポーネント
+### コンポーネント
 
 * Texture
 
 
-### materialノード
+## materialノード
 
 
 
@@ -204,24 +204,24 @@ $ npm install grimoirejs-fundamental --save
 
 これは、同時にマテリアルの値が編集できるだけでなく、パフォーマンス的にも大きな利点をもたらします。
 
-#### コンポーネント
+### コンポーネント
 
 * Material
 
 
-### import-materialノード
+## import-materialノード
 
 
 
 
 Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテリアルを読み込むためのノードです。
 
-#### コンポーネント
+### コンポーネント
 
 * MaterialImporter
 
 
-### texture-bufferノード
+## texture-bufferノード
 
 
 
@@ -231,12 +231,12 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 このノードによってレンダリングに用いるカラーバッファを生成することができます。
 カラーバッファはオフスクリーンレンダリングなどへの利用など様々な面で利用することができます。
 
-#### コンポーネント
+### コンポーネント
 
 * TextureBuffer
 
 
-### render-bufferノード
+## render-bufferノード
 
 
 
@@ -245,12 +245,12 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 このノードによってレンダリングに用いる深度バッファやステンシルバッファを生成することができます。
 
-#### コンポーネント
+### コンポーネント
 
 * RenderBuffer
 
 
-### render-sceneノード
+## render-sceneノード
 
 
 
@@ -259,12 +259,12 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 このノードは`out`に指定されたテクスチャ(デフォルトではキャンバス自身)に対して、シーンの内容を描画します。
 
-#### コンポーネント
+### コンポーネント
 
 * RenderScene
 
 
-### render-quadノード
+## render-quadノード
 
 
 
@@ -273,7 +273,7 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 このノードは`out`に指定されたテクスチャ(デフォルトではキャンバス自身)に対して、単純な四角形(`quad`)を指定されたマテリアルで描画します。
 
-#### コンポーネント
+### コンポーネント
 
 * MaterialContainer
 * RenderQuad
@@ -281,15 +281,15 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 
 
-## コンポーネント詳細
+# コンポーネント詳細
 
 
-### AssetLoadingManagerComponentコンポーネント
+## AssetLoadingManagerComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
@@ -298,37 +298,37 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 |enableLoader|Boolean||
 
 
-##### loadingProgress属性
+#### loadingProgress属性
 
-**初期値** ・・・ `0`  
+**初期値** ・・・ `0`
 **コンバーター** ・・・ `Number`
 
 
 
 
-##### autoStart属性
+#### autoStart属性
 
-**初期値** ・・・ `true`  
+**初期値** ・・・ `true`
 **コンバーター** ・・・ `Boolean`
 
 
 
 
-##### enableLoader属性
+#### enableLoader属性
 
-**初期値** ・・・ `true`  
+**初期値** ・・・ `true`
 **コンバーター** ・・・ `Boolean`
 
 
 
 
 
-### CameraComponentコンポーネント
+## CameraComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
@@ -341,69 +341,69 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 |orthogonal|Boolean||
 
 
-##### fovy属性
+#### fovy属性
 
-**初期値** ・・・ `45d`  
+**初期値** ・・・ `45d`
 **コンバーター** ・・・ `Angle2D`
 
 
 
 
-##### near属性
+#### near属性
 
-**初期値** ・・・ `0.01`  
+**初期値** ・・・ `0.01`
 **コンバーター** ・・・ `Number`
 
 
 
 
-##### far属性
+#### far属性
 
-**初期値** ・・・ `100`  
+**初期値** ・・・ `100`
 **コンバーター** ・・・ `Number`
 
 
 
 
-##### aspect属性
+#### aspect属性
 
-**初期値** ・・・ `1.6`  
+**初期値** ・・・ `1.6`
 **コンバーター** ・・・ `Number`
 
 
 
 
-##### autoAspect属性
+#### autoAspect属性
 
-**初期値** ・・・ `true`  
+**初期値** ・・・ `true`
 **コンバーター** ・・・ `Boolean`
 
 
 
 
-##### orthoSize属性
+#### orthoSize属性
 
-**初期値** ・・・ `100`  
+**初期値** ・・・ `100`
 **コンバーター** ・・・ `Number`
 
 
 
 
-##### orthogonal属性
+#### orthogonal属性
 
-**初期値** ・・・ `false`  
+**初期値** ・・・ `false`
 **コンバーター** ・・・ `Boolean`
 
 
 
 
 
-### FullscreenComponentコンポーネント
+## FullscreenComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
@@ -411,29 +411,29 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 |fullscreenTarget|String||
 
 
-##### fullscreen属性
+#### fullscreen属性
 
-**初期値** ・・・ `false`  
+**初期値** ・・・ `false`
 **コンバーター** ・・・ `Boolean`
 
 
 
 
-##### fullscreenTarget属性
+#### fullscreenTarget属性
 
-**初期値** ・・・ `null`  
+**初期値** ・・・ `null`
 **コンバーター** ・・・ `String`
 
 
 
 
 
-### GeometryComponentコンポーネント
+## GeometryComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
@@ -441,50 +441,50 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 |name|String||
 
 
-##### type属性
+#### type属性
 
-**初期値** ・・・ `null`  
+**初期値** ・・・ `null`
 **コンバーター** ・・・ `String`
 
 
 
 
-##### name属性
+#### name属性
 
-**初期値** ・・・ `null`  
+**初期値** ・・・ `null`
 **コンバーター** ・・・ `String`
 
 
 
 
 
-### GeometryRegistoryComponentコンポーネント
+## GeometryRegistoryComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
 |defaultGeometry|StringArray||
 
 
-##### defaultGeometry属性
+#### defaultGeometry属性
 
-**初期値** ・・・ `quad,cube,sphere`  
+**初期値** ・・・ `quad,cube,sphere`
 **コンバーター** ・・・ `StringArray`
 
 
 
 
 
-### HTMLBinderComponentコンポーネント
+## HTMLBinderComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
@@ -492,50 +492,50 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 |targetRenderer|String||
 
 
-##### htmlQuery属性
+#### htmlQuery属性
 
-**初期値** ・・・ `null`  
+**初期値** ・・・ `null`
 **コンバーター** ・・・ `String`
 
 
 
 
-##### targetRenderer属性
+#### targetRenderer属性
 
-**初期値** ・・・ `render-scene`  
+**初期値** ・・・ `render-scene`
 **コンバーター** ・・・ `String`
 
 
 
 
 
-### MaterialComponentコンポーネント
+## MaterialComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
 |type|String||
 
 
-##### type属性
+#### type属性
 
-**初期値** ・・・ `null`  
+**初期値** ・・・ `null`
 **コンバーター** ・・・ `String`
 
 
 
 
 
-### MaterialContainerComponentコンポーネント
+## MaterialContainerComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
@@ -543,29 +543,29 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 |drawOrder|String||
 
 
-##### material属性
+#### material属性
 
-**初期値** ・・・ `new(unlit)`  
+**初期値** ・・・ `new(unlit)`
 **コンバーター** ・・・ `Material`
 
 
 
 
-##### drawOrder属性
+#### drawOrder属性
 
-**初期値** ・・・ `null`  
+**初期値** ・・・ `null`
 **コンバーター** ・・・ `String`
 
 
 
 
 
-### MaterialImporterComponentコンポーネント
+## MaterialImporterComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
@@ -573,29 +573,29 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 |src|String||
 
 
-##### typeName属性
+#### typeName属性
 
-**初期値** ・・・ `null`  
+**初期値** ・・・ `null`
 **コンバーター** ・・・ `String`
 
 
 
 
-##### src属性
+#### src属性
 
-**初期値** ・・・ `null`  
+**初期値** ・・・ `null`
 **コンバーター** ・・・ `String`
 
 
 
 
 
-### MeshRendererコンポーネント
+## MeshRendererコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
@@ -606,53 +606,53 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 |drawOffset|Number||
 
 
-##### geometry属性
+#### geometry属性
 
-**初期値** ・・・ `quad`  
+**初期値** ・・・ `quad`
 **コンバーター** ・・・ `Geometry`
 
 
 
 
-##### targetBuffer属性
+#### targetBuffer属性
 
-**初期値** ・・・ `default`  
+**初期値** ・・・ `default`
 **コンバーター** ・・・ `String`
 
 
 
 
-##### layer属性
+#### layer属性
 
-**初期値** ・・・ `default`  
+**初期値** ・・・ `default`
 **コンバーター** ・・・ `String`
 
 
 
 
-##### drawCount属性
+#### drawCount属性
 
-**初期値** ・・・ `1.7976931348623157e+308`  
+**初期値** ・・・ `1.7976931348623157e+308`
 **コンバーター** ・・・ `Number`
 
 
 
 
-##### drawOffset属性
+#### drawOffset属性
 
-**初期値** ・・・ `0`  
+**初期値** ・・・ `0`
 **コンバーター** ・・・ `Number`
 
 
 
 
 
-### MouseCameraControlComponentコンポーネント
+## MouseCameraControlComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
@@ -663,74 +663,74 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 |distance|Number||
 
 
-##### rotateSpeed属性
+#### rotateSpeed属性
 
-**初期値** ・・・ `1`  
+**初期値** ・・・ `1`
 **コンバーター** ・・・ `Number`
 
 
 
 
-##### zoomSpeed属性
+#### zoomSpeed属性
 
-**初期値** ・・・ `1`  
+**初期値** ・・・ `1`
 **コンバーター** ・・・ `Number`
 
 
 
 
-##### moveSpeed属性
+#### moveSpeed属性
 
-**初期値** ・・・ `1`  
+**初期値** ・・・ `1`
 **コンバーター** ・・・ `Number`
 
 
 
 
-##### center属性
+#### center属性
 
-**初期値** ・・・ `0,0,0`  
+**初期値** ・・・ `0,0,0`
 **コンバーター** ・・・ `Vector3`
 
 
 
 
-##### distance属性
+#### distance属性
 
-**初期値** ・・・ `null`  
+**初期値** ・・・ `null`
 **コンバーター** ・・・ `Number`
 
 
 
 
 
-### RenderBufferComponentコンポーネント
+## RenderBufferComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
 |name|String||
 
 
-##### name属性
+#### name属性
 
-**初期値** ・・・ `null`  
+**初期値** ・・・ `null`
 **コンバーター** ・・・ `String`
 
 
 
 
 
-### RendererComponentコンポーネント
+## RendererComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
@@ -738,41 +738,41 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 |viewport|Viewport||
 
 
-##### camera属性
+#### camera属性
 
-**初期値** ・・・ `camera`  
+**初期値** ・・・ `camera`
 **コンバーター** ・・・ `Component`
 
 
 
 
-##### viewport属性
+#### viewport属性
 
-**初期値** ・・・ `auto`  
+**初期値** ・・・ `auto`
 **コンバーター** ・・・ `Viewport`
 
 
 
 
 
-### RendererManagerComponentコンポーネント
+## RendererManagerComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
 
 
 
-### RenderQuadComponentコンポーネント
+## RenderQuadComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
@@ -786,77 +786,77 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 |technique|String||
 
 
-##### out属性
+#### out属性
 
-**初期値** ・・・ `default`  
+**初期値** ・・・ `default`
 **コンバーター** ・・・ `String`
 
 
 
 
-##### depthBuffer属性
+#### depthBuffer属性
 
-**初期値** ・・・ `null`  
+**初期値** ・・・ `null`
 **コンバーター** ・・・ `String`
 
 
 
 
-##### targetBuffer属性
+#### targetBuffer属性
 
-**初期値** ・・・ `default`  
+**初期値** ・・・ `default`
 **コンバーター** ・・・ `String`
 
 
 
 
-##### clearColor属性
+#### clearColor属性
 
-**初期値** ・・・ `#0000`  
+**初期値** ・・・ `#0000`
 **コンバーター** ・・・ `Color4`
 
 
 
 
-##### clearColorEnabled属性
+#### clearColorEnabled属性
 
-**初期値** ・・・ `true`  
+**初期値** ・・・ `true`
 **コンバーター** ・・・ `Boolean`
 
 
 
 
-##### clearDepthEnabled属性
+#### clearDepthEnabled属性
 
-**初期値** ・・・ `true`  
+**初期値** ・・・ `true`
 **コンバーター** ・・・ `Boolean`
 
 
 
 
-##### clearDepth属性
+#### clearDepth属性
 
-**初期値** ・・・ `1`  
+**初期値** ・・・ `1`
 **コンバーター** ・・・ `Number`
 
 
 
 
-##### technique属性
+#### technique属性
 
-**初期値** ・・・ `default`  
+**初期値** ・・・ `default`
 **コンバーター** ・・・ `String`
 
 
 
 
 
-### RenderSceneComponentコンポーネント
+## RenderSceneComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
@@ -871,121 +871,121 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 |technique|String||
 
 
-##### layer属性
+#### layer属性
 
-**初期値** ・・・ `default`  
+**初期値** ・・・ `default`
 **コンバーター** ・・・ `String`
 
 
 
 
-##### depthBuffer属性
+#### depthBuffer属性
 
-**初期値** ・・・ `null`  
+**初期値** ・・・ `null`
 **コンバーター** ・・・ `String`
 
 
 
 
-##### out属性
+#### out属性
 
-**初期値** ・・・ `default`  
+**初期値** ・・・ `default`
 **コンバーター** ・・・ `String`
 
 
 
 
-##### clearColor属性
+#### clearColor属性
 
-**初期値** ・・・ `#0000`  
+**初期値** ・・・ `#0000`
 **コンバーター** ・・・ `Color4`
 
 
 
 
-##### clearColorEnabled属性
+#### clearColorEnabled属性
 
-**初期値** ・・・ `true`  
+**初期値** ・・・ `true`
 **コンバーター** ・・・ `Boolean`
 
 
 
 
-##### clearDepthEnabled属性
+#### clearDepthEnabled属性
 
-**初期値** ・・・ `true`  
+**初期値** ・・・ `true`
 **コンバーター** ・・・ `Boolean`
 
 
 
 
-##### clearDepth属性
+#### clearDepth属性
 
-**初期値** ・・・ `1`  
+**初期値** ・・・ `1`
 **コンバーター** ・・・ `Number`
 
 
 
 
-##### camera属性
+#### camera属性
 
-**初期値** ・・・ `null`  
+**初期値** ・・・ `null`
 **コンバーター** ・・・ `Component`
 
 
 
 
-##### technique属性
+#### technique属性
 
-**初期値** ・・・ `default`  
+**初期値** ・・・ `default`
 **コンバーター** ・・・ `String`
 
 
 
 
 
-### SceneComponentコンポーネント
+## SceneComponentコンポーネント
 
 
 
 
-#### 属性
-
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-
-
-
-### TextureBufferComponentコンポーネント
-
-
-
-
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
 
 
 
-### TextureComponentコンポーネント
+## TextureBufferComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
 
 
 
-### TransformComponentコンポーネント
+## TextureComponentコンポーネント
 
 
 
 
-#### 属性
+### 属性
+
+|名前|コンバーター|詳細|
+|:-:|:-:|:-:|
+
+
+
+## TransformComponentコンポーネント
+
+
+
+
+### 属性
 
 |名前|コンバーター|詳細|
 |:-:|:-:|:-:|
@@ -995,33 +995,33 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 |rawMatrix|Object||
 
 
-##### position属性
+#### position属性
 
-**初期値** ・・・ `0,0,0`  
+**初期値** ・・・ `0,0,0`
 **コンバーター** ・・・ `Vector3`
 
 
 
 
-##### rotation属性
+#### rotation属性
 
-**初期値** ・・・ `0,0,0,1`  
+**初期値** ・・・ `0,0,0,1`
 **コンバーター** ・・・ `Rotation3`
 
 
 
 
-##### scale属性
+#### scale属性
 
-**初期値** ・・・ `1,1,1`  
+**初期値** ・・・ `1,1,1`
 **コンバーター** ・・・ `Vector3`
 
 
 
 
-##### rawMatrix属性
+#### rawMatrix属性
 
-**初期値** ・・・ `null`  
+**初期値** ・・・ `null`
 **コンバーター** ・・・ `Object`
 
 
@@ -1029,30 +1029,30 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 
 
-## コンバーター詳細
+# コンバーター詳細
 
-### CanvasSizeConverterコンバーター
-
-
-
-### GeometryConverterコンバーター
+## CanvasSizeConverterコンバーター
 
 
 
-### MaterialConverterコンバーター
+## GeometryConverterコンバーター
 
 
 
-### NodeConverterコンバーター
+## MaterialConverterコンバーター
 
 
 
-### PositionConverterコンバーター
+## NodeConverterコンバーター
 
 
 
-### TextureConverterコンバーター
+## PositionConverterコンバーター
 
 
 
-### ViewportConverterコンバーター
+## TextureConverterコンバーター
+
+
+
+## ViewportConverterコンバーター

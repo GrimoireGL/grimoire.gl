@@ -7,35 +7,35 @@ order: 15
 コンポーネントは、ノードにアタッチされる機能を、それぞれ独立して扱うためのオブジェクトです。
 コンポーネントはツリー上のGomlNodeの一つのノードに所属し、ノードからメッセージを受けて動作します。
 
-## name
+# name
 このコンポーネントの名前です
-## attributes
+# attributes
 このコンポーネントの属性のリストです。
-## node
+# node
 このコンポーネントが属するノードです
-## element
+# element
 このコンポーネントに対応するdom要素です
-## isDefaultComponent
+# isDefaultComponent
 このコンポーネントがデフォルトコンポーネントであるかを判定します。
-## enabled
+# enabled
 コンポーネントの有効無効を設定、取得します。
-## companion
+# companion
 このコンポーネントのノードのcompanionです。GomlNodeを参照してください。
-## tree
+# tree
 このコンポーネントのノードのtreeです。GomlNodeを参照してください。
-## getValue
+# getValue
 属性値を取得します。
-## getAttribute
+# getAttribute
 属性を取得します。
-## removeEnabledObserver
+# removeEnabledObserver
 addEnabledObserverで追加したオブザーバを削除します。
-## addEnabledObserver
+# addEnabledObserver
 enabledの変化が通知されるオブザーバを登録します。
-## resolveDefaultAttributes
+# resolveDefaultAttributes
 システムで使用されます。**使用しないでください**。
-## __addAtribute
+# __addAtribute
 **カスタムコンポーネントを実装する場合に内部から利用します。**
 このコンポーネントに属性を追加します。
-## __removeAttributes
+# __removeAttributes
 **カスタムコンポーネントを実装する場合に内部から利用します。**
 このコンポーネントから属性を削除します。

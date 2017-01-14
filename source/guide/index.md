@@ -4,7 +4,7 @@ title: はじめに
 order: 1
 ---
 
-## Grimoire.jsとは?
+# Grimoire.jsとは?
 
 **Grimoire(グリモア).js** は、一言で言えば、**Web開発のためのWebGLフレームワーク** です。 高度な知識が要求され、既存のWebの開発フローに乗りにくい`WebGL`表現を、**既存のWeb開発のフローで** 、 **最小限のコードで** 、**簡単に** 、**プロダクションレベルで** 扱うためのフレームワークです。
 
@@ -14,7 +14,7 @@ order: 1
 
 `Grimoire.js`は、このWebにおける`WebGL`のあり方を変えます。Webの人がWebの書き方流で扱え、もともとCGなどをいじっていた方は従来に似た書き方をすると、その部品はすぐにWeb畑の人が使えるようになる。**WebGLが画像や動画に次ぐWebエンジニアが持つ筆の一つにする。** それがGrimoire.jsの成し遂げることです。
 
-## Grimoire.jsで何ができるの?
+# Grimoire.jsで何ができるの?
 
 さて、では具体的に **Grimoire.js** を用いてどのようなことができるのでしょうか?
 
@@ -45,7 +45,7 @@ https://grimoiregl.github.io/grimoire.gl-example/#webcam
 
 あなたがどのように、使いたいかにせよ、もしそれが`WebGL`の表現力を必要とするなら、十分に`Grimoire.js`の恩恵を受けることができるでしょう。
 
-## はじめに
+# はじめに
 
 `Grimoire.js`を試すには、まず単純な`.html`を作成して以下の`<script>`でロードします。
 
@@ -57,7 +57,7 @@ https://grimoiregl.github.io/grimoire.gl-example/#webcam
 
 もし`minify`されたjsや、`npm`からの利用をしたいなら[ダウンロード](/guide/download.html)を参考にしてください。 **ただし、初心者にはまず`<script>`を用いての利用を推奨します。何事もシンプルなことから入るのが一番です**
 
-## 宣言的なWebGLマークアップ
+# 宣言的なWebGLマークアップ
 
 `Grimoire.js`では、WebGLを記述するためのマークアップ(GOML)を記述します。例えば、埋め込みたい位置に以下のように記述します。
 
@@ -107,7 +107,7 @@ https://grimoiregl.github.io/grimoire.gl-example/#webcam
 <iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-02">
 </iframe>
 
-## Javascriptによる操作
+# Javascriptによる操作
 
 ```xml
 <script type="text/goml" id="canvas1">
@@ -147,7 +147,7 @@ gr(function(){
 
 また、**`gr`に文字列を渡してクエリで`<script>`を指定し、それにたいして操作したいノードを取得するためのクエリを指定します** (grの最初の括弧で帰ってくるのは、ある`<script>`へのクエリということに注意してください。これは初めて使う方が陥りやすい最も多いミスの一つです。)
 
-## Grimoire.jsのノード・コンポーネントシステム
+# Grimoire.jsのノード・コンポーネントシステム
 
 これまでの議論は、他のタグベースのWebGLライブラリのものと変わりありません。 しかし、`Grimoire`におけるノードやコンポーネントのシステムを一度理解すれば、いかにこのノードのシステムがよくできているかわかることでしょう。
 
@@ -193,7 +193,7 @@ gr(function(){
 
 ![](./images/optional-component.png)
 
-### コンポーネントを書いてみる
+## コンポーネントを書いてみる
 
 まだ、コンポーネントが何か議論していませんでしたね。ここでは例えばくっつけた対象を回転させ続けるコンポーネント、`Rotate`を作ってみることにしましょう。
 
@@ -251,7 +251,7 @@ $から始まる関数は **メッセージハンドラー** と呼ばれ、コ�
 
 メッセージハンドラーに関してはまだまだ触れなくてはならないことも多いのですが、ここでは単なるイベントハンドラーという程度の理解で問題ありません。
 
-### ノードを定義してみる
+## ノードを定義してみる
 
 もし、回転する`<mesh>`を大量に描きたいなら上のように書くのは不便ですね。ここで、`<rotated-mesh/>`なるものを用意するようにしてみましょう。
 
@@ -279,7 +279,7 @@ gr.registerNode("rotated-mesh",["Rotate"],{},"mesh");
 <iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-06">
 </iframe>
 
-## 次は
+# 次は
 
 ここまで理解したあなたは`Grimoire.js`の最も基本的な仕組みを理解しています。全てはこの上に成り立っているのです。例外はありません。
 

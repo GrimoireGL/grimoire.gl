@@ -4,7 +4,7 @@ title: grimoirejs-math
 order: 5
 ---
 
-## AABB
+# AABB
 
 Width of this AABB
 
@@ -40,7 +40,7 @@ public clear(): void
   public toMathematicaCuboid(): string
 ```
 
-## Color3
+# Color3
 
 ```
   public static fromColor4(col: Color4): Color3
@@ -94,7 +94,7 @@ public clear(): void
   public toDisplayString(): string
 ```
 
-## Color4
+# Color4
 
 ```
   public static internalParse(color: string, isFirst: boolean, tryParse?: boolean): Color4
@@ -144,7 +144,7 @@ public clear(): void
   public toDisplayString(): string
 ```
 
-## Colors
+# Colors
 
 ```
 {
@@ -298,7 +298,7 @@ public clear(): void
 }
 ```
 
-## MatrixBase
+# MatrixBase
 
 ```
   public rawElements: GLM.IArray;
@@ -320,7 +320,7 @@ public clear(): void
   public getBySingleIndex(index: number): number
 ```
 
-## Matrix
+# Matrix
 
 ```
   public static zero(): Matrix
@@ -479,7 +479,7 @@ public clear(): void
   public get ColmunCount(): number
 ```
 
-## MatrixArray
+# MatrixArray
 
 ```
   public static getIdentityMatrixArray(length: number): MatrixArray
@@ -493,7 +493,7 @@ public clear(): void
   public setAt(index: number, matrix: Matrix): void
 ```
 
-## PointList
+# PointList
 
 ```
   public static initializeWithCube(list: PointList): PointList
@@ -519,7 +519,7 @@ public clear(): void
   public toMathematicaPoints(): string
 ```
 
-## Quaternion
+# Quaternion
 
 ```
   public rawElements: GLM.IArray;
@@ -629,7 +629,7 @@ public factoringQuaternionZXY(): { x: number, y: number, z: number }
 public factoringQuaternionXYZ(): { x: number, y: number, z: number }
 ```
 
-## Rectangle
+# Rectangle
 
 ```
   public static equals(r1: Rectangle, r2: Rectangle): boolean
@@ -691,7 +691,7 @@ public factoringQuaternionXYZ(): { x: number, y: number, z: number }
   public toString(): string
 ```
 
-## VectorBase
+# VectorBase
 
 ```
 public rawElements: GLM.IArray;
@@ -709,7 +709,7 @@ public get ElementCount(): number
 public get sqrMagnitude(): number
 ```
 
-## Vector2
+# Vector2
 
 ```
 public static get XUnit(): Vector2
@@ -847,7 +847,7 @@ public get ElementCount(): number
 public toMathematicaString(): string
 ```
 
-## Vector3
+# Vector3
 
 ```
 public static get XUnit(): Vector3
@@ -1005,7 +1005,7 @@ public toDisplayString(): string
 public get ElementCount(): number
 ```
 
-## Vector4
+# Vector4
 
 ```
 public static get XUnit(): Vector4
@@ -1163,7 +1163,7 @@ public toDisplayString(): string
 public toMathematicaString(): string
 ```
 
-## VectorArray
+# VectorArray
 
 ```
 public rawElements: number[]; public static zeroVectorArray(dimension: number, length: number): VectorArray
