@@ -4,7 +4,7 @@ title: ダウンロード
 order: 0
 ---
 
-## スタンドアロン
+# スタンドアロン
 
 scriptタグで読み込んですぐに利用するためには、スタンドアロン版の使用が便利です。`GrimoireJS`及び`gr`がグローバル変数として登録されます。(`gr`は`noConflict`を用いて利用しないことも可能です。)
 
@@ -15,7 +15,7 @@ scriptタグで読み込んですぐに利用するためには、スタンド�
 > 上のリンクでは`grimoirejs`, `grimoirejs-fundamental`, `grimoirejs-math`が同梱されている、 `grimoirejs-preset-basic`がダウンロードされます。
 > `grimoirejs-fundamental`を利用することで初めてレンダリングが行えるようになります。また`grimoirejs-fundamental`は`grimoirejs-math`に依存しているため、これらが含まれます。
 
-### CDN
+## CDN
 
 unpkg上で提供されているパッケージは常に最新版になっています。[こちら](https://unpkg.com/grimoirejs-preset-basic/register/grimoire-preset-basic.min.js)を利用すれば、手軽に組み込むことが可能です。
 
@@ -23,7 +23,7 @@ unpkg上で提供されているパッケージは常に最新版になってい
 >
 > 上のリンクでは`grimoirejs`, `grimoirejs-fundamental`, `grimoirejs-math`が同梱されている、 `grimoirejs-preset-basic`がダウンロードされます。
 
-## npm
+# npm
 
 すでに自作のアプリケーション環境がNPMを用いている場合や、babelなどを使ったり効率的に開発したい場合のためにnpmを用いる方法も用意されています。
 
