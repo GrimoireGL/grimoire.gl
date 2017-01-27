@@ -9,16 +9,16 @@ grimoire.jsでは、プラグインを用いてユーザーが新たに使用可
 
 これらの機能を満たすためのテンプレートを提供するためのパッケージを提供してはいるが、もし自前のビルド環境を用いる場合は以下の仕様を考慮しなければならない。
 
-## フォルダ構成
+# フォルダ構成
 
 プラグインをnpmにpublishする際には以下の2つのフォルダが必ず含まれる。
 
 * ref
 * register
 
-## ファイル構成
+# ファイル構成
 
-### register/index.js
+## register/index.js
 
 プラグインのユーザーが`require("プラグイン名/register")`を読んだ際に読み込まれるファイルである。このjavascriptファイルには、プラグイン内の全ファイルがバンドリングされた状態で出力されるべきである。
 
@@ -50,7 +50,7 @@ grimoire.jsでは、プラグインを用いてユーザーが新たに使用可
 (プラグイン内で`require("依存先ライブラリ名/register")`を呼んではならない。`require("依存先ライブラリ名/ref/PATH/TO/MODULE")`は参照なので問題ない。)
 * ソースフォルダの中では、フォルダAとファイルA.jsが同時に存在してはならない。(この場合、上記のindex.jsはうまく生成することができない。)
 
-### refフォルダ
+## refフォルダ
 
 プラグインないの各ソースファイルに対して参照を取得するためのファイルが含まれる。
 
@@ -75,7 +75,7 @@ var v:any;
 export default v;
 ```
 
-### ref/index.js
+## ref/index.js
 
 以下のオブジェクトをexportする必要がある。
 
@@ -83,11 +83,11 @@ export default v;
 window.GrimoireJS.lib.{{ライブラリ名}};
 ```
 
-## grimoirejs-cauldronのヘルパーコマンド
+# grimoirejs-cauldronのヘルパーコマンド
 
 上記の仕様を満たすためのいくつかの自動生成コマンドを、`grimoirejs-cauldron`パッケージが内包している。
 
-### generate-exposureコマンド
+## generate-exposureコマンド
 
 ```bash
 $  cauldron generate-exposure --src ./src --dest ./src/index.ts --ts --main ./src/main.ts
@@ -100,7 +100,7 @@ $  cauldron generate-exposure --src ./src --dest ./src/index.ts --ts --main ./sr
 |ts|typescriptを生成すべきかどうか|
 |main|プラグインの登録処理で呼ばれるべきファイル(プラグインのエントリーポイント)|
 
-### generate-referenceコマンド
+## generate-referenceコマンド
 
 ```bash
 $  cauldron generate-reference --src ./src --dest ./src/index.ts --ts --main ./src/main.ts --dts ./ref
@@ -114,11 +114,11 @@ $  cauldron generate-reference --src ./src --dest ./src/index.ts --ts --main ./s
 |main|プラグインの登録処理で呼ばれるべきファイル(プラグインのエントリーポイント)|
 |dts|dtsフォルダを生成する先(基本的にrefフォルダ)|
 
-## babelのポリフィル系の留意点
+# babelのポリフィル系の留意点
 
 refやregister内のjsファイルは全てbabel後、es2015準拠のコードでなければならない。ただし、`babel-polyfill`を各プラグインに入れてしまうと困ってしまうので、以下の例外を除いて`require("babel-polyfill")`や`transform-runtime`プラグインを用いてはならない。
 
-### preset
+## preset
 
 Grimoire.jsには、babelの設定のpresetのように、複数のプラグインのセットをプリセットとしてインストールしたり、scriptタグとして用いることができる。
 このプリセットに`grimoirejs`が含まれるpresetを用いる場合、scriptタグで用いる対象のみ`babel-polyfill`を用いる必要がある。(**register/index.jsはrequireされた時に用いられるファイルであるからこれに含めてはならない**)

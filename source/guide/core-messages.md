@@ -7,9 +7,9 @@ order: 4
 すべてのメッセージは`$`から始まるメソッドによってハンドリングされます。
 これは、通常のメソッドとして作成したつもりのコンポーネントないのメソッドが別のコンポーネントが発行するメッセージによって起動してしまうことによるバグなどを抑制するためです。
 
-## GrimoireJS自身が定義するメッセージ群
+# GrimoireJS自身が定義するメッセージ群
 
-### treeInitialized
+## treeInitialized
 
 ```typescript
   function $treeInitialized(c: ITreeInitializedInfo): void;
@@ -27,7 +27,7 @@ interface ITreeInitializedInfo {
 
 初期化後に追加されたいかなるコンポーネントには呼び出されることはありません。
 
-### mount
+## mount
 
 ```typescript
   function $mount():void;
@@ -35,7 +35,7 @@ interface ITreeInitializedInfo {
 
 コンポーネントが属するノードがツリーに結びついた際に呼び出されます。
 
-### unmount
+## unmount
 
 ```typescript
   function $unmount():void;
@@ -44,7 +44,7 @@ interface ITreeInitializedInfo {
 コンポーネントが属しているノードがツリーからデタッチされた際に呼び出されます。
 
 
-## ノード初期化時のアルゴリズム
+# ノード初期化時のアルゴリズム
 
 あるノードNが親ノードPに属するように新たにノードNをインスタンス化する際、以下のような順序で初期化されることが想定されている。
 ```

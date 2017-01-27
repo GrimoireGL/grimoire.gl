@@ -86,29 +86,53 @@ nav
   margin 0
   padding 0
   list-style none
-  li
+  > li
+    box-sizing border-box
     border 1px solid color-inverse-normal
     border-top 0
     &:first-child
       border-top 1px solid color-inverse-normal
-  a
-    box-sizing border-box
-    text-decoration none
-    display block
-    padding 12px 0 10px
-    color color-inverse-normal
-    transition .3s
-    &:hover
+    > a
+      box-sizing border-box
+      text-decoration none
+      display block
+      padding 12px 0 10px
+      color color-inverse-normal
       transition .3s
-      color color-inverse
+      &:hover
+        transition .3s
+        color color-inverse
+        background-color color-inverse-normal
+      &:active
+        transition .3s
+        background-color alpha(color-inverse-normal, 0.9)
+  > li.active
+    > a
       background-color color-inverse-normal
-    &:active
-      transition .3s
-      background-color alpha(color-inverse-normal, 0.9)
-  li.active
-    a
       color color-inverse
-      background-color color-inverse-normal
+    ul
+      padding 0
+      list-style none
+      li
+        border-left 5px solid color-inverse-normal
+        border-right 5px solid color-inverse-normal
+        &:first-child
+          padding-top 10px
+        &:last-child
+          padding-bottom 10px
+          border-bottom 5px solid color-inverse-normal
+        a
+          padding 5px 5px
+          display block
+          font-size 12px
+          cursor pointer
+          text-decoration none
+          color color-inverse-normal
+          line-height 1.5
+        &.active
+          a
+            font-weight bold
+            color color-inverse-emphasis
 
 #content
   margin-top header-height
@@ -122,20 +146,19 @@ nav
   hr
     border none
     border-top 2px dotted color-inverse-normal
-  h1
-    margin-bottom 50px
-  h2, h3, h4, h5, h6
+  h1:not(#content-title), h2, h3, h4, h5, h6
     color color-inverse-emphasis
     a
       &::before
         content '# '
-  h2
+  h1:not(#content-title)
     font-size 18px
     border-bottom 1px solid color-inverse-normal
     padding-bottom 8px
     margin-top 60px
     margin-bottom 30px
-  h3
+  h2
+    font-size 16px
     margin-top 60px
     margin-bottom 30px
   h3, h4, h5, h6

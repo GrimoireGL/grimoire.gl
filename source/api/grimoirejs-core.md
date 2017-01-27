@@ -286,76 +286,206 @@ trueのときは様々な警告が出力されますが、パフォーマンス�
   `public async resolvePlugins(): Promise<void> `
 - **使い方**
 
-#### getCompanion
-- **定義**
-
-  `public getCompanion(scriptTag: Element): NSDictionary<any>`
-- **使い方**
-
 #### addRootNode
+Grimoire.jsで管理されるルートノードを追加します。
+`html`に読み込まれた`goml`は、ページロード時にパースされ、そのルートノードは自動的にこのメソッドに渡されます。
+追加したノードの`id`を返します。
 - **定義**
 
   `public addRootNode(tag: HTMLScriptElement, rootNode: GomlNode): string`
 - **使い方**
 
 #### getRootNode
+`goml`として読み込んだスクリプトタグを指定し、対応するツリーのルートノードを取得します。
 - **定義**
 
   `public getRootNode(scriptTag: Element): GomlNode`
 - **使い方**
 
 #### clear
+GrimoireInterfaceの状態をクリアし、その後`initialize`します。
+クリアされるのは以下です。
+
++ nodeDeclarations
++ ComponentDeclaration
++ converters
++ rootNodes
++ loadTasks
++ nodeDictionary
++ componentDictionary
+
 - **定義**
 
   `public clear(): void`
 - **使い方**
 
+
 #### registerComponent
+Grimoire.jsにコンポーネントを追加し、その`ComponentDeclaration`を返します。
+追加されたコンポーネントは、`goml`中で利用できるようになります。
+名前が重複していた場合、例外を投げます。
+コンポーネントは、オブジェクトかコンストラクタを指定します。
+`debug`フラグが立っている場合、命名規則にに則っていなければ警告します。
+`superComponent`には継承元コンポーネントを指定します。存在しなければ例外を投げます。
 - **定義**
 
   `public registerComponent(name: string | NSIdentity, obj: Object | (new () => Component), superComponent?: string | NSIdentity | (new () => Component)): ComponentDeclaration`
 - **使い方**
 
+  コンポーネントの名前は`CamelCase`が推奨されます。
+  簡易的にコンポーネントを追加するのには、オブジェクトを渡すのが簡単です。
+  ```javascript
+  gr.registerComponent("ComponentName",{
+    attributes:{
+      hoge:{
+        converter:"Number",
+        default:777
+      },
+      fuga:{
+        converter:"String",
+        default:"Grimoire"
+      }
+    },
+
+    $awake(){
+      /*~~~*/
+    }
+  })
+  ```
+  また、コンストラクタを指定することもできます。
+  ```javascript
+  class ComponentName{
+    static get attributes(){
+      return {
+        hoge:{
+          converter:"Number",
+          default:777
+        },
+        fuga:{
+          converter:"String",
+          default:"Grimoire"
+        }
+      }
+    }
+    $awake(){
+      /*~~~*/
+    }
+  }
+  gr.registerComponent("ComponentName",ComponentName);
+  ```
+  ３つ目の引数に継承するコンポーネントを指定できます。
+  ここでも、コンストラクタか、名前で指定できます。
+  ```javascript
+  gr.registerComponent("ComponentName1",ComponentName1,"SuperComponent");
+  gr.registerComponent("ComponentName2",ComponentName2,SuperComponent);
+  ```
+
 #### registerNode
+Grimoire.jsにノードを追加します。
+追加されたノードは`goml`中で利用できます。
+名前が重複していた場合、例外を投げます。
+`debug`フラグが立っている場合、命名規則にに則っていなければ警告します。
+ノードが持つべきコンポーネントのリストを、識別子で指定します。
+ノードの属性の初期値を、指定することができます。
+`superNode`には継承元ノードを指定します。存在しなければ例外を投げます。
+`freezeAttributes`で、固定する属性を指定できます。
+固定した属性は、`goml`,`NodeInterface`からの操作を禁止し、
+`GomlNode`かコンポーネントのインスタンスからしか操作できなくなります。
+
 - **定義**
 
   `public registerNode(name: string | NSIdentity,
     requiredComponents: (string | NSIdentity)[],
     defaults?: { [key: string]: any } | NSDictionary<any>,
-    superNode?: string | NSIdentity, freezeAttributes?: string[]): void`
+    superNode?: string | NSIdentity,
+    freezeAttributes?: string[]): void`
 - **使い方**
 
+  以下のように、ノードを追加します。
+
+  ```javascript
+  gr.registerNode("node-name",["ComponentName"],{
+    hoge:100,
+    fuga:"js"
+  })
+
+  gr.registerNode("node-name2",[],{
+    hoge:200,
+    fuga:"override default value 'js'."
+  },"node-name");
+  ```
+  属性の固定は、以下のような状況で有用でしょう。
+  ```javascript
+  gr.registerNode("cube",[],{
+    geometry:"cube"
+  },"mesh",["geometry"]);
+  ```
+
 #### registerConverter
+コンバータを追加します。
+
 - **定義**
 
   `public registerConverter(name: string | NSIdentity, converter: ((this: Attribute, val: any) => any)): void`
 - **使い方**
 
 #### overrideDeclaration
+ノードの宣言を上書きします。
+指定したノードが存在しないときは例外を投げます。
+`additionalComponents`でコンポーネントを追加することができます。
+コンポーネントを削除することはできません。
+`defaults`で属性の初期値を変更できます。
+
 - **定義**
 
   `public overrideDeclaration(targetDeclaration: string | NSIdentity, additionalComponents: (string | NSIdentity)[]): NodeDeclaration`
+  `public overrideDeclaration(targetDeclaration: string | NSIdentity, defaults: { [attrName: string]: any }): NodeDeclaration`
+  `public overrideDeclaration(targetDeclaration: string | NSIdentity, additionalComponents: (string | NSIdentity)[], defaults: { [attrName: string]: any }): NodeDeclaration`
 - **使い方**
+  以下のようにして、カメラの初期値を書き換えることができます。
+
+  ```javascript
+  gr.overrideDeclaration("camera",{
+    position:"10,3,10",
+    rotation:"y(45)"
+  })
+  ```
+  また、以下のようにして、カメラをマウスで操作できるようにできます。
+  (`MouseCameraControll`は、[grimoirejs-fundamental](url)に含まれます。)
+
+  ```javascript
+  gr.overrideDeclaration("camera",["MouseCameraControll"])
+  ```
 
 #### queryRootNodes
+内部使用
 - **定義**
 
   `public queryRootNodes(query: string): GomlNode[]`
 - **使い方**
 
 #### extendGrimoireInterface
+GrimoireInterfaceにメソッドを追加します。
+既に存在する識別子を指定すると、例外を投げます。
+**指定した関数内では、`this`はGrimoireInterfaceにバインドされます**
 - **定義**
 
   `public extendGrimoireInterface(name:string, func:Function):void`
 - **使い方**
 
 #### extendGomlInterface
+GomlInterfaceにメソッドを追加します。
+既に存在する識別子を指定すると、例外を投げます。
+**指定した関数内では、`this`はGrimoireInterfaceにバインドされます**
 - **定義**
 
   `public extendGomlInterface(name:string, func:Function):void`
 - **使い方**
 
 #### extendNodeInterface
+NodeInterfaceにメソッドを追加します。
+既に存在する識別子を指定すると、例外を投げます。
+**指定した関数内では、`this`はGrimoireInterfaceにバインドされます**
 - **定義**
 
   `public extendNodeInterface(name:string, func:Function):void`
@@ -363,12 +493,57 @@ trueのときは様々な警告が出力されますが、パフォーマンス�
 
 
 ## GomlInterface
+複数、または単数のツリーを操作するためのインタフェースです。
+`GrimoireInterface`にクエリを渡して関数として呼び出すことで取得できます。
+
 ### コンストラクタ
 constructor(rootNodes: GomlNode[])
 ### 関数として呼び出し
-(query: string): NodeInterface;
+`gomlInterface`は関数として呼び出して、`NodeInterface`を取得できます。
+引数として、対象となるノードを指定するクエリを渡します。
+#### gr("selector")(query: string): NodeInterface;
+- **定義**
+
+  ```typescript
+  function(selector: string): NodeInterface;
+  ```
+- **パラメータ**
+  - selector
+
+    対象となるノードを指定するセレクタ
+- **使い方**
+
+  セレクタで指定されたノードを、対象となるすべてのツリーからそれぞれ探索して返します。
+  たとえば、`goml`上で以下のように２つのノードが読み込まれていたとします。
+
+  ```xml
+  <mesh id="nodeId" class="nodeClass"/>
+  <mesh class="nodeClass"/>
+  ```
+  この`goml`が`html`に以下のように埋め込まれていたとします。
+  ```html
+  <script id="main" type="text/goml" src="path/to/goml"></script>
+  ```
+  このとき、最初の`mesh`を以下のように指定できます。
+
+  ```javascript
+  var node = gr("#main")("#nodeId");
+  ```
+  また、以下のようにclassを指定するセレクタを渡して、複数の`mesh`を同時に対象にできます。
+
+  ```javascript
+  var nodes = gr("#main")(".meshClass");
+  ```
+  > *注意:*  
+  > 操作対象のNodeは一つとは限りません。セレクタで指定される複数の対象同時に操作できます。
 ### プロパティ
 #### rootNodes
+GomlInterfaceが対象とするツリー群のルートノードのリストです。
+- **型**
+
+  `GomlNode[]`
+- **使い方**
+
 ### メソッド
 #### getNodeById
 #### queryFunc
@@ -378,7 +553,94 @@ constructor(rootNodes: GomlNode[])
 ### コンストラクタ
 constructor(public nodes: GomlNode[][])
 ### プロパティ
+#### nodes
+#### count
+#### nodeDeclarations
+`goml`上で利用可能なすべてのタグの定義を取得できます。
+- **構文**
+
+  ```typescript
+  gr.nodeDeclarations
+  ```
+- **型**
+
+  NSDictionary<NodeDeclaration>
+- **使い方**
+#### isEmpty
 ### メソッド
+#### get
+#### getAttribute
+属性を取得します。
+- **定義**
+
+  `public queryRootNodes(query: string): GomlNode[]`
+- **使い方**
+
+#### setAttribute
+属性を設定します。
+#### on
+イベントリスナを追加します
+- **定義**
+- **使い方**
+#### off
+イベントリスナを削除します
+- **定義**
+- **使い方**
+#### append
+対象となるノードそれぞれに、指定したタグをパースした結果を追加します。
+- **定義**
+
+  `public append(tag: string): NodeInterface`
+- **使い方**
+#### remove
+対象となるノードを、ツリーから削除します。
+- **定義**
+- **使い方**
+#### forEach
+対象となるノードそれぞれに対して関数を適用します。
+- **定義**
+- **使い方**
+#### find
+述語を満たす最初のノードを取得します
+- **定義**
+- **使い方**
+#### watch
+- **定義**
+- **使い方**
+#### setEnabled
+- **定義**
+- **使い方**
+#### children
+- **定義**
+- **使い方**
+#### addComponent
+- **定義**
+- **使い方**
+#### first
+最初のノードを取得します。
+- **定義**
+- **使い方**
+#### single
+最初のノードを取得しますが、このインタフェースの対象が単一でなければ例外を投げます。
+- **定義**
+- **使い方**
+#### filter
+- **定義**
+- **使い方**
+#### toArray
+対象を配列にして返します。
+- **定義**
+- **使い方**
+#### addChildByName
+- **定義**
+- **使い方**
+#### sendMessage
+- **定義**
+- **使い方**
+#### broadcastMessage
+- **定義**
+- **使い方**
+
 
 
 # 基本クラス
@@ -409,7 +671,26 @@ grimoirejs-coreでは、すべてのオブジェクトは`GomlNode`と`Component
 # 標準プラグイン
 grimoirejs-coreで定義される標準のノード、コンポーネント、コンバータです。
 ## ノード
+説明
+### コンポーネント
+### 属性
+### 親
+
 ## コンポーネント
+説明
+###コンポーネント名
+#### 属性
+説明
+##### 名前
+##### コンバータ
+##### デフォルト
+#### 親
+#### 発行イベント
+
+
+
+
+
 
 ## コンバータ
 ### String
@@ -543,7 +824,7 @@ grimoirejs-coreで定義される標準のノード、コンポーネント、�
 
 
 
-  
+
 
 
 ## AssetLoadingManager コンポーネント
