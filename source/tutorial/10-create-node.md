@@ -23,7 +23,7 @@ registerNodeメソッドでは第一引数にノードの名前、第二引数�
 gr.registerComponent('Rotate', {
   attributes: {
     speed: {
-      defaultValue: '1',
+      default: '1',
       converter: 'Number',
     },
   },

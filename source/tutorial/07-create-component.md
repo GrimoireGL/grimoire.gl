@@ -17,7 +17,7 @@ order: 7
 コンポーネントを定義するにはregisterComponentメソッドを用います。javascriptからコンポーネントを定義してみましょう。
 
 * attributes - コンポーネントの属性を定義します
-    * defaultValue - 属性の初期値を設定します
+    * default - 属性の初期値を設定します
     * converter - 属性値の型を定義します。下の例では`Number`を指定しているので、数字として扱われます。
 * $awake - コンポーネントの初期化時に呼び出されます
 * $update - 毎フレーム呼び出されます
@@ -28,7 +28,7 @@ order: 7
 gr.registerComponent('Rotate', {
   attributes: {
     speed: {
-      defaultValue: '1',
+      default: '1',
       converter: 'Number',
     },
   },
