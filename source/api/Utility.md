@@ -1,6 +1,6 @@
 ---
 type: doc
-title: Component
+title: Utility
 order: 30
 ---
 
@@ -48,3 +48,28 @@ public setAttribute(attrName: string | NSIdentity, value: any): void
 ### remove Attribute
 属性を削除します。
 属性が存在して削除に成功したらtrue,存在しなければfalseを返します。
+
+# Constants
+定数を管理します
+## static定数
+### defaultNamespace
+デフォルトの名前空間.
+"HTTP://GRIMOIRE.GL/NS/DEFAULT"
+### x_gr_id
+"x-gr-id"
+
+# Ensure
+値を正しい形式に統一します。
+## staticメソッド
+### tobeString
+stringかnumberを文字列に変換します。
+### tobeNumber
+### tobeNSIdentity
+### tobeNSIdentityArray
+### tobeNSDictionary
+### tobeMessage
+### tobeComponentConstructor
+
+
+# NSDictionary
+# NSIdentity
