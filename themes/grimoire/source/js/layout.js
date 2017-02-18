@@ -45,6 +45,18 @@ document.addEventListener('DOMContentLoaded', function() {
       history.replaceState(null, null, href);
     });
   }
+
+  // activate humburger button
+  var el = document.querySelectorAll('.hamburger');
+  var sidebar = document.querySelector('#sidebar');
+  var menu = document.querySelector('#menu-wrap');
+  for (var i = 0; i < el.length; i++) {
+    el[i].addEventListener('click', function() {
+      this.classList.toggle('active');
+      sidebar.classList.toggle('active');
+      menu.classList.toggle('active');
+    }, false);
+  }
 });
 
 function createSubMenu(h1, marginTop) {

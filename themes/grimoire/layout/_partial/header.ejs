@@ -1,8 +1,13 @@
 <header id="header">
-  <a id="logo-wrap" href="<%- url_for('/') %>">
-    <div id="logo-icon"></div>
-    <div id="logo-font"></div>
-  </a>
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="<%- url_for('/') %>">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
   <nav id="menu-wrap">
     <ul id="menu">
       <%- partial('_partial/menu') %>

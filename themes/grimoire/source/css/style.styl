@@ -4,6 +4,7 @@
 @import '_util/misc'
 @import '_partial/syntax'
 @import '_util/button'
+@import '_partial/hamburger.css'
 
 body
   margin 0
@@ -27,6 +28,18 @@ body
   height header-height
   background-color color-inverse
   box-shadow 0px 0px 5px rgba(0, 0, 0, .60)
+  z-index 10
+
+  .hamburger
+    display none
+    margin-left 30px
+    height 20px
+    width 20px
+
+#left-wrap
+  display flex
+  flex-wrap nowrap
+  align-items center
 
 #logo-wrap
   display block
@@ -48,7 +61,7 @@ body
   background-image logo-font
 
 nav
-  width 350px
+  width menu-width
   margin-right 50px
 
 #menu
@@ -250,13 +263,25 @@ nav
 .primary-buttons
   width 230px
   height 50px
-  margin: 40px auto 20px auto;
+  margin 40px auto 20px auto;
   a
     button(color-primary, color-inverse)
 
 // @media (max-width (content-width + sidebar-width * 2))
   // #column-wrap
   //   justify-content flex-start
+
+mobile-sidebar()
+  transition 0.3s margin-left
+  background-color rgba(0, 0, 0, 0.85)
+  #doc-title
+    color color-inverse
+  #list
+    .sub-menu
+      li.active
+        a
+          color color-inverse
+
 @media mq-small-pc
   #column-wrap
     justify-content flex-start
@@ -269,7 +294,16 @@ nav
     #content
       margin-left 0
   #sidebar
-    display none
+    margin-left -1 * sidebar-width
+    height 100%
+    mobile-sidebar()
+    &.active
+      margin-left 0
+  #logo-wrap
+    margin-left 30px
+  #header
+    .hamburger
+      display inline-block
 
 @media mq-mobile
   #column-wrap
@@ -281,7 +315,13 @@ nav
       margin-right side-spacing
       width 'calc(100% - %s)' % (side-spacing * 2)
   #sidebar
-    display none
+    margin-left -1 * sidebar-width
+    top mobile-header-height
+    height 100%
+    padding-top 95px
+    mobile-sidebar()
+    &.active
+      margin-left 0
   #header
     justify-content center
     height mobile-header-height
@@ -293,4 +333,21 @@ nav
       #logo-font
         display none
     #menu-wrap
-      display none
+      position absolute
+      left -1 * menu-width
+      top mobile-header-height
+      padding 18px 0 15px
+      border-bottom 1px solid color-inverse-normal
+      &.active
+        left ((sidebar-width - menu-width) / 2)
+      a
+        font-size 14px
+        color color-inverse
+        &::after
+          background-color color-inverse
+    .hamburger
+      display inline-block
+      position absolute
+      left -10px
+      height 18px
+      width 18px
