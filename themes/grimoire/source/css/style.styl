@@ -334,12 +334,15 @@ mobile-sidebar()
         display none
     #menu-wrap
       position absolute
-      left -1 * menu-width
+      left -1 * sidebar-width
+      width sidebar-width
       top mobile-header-height
       padding 18px 0 15px
       border-bottom 1px solid color-inverse-normal
+      transition 0.3s left
+      background-color rgba(0, 0, 0, 0.8)
       &.active
-        left ((sidebar-width - menu-width) / 2)
+        left 0
       a
         font-size 14px
         color color-inverse
