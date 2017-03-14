@@ -1,165 +1,165 @@
 ---
-type: doc
-title: マテリアルの自作
-order: 11
+Type: doc
+Title: Authoring of materials
+Order: 11
 ---
 
-## 概要
+## Overview
 
-Grimoire.jsのfundamentalプラグインには強力なマテリアルの作成・インポート機能が含まれている。
-これにより、シェーダーの作成者は最小限の労力でマテリアルを作成し公開できるとともに、
-利用者はすぐにインポートして、タグベースのインターフェースで利用できる。
+Grimoire.js's fundamental plug-in includes powerful material creation and import functions.
+This allows shader authors to create and publish materials with minimal effort,
+The user can import it immediately and use it with the tag based interface.
 
-この章ではシェーダーを活用したマテリアルの作成について解説する。そのため、GLSLの文法がある程度前提
-になる解説が多々存在する。
-**もし、GLSLにまったく触れたことがない、それがなんであるかがわからない読者は一度`ShaderToy`などを
-利用してGLSLに触れてみることを強く推奨する。**
+This chapter explains the creation of materials using shaders. Therefore, the GLSL grammar is somewhat premised
+There are many explanations to become.
+** If you have never touched the GLSL, readers who do not know what it is like to call `ShaderToy` etc.
+We strongly recommend using GLSL by using it. **
 
-## Sortファイル
+## Sort file
 
-このライブラリにおけるシェーダーファイルの形式はGLSLを拡張したSORT(ソール)によって記述される。  
-GLSL単体では、単一のシェーダー(頂点シェーダーもしくはフラグメントシェーダー)を複数個記述して、
-javascriptなどから操作することにより初めて利用できるが、このSORTを利用することによって、
-`マルチパスレンダリング`、`GLステートの操作`、`uniform変数の初期値の設定`、`外部ファイルのインポート`
-などが可能になる。
+The format of the shader file in this library is described by SORT (sole) which extends GLSL.
+For GLSL alone, describe multiple shaders (vertex shader or fragment shader)
+It can be used for the first time by operating from javascript etc, but by using this SORT,
+`Multipass rendering`, `manipulate GL state`, `set initial value of uniform variable`, `import external file`
+And so on.
 
-### sortファイルの文法
+### Sort file grammar
 
-以下は簡単なsortファイルの例である。
+The following is an example of a simple sort file.
 
 ```glsl
-@Pass
-@BlendFunc(ONE,ONE)
-FS_PREC(mediump,float)
+@ Pass
+@ BlendFunc (ONE, ONE)
+FS_PREC (mediump, float)
 
 #ifdef VS
-  attribute vec3 position;
+  Attribute vec3 position;
 
-  uniform mat4 _matPVM;
+  Uniform mat4 _matPVM;
 
-  void main(){
-    gl_Position = _matPVM * vec4(position,1);
-  }
-#endif
+  Void main () {
+    Gl_Position = _ matPVM * vec 4 (position, 1);
+  }
+# Endif
 
-#ifdef FS
-  @{type:"color", default:"#381794"}
-  uniform vec4 color;
+# Ifdef FS
+  @ {Type: "color", default: "# 381794"}
+  Uniform vec4 color;
 
-  void main(){
-    gl_FragColor = color;
-  }
-#endif
+  Void main () {
+    Gl_FragColor = color;
+  }
+# Endif
 
 ```
 
-通常のシェーダーについて見慣れている人ならば、上記のコードが以下によって構築されていることがわかるだろう。
+If you are familiar with normal shaders, you will find that the above code is built by
 
-* 通常のGLSLのコード
-* 通常のGLSLのマクロ
-* `@`から始まる文
+* Regular GLSL code
+* Normal GLSL macros
+* Sentences starting with `@`
 
-**さわってみよう1**
+** Let's touch * 1 **
 
-まずは上記のコードを読み込んだ以下のコードを読んで、uniform変数としてマテリアルに記述
-されている`color`がマテリアルタグから操作できることを見て欲しい。
+First read the code above and read the following code and write it as a uniform variable in the material
+Let's see that `color` being manipulated can be manipulated from the material tag.
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t11-01" allowfllscreen></iframe>
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example#t11-01" allowfllscreen> </ iframe>
 
-### sortのuniform変数
+### uniform variable of sort
 
-sortのuniform変数はその変数名の付け方によって2つに大別される。
+The sort uniform variable is roughly divided into two according to the way of assigning the variable name.
 
-* ユーザーUniform変数
-* 環境Uniform変数
+* User Uniform variable
+* Environmental Uniform variable
 
-`_`から**始まらない**変数は**ユーザーUniform変数**であり、`_`から**始まる**変数は**環境Uniform変数**である。
+Variables are ** User Uniform variables **, variables beginning with `_` ** ** are ** environment Uniform variables **.
 
-例えば、上記のコードの例で言えば`color`は**ユーザーUniform変数**であり、`_matPVM`は**環境Uniform変数**である。
+For example, in the code example above, `color` is ** user Uniform variable ** and` _matPVM` is ** environment Uniform variable **.
 
-また、どちらのタイプのuniform変数でも変数の宣言の上部に@から始まるJSONを記述することにより、`初期値`や`設定`などの付加情報を変数に結びつけることができる。この付加情報を**アノテーション**と言う。
+Also, by writing JSON which begins with @ at the top of variable declaration for both types of uniform variable, additional information such as `initial value` and `setting` can be connected to the variable. This additional information is called ** annotation **.
 
-例:
+Example:
 
 ```glsl
-  @{type:"color", default:"#381794"}
-  uniform vec4 color;
+  @ {Type: "color", default: "# 381794"}
+  Uniform vec4 color;
 ```
 
-> アノテーションのJSON
+> Annotation JSON
 >
-> アノテーションのJSONはJSON5ライブラリによってパースされている。そのため、キー部分の`"`は省略できる。
+> Annotation JSON has been parsed by the JSON 5 library. Therefore, ```in the key part can be omitted.
 
-#### 環境Uniform変数
+#### Environment Uniform Variable
 
-環境Uniform変数は、プラグインなどが、変数名に応じて自動的に値をシェーダーに割り当てる際に利用される。
-`fundamental`自身もこの機能を利用して利用する機会が多いであろういくつかの変数を定義している。
+The environment Uniform variable is used when plugins etc. automatically assign values ​​to shaders according to variable names.
+`Fundamental` itself also defines a number of variables that will have many opportunities to exploit this feature.
 
-> grimoirejs-fundamentalの代表的な環境Uniform変数
+> Representative environment of grimoirejs-fundamental environment Uniform variable
 >
-> |変数型|変数名|内容|
-> |:-:|:-:|:-:|
-> |float|\_time|Grimoire.js読み込み時からの時間|
-> |vec2|\_viewportSize|レンダリング対象のビューポートサイズ(px単位)|
-> |mat4|\_matM|モデル行列|
-> |mat4|\_matV|ビュー行列|
-> |mat4|\_matP|プロジェクション行列|
-> |mat4|\_matPV|プロジェクション \* ビュー行列|
-> |mat4|\_matVM|ビュー行列 \* モデル行列|
-> |mat4|\_matPVM|レンダリング対象のモデルのプロジェクション行列 \* ビュー行列 \* モデル行列|
-> |vec3|\_cameraPosition|カメラ座標(ワールド座標系)|
-> |vec3|\_cameraDirection|カメラ向き(ワールド座標系)|
+> | Variable type | Variable name | Content |
+> | -: -: |: -: |: -: |
+> | Float | \ _time | Grimoire.js Time since reading |
+> | Vec2 | \ _viewportSize | Viewport size to be rendered (px unit) |
+> | Mat4 | \ _ matM | model matrix |
+> | Mat4 | \ _ matV | view matrix |
+> | Mat4 | \ _ matP | projection matrix |
+> | Mat4 | \ _ matPV | projection \ * view matrix |
+> | Mat4 | \ _ matVM | view matrix \ * model matrix |
+> | Mat4 | \ _ matPVM | Projection matrix of model to be rendered \ * View matrix \ * Model matrix |
+> | Vec3 | \ _ cameraPosition | camera coordinates (world coordinate system) |
+> | Vec3 | \ _ cameraDirection | camera orientation (world coordinate system) |
 >
-> 詳細は[sortシェーダー](https://grimoire.gl/guide/sort.html)が参考になる。
+> For details, [sort shader] (https://grimoire.gl/guide/sort.html) is helpful.
 
-#### ユーザーUniform変数
+#### User Uniform Variable
 
-ユーザーUniform変数は、タグを通じてユーザーがインタラクション可能な値をシェーダーに割り当てる際に利用される。
-(一般的にユーザーがいじらないであろう調整用の変数やガウス分布の係数の配列などもこちらで作成して、コンポーネントから割り当てる。)
+User Uniform variables are used to assign values ​​that users can interact with through tags to shaders.
+(In general, adjustment variables and Gaussian distribution coefficient arrays that the user will not tamper with are created here and assigned from the component.)
 
-ユーザーUniform変数には初期値を持つことができる。この際には、対象となるuniform変数のアノテーションのdefault要素にデフォルトとなる値を入れる。
+The user Uniform variable can have an initial value. In this case, put the default value in the default element of the annotation of the target uniform variable.
 
-タグ側での値の指定は対応した型のコンバーターによって行われる。
+Specification of the value on the tag side is done by the converter of the corresponding type.
 
-例えば、`sampler2D`型のuniform変数にはテクスチャへのファイルパスをタグ側から読み込むことができる。
+For example, to a uniform variable of type `sampler2D` you can read the file path to the texture from the tag side.
 
-それぞれの型に対応したコンバーターが何になるか等、詳細の説明は [sortシェーダー](https://grimoire.gl/guide/sort.html)を参考にして欲しい。
+Please refer to [sort shader] (https://grimoire.gl/guide/sort.html) for the detailed explanation such as what the converter corresponding to each type will be.
 
-> vec3,vec4型のコンバーター
+> Vec3, vec4 type converter
 >
-> vec3,vec4型はデフォルトではベクトル型のコンバーターが指定される。
-> すなわち、`1,2,3`という指定や`n(1,2,3)`などの指定が可能であるが、色のコンバーターではないので`red`や`#330000`などの指定はできない。
+> For vec3, vec4 type, a vector type converter is specified by default.
+> That is, designation of `1, 2, 3` and specification such as` n (1,2,3) `are possible, but since it is not a color converter, designation of` red` or `# 330000` Can not.
 >
-> ただし、vec3,vec4のアノテーションに`type:"color"`を指定すると、使われるコンバーターは色の指定用のものになる。
+> However, if `type:" color "` is specified for the annotation of vec3, vec4, the converter used will be for color specification.
 
-### sortのattribute変数
+### sort's attribute variable
 
-attribute変数はジオメトリー内の同名のバッファとして登録されているものから用いる。
-デフォルトで登録されているプリミティブは初期状態で以下のようなバッファを持つ。
+The attribute variable is used from the one registered as the buffer of the same name in the geometry.
+Primitives that are registered by default have the following initialization buffer.
 
-|変数型|変数名|内容|
-|:-:|:-:|:-:|
-|vec3|position|モデル空間の頂点座標|
-|vec3|normal|モデル空間の法線(正規化済み)|
-|vec3|texCoord|テクスチャ座標|
+| Variable type | Variable name | Contents |
+|: -: |: -: |: -: |
+| Vec3 | position | vertex coordinates of model space |
+| Vec3 | normal | Model space normals (normalized) |
+| Vec3 | texCoord | texture coordinates |
 
-**さわってみよう2**
+** Let's touch it 2 **
 
-以下の例は上記の説明を参考にいくつかの機能を使ったものである。
+The following example uses several functions with reference to the above explanation.
 
-違う変数を使って見たり、初期値を変えて実際に試してみよう。
+Let's try using different variables and changing initial values ​​and actually trying.
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t11-02" allowfllscreen></iframe>
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example#t11-02" allowfllscreen> </ iframe>
 
-### プリファレンス
+### Preferences
 
-シェーダーを用いる際はしばしば適切なglステートの設定がなければ動作しないものがある。そのため、sortシェーダーではシェーダー内部でglステートの設定を明示できる。
+When shaders are used, sometimes they do not work unless there is an appropriate gl state setting. Therefore, in the sort shader, you can specify the setting of the gl state inside the shader.
 
-`@Pass` 以外の`@プリファレンス名(引数...)`の形式をとるものを**プリファレンス**と呼ぶ。
+Those which take the form of `@ preference name (argument ...)` other than `@ Pass` is called ** preference **.
 
-これらはパスの描画時にGLのステートに設定を与えるなどの機能を持つ。以下は、定義済みのプリファレンスである。
+These have functions such as giving settings to GL state when drawing a path. The following are predefined preferences.
 
-#### WebGLのAPIと同一のもの
+#### The same as the WebGL API
 
 * BlendFunc
 * BlendFuncSeparate
@@ -167,61 +167,61 @@ attribute変数はジオメトリー内の同名のバッファとして登録�
 * BlendEquationSeparate
 * CullFace
 
-これらは、同名のWebGLの関数と同じ引数リストを持ち、同様の指定により処理を指定できる。
+They have the same argument list as the function of WebGL of the same name, and you can designate the processing by the same specification.
 
-例えば、`@CullFace(FRONT)`と記述したマテリアルで描画が行われると前方がカリングされる。
+For example, drawing is done with material written as `@ CullFace (FRONT)`, the front is culled.
 
-**さわってみよう3**
+** Let's touch * 3 **
 
-以下の例はブレンド設定をSORTからいじったものである。違う設定を使って見たりして実験してみよう。
+The following example is a blend setting from SORT. Let's try experimenting with different settings.
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t11-03" allowfllscreen></iframe>
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example#t11-03" allowfllscreen> </ iframe>
 
-#### マクロ値の公開
+#### Publishing Macro Values
 
-ループ回数など、uniform変数だけでは渡せない変数の場合に動的にシェーダーのマクロを書き換えたい場合がある。
-そのような場合、`@ExposeMacro`プリファレンスを使うと特定のマクロの値をタグ側から操作可能になる。
-
-```glsl
-  @ExposeMacro(型,GOML側の属性名,マクロ名,初期値)
-```
-
-現状では型として取れるものは以下の二つである。
-
-* int
-* bool
-
-boolが指定された際、初期値に利用可能な値はtrueもしくはfalseのみである。intが指定された場合、整数が指定可能である。(小数が指定された場合切り捨てられる)
-
-例えば、以下のように指定する。
-```glsl
-@ExposeMacro(int,loopCount,LOOP_COUNT,5)
-@ExposeMacro(bool,useTexture,USE_TEXTURE,true)
-```
-
-また、上記の例ではタグに値が特に存在しなかった場合以下のようなマクロが挿入される。
+There are cases where you want to dynamically rewrite shader macros in the case of variables that can not be passed by uniform variables alone, such as the number of loops.
+In such a case, using the `@ ExposeMacro` preference makes it possible to manipulate the value of a particular macro from the tag side.
 
 ```glsl
-  #define LOOP_COUNT 5
-  #define USE_TEXTURE
+  @ExposeMacro (type, GOML side attribute name, macro name, initial value)
 ```
 
-**bool型はその値ではなくフラグの存在、非存在によってその値を表現することに注意。**
+Currently two types are available as types:
 
-以下の例は、球体の法線を描画したものであるが、法線の計算手法をワールド空間にするかビュー空間にするかをタグ側から設定できるようになっている。
+* Int
+* Bool
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t11-05" allowfllscreen></iframe>
+When bool is specified, the only valid values ​​for the initial value are true or false. If int is specified, an integer can be specified. (Truncated if decimal is specified)
 
-### マルチパスレンダリング
+For example, specify as follows.
+```glsl
+@ExposeMacro (int, loopCount, LOOP_COUNT, 5)
+@ExposeMacro (bool, useTexture, USE_TEXTURE, true)
+```
 
-エッジの描画のシェーダーなどでは、1回の描画だけでは目的の画が得られないことがある。その際、複数回の描画(マルチパスレンダリング)をする必要がある。
+Also, in the above example, if no value exists in the tag in particular, the following macro is inserted.
 
-今までの解説では、一回分の描画(シングルパス)の記述に必要な部分だけを解説したが、SORTでは、複数回の描画を一つのシェーダーで記述することができる。
+```glsl
+  #define LOOP_COUNT 5
+  #define USE_TEXTURE
+```
 
-SORTの`@Pass`ディレクティブはその終わりから、次の`@Pass`までを一つのパスとみなすための文法である。
-これらそれぞれの描画(パス)は、上から順に描画される。
+** Note that the value of bool type is expressed not by its value but by the presence or absence of a flag. **
 
-**さわってみよう4**
-例えば、以下の例では`前面をカリングにして少し拡大`したあと、`背面をカリングにして通常描画`することによってエッジを書いたサンプルである。
+In the following example, the normals of the spheres are drawn, but it is possible to set whether the calculation method of the normal is to be world space or view space from the tag side.
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t11-04" allowfllscreen></iframe>
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example#t11-05" allowfllscreen> </ iframe>
+
+### Multipass Rendering
+
+In a shader of drawing an edge, the target image may not be obtained with only one drawing. At that time, it is necessary to draw a plurality of times (multipass rendering).
+
+In the commentary so far, only the part necessary for the description of single drawing (single pass) is explained, but in SORT, it is possible to describe multiple drawing in one shader.
+
+The `@ Pass` directive of SORT is a grammar for considering from the end to the next` @ Pass `as one pass.
+Each drawing (pass) is rendered in order from the top.
+
+** Let's touch * 4 **
+For example, in the following example, it is a sample that writes edges by `drawing a little in front by culling and then` drawing on the back with culling on the back.
+
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example#t11-04" allowfllscreen> </ iframe>

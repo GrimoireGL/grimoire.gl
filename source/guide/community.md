@@ -1,72 +1,72 @@
 ---
-type: doc
-title: コミュニティの仲間になろう
-order: 100
+Type: doc
+Title: Become a member of the community
+Order: 100
 ---
 
-Grimoire.jsプロジェクトは日々成長しています。 かつては一人で作り続けたプロジェクトから、何人かの方々が協力してくれるようなところまで到るまでになりました。
+The Grimoire.js project is growing day by day. In the past it was until the point where some people will cooperate from the project that I have been making alone.
 
-このページを読んでいるあなたも、コミュニティに参加する準備ができていることでしょう。あなたのためにコミュニティが何ができるか、あなたが何をコミュニティにできるかこのページでは紹介します。
+You are also reading this page, you are ready to join the community. I will show you what the community can do for you and what you can do for the community on this page.
 
-まずは、**ようこそ。Grimoire.jsのコミュニティへ**
+First of all, ** Welcome. To the community of Grimoire.js **
 
-# コミュニケーションツール
+# Communication tool
 
-まずは協力を得るにせよ、協力いただけるにせよ何らかの形でコミュニティーに入らなければ話は始まりません。
+Whether you first get cooperation or not, the story will not start unless you join the community in some way, even if you can cooperate.
 
 ## slack
 
-私たちはSlackを利用して、日々`Grimoire.js`について議論しています。 あなたが今欲しいと思っている機能ももしかしたら今ここで議論されているかもしれません。
-あなたが今悩んでいる内容も、今まさに他の方々が悩んでいるような内容かもしれません。まずは参加をして始めましょう。
+We use Slack to discuss `Grimoire.js` on a daily basis. Perhaps the features that you want now are probably being discussed here.
+The content you are suffering now may be the contents that other people are suffering right now. Let's start by participating first.
 
-**登録は以下のリンクから簡単にできます**
+** Easy registration from the following link **
 
 [![Slack Status](https://grimoire-slackin.herokuapp.com/badge.svg)](https://grimoire-slackin.herokuapp.com/)
 
 ## Github
 
-もし、バグに悩んだりソースコードに疑問があるならGithubを見るべきです。
-IssueやPull requestを投げることに躊躇わないでください。その一歩を踏めるどのような方も`Grimoire.js`にとっては大事なコミュニティの一人なのです。
+If you are suffering from bugs or have questions on the source code, you should see Github.
+Do not hesitate to throw Issue or Pull request. Anyone who follows that step is one of the important communities for `Grimoire.js`.
 
 https://github.com/GrimoireGL/GrimoireJS
 
-もし、そのバグがコアのバグかどのバグかわからない場合はコアのIssueに書き込んでください。どのプラグインのバグか明確な場合、以下のページから対象となるレポジトリのIssueにお願いします。
+If you do not know whether the bug is a core bug or a bug, please write it in the Issue of the core. If you are sure which plugin bug is clear, please go to the Issue of the target repository from the following page.
 
 https://github.com/GrimoireGL
 
-# コミュニティができること
+# What the community can do
 
-## サポートを受ける
+# Obtain support
 
-SlackやIssueで聞けば、あなたの今悩んでいる内容に解決できるような内容があるかもしれません。
+If you hear it in Slack or Issue, there may be content that you can solve for what you are suffering now.
 
-時にそれはバグかもしれません。そんな時、あなたのサポートはコミュニティにとって大きなプラスになります。
+Sometimes it may be a bug. In that case, your support will be a big plus for the community.
 
-# コミュニティにできること
+# What the community can do
 
-## バグレポート、プルリクエスト
+## Bug report, pull request
 
-バグ報告はとてもありがたい一つの貢献方法です。あなたの気がつきは、長く使っているコミュニティのメンバーも気がついていないかもしれません。
+Bug reporting is a very much appreciated contribution method. Your notice may not be aware of members of communities that have been using for a long time.
 
-是非[Github](https://github.com/GrimoireGL/GrimoireJS)から伝えてください。明日の安定性はあなたのバグ報告から誕生します。
+Please be sure to tell from [Github](https://github.com/GrimoireGL/GrimoireJS). Tomorrow's stability will come from your bug report.
 
-## ドキュメントの翻訳
+## Translation of documents
 
-Grimoire.jsでは、現状ではGithub上を除く公式サイト上のドキュメントは日本語で記されています。
-しかし、これは最終的には英語になるべきであり、現状はコアチームの開発速度とドキュメントの維持の折衷案としてこの方法になっています。
+In Grimoire.js, the documents on the official website except Github are written in Japanese as of now.
+However, this should eventually be in English and the current situation is this way as a compromise between core team development speed and document maintenance.
 
-このプロジェクトでは、ドキュメントを翻訳する協力をしていただける方を募集しています。日本発のOSSが海外へ羽ばたくのに協力していただける方は是非ご協力ください。
-(この場合、お手数ですがまずslackにお入りください。)
+In this project, we are looking for someone who can cooperate in translating documents. Those who can cooperate with OSS from Japan flapping abroad please cooperate.
+(In this case, sorry to trouble you, but please enter slack first.)
 
 We are now looking for translators! Currently our documents are written in Japanese except some documents on Github.
-This is just for performance to write documents of core development team.  But we really want to translate all our documents in English.
+But we really want to translate all our documents in English.
 
 If you are interested in our team, please join our slack by the link above.
 
-## ドキュメントを書く
+Write a document
 
-これらのページはGithub上の`md`ファイルから自動生成されています。誰でも以下のページから編集ができます。
+These pages are automatically generated from the `md` file on Github. Anyone can edit from the following page.
 
 https://github.com/GrimoireGL/grimoire.gl/tree/master/source
 
-また、編集したいページの一番下の`Edit this page on Github`ボタンからも編集を開始できます。
+You can also start editing from the `Edit this page on Github` button at the bottom of the page you want to edit.

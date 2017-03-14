@@ -1,95 +1,95 @@
 ---
-type: doc
-title: grimoirejs-fundamental
-order: 2
+Type: doc
+Title: grimoirejs-fundamental
+Order: 2
 ---
-# 概要
+# Overview
 
 
 
-# インストール
+# Install
 
 ```sh
-$ npm install grimoirejs-fundamental --save
+$ Npm install grimoirejs-fundamental - save
 ```
 
-[unpkg.com](https://unpkg.com)によるCDNも利用可能。
+CDN by [unpkg.com](https://unpkg.com) is also available.
 
-** [CDN - grimoirejs-fundamental - ](https://unpkg.com/grimoirejs-fundamental/register/grimoire-fundamental.js) **
+** [CDN - grimoirejs - fundamental -](https://unpkg.com/grimoirejs-fundamental/register/grimoire-fundamental.js) **
 
-# 一覧
+A list
 
-## ノード
+## node
 
-  |ノード名|説明|
-  |:-:|:-:|
-  |[`<goml>`](#gomlノード)|GOMLファイルのルートノード|
-  |[`<scene>`](#sceneノード)|ある3D空間上のモデルの配置やカメラの設定などの場面の設定を含むためのノード|
-  |[`<object>`](#objectノード)|3D空間上の物体を意味するノード|
-  |[`<camera>`](#cameraノード)|3D空間を撮影するためのカメラのノード|
-  |[`<mesh>`](#meshノード)|3D空間上のモデルなど、 **映るもの** を表すためのノード|
-  |[`<renderer>`](#rendererノード)|キャンバスの描画手法を指定するためのノード|
-  |[`<geometry>`](#geometryノード)|新しい形状を生成するためのノード|
-  |[`<texture>`](#textureノード)|テクスチャを明示的に読み込むためのノード|
-  |[`<material>`](#materialノード)|マテリアルを明示的に読み込むためのノード|
-  |[`<import-material>`](#import-materialノード)|新しいマテリアルを外部から読み込むためのノード|
-  |[`<texture-buffer>`](#texture-bufferノード)|カラーバッファ用のテクスチャを生成するためのノード|
-  |[`<render-buffer>`](#render-bufferノード)|深度バッファ/ステンシルバッファ用の`renderbuffer`を生成するためのノード|
-  |[`<render-scene>`](#render-sceneノード)|シーンを描画するレンダリング手順を表すためのノード|
-  |[`<render-quad>`](#render-quadノード)|四角形単体を特定のマテリアルで描画するためのノード|
+  | Node name | Description |
+  |: -: |: -:: |
+  | [`<Goml>`](# goml node) | Route node of GOML file |
+  | [`<Scene>`](# scene node) | A node for including settings of scenes such as placement of models on a 3D space and setting of cameras |
+  | [`<Object>`](# object node) | Node that means an object in 3D space |
+  | [`<Camera>`](# camera node) | camera node for taking 3D space |
+  | [`<Mesh>`](# mesh node) | Model such as 3D space, etc. ** Node to represent ** *
+  | [`<Renderer>`](# renderer node) | Node for specifying the canvas drawing method |
+  | [`<Geometry>`](# geometry node) | Node for generating a new shape |
+  | [`<Texture>`](# texture node) | node for explicitly reading the texture |
+  | [`<Material>`](# material node) | node for explicitly reading material |
+  | [`<Import-material>`](# import-material node) | Node for reading new materials from outside |
+  | [`<Texture-buffer>`](# texture-buffer node) | node for generating texture for color buffer |
+  | [`<Render-buffer>`](# render-buffer node) | node for generating `renderbuffer` for depth buffer/stencil buffer |
+  | [`<Render-scene>`](# render-scene node) | Node to represent the rendering procedure to render the scene |
+  | [`<Render-quad>`](# render-quad node) | Node for rendering a single rectangle with a specific material |
 
-## コンポーネント
+##
 
-  |コンポーネント名|説明|
-  |:-:|:-:|
-  |[`<AssetLoadingManagerComponent>`](#AssetLoadingManagerComponentコンポーネント)|アセットの読み込みを司るコンポーネント。ローダーの表示などを司る。|
-  |[`<CameraComponent>`](#CameraComponentコンポーネント)|シーンを描画するカメラのコンポーネント|
-  |[`<CanvasInitializerComponent>`](#CanvasInitializerComponentコンポーネント)|キャンバスの初期化及び設定を司るコンポーネント|
-  |[`<ClickableMeshComponent>`](#ClickableMeshComponentコンポーネント)||
-  |[`<FullscreenComponent>`](#FullscreenComponentコンポーネント)|フルスクリーン状態を管理するコンポーネント|
-  |[`<GeometryComponent>`](#GeometryComponentコンポーネント)|ジオメトリを生成するためのコンポーネント|
-  |[`<GeometryRegistoryComponent>`](#GeometryRegistoryComponentコンポーネント)|ジオメトリを管理するコンポーネント|
-  |[`<HTMLBinderComponent>`](#HTMLBinderComponentコンポーネント)|(Deprecated)DOM要素とTransformを同期させるためのコンポーネント|
-  |[`<LoopManagerComponent>`](#LoopManagerComponentコンポーネント)|全体のループを管理しているコンポーネント。あまり直接ユーザーがいじることはありません。|
-  |[`<MaterialComponent>`](#MaterialComponentコンポーネント)||
-  |[`<MaterialContainerComponent>`](#MaterialContainerComponentコンポーネント)|マテリアルとマテリアルへの属性を管理するためのコンポーネント|
-  |[`<MaterialImporterComponent>`](#MaterialImporterComponentコンポーネント)|マテリアル設定ファイルを読み込むためのコンポーネント|
-  |[`<MouseCameraControlComponent>`](#MouseCameraControlComponentコンポーネント)||
-  |[`<RenderBufferComponent>`](#RenderBufferComponentコンポーネント)||
-  |[`<RendererComponent>`](#RendererComponentコンポーネント)||
-  |[`<RendererManagerComponent>`](#RendererManagerComponentコンポーネント)|全レンダラーを管理するためのコンポーネント|
-  |[`<RenderHitareaComponent>`](#RenderHitareaComponentコンポーネント)||
-  |[`<RenderQuadComponent>`](#RenderQuadComponentコンポーネント)||
-  |[`<RenderSceneComponent>`](#RenderSceneComponentコンポーネント)||
-  |[`<SceneComponent>`](#SceneComponentコンポーネント)|特定のシーン内に関連する処理を行うためのコンポーネント|
-  |[`<TextureBufferComponent>`](#TextureBufferComponentコンポーネント)||
-  |[`<TextureComponent>`](#TextureComponentコンポーネント)||
-  |[`<TimeComponent>`](#TimeComponentコンポーネント)||
-  |[`<TransformComponent>`](#TransformComponentコンポーネント)|シーン中に存在する物体の変形を司るコンポーネント|
+  | Component name | Description |
+  |: -: |: -:: |
+  | [`<AssetLoadingManagerComponent>`](# AssetLoadingManagerComponent component) | Component responsible for loading assets. It controls display of the loader. |
+  | [`<CameraComponent>`](# CameraComponent component) | Component of the camera that renders the scene |
+  | [`<CanvasInitializerComponent>`](# CanvasInitializerComponent component) | Component responsible for canvas initialization and configuration |
+  | [`<ClickableMeshComponent>`](# ClickableMeshComponent component) ||
+  | [`<FullscreenComponent>`](# FullscreenComponent component) | Component that manages the full screen state |
+  | [`<GeometryComponent>`](# GeometryComponent component) | Component for generating geometry |
+  | [`<GeometryRegistoryComponent>`](# GeometryRegistoryComponent component) | Component that manages the geometry |
+  | [`<HTMLBinderComponent>`](# HTMLBinderComponent component) | (Deprecated) Component for synchronizing Transform with DOM element |
+  | [`<LoopManagerComponent>`](# LoopManagerComponent component) | A component that manages the entire loop. There is nothing to be touched directly by the user. |
+  | [`<MaterialComponent>`](# MaterialComponent component) ||
+  | [`<MaterialContainerComponent>`](# MaterialContainerComponent component) | Component for managing attributes to materials and materials |
+  | [`<MaterialImporterComponent>`](# MaterialImporterComponent component) | Component for reading the material configuration file |
+  | [`<MouseCameraControlComponent>`](# MouseCameraControlComponent component) ||
+  | [`<RenderBufferComponent>`](# RenderBufferComponent component) ||
+  | [`<RendererComponent>`](# RendererComponent component) ||
+  | [`<RendererManagerComponent>`](# RendererManagerComponent component) | Component for managing all renderers |
+  | [`<RenderHitareaComponent>`](# RenderHitareaComponent component) ||
+  | [`<RenderQuadComponent>`](# RenderQuadComponent component) ||
+  | [[<RenderSceneComponent> `](# RenderSceneComponent component) ||
+  | [`<SceneComponent>`](# SceneComponent component) | Component for performing related processing within a specific scene |
+  | [`<TextureBufferComponent>`](# TextureBufferComponent component) ||
+  | [`<TextureComponent>`](# TextureComponent component) ||
+  | [`<TimeComponent>`](# TimeComponent component) ||
+  | [`<TransformComponent>`](# TransformComponent component) | Component responsible for deformation of objects present in the scene |
 
-## コンバーター
+## converter
 
-  |コンバーター名|説明|
-  |:-:|:-:|
-  |[`CanvasSizeConverter`](#CanvasSizeConverterコンバーター)|キャンバスのサイズ用のコンバーター|
-  |[`GeometryConverter`](#GeometryConverterコンバーター)|ジオメトリを指定するためのコンバーター|
-  |[`MaterialConverter`](#MaterialConverterコンバーター)|マテリアルを指定するためのコンバーター|
-  |[`NodeConverter`](#NodeConverterコンバーター)||
-  |[`TextureConverter`](#TextureConverterコンバーター)|テクスチャへの参照を取得するためのコンバーター|
-  |[`ViewportConverter`](#ViewportConverterコンバーター)|ビューポートサイズを設定するためのコンバーター|
+  | Converter Name | Description |
+  |: -: |: -:: |
+  | [`CanvasSizeConverter`](# CanvasSizeConverter converter) | Converter for canvas size |
+  | [`GeometryConverter`](# GeometryConverter converter) | Converter to specify geometry |
+  | [`MaterialConverter`](# MaterialConverter converter) | Converter for specifying material |
+  | [`NodeConverter`](# NodeConverter converter) ||
+  | [`TextureConverter`](# TextureConverter converter) | Converter for obtaining reference to texture |
+  | [`ViewportConverter`](# ViewportConverter converter) | Converter for setting viewport size |
 
-# ノード詳細
-
-
-## gomlノード
+# Node details
 
 
-GOMLファイルのルートノード  
-ツリーに唯一一つ必要なコンポーネントなどをつけておくためのノード。  
-特に、`<canvas>`の初期化やループの管理など、最初の初期化時のパラメーターを受け取るためのコンポーネントとともに、  
-`<canvas>`の設定(`width`や`height`)またはフルスクリーンなどのコンポーネントを含む。
+## goml node
 
-### コンポーネント
+
+Root node of GOML file
+A node for keeping only one necessary component etc in the tree.
+In particular, along with components for receiving initial initialization parameters, such as `<canvas>` initialization and loop management,
+Contains components such as `<canvas>` setting (`width` or` height`) or fullscreen.
+
+### Component
 
 * CanvasInitializer
 * LoopManager
@@ -99,162 +99,162 @@ GOMLファイルのルートノード
 * Fullscreen
 
 
-## sceneノード
+## scene node
 
 
-ある3D空間上のモデルの配置やカメラの設定などの場面の設定を含むためのノード  
-カメラや、ライト、メッシュなど空間に配置するためのノードです。  
-全ての場面に存在する座標を持ちうるノード(`TransformComponent`を含むノード)は必ずこのノードの子ノードのとして存在する必要があります。
+A node for including scene settings such as arrangement of a model in a certain 3D space and setting of a camera
+It is a node for placing in the space such as camera, light, mesh etc.
+Nodes that can have coordinates that exist in all scenes (nodes that contain `TransformComponent`) must exist as child nodes of this node.
 
-### コンポーネント
+### Component
 
 * Scene
 
 
-## objectノード
+## object node
 
 
-3D空間上の物体を意味するノード  
-メッシュやカメラなどのベースとなるノードです。このノードの子要素には親要素の変型量(`position`や`rotation`)などが伝搬します。  
-詳しくは`TransformComponent`を参照すると良いでしょう。
+A node meaning an object in 3D space
+It is the base node of mesh and camera. Child elements of this node will propagate the amount of transformation (`position` or` rotation`) of the parent element.
+For details, refer to `TransformComponent`.
 
-### コンポーネント
+### Component
 
 * Transform
 
 
-## cameraノード
+## ## camera node
 
-**継承元:&lt;object&gt;**
+** Inherited from: & lt; object & gt; **
 
-3D空間を撮影するためのカメラのノード  
-3D空間を撮影するためのカメラを意味するノードです。シーンをレンダリングするには最低一つのカメラがシーンに属していなければなりません。
+A node of a camera for shooting 3D space
+It is a node meaning a camera to shoot 3D space. At least one camera must belong to the scene to render the scene.
 
-### コンポーネント
+### Component
 
 * Camera
 
 
-## meshノード
+## mesh node
 
-**継承元:&lt;object&gt;**
+** Inherited from: & lt; object & gt; **
 
-3D空間上のモデルなど、 **映るもの** を表すためのノード  
-3D空間上に存在する映るものを意味するノードです。シーンに何かを写すには最低一つのメッシュがシーンに属していなければなりません。  
-メッシュは、マテリアル(材質)とジオメトリ(形状)からなります。この2つの指定を変えることで、様々な表現が3D空間上で可能になります。
+A model such as a 3D space model, etc. ** A node for representing **
+It is a node that means what appears in 3D space. At least one mesh must belong to the scene to capture something in the scene.
+Mesh consists of material (material) and geometry (shape). By changing these two specifications, various expressions become possible in 3D space.
 
-### コンポーネント
+### Component
 
 * MaterialContainer
 * MeshRenderer
 
 
-## rendererノード
+## renderer node
 
 
-キャンバスの描画手法を指定するためのノード  
-キャンバス上の領域をどのように描画するかを示すためのノードです。gomlの読み込み時に一つも存在しない場合は、自動的にgoml直下に生成されます。  
-1つ以上のレンダラーを含むことで、キャンバスの複数の領域をレンダリングしたりすることができるようになります。  
-また、この子要素に指定する`<render-XXX>`ノードなどによって、どのようにその領域を描画するかが決定されます。  
-通常、`<renderer>`の子ノードに何も存在しない場合、自動的に`<render-scene>`タグが生成されます。
+A node for designating a canvas drawing method
+This is a node to show how to draw the area on the canvas. If none of goml's loads are present, they are automatically created directly under goml.
+By including one or more renderers, you can render multiple areas of the canvas.
+Also, the `<render-XXX>` node specified for this child element determines how to draw that area.
+Normally, `<render-scene>` tags are automatically generated if there is nothing in the child node of `<renderer>`.
 
-### コンポーネント
+### Component
 
 * Renderer
 
 
-## geometryノード
+## geometry node
 
 
-新しい形状を生成するためのノード  
-単純な変形(`scale`、`position`、`rotation`だけで表せない)、例えば円の分割数などを指定したい別の形状を明示的に生成するためのノードです。
+A node for generating a new shape
+It is a node to explicitly generate another shape that you want to specify simple deformation (not only `scale`,` position`, `rotation`), such as the number of divisions of a circle.
 
-### コンポーネント
+### Component
 
 * Geometry
 
 
-## textureノード
+## texture node
 
 
-テクスチャを明示的に読み込むためのノード  
-テクスチャを読み込むためのノードです。通常、テクスチャはurlをマテリアルに指定するなどして読み込まれますが、  
-サンプラの指定などをしたい場合、このタグで明示的に読み込むことにより読み込むことができます。
+A node for explicitly reading a texture
+Node for reading texture. Normally textures are read by specifying url as material,
+If you want to specify sampler etc., you can load by explicitly reading with this tag.
 
-### コンポーネント
+### Component
 
 * Texture
 
 
-## materialノード
+## material node
 
 
-マテリアルを明示的に読み込むためのノード  
-マテリアルを生成するためのノードです。メッシュからこのノードを参照して利用することにより、複数のメッシュで共通のマテリアルのインスタンスを参照させることができます。  
-これは、同時にマテリアルの値が編集できるだけでなく、パフォーマンス的にも大きな利点をもたらします。
+Node for explicitly reading material
+A node for generating material. By referring to this node from the mesh, you can make multiple meshes refer to instances of common material.
+This not only allows you to edit the value of the material at the same time, it also brings significant performance advantages.
 
-### コンポーネント
+### Component
 
 * Material
 
 
-## import-materialノード
+## import-material node
 
 
-新しいマテリアルを外部から読み込むためのノード  
-Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテリアルを読み込むためのノードです。
+Node for reading new material from outside
+This is a node for reading a new kind of material from the material file (* .sort) of Grimoire.js.
 
-### コンポーネント
+### Component
 
 * MaterialImporter
 
 
-## texture-bufferノード
+## texture-buffer node
 
 
-カラーバッファ用のテクスチャを生成するためのノード  
-`<renderer>`ノードの直下に含まれうるノードの一つです。  
-このノードによってレンダリングに用いるカラーバッファを生成することができます。  
-カラーバッファはオフスクリーンレンダリングなどへの利用など様々な面で利用することができます。
+Node for generating texture for color buffer
+It is one of the nodes that can be included directly under the `<renderer>` node.
+This node can generate a color buffer for rendering.
+The color buffer can be used in various aspects such as use for off-screen rendering etc.
 
-### コンポーネント
+### Component
 
 * TextureBuffer
 
 
-## render-bufferノード
+## ## render-buffer node
 
 
-深度バッファ/ステンシルバッファ用の`renderbuffer`を生成するためのノード  
-`<renderer>`ノードの直下に含まれうるノードの一つです。  
-このノードによってレンダリングに用いる深度バッファやステンシルバッファを生成することができます。
+Node for generating `renderbuffer` for depth buffer/stencil buffer
+It is one of the nodes that can be included directly under the `<renderer>` node.
+This node can generate depth buffer and stencil buffer for rendering.
 
-### コンポーネント
+### Component
 
 * RenderBuffer
 
 
-## render-sceneノード
+## render-scene node
 
 
-シーンを描画するレンダリング手順を表すためのノード  
-`<renderer>`ノードの直下に含まれうるノードの一つです。  
-このノードは`out`に指定されたテクスチャ(デフォルトではキャンバス自身)に対して、シーンの内容を描画します。
+A node for representing a rendering procedure for rendering a scene
+It is one of the nodes that can be included directly under the `<renderer>` node.
+This node draws the contents of the scene against the texture specified as `out` (by default the canvas itself).
 
-### コンポーネント
+### Component
 
 * RenderScene
 * RenderHitArea
 
 
-## render-quadノード
+## render-quad node
 
 
-四角形単体を特定のマテリアルで描画するためのノード  
-`<renderer>`ノードの直下に含まれうるノードの一つです。  
-このノードは`out`に指定されたテクスチャ(デフォルトではキャンバス自身)に対して、単純な四角形(`quad`)を指定されたマテリアルで描画します。
+Node for rendering a single rectangle with a specific material
+It is one of the nodes that can be included directly under the `<renderer>` node.
+This node draws a simple rectangle (`quad`) with the specified material for the texture specified as` out` (default on the canvas itself).
 
-### コンポーネント
+### Component
 
 * MaterialContainer
 * RenderQuad
@@ -262,944 +262,944 @@ Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテ�
 
 
 
-# コンポーネント詳細
+# Component details
 
 
-## AssetLoadingManagerComponentコンポーネント
+## AssetLoadingManagerComponent component
 
 
-アセットの読み込みを司るコンポーネント。ローダーの表示などを司る。
+A component that controls the loading of assets. It controls display of the loader.
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|loadingProgress|Number|現在の読み込み状況を0-1で表す。|
-|autoStart|Boolean|リソースの読み込み完了後に、自動的にレンダリングループを開始するかどうか|
-|enableLoader|Boolean|リソースのロード時にローディング画面を表示するかどうか|
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| LoadingProgress | Number | The current read status is represented by 0 - 1. |
+| AutoStart | Boolean | Whether to automatically start the rendering loop after loading the resource |
+| EnableLoader | Boolean | Whether loading screen is displayed when loading resources |
 
 
-#### loadingProgress属性
+#### loadingProgress attribute
 
-**初期値** ・・・ `0`  
-**コンバーター** ・・・ `Number`
+** Initial value ** ... `0`
+** Converter ** ... `Number`
 
 
 
-現在の読み込み状況を0-1で表す。
+The current reading status is represented by 0 - 1.
 
 
-#### autoStart属性
+#### autoStart attribute
 
-**初期値** ・・・ `true`  
-**コンバーター** ・・・ `Boolean`
+** Initial value ** ... `true`
+** Converter ** ... `Boolean`
 
-リソースの読み込み完了後に、自動的にレンダリングループを開始するかどうか
+Whether to automatically start the rendering loop after loading the resource
 
 
-#### enableLoader属性
+#### enableLoader attribute
 
-**初期値** ・・・ `true`  
-**コンバーター** ・・・ `Boolean`
+** Initial value ** ... `true`
+** Converter ** ... `Boolean`
 
-リソースのロード時にローディング画面を表示するかどうか
+Whether to display the loading screen when loading resources
 
 
 
-## CameraComponentコンポーネント
+## ## CameraComponent component
 
 
-シーンを描画するカメラのコンポーネント  
-このコンポーネントによって、透視射影や正方射影などの歪みを調整します。  
-また、このコンポーネントの付属するノードに属する`Transoform`によって、カメラの位置や向きが確定されます。
+Component of the camera that draws the scene
+This component adjusts distortion such as perspective projection and square projection.
+Also, `Transoform` belonging to the node to which this component belongs establishes the position and orientation of the camera.
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|fovy|Angle2D|カメラの視野角。|
-|near|Number|カメラに映るもっとも近い距離です。|
-|far|Number|far - nearの値があまりにも大きいと、Z-fighting(手前の物体が奥に表示されたように見えたりする)現象が起きる可能性があります。|
-|aspect|Number|カメラのアスペクト比|
-|autoAspect|Boolean|アスペクト比の自動調整が有効か否か|
-|orthoSize|Number|正射影時の横の基準サイズ|
-|orthogonal|Boolean|この属性がfalseである場合、カメラは透視射影としてシーンをレンダリングします。この場合、レンダリング結果にパース(奥行き感)が出ます。|
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| Fovy | Angle2D | Viewing angle of the camera. |
+| Near | Number | The closest distance shown in the camera. |
+If | far | Number | far - near is too large, there is a possibility that Z - fighting (appearing as if the object in front is displayed behind) phenomenon may occur. |
+| Aspect | Number | Aspect ratio of camera |
+| AutoAspect | Boolean | Whether automatic aspect ratio adjustment is enabled |
+| OrthoSize | Number | horizontal reference size when orthogonal projection |
+| Orthogonal | Boolean | If this attribute is false, the camera renders the scene as perspective projection. In this case, parsing (sense of depth) appears in the rendering result. |
 
 
-#### fovy属性
+#### fovy attribute
 
-**初期値** ・・・ `45d`  
-**コンバーター** ・・・ `Angle2D`
+** Initial value ** ... `45 d`
+** Converter ** ... ... `Angle2D`
 
-カメラの視野角。  
-orthogonal属性がtrueである場合この属性は無視されます。
+Viewing angle of the camera.
+This attribute is ignored if the orthogonal attribute is true.
 
 
-#### near属性
+#### near attribute
 
-**初期値** ・・・ `0.01`  
-**コンバーター** ・・・ `Number`
+** Initial value ** ... 0.01 `
+** Converter ** ... `Number`
 
-カメラに映るもっとも近い距離です。  
-0よりも大きく、far属性よりも小さい必要があります。
+It is the closest distance reflected on the camera.
+It must be greater than 0 and less than the far attribute.
 
 
-#### far属性
+#### far attribute
 
-**初期値** ・・・ `100`  
-**コンバーター** ・・・ `Number`
+** Initial value ** ... `100`
+** Converter ** ... `Number`
 
 
 
-far - nearの値があまりにも大きいと、Z-fighting(手前の物体が奥に表示されたように見えたりする)現象が起きる可能性があります。  
-この差があまりに大きい時、カメラに映る物体の座標の小さいz座標の値の差は0に近似されます。  
-逆にこの値が小さい時は、カメラに映る物体はある程度小さいz座標の差でも問題なく表示されます。  
-**大切なのは、写したい空間よりも無駄に大きくしないこと。常に適切な値を設定するべきです**
+If the value of far - near is too large, there is a possibility that Z - fighting (appearing as if the object in front is displayed in the back) phenomenon occurs.
+When this difference is too large, the difference in the value of the small z coordinate of the coordinates of the object appearing in the camera is approximated to zero.
+Conversely, when this value is small, objects displayed in the camera are displayed with no problem even if the difference in z coordinate is small to some extent.
+** The important thing is not to make it wastefully larger than the space you want to copy. You should always set an appropriate value **
 
 
-#### aspect属性
+#### aspect attribute
 
-**初期値** ・・・ `1.6`  
-**コンバーター** ・・・ `Number`
+** Initial value ** ... `1.6`
+** Converter ** ... `Number`
 
-カメラのアスペクト比  
-カメラの横の大きさと縦の大きさの比率を指定します。autoAspect属性がtrueである時、毎回のレンダリング時にこの値を自動調整します。
+Aspect ratio of camera
+Specify the ratio of the size of the camera to the size of the camera in the horizontal direction. When the autoAspect attribute is true, this value is automatically adjusted at every rendering.
 
 
-#### autoAspect属性
+#### autoAspect attribute
 
-**初期値** ・・・ `true`  
-**コンバーター** ・・・ `Boolean`
+** Initial value ** ... `true`
+** Converter ** ... `Boolean`
 
-アスペクト比の自動調整が有効か否か  
-レンダリング時にそのビューポートの大きさに応じて比率を自動調整するかどうかを示します。
+Whether automatic adjustment of the aspect ratio is effective or not
+Indicates whether to automatically adjust the ratio according to the size of the viewport when rendering.
 
 
-#### orthoSize属性
+#### orthoSize attribute
 
-**初期値** ・・・ `100`  
-**コンバーター** ・・・ `Number`
+** Initial value ** ... `100`
+** Converter ** ... `Number`
 
-正射影時の横の基準サイズ  
-正射影時はfovy属性を用いて自動的に写す領域を決定できません。  
-そのため、横の一片のサイズをこの属性で指定します。**アスペクト比は計算に用いられることに注意してください。**
+Horizontal reference size during orthographic projection
+During orthographic projection, you can not determine the area to be automatically photographed using the fovy attribute.
+Therefore, specify the size of the horizontal piece with this attribute. ** Please note that the aspect ratio is used for calculation. **
 
 
-#### orthogonal属性
+#### orthogonal attribute
 
-**初期値** ・・・ `false`  
-**コンバーター** ・・・ `Boolean`
+** Initial value ** ... `false`
+** Converter ** ... `Boolean`
 
 
 
-この属性がfalseである場合、カメラは透視射影としてシーンをレンダリングします。この場合、レンダリング結果にパース(奥行き感)が出ます。  
-一方、この属性がtrueである場合、カメラは正射影としてシーンをレンダリングします。この場合、レンダリング結果には奥行き感は出ません。
+If this attribute is false, the camera renders the scene as perspective projection. In this case, parsing (sense of depth) appears in the rendering result.
+On the other hand, if this attribute is true, the camera will render the scene as orthographic projection. In this case, there is no sense of depth in the rendering result.
 
 
 
-## CanvasInitializerComponentコンポーネント
+## ## CanvasInitializerComponent component
 
 
-キャンバスの初期化及び設定を司るコンポーネント  
-このコンポーネントによって、適切な位置に`<canvas>`を初期化してWebGLコンテキストを初期化します。
+Component responsible for initializing and setting the canvas
+This component initializes the WebGL context by initializing `<canvas>` in the proper position.
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|width|CanvasSize|キャンバスタグの横幅を指定します。|
-|height|CanvasSize|キャンバスタグの縦幅を指定します。|
-|containerId|String|キャンバス要素の直接の親要素のコンテナに割り当てるidを指定します。|
-|containerClass|String|キャンバス要素の直接の親要素のコンテナに割り当てるクラス名を指定します。|
-|preserveDrawingBuffer|Boolean|描画結果をdataURLに変換する際などはこの属性がtrueでないと正常にレンダリング結果を取得できません。|
-|antialias|Boolean|この属性は、途中で動的に変更することができません。|
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| Width | CanvasSize | Specifies the width of the canvas tag. |
+| Height | CanvasSize | Specifies the vertical width of the canvas tag. |
+| ContainerId | String | Specifies the id to assign to the container of the direct parent element of the canvas element. |
+| ContainerClass | String | Specifies the class name to assign to the container of the direct parent element of the canvas element. |
+| PreserveDrawingBuffer | Boolean | When rendering results are converted to dataURL etc. If this attribute is not true, rendering result can not be acquired normally. |
+| Antialias | Boolean | This attribute can not be changed dynamically in the middle. |
 
 
-#### width属性
+#### width attribute
 
-**初期値** ・・・ `fit`  
-**コンバーター** ・・・ `CanvasSize`
+** Initial value ** · · · `fit`
+** Converter ** ... `CanvasSize`
 
-キャンバスタグの横幅を指定します。
+Specify the width of the canvas tag.
 
 
-#### height属性
+#### height attribute
 
-**初期値** ・・・ `fit`  
-**コンバーター** ・・・ `CanvasSize`
+** Initial value ** · · · `fit`
+** Converter ** ... `CanvasSize`
 
-キャンバスタグの縦幅を指定します。
+Specify the vertical width of the canvas tag.
 
 
-#### containerId属性
+#### containerId Attribute
 
-**初期値** ・・・ `(Empty string)`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... ... `(Empty string)`
+** Converter ** ... `String`
 
-キャンバス要素の直接の親要素のコンテナに割り当てるidを指定します。
+Specify the id to assign to the container of the direct parent element of the canvas element.
 
 
-#### containerClass属性
+#### containerClass attribute
 
-**初期値** ・・・ `gr-container`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `gr-container`
+** Converter ** ... `String`
 
-キャンバス要素の直接の親要素のコンテナに割り当てるクラス名を指定します。
+Specifies the class name to assign to the container of the direct parent element of the canvas element.
 
 
-#### preserveDrawingBuffer属性
+#### preserveDrawingBuffer attribute
 
-**初期値** ・・・ `true`  
-**コンバーター** ・・・ `Boolean`
+** Initial value ** ... `true`
+** Converter ** ... `Boolean`
 
 
 
-描画結果をdataURLに変換する際などはこの属性がtrueでないと正常にレンダリング結果を取得できません。
+When rendering result is converted to dataURL etc, rendering result can not be acquired normally unless this attribute is true.
 
 
-#### antialias属性
+#### antialias attribute
 
-**初期値** ・・・ `true`  
-**コンバーター** ・・・ `Boolean`
+** Initial value ** ... `true`
+** Converter ** ... `Boolean`
 
 
 
-この属性は、途中で動的に変更することができません。
+This attribute can not be changed dynamically in the middle.
 
 
 
-## ClickableMeshComponentコンポーネント
+## ClickableMeshComponent component
 
 
 
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
+| Name | Converter | Details |
+|: -: |: -: |: -: |
 
 
 
-## FullscreenComponentコンポーネント
+## FullscreenComponent component
 
 
-フルスクリーン状態を管理するコンポーネント  
-Grimoire.jsによって管理されているキャンバス(正確にはその親のコンテナ)のフルスクリーン状態等を管理します。  
-(他の要素をフルスクリーン化することも可能ですが、通常このGrimoire.jsによって生成されるキャンバスを含むDOM要素に対して用いられます。)  
-また、一部の古いブラウザでは動作しない機能であることに注意してください。  
-また、`fullscreen`属性は必ず マウスのイベントなどのユーザーのインタラクションを伴うイベントからの呼び出しで **動的に** trueにされる必要があります。  
-最初からtrueに設定して初期状態でキャンバスをフルスクリーン状態にすることはWebAPIの制約上できません。
+Component that manages full screen state
+It manages the full screen state etc. of the canvas managed by Grimoire.js (precisely its parent container).
+(It is possible to make other elements full screen, but it is usually used for DOM elements including the canvas generated by this Grimoire.js.)
+Also note that it is a function that does not work with some older browsers.
+Also, the `fullscreen` attribute must be dynamically ** true on a call from an event involving a user's interaction, such as a mouse event.
+It is impossible due to WebAPI restriction to set the canvas to the full screen state at the initial state by setting it to true from the beginning.
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|fullscreen|Boolean|このフラグをtrueにする際は、**必ず**、マウスイベントなどのユーザーのインタラクションを伴うイベントからの呼び出しで変更されなければなりません。|
-|fullscreenTarget|String|nullが指定された場合、キャンバスの親要素が用いられます。|
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| Fullscreen | Boolean | When this flag is set to true, it must ** be changed by **, a call from an event with user interaction such as mouse event etc. |
+If fullscreenTarget | String | null is specified, the parent element of the canvas is used. |
 
 
-#### fullscreen属性
+#### fullscreen attribute
 
-**初期値** ・・・ `false`  
-**コンバーター** ・・・ `Boolean`
+** Initial value ** ... `false`
+** Converter ** ... `Boolean`
 
 
 
-このフラグをtrueにする際は、**必ず**、マウスイベントなどのユーザーのインタラクションを伴うイベントからの呼び出しで変更されなければなりません。  
+When this flag is set to true, it must ** be changed by a call from an event accompanied by a user's interaction such as **, mouse event etc.
 
-したがって、GOMLで初期状態からこのフラグをtrueにすることはできません。
+Therefore, this flag can not be set to true from the initial state in GOML.
 
 
-#### fullscreenTarget属性
+#### fullscreenTarget Attribute
 
-**初期値** ・・・ `null`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `null`
+** Converter ** ... `String`
 
 
 
-nullが指定された場合、キャンバスの親要素が用いられます。
+If null is specified, the parent element of the canvas is used.
 
 
 
-## GeometryComponentコンポーネント
+## GeometryComponent component
 
 
-ジオメトリを生成するためのコンポーネント  
-`type`属性に指定されたタイプのジオメトリを生成して、`name`属性に指定された名前で利用できる形にして登録します。  
-このコンポーネントは`type`属性に応じて、**動的** に属性が増えることに気をつけてください。
+Component for generating geometry
+It creates a geometry of the type specified in the `type` attribute and registers it so that it can be used with the name specified in the` name` attribute.
+Please be aware that this component will have ** dynamic ** attributes depending on the `type` attribute.
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|type|String|`GeometryFactory`に登録されたプリミティブのジェネレーターの名前を指します。|
-|name|String|`GeometryConverter`によって取得される際に利用されるジオメトリ名です。|
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| Type | String | Points to the name of the generator of the primitive registered in `GeometryFactory`. |
+| Name | String | Geometry name to be used when getting by 'GeometryConverter'. |
 
 
-#### type属性
+#### type attribute
 
-**初期値** ・・・ `null`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `null`
+** Converter ** ... `String`
 
 
 
-`GeometryFactory`に登録されたプリミティブのジェネレーターの名前を指します。  
-この指定する名前によって、動的に属性が増えることに気をつけてください。  
-また、増えたジオメトリの属性は動的に操作できないことに気をつけてください。
+It refers to the name of the generator of the primitive registered in `GeometryFactory`.
+Please be aware that the attribute will dynamically increase depending on the name you specify.
+Also, be aware that the increased geometry attributes can not be dynamically manipulated.
 
 
-#### name属性
+#### name attribute
 
-**初期値** ・・・ `null`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `null`
+** Converter ** ... `String`
 
 
 
-`GeometryConverter`によって取得される際に利用されるジオメトリ名です。  
-もし、`quad`など事前に登録されたジオメトリを指定した場合、そのジオメトリを上書きすることができます。
+Geometry name used when getting by `GeometryConverter`.
+If you specify a preregistered geometry such as `quad`, you can overwrite that geometry.
 
 
 
-## GeometryRegistoryComponentコンポーネント
+## GeometryRegistoryComponent component
 
 
-ジオメトリを管理するコンポーネント  
-あまりユーザーが直接操作することはありません。
+Component that manages the geometry
+There is not much user operation directly.
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|defaultGeometry|StringArray|デフォルトで生成するジオメトリの種類|
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| DefaultGeometry | StringArray | type of geometry generated by default |
 
 
-#### defaultGeometry属性
+#### defaultGeometry attribute
 
-**初期値** ・・・ `quad,cube,sphere`  
-**コンバーター** ・・・ `StringArray`
+** Initial value ** · · · `` quad, cube, sphere`
+** Converter ** ... ... `StringArray`
 
-デフォルトで生成するジオメトリの種類
+Types of geometry generated by default
 
 
 
-## HTMLBinderComponentコンポーネント
+## HTMLBinderComponent component
 
 
-(Deprecated)DOM要素とTransformを同期させるためのコンポーネント  
-このコンポーネントはfundamentalからは削除されます。(別のパッケージとして分離予定)
+(Deprecated) Component for synchronizing Transform with DOM element
+This component will be removed from fundamental. (Separated as separate package)
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|htmlQuery|String||
-|targetRenderer|String||
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| HtmlQuery | String ||
+| TargetRenderer | String ||
 
 
-#### htmlQuery属性
+#### htmlQuery attribute
 
-**初期値** ・・・ `null`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `null`
+** Converter ** ... `String`
 
 
 
 
-#### targetRenderer属性
+#### targetRenderer attribute
 
-**初期値** ・・・ `render-scene`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `render-scene`
+** Converter ** ... `String`
 
 
 
 
 
-## LoopManagerComponentコンポーネント
+## LoopManagerComponent component
 
 
-全体のループを管理しているコンポーネント。あまり直接ユーザーがいじることはありません。
+A component that manages the entire loop. There is nothing to be touched directly by the user.
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|loopEnabled|Boolean||
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| LoopEnabled | Boolean ||
 
 
-#### loopEnabled属性
+#### loopEnabled attribute
 
-**初期値** ・・・ `false`  
-**コンバーター** ・・・ `Boolean`
+** Initial value ** ... `false`
+** Converter ** ... `Boolean`
 
 
 
 
 
-## MaterialComponentコンポーネント
+## MaterialComponent component
 
 
 
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|type|String||
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| Type | String ||
 
 
-#### type属性
+#### type attribute
 
-**初期値** ・・・ `null`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `null`
+** Converter ** ... `String`
 
 
 
 
 
-## MaterialContainerComponentコンポーネント
+## MaterialContainerComponent component
 
 
-マテリアルとマテリアルへの属性を管理するためのコンポーネント  
-このコンポーネントは将来的に`MeshRenderer`と統合されます。  
-指定されたマテリアルの初期化の管理や、マテリアルによって動的に追加される属性の管理を行います、
+Components for managing materials and material attributes
+This component will be integrated with `MeshRenderer` in the future.
+We manage the initialization of the specified material and manage the attributes dynamically added by the material,
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|material|Material|対象のマテリアル|
-|drawOrder|String|デフォルトの状態では、マテリアルから読み込んだ描画順序設定を用います|
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| Material | Material | Target material |
+| DrawOrder | String | In the default state, use the drawing order setting read from the material |
 
 
-#### material属性
+#### material attribute
 
-**初期値** ・・・ `new(unlit)`  
-**コンバーター** ・・・ `Material`
+** Initial value ** ... ... `new (unlit)`
+** Converter ** ... `Material`
 
-対象のマテリアル
+Target material
 
 
-#### drawOrder属性
+#### drawOrder attribute
 
-**初期値** ・・・ `null`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `null`
+** Converter ** ... `String`
 
 
 
-デフォルトの状態では、マテリアルから読み込んだ描画順序設定を用います
+In the default state, we use the drawing order setting read from the material
 
 
 
-## MaterialImporterComponentコンポーネント
+## MaterialImporterComponent component
 
 
-マテリアル設定ファイルを読み込むためのコンポーネント
+Component for reading the material configuration file
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|typeName|String|マテリアル名として登録される名前|
-|src|String|読み込み先のファイルパス|
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| TypeName | String | Name registered as material name |
+| Src | String | File path to load |
 
 
-#### typeName属性
+#### typeName Attribute
 
-**初期値** ・・・ `null`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `null`
+** Converter ** ... `String`
 
-マテリアル名として登録される名前
+Name registered as material name
 
 
-#### src属性
+#### src attribute
 
-**初期値** ・・・ `null`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `null`
+** Converter ** ... `String`
 
-読み込み先のファイルパス
+File path to load
 
 
 
-## MouseCameraControlComponentコンポーネント
+## MouseCameraControlComponent component
 
 
 
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|rotateSpeed|Number||
-|zoomSpeed|Number||
-|moveSpeed|Number||
-|center|Position||
-|distance|Number||
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| RotateSpeed ​​| Number ||
+| ZoomSpeed ​​| Number ||
+| MoveSpeed ​​| Number ||
+| Center | Position ||
+| Distance | Number ||
 
 
-#### rotateSpeed属性
+#### rotateSpeed ​​attribute
 
-**初期値** ・・・ `1`  
-**コンバーター** ・・・ `Number`
+** Initial value ** ... `1`
+** Converter ** ... `Number`
 
 
 
 
-#### zoomSpeed属性
+#### zoomSpeed ​​attribute
 
-**初期値** ・・・ `1`  
-**コンバーター** ・・・ `Number`
+** Initial value ** ... `1`
+** Converter ** ... `Number`
 
 
 
 
-#### moveSpeed属性
+#### moveSpeed ​​attribute
 
-**初期値** ・・・ `1`  
-**コンバーター** ・・・ `Number`
+** Initial value ** ... `1`
+** Converter ** ... `Number`
 
 
 
 
-#### center属性
+#### center attribute
 
-**初期値** ・・・ `0,0,0`  
-**コンバーター** ・・・ `Position`
+** Initial value ** ... `0, 0, 0`
+** Converter ** ... `Position`
 
 
 
 
-#### distance属性
+#### distance attribute
 
-**初期値** ・・・ `null`  
-**コンバーター** ・・・ `Number`
+** Initial value ** ... `null`
+** Converter ** ... `Number`
 
 
 
 
 
-## RenderBufferComponentコンポーネント
+## RenderBufferComponent component
 
 
 
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|name|String||
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| Name | String ||
 
 
-#### name属性
+#### name attribute
 
-**初期値** ・・・ `null`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `null`
+** Converter ** ... `String`
 
 
 
 
 
-## RendererComponentコンポーネント
+## RendererComponent component
 
 
 
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|camera|Component||
-|viewport|Viewport||
-|handleMouse|Boolean||
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| Camera | Component ||
+| Viewport | Viewport ||
+| HandleMouse | Boolean ||
 
 
-#### camera属性
+#### camera attribute
 
-**初期値** ・・・ `camera`  
-**コンバーター** ・・・ `Component`
+** Initial value ** ... `camera`
+** Converter ** ... `Component`
 
 
 
 
-#### viewport属性
+#### viewport attribute
 
-**初期値** ・・・ `auto`  
-**コンバーター** ・・・ `Viewport`
+** Initial value ** ... `auto`
+** Converter ** ... `Viewport`
 
 
 
 
-#### handleMouse属性
+#### handleMouse Attribute
 
-**初期値** ・・・ `true`  
-**コンバーター** ・・・ `Boolean`
+** Initial value ** ... `true`
+** Converter ** ... `Boolean`
 
 
 
 
 
-## RendererManagerComponentコンポーネント
+## RendererManagerComponent component
 
 
-全レンダラーを管理するためのコンポーネント
+Components for managing all renderers
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
+| Name | Converter | Details |
+|: -: |: -: |: -: |
 
 
 
-## RenderHitareaComponentコンポーネント
+## RenderHitareaComponent component
 
 
 
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
+| Name | Converter | Details |
+|: -: |: -: |: -: |
 
 
 
-## RenderQuadComponentコンポーネント
+## RenderQuadComponent component
 
 
 
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|out|String||
-|depthBuffer|String||
-|targetBuffer|String||
-|clearColor|Color4||
-|clearColorEnabled|Boolean||
-|clearDepthEnabled|Boolean||
-|clearDepth|Number||
-|technique|String||
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| Out | String ||
+| DepthBuffer | String ||
+| TargetBuffer | String ||
+| ClearColor | Color 4 ||
+| ClearColorEnabled | Boolean ||
+| ClearDepthEnabled | Boolean ||
+ClearDepth | Number ||
+| Technique | String ||
 
 
-#### out属性
+#### out Attribute
 
-**初期値** ・・・ `default`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `default`
+** Converter ** ... `String`
 
 
 
 
-#### depthBuffer属性
+#### depthBuffer attribute
 
-**初期値** ・・・ `null`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `null`
+** Converter ** ... `String`
 
 
 
 
-#### targetBuffer属性
+#### targetBuffer attribute
 
-**初期値** ・・・ `default`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `default`
+** Converter ** ... `String`
 
 
 
 
-#### clearColor属性
+#### clearColor attribute
 
-**初期値** ・・・ `#0000`  
-**コンバーター** ・・・ `Color4`
+** Initial value ** ... `` 0000``
+** Converter ** ... `Color 4`
 
 
 
 
-#### clearColorEnabled属性
+#### clearColorEnabled attribute
 
-**初期値** ・・・ `true`  
-**コンバーター** ・・・ `Boolean`
+** Initial value ** ... `true`
+** Converter ** ... `Boolean`
 
 
 
 
-#### clearDepthEnabled属性
+#### clearDepthEnabled attribute
 
-**初期値** ・・・ `true`  
-**コンバーター** ・・・ `Boolean`
+** Initial value ** ... `true`
+** Converter ** ... `Boolean`
 
 
 
 
-#### clearDepth属性
+#### clearDepth attribute
 
-**初期値** ・・・ `1`  
-**コンバーター** ・・・ `Number`
+** Initial value ** ... `1`
+** Converter ** ... `Number`
 
 
 
 
-#### technique属性
+#### technique attribute
 
-**初期値** ・・・ `default`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `default`
+** Converter ** ... `String`
 
 
 
 
 
-## RenderSceneComponentコンポーネント
+## RenderSceneComponent component
 
 
 
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|layer|String||
-|depthBuffer|String||
-|out|String||
-|clearColor|Color4||
-|clearColorEnabled|Boolean||
-|clearDepthEnabled|Boolean||
-|clearDepth|Number||
-|camera|Component||
-|technique|String||
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| Layer | String ||
+| DepthBuffer | String ||
+| Out | String ||
+| ClearColor | Color 4 ||
+| ClearColorEnabled | Boolean ||
+| ClearDepthEnabled | Boolean ||
+ClearDepth | Number ||
+| Camera | Component ||
+| Technique | String ||
 
 
-#### layer属性
+#### layer attribute
 
-**初期値** ・・・ `default`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `default`
+** Converter ** ... `String`
 
 
 
 
-#### depthBuffer属性
+#### depthBuffer attribute
 
-**初期値** ・・・ `null`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `null`
+** Converter ** ... `String`
 
 
 
 
-#### out属性
+#### out Attribute
 
-**初期値** ・・・ `default`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `default`
+** Converter ** ... `String`
 
 
 
 
-#### clearColor属性
+#### clearColor attribute
 
-**初期値** ・・・ `#0000`  
-**コンバーター** ・・・ `Color4`
+** Initial value ** ... `` 0000``
+** Converter ** ... `Color 4`
 
 
 
 
-#### clearColorEnabled属性
+#### clearColorEnabled attribute
 
-**初期値** ・・・ `true`  
-**コンバーター** ・・・ `Boolean`
+** Initial value ** ... `true`
+** Converter ** ... `Boolean`
 
 
 
 
-#### clearDepthEnabled属性
+#### clearDepthEnabled attribute
 
-**初期値** ・・・ `true`  
-**コンバーター** ・・・ `Boolean`
+** Initial value ** ... `true`
+** Converter ** ... `Boolean`
 
 
 
 
-#### clearDepth属性
+#### clearDepth attribute
 
-**初期値** ・・・ `1`  
-**コンバーター** ・・・ `Number`
+** Initial value ** ... `1`
+** Converter ** ... `Number`
 
 
 
 
-#### camera属性
+#### camera attribute
 
-**初期値** ・・・ `null`  
-**コンバーター** ・・・ `Component`
+** Initial value ** ... `null`
+** Converter ** ... `Component`
 
 
 
 
-#### technique属性
+#### technique attribute
 
-**初期値** ・・・ `default`  
-**コンバーター** ・・・ `String`
+** Initial value ** ... `default`
+** Converter ** ... `String`
 
 
 
 
 
-## SceneComponentコンポーネント
+## SceneComponent component
 
 
-特定のシーン内に関連する処理を行うためのコンポーネント  
-このコンポーネントには属性が存在しません。
+Components for performing related processing in a specific scene
+There are no attributes for this component.
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
+| Name | Converter | Details |
+|: -: |: -: |: -: |
 
 
 
-## TextureBufferComponentコンポーネント
+## TextureBufferComponent component
 
 
 
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
+| Name | Converter | Details |
+|: -: |: -: |: -: |
 
 
 
-## TextureComponentコンポーネント
+## TextureComponent component
 
 
 
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
+| Name | Converter | Details |
+|: -: |: -: |: -: |
 
 
 
-## TimeComponentコンポーネント
+## TimeComponent component
 
 
 
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|time|Number||
-|timeDelta|Number||
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| Time | Number ||
+| TimeDelta | Number ||
 
 
-#### time属性
+#### time attribute
 
-**初期値** ・・・ `0`  
-**コンバーター** ・・・ `Number`
+** Initial value ** ... `0`
+** Converter ** ... `Number`
 
 
 
 
-#### timeDelta属性
+#### timeDelta attribute
 
-**初期値** ・・・ `0`  
-**コンバーター** ・・・ `Number`
+** Initial value ** ... `0`
+** Converter ** ... `Number`
 
 
 
 
 
-## TransformComponentコンポーネント
+## TransformComponent component
 
 
-シーン中に存在する物体の変形を司るコンポーネント  
-このコンポーネントによって物体の座標や回転量、拡大料などが定義されます。  
-シーン中の全ての物体は必ずこのコンポーネントを含まなければなりません。
+Component responsible for deformation of objects present in the scene
+This component defines the coordinate of the object, the amount of rotation, the magnification fee, etc.
+All objects in the scene must include this component.
 
-### 属性
+### Attributes
 
-|名前|コンバーター|詳細|
-|:-:|:-:|:-:|
-|position|Vector3|この物体の座標|
-|rotation|Rotation3|この物体の回転量|
-|scale|Vector3|この物体の拡大率|
-|rawMatrix|Object|利用されません|
+| Name | Converter | Details |
+|: -: |: -: |: -: |
+| Position | Vector 3 | coordinate of this object |
+| Rotation | Rotation 3 | Rotation amount of this object |
+| Scale | Vector 3 | magnification ratio of this object |
+| RawMatrix | Object | Not used |
 
 
-#### position属性
+#### position attribute
 
-**初期値** ・・・ `0,0,0`  
-**コンバーター** ・・・ `Vector3`
+** Initial value ** ... `0, 0, 0`
+** Converter ** ... ... `Vector 3`
 
-この物体の座標
+The coordinates of this object
 
 
-#### rotation属性
+#### rotation attribute
 
-**初期値** ・・・ `0,0,0,1`  
-**コンバーター** ・・・ `Rotation3`
+** Initial value ** ... `0, 0, 0, 1`
+** Converter ** ... ... `Rotation 3`
 
-この物体の回転量
+The amount of rotation of this object
 
 
-#### scale属性
+#### scale attribute
 
-**初期値** ・・・ `1,1,1`  
-**コンバーター** ・・・ `Vector3`
+** Initial value ** ... `1, 1, 1`
+** Converter ** ... ... `Vector 3`
 
-この物体の拡大率
+The enlargement factor of this object
 
 
-#### rawMatrix属性
+#### rawMatrix attribute
 
-**初期値** ・・・ `null`  
-**コンバーター** ・・・ `Object`
+** Initial value ** ... `null`
+** Converter ** ... `Object`
 
-利用されません
+Not used
 
 
 
 
-# コンバーター詳細
+# Converter Details
 
-## CanvasSizeConverterコンバーター
+## CanvasSizeConverter converter
 
-キャンバスのサイズ用のコンバーター  
-数値を指定した場合(`100`など)はその値をそのまま返す。  
-`aspect(1.6)`などと記述する時、キャンバスのアスペクト比を1.6にするようにリサイズする。  
-`fit`と指定した時、親要素にちょうどマッチするサイズを返す。  
-もし、親要素の高さが0である時かつ、親がbodyである際で`fit`が指定されていると、bodyへの高さ属性が指定されていないものと判断して、  
-自動的にbodyに`height:100%`を割り当てる。
+Converter for canvas size
+If you specify a numeric value (such as `100`), return that value as is.
+When describing `aspect (1.6)` etc, resize to make the canvas aspect ratio 1.6.
+When `fit` is specified, it returns the size that exactly matches the parent element.
+If the height of the parent element is 0 and the parent is body, if `fit` is specified, it is judged that the height attribute to the body is not specified,
+Automatically assign `height: 100%` to body.
 
-## GeometryConverterコンバーター
+## GeometryConverter Converter
 
-ジオメトリを指定するためのコンバーター  
-`quad`など、ジオメトリ名を指定するか、Geometry型のインスタンスを渡す。
+Converter to specify the geometry
+Specify the geometry name, such as `quad`, or pass an instance of Geometry type.
 
-## MaterialConverterコンバーター
+## MaterialConverter converter
 
-マテリアルを指定するためのコンバーター  
-`<material>へのクエリ`が指定された場合は、そのクエリによって検索された先頭の`<material>`を用いる。  
-`new(マテリアル名)`が指定された場合は、新しいマテリアルのインスタンスを生成して用いる。  
-通常、マテリアルを指定するコンポーネントはマテリアルによって、そのコンポーネントが所持する属性が置き換わる。  
-`new(マテリアル)`名で指定した場合、そのコンポーネント自身がマテリアルの属性を管理することになるので注意が必要。
+Converter for specifying material
+If `query to <material>` is specified, use the first `<material>` retrieved by that query.
+If `new (material name)` is specified, create and use a new material instance.
+Normally, the material that specifies the material is replaced by the material by the material.
+Note that if you specify it with `new (material)` name, that component itself will manage the attributes of the material.
 
-## NodeConverterコンバーター
+## ## NodeConverter Converter
 
 
 
-## TextureConverterコンバーター
+## TextureConverter converter
 
-テクスチャへの参照を取得するためのコンバーター  
-渡すものが文字列である場合、4つの方法がある。  
-`url`・・・指定したアドレスから画像を解決して取得する  
-`backbuffer(バックバッファ名)`・・・名前付きバックバッファのリストから取得する  
-`video(ビデオファイルへのURL)`・・・指定したアドレスからビデオを取得してテクスチャとして再生する(Buggy)  
-`query(<texture>へのクエリ)`・・・指定したクエリで`<texture>`を探索して利用する。  
-渡すものがオブジェクトである場合、5つの方法がある。  
-`Texture2D型`・・・そのまま利用される  
-`HTMLImageElement`・・・必要がある場合リサイズされた上で利用される。(自動的に2の累乗に変換される)  
-`HTMLCanvasElement`・・・必要がある場合リサイズされた上で利用される。(自動的に2の累乗に変換される)  
-`HTMLVideoElement`・・・必要がある場合リサイズされた上で、自動的に再生される(自動的に2の累乗に変換される)
+Converter to get reference to texture
+There are four ways when passing is a string.
+`Url` ... Resolve and retrieve the image from the specified address
+`Backbuffer (back buffer name)` ... fetching from the list of named back buffers
+`Video (URL to video file)` ... ... Acquires video from the specified address and plays it as a texture (Buggy)
+`Query (Query to <texture>)` ... Search and use `<texture>` in the specified query.
+There are five ways when passing is an object.
+`Texture2D type` · · · used as is
+`HTMLImageElement` · · · If necessary, it is resized and used. (It is automatically converted to a power of 2)
+`HTMLCanvasElement` · · · If necessary, it is resized and used. (It is automatically converted to a power of 2)
+`HTMLVideoElement` ... If necessary, it is automatically resized after being resized (it is automatically converted to a power of 2)
 
-## ViewportConverterコンバーター
+## ViewportConverter converter
 
-ビューポートサイズを設定するためのコンバーター  
-`auto`・・・親のキャンバスのサイズにあったビューポートサイズを返す  
-`左端,上端,幅,高さ`・・・キャンバスのサイズを具体的に指定する。  
-数値を指定するとピクセル単位になるが、数値に%をつければ親のキャンバス基準での比率指定ができる。
+Converter for setting viewport size
+`Auto` ... Return the size of the viewport that matched the size of the parent canvas
+`Left end, Top edge, Width, Height` ... Specify the size of the canvas concretely.
+If you specify a number, it becomes pixel unit, but if you add% to the number you can specify the ratio on the parent's canvas basis.

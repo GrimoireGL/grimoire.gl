@@ -1,37 +1,35 @@
 ---
-type: doc
-title: Grimorie.jsを使ってみる
-order: 1
+Type: doc
+Title: Try using Grimorie.js
+Order: 1
 ---
 
-## 概要
+## Overview
 
-Grimoire.jsはWeb3Dライブラリです。Grimoire.jsではWeb開発フローにマッチした形で、3D表現を作ることができます。3D表現はHTML5のCanvasを使用することにより表示されます。
+Grimoire.js is a Web3D library. Grimoire.js allows you to create 3D representations in a way that matches the web development flow. 3D representation is displayed using HTML5 Canvas.
 
-## 学べること
+Learning #
 
-* Grimoire.jsの読み込み
-* GOMLの読み込み
+* Loading Grimoire.js
+* Loading GOML
 
-### Grimoire.jsを使ってみるには
+### To use Grimoire.js
 
-使用方法は簡単です。Grimoire.jsの本体のscriptと3Dの表現を行うGOML(Grimorie Object Markup Language)をHTML内で読み込むことにより使用することができます。Grimoire.jsでは必要な機能だけをライブラリに取り込んで使用することができます。
+Usage is simple. It can be used by reading the GOML (Grimorie Object Markup Language) which expresses the script of the body of Grimoire.js and 3D in the HTML. In Grimoire.js, you can import and use only necessary functions into the library.
 
-では、`index.html`に`grimoire.js`と`index.goml`を読み込んでみます。
+Let's load `grimoire.js` and` index.goml` in `index.html`.
 
-> このgrimoire.jsはGrimoire.jsとgrimoirejs-fundamental、grimoirejs-mathを一つにバンドリングしたものです。ユーザーはこれをプリセットとしてダウンロードすることもできます。
+> This grimoire.js is a bundle of Grimoire.js, grimoirejs-fundamental, grimoirejs-math as one. Users can also download this as a preset.
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t01-01"></iframe>
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example#t01-01"> </ iframe>
 
-Grimoire.jsを使用するために必要な準備はこれだけです。それでは、これからGrimoire.jsを使って様々なweb3D表現を始めましょう。
+This is the only preparation needed to use Grimoire.js. Let's start with various web3D expressions using Grimoire.js from now on.
 
-またGrimoire.jsではGOMLを読み込んだ数に応じて、canvasが生成されることになっています。
+In addition, Grimoire.js is supposed to generate a canvas according to the number of GOMLs read.
 
-<!-- <iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t01-02"></iframe> -->
-
-次の章で行いますが、ユーザはセレクタを用いて、各キャンバスに存在するGrimorieインターフェースを取得することができます。これにより対象のGOMLに対してのみGOMLのタグを操作することが可能になっています。
+In the next chapter you can use the selector to get the Grimorie interface that exists on each canvas. This makes it possible to manipulate tags of GOML only for the target GOML.
 
 
-> 次は読み込んだGOMLの使い方を学びます。
+> Next we will learn how to use the loaded GOML.
 >
-> [GOMLを扱う](/tutorial/02-handle-goml.html)
+> [Handle GOML](/tutorial/02-handle-goml.html)

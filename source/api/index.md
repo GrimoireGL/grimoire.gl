@@ -1,303 +1,303 @@
 ---
-type: doc
-title: Top-Level API
-order: 0
+Type: doc
+Title: Top-Level API
+Order: 0
 ---
 
-Grimoire.jsを初めて用いる際、最初に扱うjavascriptのAPIはおそらくこれらのトップレベルAPIでしょう。 これらのAPIによってユーザーは自身のサービスのロジックにマッチした形で3Dのキャンバス部分を操作することが容易になります。
+When using Grimoire.js for the first time, the first javascript API to handle is probably these top level APIs. These APIs make it easier for users to manipulate 3D canvas parts in a way that matches the logic of their services.
 
-![top-level-interface](./images/Grimoire-interface-describe.png)
+![Top-level-interface](./images/Grimoire-interface-describe.png)
 
-トップレベルのAPIは以上の図のように主に4つに分割され、それぞれ役割が異なります。
+Top-level APIs are divided into four main parts as shown in the above figure, and their roles are different.
 
 ---
 
 # GrimoireInterface
 
-主に**特定のGOMLソースに依存しない**対象に対して操作するAPIを提供します。
+Mainly ** It does not depend on specific GOML source ** We provide API to operate on target.
 
-**例**
+** Example **
 
-- registerNodeメソッド
-- registerComponentメソッド
-- ...etc
+- registerNode method
+- registerComponent method
+- ... etc
 
-GrimoireInterfaceは`<script>`タグを用いて単にWebページにロードされている場合、`window.gr`に代入されます。
+GrimoireInterface will be assigned to `window.gr` if it is simply loaded into a web page using the` <script> `tag.
 
-GrimoireInterfaceはnpmを用いて以下のようにしても取得することができます。この場合window以下を書き換えることなくGrimoireInterfaceが利用可能です。
+GrimoireInterface can also be obtained using npm as follows. In this case GrimoireInterface is available without rewriting window or less.
 
 ```javascript
-var gr = require("grimoirejs");
+Var gr = require ("grimoirejs");
 ```
 
-## gr("selector")
+## gr ("selector")
 
-- **定義**
+- ** Definition **
 
-  ```typescript
-  function gr(selector: string): GOMLInterface;
-  ```
+  ```typescript
+  Function gr (selector: string): GOMLInterface;
+  ```
 
-- **使い方**
+- ** How to use **
 
-  GrimoireInterfaceは関数としてセレクタを渡すことができます。 このセレクタはGOMLを選択するための記法であり、`text="text/goml"`の指定されているノードを取得するためのセレクタを指定します。
+  GrimoireInterface can pass a selector as a function. This selector is a notation for selecting GOML and specifies a selector for getting the node specified by `text =" text/goml "`.
 
-  ```javascript
-  var theCanvas = gr("script.mainCanvas");
-  ```
+  ```javascript
+  Var theCanvas = gr ("script.mainCanvas");
+  ```
 
-  例えば、上記の例では`mainCanvas`クラスが指定されたscriptタグ全てが結びついているGOMLに対して処理をするインターフェースが取得されます。
+  For example, in the above example, the interface that processes the GOML to which all script tags specified with the `mainCanvas` class are bound is acquired.
 
-  > 注意:
+  > Attention:
 
-  > 取得される操作対象のGOMLが一つとは限らない事に気をつけてください。取得する対象が`canvas`ではなく`script`である事に注意してください。
+  > Please be aware that the GOML of the operation target to be acquired is not limited to one. Please note that the target to retrieve is `script` instead of` canvas`.
 
-## gr.ns(namespace)
+## gr.ns (namespace)
 
-- **定義**
+- ** Definition **
 
-  ```typescript
-   function ns(namespace: string): (name: string) => NamespacedIdentity;
-  ```
+  ```typescript
+   Function ns (namespace: string): (name: string) => NamespacedIdentity;
+  ```
 
-- **使い方:**
+- ** Usage: **
 
-  nsメソッドはGrimoire.jsが用いる各ノードやコンポーネントなどの名前の識別のために名前空間を用いるために使います。
+  The ns method is used to use the namespace for identifying the name of each node, component etc. used by Grimoire.js.
 
-  自分以外の人が用いるであろうコンポーネントやノードを作成する場合、名称が被って競合するのを防ぐために利用する必要があるでしょう。
+  When creating components or nodes that other people will use, you will need to use them to prevent conflicting names.
 
-  ```javascript
-  var g = gr.ns("http://grimoire.gl/ns/sample");
-  var id = g("TEST"); //完全修飾名 TEST | HTTP://GRIMOIRE.GL/NS/SAMPLEを意味するオブジェクトとなる。
-  ```
+  ```javascript
+  Var g = gr.ns ("http://grimoire.gl/ns/sample");
+  Var id = g ("TEST");//Fully qualified name TEST | http://GRIMOIRE.GL/NS/SAMPLE is an object.
+  ```
 
 ## registerComponent
 
-- **定義**
+- ** Definition **
 
-  ```typescript
-  interface IAttributeDeclaration {
-    converter: string | NamespacedIdentity;
-    defaultValue: any;
-  }
+  ```typescript
+  Interface IAttributeDeclaration {
+    Converter: string | NamespacedIdentity;
+    DefaultValue: any;
+  }
 
-  function registerComponent(
-       name: string | NamespacedIdentity,
-       attributes: { [name: string]: IAttributeDeclaration },
-       component: Object | (new () => Component)
-  ): void;
-  ```
+  Function registerComponent (
+       Name: string | NamespacedIdentity,
+       Attributes: {[name: string]: IAttributeDeclaration},
+       Component: Object | (new () => Component)
+  ): Void;
+  ```
 
-- **使い方**
+- ** How to use **
 
-  指定した名称のコンポーネントを追加します。 引数`name`が`NamespacedIdentity`として指定されると、名前空間を含んだタグとして区別されます。 一方で引数`name`が`string`である際は名前空間を**デフォルト名前空間**として処理します。
+  Add a component with the specified name. If the argument `name` is specified as` NamespacedIdentity`, it is distinguished as a tag containing a namespace. On the other hand, when the argument `name` is` string`, we treat the namespace as ** default namespace **.
 
-  引数`attributes`はこのコンポーネントが公開する属性です。これは値として`IAttributeDeclaration`を持つプレーンオブジェクトです。このプレーンオブジェクトのkeyが属性名として用いられます。(常に名前空間はこのコンポーネントの名前空間です。) ユーザーはこのattributesに指定されている属性に対してGOMLを通じて代入したりattrメソッドなどを通じて値を操作できたりします。
+  The argument `attributes` is an attribute exposed by this component. This is a plane object with the value 'IAttributeDeclaration`. The key of this plane object is used as an attribute name. (The namespace is always the namespace of this component.) Users can assign values ​​to attributes specified in this attributes through GOML or manipulate values ​​through attr methods etc.
 
-  引数`component`は新しく登録したいコンポーネントの`コンストラクタとなる関数`もしくは`プレーンオブジェクト`です。 ただし、プレーンオブジェクトはメソッド内部でコンストラクタに変換します。また、コンストラクタを指定する場合はそのコンストラクタのスーパークラスにComponentが入っていなければなりません。
+  The argument `component` is the` constructor function `or` plane object `of the component you wish to register newly. However, the plane object is converted inside the method into a constructor. Also, if you specify a constructor, the superclass of its constructor must contain a Component.
 
 ## registerNode
 
-- **定義**
+- ** Definition **
 
-  ```typescript
-  function registerNode(
-    name: string | NamespacedIdentity,
-    requiredComponents: (string | NamespacedIdentity)[],
-    defaultValues?: { [key: string]: any } | NamespacedDictionary<any>,
-    superNode?: string | NamespacedIdentity,
-    requiredComponentsForChildren?: (string | NamespacedIdentity)[]
-  ): void
-  ```
+  ```typescript
+  Function registerNode (
+    Name: string | NamespacedIdentity,
+    RequiredComponents: (string | NamespacedIdentity) [],
+    DefaultValues ​​?: {[key: string]: any} | NamespacedDictionary <any>,
+    SuperNode ?: string | NamespacedIdentity,
+    RequiredComponentsForChildren ?: (string | NamespacedIdentity) []
+  ): Void
+  ```
 
-- **使い方**
+- ** How to use **
 
-  新たに指定した名称のノードを追加します。引数`name`が`NamespacedIdentity`として指定されると、名前空間を含んだタグとして区別されます。一方で引数`name`が`string`である際は名前空間を**デフォルト名前空間**として処理します。
+  Add a node with the newly specified name. If the argument `name` is specified as` NamespacedIdentity`, it is distinguished as a tag containing a namespace. On the other hand, when the argument `name` is` string`, we treat the namespace as ** default namespace **.
 
-  引数`requiredComponents`はその名称のノードが初期状態のときに保持するコンポーネントの配列を持ちます。この配列は要素として`string`もしくは`NamespacedIdentity`を持つことができます。 この配列を受け取った際、`string`な要素は自動的に名前空間を**デフォルト名前空間**として処理します。
+  The argument `requiredComponents` has an array of components to hold when its named node is in its initial state. This array can have `string` or` NamespacedIdentity` as an element. When receiving this array, the `string` element will automatically treat the namespace as ** default namespace **.
 
-  引数`defaultValues`はこのノードの各属性の初期値を表します。この引数に対して単なるプレーンオブジェクトすなわち`{[key: string]: any}`を渡した場合は、`key`を属性名として解釈し、属性の名前空間として**ノードの名前空間**を用います。もし、ノードの名前空間外の属性に対して初期値を割り当てたい場合は`NamespacedDictionary<any>`を用いてこの引数を割り当てます。
+  The argument `defaultValues` represents the initial value of each attribute of this node. If you pass just a plain object for this argument, ie `{[key: string]: any}`, interpret `key` as an attribute name and add ** node namespace ** as the attribute namespace I will use it. If you want to assign initial values ​​for attributes outside the namespace of the node, assign this argument using `NamespacedDictionary <any>`.
 
-  > デフォルト値の割り当て優先順位:
+  > Default value assignment Priority:
 
-  > あるノードが読み込まれた時に属性に割り当てられる値は以下の優先順位に従って割り当てられます。
+  > The value assigned to an attribute when a node is loaded is assigned according to the following priority.
 
-  > `GOMLによる指定 > registerNode内のdefaultValuesによる指定 > registerComponent内のattributesによる指定`
+  > `Designation by GOML> Specification by defaultValues ​​in registerNode> Specification by attributes in registerComponent`
 
-  > すなわち、初期ロード時にGOMLに記述されていない属性についてはregisterNode内のdefaultValuesが検索され、それも見つからない場合はregisterComponent内のattributesから初期値をロードします。
+  > That is, for attributes not described in GOML at initial loading, defaultValues ​​in registerNode are searched and if not found, load initial values ​​from attributes in registerComponent.
 
-  引数`superNode`はこのノードが設定を継承する元のノード名を指定します。この引数が指定されると、`superNode`に対応付いたノードの`requiredComponents`,`defaultValues`,`requiredComponentsForChildren`が再帰的に引き継がれます。
+  The argument `superNode` specifies the name of the node from which this node inherits its configuration. When this argument is specified, `requiredComponents`,` defaultValues`, `requiredComponentsForChildren` of the node associated with` superNode` are recursively inherited.
 
-  引数`requiredComponentsForChildren`はこのノードの子ノードに指定されるノードに要求するコンポーネントの名称のリストを受け取ります。 この要素が指定されると、このノード以下の子ノードとしてGOML内などに記述されるすべての要素は指定されたコンポーネントを所持している必要があります。
+  The argument `requiredComponentsForChildren` receives a list of the names of the components to be requested for the node specified as a child node of this node. When this element is specified, all elements described in GOML, etc. as child nodes below this node must possess the specified component.
 
 # GOMLInterface
 
-主に**特定のGOMLのソースに依存する**対象に対して操作するAPIを提供します。
+It mainly ** depends on specific GOML source ** We provide API to manipulate target.
 
-GOMLInterfaceを介して、ひとつまたは複数のGOMLを操作できます。
-GOMLInterfaceは、主にGrimoireInterfaceを関数として呼び出して取得できます。
-このときセレクタの対象になったGOMLが、このGOMLInterfaceの操作対象となります。
+You can manipulate one or more GOML via GOMLInterface.
+GOMLInterface can be obtained mainly by calling GrimoireInterface as a function.
+At this time, the GOML that is the target of the selector becomes the operation target of this GOMLInterface.
 
-**例**
+** Example **
 
-- (なし)
+- (None)
 
-## gr("gomlSelector")("nodeSelector")
+## gr ("gomlSelector") ("nodeSelector")
 
-- **定義**
+- ** Definition **
 
-  ```typescript
-  function(selector: string): NodeInterface;
-  ```
+  ```typescript
+  Function (selector: string): NodeInterface;
+  ```
 
-- **使い方**
+- ** How to use **
 
-  GomlInterfaceは関数としてセレクタを渡すことができます。 このセレクタはNodeを選択するための記法であり、このGOMLInterfaceが対象とするGOML群のもつNodeTreeのノードを取得するためのセレクタを指定します。
+  GomlInterface can pass a selector as a function. This selector is a notation for selecting a Node and specifies a selector for acquiring the NodeTree node of the GOML group that this GOMLInterface is targeting.
 
-  ```javascript
-  var cubes = gr("script.mainCanvas")("cube");
-  ```
+  ```javascript
+  Var cubes = gr ("script.mainCanvas") ("cube");
+  ```
 
-  例えば、上記の例では`mainCanvas`クラスが指定されたscriptタグ全てが結びついているGOMLの中で、`cube`クラスが指定された全てのノードを対象とするインターフェースが取得できます。
+  For example, in the example above, all the script tags specified by the `mainCanvas` class are associated with each other GOML can get the interface targeting all nodes specified by the` cube` class.
 
-  > 注意:
+  > Attention:
 
-  > 取得される操作対象のノードが一つとは限らない事に気をつけてください。
+  > Please be aware that the number of operation target nodes to be acquired is not limited to one.
 
 
 ---
 
 # NodeInterface
 
-主に**特定のNode**に対して操作するAPIを提供します。
+Mainly provides ** API to operate on specific Node **.
 
-ひとつ、または複数のノードを対象とした操作を提供します。
+It provides operations targeting one or more nodes.
 
-**例**
+** Example **
 
-- appendメソッド
-- getComponentメソッド
-- forEachメソッド
-- removeメソッド
-- ...etc
+- append method
+- getComponent method
+- forEach method
+- remove method
+- ... etc
 
-## gr("gomlSelector")("nodeSelector")("componentSelector")
-- **定義**
+## gr ("gomlSelector") ("nodeSelector") ("componentSelector")
+- ** Definition **
 
-  ```typescript
-  function(selector: string): ComponentInterface;
-  ```
+  ```typescript
+  Function (selector: string): ComponentInterface;
+  ```
 
-- **使い方**
+- ** How to use **
 
-  NodeInterfaceは関数としてセレクタを渡すことができます。 このセレクタはComponentを選択するための記法であり、対象とするノード群の中からコンポーネントを指定します
+  NodeInterface can pass a selector as a function. This selector is a notation for selecting a Component, and specifies a component from the target node group
 
-  ```javascript
-  var components = gr("script.mainCanvas")("cube")("a");
-  ```
+  ```javascript
+  Var components = gr ("script.mainCanvas") ("cube") ("a");
+  ```
 ## isEmpty
-このNodeInterfaceの対象が一つ以上存在するか確認します。
-存在すればtrue,一つも存在しなければfalseを返します。
-  ```typescript
-  if(gr("script.mainCanvas")("cube").isEmpty()){
-    //nodeInterface is empty!
-  }
-  ```
-## get
-対象となるノード群からノードを指定して取り出します。
-gomlとノードのインデックスを指定することができます。
-gomlのインデックスを省略すると、すべてのgomlに渡って指定したインデックスのノードを返します。
-引数を指定しないと、最初のノードを返します。
-どの場合も、指定した位置にノードが存在しないときは例外を投げます。
-  ```typescript
-  var nodeInterface = gr("script.mainCanvas")("cube");
-  var gomlIndex = 2;
-  var nodeIndex = 1;
-  if(nodeInterface.isEmpty()){
-    var firstNode = nodeInterface.get();//error: this NodeInterface is empty.
-    var secondNode = nodeInterface.get(nodeIndex);//error: index out of range.
-  }else{
-    var firstNode = nodeInterface.get();
-    var secondNode = nodeInterface.get(nodeIndex);
-    var secondNodeIsThirdGOML = nodeInterface.get(gomlIndex,nodeIndex);
-  }
-  ```
+Confirm that there is at least one target of this NodeInterface.
+Returns true if it exists, false if none exists.
+  ```typescript
+  If (gr ("script.mainCanvas") ("cube"). IsEmpty ()) {
+   //nodeInterface is empty!
+  }
+  ```
+##
+Specify the node from the target node group and retrieve it.
+You can specify goml and node index.
+If you omit the index of goml, it returns the node with the specified index over all goml.
+If no argument is specified, the first node is returned.
+In any case, throw an exception if the node does not exist at the specified position.
+  ```typescript
+  Var nodeInterface = gr ("script.mainCanvas") ("cube");
+  Var gomlIndex = 2;
+  Var nodeIndex = 1;
+  If (nodeInterface. IsEmpty ()) {
+    Var firstNode = nodeInterface.get ();//error: this NodeInterface is empty.
+    Var secondNode = nodeInterface.get (nodeIndex);//error: index out of range.
+  } Else {
+    Var firstNode = nodeInterface.get ();
+    Var secondNode = nodeInterface.get (nodeIndex);
+    Var secondNodeIsThirdGOML = nodeInterface.get (gomlIndex, nodeIndex);
+  }
+  ```
 ## getAttribute
-属性名を指定して、対象ノードの**最初のノードの**属性を取得します。
-  ```typescript
-  var cube_position = gr("script.mainCanvas")("cube").getAttribute("position");
-  console.log(cube_position.X);
-  console.log(cube_position.Y);
-  console.log(cube_position.Z);
-  ```
+Specify the attribute name and acquire the ** attribute of the first node ** of the target node.
+  ```typescript
+  Var cube_position = gr ("script.mainCanvas") ("cube"). GetAttribute ("position");
+  Console.log (cube_position.X);
+  Console.log (cube_position.Y);
+  Console.log (cube_position.Z);
+  ```
 ## setAttribute
-属性名を指定して、**すべての対象ノードの**属性を設定します
-  ```typescript
-  gr("script.mainCanvas")("cube").setAttribute("color","red");
-  ```
+Specify attribute name, ** Set ** attributes of all target nodes
+  ```typescript
+  Gr ("script.mainCanvas") ("cube"). SetAttribute ("color", "red");
+  ```
 ## addComponent
-すべての対象ノードにコンポーネントを追加します。
-  ```typescript
-  gr("script.mainCanvas")("cube").addComponent("rotateAround");
-  ```
+Add components to all target nodes.
+  ```typescript
+  Gr ("script.mainCanvas") ("cube"). AddComponent ("rotateAround");
+  ```
 ## append
-すべての対象ノードに対して、指定したタグを持つノードを子要素に追加します。
-  ```typescript
-  gr("script.mainCanvas")("cube").append("<mesh geometry="quad" color="brown" />");
-  ```
+For each target node, add a node with the specified tag to the child element.
+  ```typescript
+  Append ("<mesh geometry =" quad "color =" brown "/>"); gr ("script.mainCanvas")
+  ```
 ## children
-特定のノード群の子要素を対象とする、新しいnodeInterfaceを取得します。
+Get a new nodeInterface targeting a child element of a specific node group.
 ## off
-対象ノードに指定したイベントリスナが登録されていれば削除します
+If an event listener specified for the target node is registered, delete it
 ## on
-対象ノードにイベントリスナを追加します。
+Add an event listener to the target node.
 ## remove
-対象ノードをすべて削除します。
-  ```typescript
-  gr("script.mainCanvas")("cube").remove();
-  ```
+Delete all target nodes.
+  ```typescript
+  Gr ("script.mainCanvas") ("cube"). Remove ();
+  ```
 ## forEach
-このノードインタフェースが対象とするすべてのノードに対して反復処理を行います。
-ノードと、そのノードのgomlのインデックス、goml上でのインデックスを参照できます。
-  ```typescript
-  gr("script.mainCanvas")("cube").forEach((node,gomlIndex,nodeIndex)=>{
-    node.setAttribute("position",`${gomlIndex},${nodeIndex},0`);
-  });
-  ```
+Iterate over all nodes that this node interface is targeting.
+You can refer to the node and its index of goml, index on goml.
+  ```typescript
+  Gr ("script.mainCanvas") ("cube"). ForEach ((node, gomlIndex, nodeIndex) => {
+    Node.setAttribute ("position", `$ {gomlIndex}, $ {nodeIndex}, 0`);
+  });
+  ```
 ## setEnable
-このノードインタフェースが対象とするノードを有効、または無効にします。
-  ```typescript
-  gr("script.mainCanvas")("cube").setEnabled(false);
-  ```
+Enable or disable the target node for this node interface.
+  ```typescript
+  Gr ("script.mainCanvas") ("cube"). SetEnabled (false);
+  ```
 ## first
-対象のノード群の、ひとつ目のノードを返します。存在しない時、nullを返します。
+Returns the first node of the target node group. When it does not exist, it returns null.
 ## single
-対象ノード群が唯一のノードのみを含むとき、それを返します。ノード数が０または２以上のとき、例外を投げます。
+If the target node group contains only one node, it returns it. Throws an exception when the number of nodes is 0 or 2 or more.
 ## count
-対象ノードの個数を数えます。
-  ```typescript
-  var count = gr("script.mainCanvas")("cube").count();
-  ```
+Count the number of target nodes.
+  ```typescript
+  Var count = gr ("script.mainCanvas") ("cube"). Count ();
+  ```
 ---
 
 # ComponentInterface
 
-主に**特定のNodeに属しているコンポーネント**に対する処理に利用します。
+Mainly ** Used for processing ** belonging to a specific Node.
 
-- attrメソッド
-- destroyメソッド
-- ...etc
+- attr method
+- destroy method
+- ... etc
 
 ## getAttribute
-特定のコンポーネント群のAttributeを返します。または、特定のAttributeに値をセットします。
+Returns the Attribute of a specific component group. Or, set the value to a specific Attribute.
 ## setAttribute
 ## destroy
-指定したコンポーネント群を消去します。
+Deletes the specified component group.
 ## count
-対象ノードの個数を数えます。
-  ```typescript
-  var count = gr("script.mainCanvas")("cube").count();
-  ```
-## get
-対象となるコンポーネント群からコンポーネントを指定して取り出します。存在しないとnull、曖昧性があるとerrorを投げる
+Count the number of target nodes.
+  ```typescript
+  Var count = gr ("script.mainCanvas") ("cube"). Count ();
+  ```
+##
+Specify the component from the target component group and retrieve it. If it does not exist it is null, and if it is ambiguous it will throw an error
 

@@ -1,47 +1,47 @@
 ---
-type: doc
-title: コンポーネントを扱う
-order: 4
+Type: doc
+Title: handling components
+Order: 4
 ---
 
-## 概要
-Grimoire.jsではコードの再利用性を高めるための手段としてコンポーネントを定めています。これによりユーザーは構築したロジックを、異なるノードに容易に適用することができます。ここでいうコンポーネントとは、全てのノードの基礎となるものです。コンポーネントを組み合わせることにより、一つの特定の機能を持ったノードが作成されます。
+## Overview
+Grimoire.js defines components as a means to increase code reusability. This allows the user to easily apply the constructed logic to different nodes. The component here is the foundation of all nodes. By combining components, a node with one specific function is created.
 
-## 学べること
+Learning #
 
-* デフォルトコンポーネントとオプショナルコンポーネントについて
-* オプショナルコンポーネントに関するGOMLの記述方法
+* About default and optional components
+* How to write GOML on optional components
 
-### デフォルトコンポーネントとオプショナルコンポーネント
+### Default and Optional Components
 
-Grimoire.jsのコンポーネントは、デフォルトコンポーネントとオプショナルコンポーネントの２種類に分かれます。
-GOMLに記載される`<mesh>`などのタグには、タグ名に応じて最初から複数のコンポーネントが付属しています(Transformコンポーネントなど)。これらのコンポーネントをデフォルトコンポーネントと呼びます。
-これに対し、ユーザーがGOML等で後から追加したコンポーネントをオプショナルコンポーネントとしています。
+The components of Grimoire.js are divided into two types, default components and optional components.
+A tag such as `<mesh>` described in GOML comes with several components from the beginning depending on the tag name (for example, Transform component). These components are called default components.
+On the other hand, the component that the user added later with GOML etc is set as an optional component.
 
-> オプショナルコンポーネントを追加する際には、そのコンポーネントが依存しているコンポーネントが存在する可能性があります。その際には依存しているコンポーネントも含めて、オプショナルコンポーネントとして明示的にノードに追加することが必要です。
+> When adding an optional component, there may be components on which the component depends. In doing so, it is necessary to explicitly add it to the node as an optional component, including dependent components.
 
-### オプショナルコンポーネントの追加
+### Add optional components
 
-GOMLからノードにオプショナルコンポーネントを追加することが可能です。そのためには、ノードの子要素に追加するコンポーネントを明治する必要があります。そのための記述が以下の通りです。
+It is possible to add optional components from GOML to nodes. To do that, we need to measure the components to add to the child elements of the node. The description for that is as follows.
 
-`<camera>`タグにマウス操作を可能にするコンポーネントを追加することを例に考えてみます。記法は以下の通りです。これを`<camera>`タグの子要素に追加することで、コンポーネントの追加は終了です。
+Consider adding a component that allows mouse operation on the `<camera>` tag as an example. The notation is as follows. By adding this to the child element of the `<camera>` tag, adding the component is complete.
 
 ```html
-<camera.components>
-  <MouseCameraControl/>
+<Camera.components>
+  <MouseCameraControl />
 </camera.components>
 ```
 
-> MouseCameraControlはgrimoirejs-fundamentalがサポートしているタグです。ユーザはコンポーネントを作成してすることも可能です。詳しくは[コンポーネントを作成してみる](/tutorial/07-create-component.html)に記載しています。
+> MouseCameraControl is a tag supported by grimoirejs-fundamental. Users can also create components. For details, it is described in [Create a component](/tutorial/07-create-component.html).
 
-対象のタグに、`<対象のタグの名前.components>追加するコンポーネントのタグ</対象のタグの名前.components>`とする必要があります。
+To the target tag, it is necessary to set `<target tag name.components> tag of the component to be added </ target tag name .components>`.
 
-実際にコンポーネントが追加されていることを確認してみましょう。
+Let's make sure that the component is actually added.
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t04-01"></iframe>
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example#t04-01"> </ iframe>
 
 
 
-> 次はコンポーネントの操作に関して、Javascriptから操作することを学びます。これにより、動的にコンポーネントの追加、変更が可能になります。
+> Next, learn to operate from Javascript on the operation of the component. This makes it possible to add and change components dynamically.
 >
-> [javascript側からOptionalComponentを操作してみる](/tutorial/05-handle-component-with-js.html)
+> [Try to manipulate OptionalComponent from the javascript side](/tutorial/05-handle-component-with-js.html)

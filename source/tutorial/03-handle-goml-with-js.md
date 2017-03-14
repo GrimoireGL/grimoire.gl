@@ -1,90 +1,90 @@
 ---
-type: doc
-title: JavascriptでGOMLを扱う
-order: 3
+Type: doc
+Title: Work with GOML in Javascript
+Order: 3
 ---
 
-## 概要
+## Overview
 
-GOMLで宣言したノード、コンポーネントの属性は、javascriptを読み込むことにより操作することができます。 Grimoire.jsでは、canvas部分を操作する際に容易に扱うことのできるインターフェースを提供しています。この章では、実際にGrimoireのインターフェースを用いて実際にコンポーネントの属性を変更して見ましょう。
+Attributes of nodes and components declared in GOML can be manipulated by reading javascript. Grimoire.js provides an interface that can be easily handled when manipulating the canvas part. In this chapter, let's actually change the attribute of the component actually using Grimoire's interface.
 
-今回は、インターフェースのノードに関する基本的な操作を行います。トップレベルAPIの詳細は、[APIReference](https://grimoire.gl/api/) を参照すると良いでしょう。
+This time, we will perform the basic operation related to the node of the interface. For details of the top level API, it is good to refer to [APIReference] (https://grimoire.gl/api/).
 
-## 学べること
-* Canvasのjavascript側からの取得
-* GOMLのノードに関するjavascriptによる操作
-* ノードの属性の変更
+Learning #
+* Acquisition from Canvas's javascript side
+* Operation by javascript on GOML node
+* Change node attributes
 
-### canvasの取得
+Get ### canvas
 
-まずcanvasを取得するためのjavascriptを読み込みます。
-`index.html`に`index.js`を読み込みましょう。
+First, load javascript to get canvas.
+Let's load `index.js` in` index.html`.
 
-これでcanvasを取得するための準備は整いました(以下のWebエディタでは既に読み込んであります)。
+You are now ready to get the canvas (already in the web editor below).
 
 ```javascript
-gr(function() {
-  var $$ = gr("#main");
+Gr (function () {
+  Var $$ = gr ("# main");
 });
 ```
 
-> 操作するキャンバス部分を取得する際にはGrimoireインターフェース内で取得するようにします。これはcanvas生成前に取得が行われることを防ぐためです。
+> When retrieving the part of the canvas you want to manipulate, try to get it inside the Grimoire interface. This is to prevent acquisition from occurring before canvas generation.
 
-以下のようにセレクタを用いて、Grimoire.jsが扱うキャンバス部分を取得できます。複数のGOMLを読み込んでいる場合等、これを利用することにより、書くキャンバスに対して明示的な操作を行うことが可能になります。
+You can get the canvas part handled by Grimoire.js using the selector like below. When using multiple GOMLs etc., you can explicitly operate on the canvas you write by using this.
 
-### meshの属性を変更してみる
+### Try changing the attribute of mesh
 
-それでは、まず`<mesh>`ノードに対して`position`属性を上書きしてみましょう。
+Let's first overwrite the `position` attribute on the` <mesh> `node.
 
-ノードに対して、デフォルトコンポーネントの属性を変化させるためには`setAttribute("属性名", value)`を用います。valueには,書く属性が対応しているコンバーターに適した値を指定することが可能です。
+To change the attributes of the default component for a node, use `setAttribute (" attribute name ", value)`. For value, it is possible to specify a value suitable for the converter to which the write attribute corresponds.
 
 ```javascript
-gr(function() {
-    var $$ = gr("#main");
-    setTimeout(function(){
-      $$("mesh").setAttribute("position", "3,0,0");
-    },1000);
+Gr (function () {
+    Var $$ = gr ("# main");
+    SetTimeout (function () {
+      $$ ("mesh"). SetAttribute ("position", "3,0,0");
+    }, 1000);
 });
 ```
 
-以上の記述により1秒後にmeshのポジションが(3,0,0)に移動しているはずです。
-確認してみましょう。
+With the above description mesh's position should be shifted to (3, 0, 0) after 1 second.
+Let's check it.
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t03-01"allowfllscreen></iframe>
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example#t03-01" allowfllscreen> </ iframe>
 
->ノード名で指定した場合には、同じノード名を持つノードの全てが取得されます。ある特定のノードに対して操作を行う際にはセレクタを活用しましょう。
+> When specified as a node name, all nodes with the same node name are acquired. Let's use a selector when you operate on a specific node.
 
-他にもGrimoireのノードインターフェースには、
-ノードのインターフェースでは、ノードの構造に関する操作(destroy, append)、ノードの属性に関する操作(setAttribute,getAttribute)、また、イベントハンドラの登録(on,off)を行うことができます。
+In addition to Grimoire's node interface,
+In the node's interface, you can perform operations on the structure of the node (destroy, append), operations on node attributes (setAttribute, getAttribute), and register event handlers (on, off).
 
-* get
-* addComponent **(次の章で扱います)**
-* append
-* children
-* compareClass
-* find
-* off
-* on
-* remove
-* foreach
-* single
-* count
+* Get
+* AddComponent ** (handled in next chapter) **
+* Append
+* Children
+* CompareClass
+* Find
+* Off
+* On
+* Remove
+Foreach
+Single
+* Count
 
-現在は上記のメソッドがサポートされています。
+Currently the above methods are supported.
 
-### 動的にmeshを追加してみる
+### Try adding mesh dynamically
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t03-02" allowfllscreen></iframe>
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example#t03-02" allowfllscreen> </ iframe>
 
-`append`メソッドを使ってみましょう
-このメソッド`append('<tag>')`を用いることにより、Javascriptからノードを指定した箇所に追加することができます。
+Let's use the `append` method
+By using this method `append ('<tag>')` you can add a node from Javascript to the specified location.
 
 ```javascript
-      $$("mesh").append('<mesh geometry="cube" position="0,1,0" color="green" />');
+      $$ ("mesh"). Append ('<mesh geometry = "cube" position = "0, 1, 0" color = "green" />');
 ```
 
-上記のように記述することで、緑色のCubeが(0,1,0)に表示されるはずです。
+By describing as described above, the green Cube should be displayed at (0, 1, 0).
 
-> 次はコンポーネントの扱い方を学びます。 GOMLで宣言したノードには標準でデフォルトコンポーネントが付属していますが、後からコンポーネントをGOML内で追加することができます。次の章ではこのオプショナルコンポーネントについて詳しく扱います。
+> Next we will learn how to handle components. Nomenclature declared in GOML comes with standard default components, but you can add components later in GOML. The next chapter deals with this optional component in detail.
 
-> [コンポーネントを扱ってみる](/tutorial/04-handle-component.html)
+> [Try handling components](/tutorial/04-handle-component.html)
