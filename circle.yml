@@ -2,8 +2,15 @@ machine:
   timezone: UTC
   node:
     version: 7.7.1
-  post:
-    - npm install -g npm@3
+  environment:
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+
+dependencies:
+  override:
+    - yarn
+  cache_directories:
+    - ~/.cache/yarn
+
 deployment:
   production:
     branch: master
@@ -13,10 +20,12 @@ deployment:
       - ./node_modules/.bin/hexo clean
       - ./node_modules/.bin/hexo generate
       - ./node_modules/.bin/hexo deploy
+
 general:
   branches:
-    only:
-      - master
+    ignore:
+      - gh-pages
+
 test:
   override:
-    - echo "Ya! No test, but all OK!!!"
+    - yarn test

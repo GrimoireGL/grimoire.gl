@@ -1,0 +1,17 @@
+{
+  "rules": {
+    "alex": {
+      "allow": []
+    },
+    "no-dead-link": {
+      "checkRelative": false,
+      "baseURI": null,
+      "ignore": []
+    },
+    "no-empty-section": true,
+    "write-good": {
+      "passive": false,
+      "thereIs": false
+    }
+  }
+}

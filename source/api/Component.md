@@ -1,41 +1,41 @@
 ---
-type: doc
-title: Component
-order: 15
+Type: doc
+Title: Component
+Order: 15
 ---
 
-コンポーネントは、ノードにアタッチされる機能を、それぞれ独立して扱うためのオブジェクトです。
-コンポーネントはツリー上のGomlNodeの一つのノードに所属し、ノードからメッセージを受けて動作します。
+A component is an object for handling the functions attached to a node independently.
+The component belongs to one node of the GomlNode on the tree, and receives a message from the node and operates.
 
-# name
-このコンポーネントの名前です
-# attributes
-このコンポーネントの属性のリストです。
-# node
-このコンポーネントが属するノードです
-# element
-このコンポーネントに対応するdom要素です
-# isDefaultComponent
-このコンポーネントがデフォルトコンポーネントであるかを判定します。
-# enabled
-コンポーネントの有効無効を設定、取得します。
-# companion
-このコンポーネントのノードのcompanionです。GomlNodeを参照してください。
-# tree
-このコンポーネントのノードのtreeです。GomlNodeを参照してください。
-# getValue
-属性値を取得します。
-# getAttribute
-属性を取得します。
-# removeEnabledObserver
-addEnabledObserverで追加したオブザーバを削除します。
-# addEnabledObserver
-enabledの変化が通知されるオブザーバを登録します。
-# resolveDefaultAttributes
-システムで使用されます。**使用しないでください**。
+# Name
+The name of this component
+# Attributes
+A list of attributes for this component.
+# Node
+The node to which this component belongs
+# Element
+The dom element corresponding to this component
+# IsDefaultComponent
+Determine whether this component is the default component.
+# Enabled
+Set and get validity/invalidity of component.
+# Companion
+This node's companion of this component. See GomlNode.
+# Tree
+The tree of nodes of this component. See GomlNode.
+# GetValue
+Retrieve the attribute value.
+# GetAttribute
+Get the attribute.
+# RemoveEnabledObserver
+Delete the observer added with addEnabledObserver.
+# AddEnabledObserver
+Register the observer to be notified of the change of enabled.
+# ResolveDefaultAttributes
+It is used in the system. **Please do not use**.
 # __addAtribute
-**カスタムコンポーネントを実装する場合に内部から利用します。**
-このコンポーネントに属性を追加します。
+** Used internally when implementing custom components. **
+Add an attribute to this component.
 # __removeAttributes
-**カスタムコンポーネントを実装する場合に内部から利用します。**
-このコンポーネントから属性を削除します。
+** Used internally when implementing custom components. **
+Removes an attribute from this component.

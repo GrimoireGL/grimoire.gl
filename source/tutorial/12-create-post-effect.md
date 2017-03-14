@@ -1,41 +1,41 @@
 ---
-type: doc
-title: ポストエフェクトを作成する
-order: 12
+Type: doc
+Title: Create a post effect
+Order: 12
 ---
 
-## 概要
+## Overview
 
-前の章で解説したマテリアルを用いて、ポストエフェクトをかけたり、画像にエフェクトをかけたりすることができる。
-この際、`<renderer>`タグの中身に書くタグによって、レンダラーの挙動をカスタマイズする。
+Using the material described in the previous chapter, you can apply post effects and apply effects to images.
+In this case, customize the behavior of the renderer by the tag written in the contents of the `<renderer>` tag.
 
-例えば以下の例は入力の画像の色を反転して出力するだけのコードである。
+For example, the following example is a code that only inverts the color of the input image and outputs it.
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t12-01" allowfllscreen></iframe>
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example#t12-01" allowfllscreen> </ iframe>
 
-### rendererタグの中身
+### What is in the renderer tag
 
-rendererタグの中身の要素は主に2つに分類される。
+The contents of the contents of the renderer tag are mainly classified into two.
 
-* renderer-\* となっているレンダリングのタスクを表したタグ
-* texture-buffer/render-buffer というレンダリング先用のテクスチャを表すタグ
+* Renderer - a tag representing the task of rendering as \ *
+* Texture-buffer / render-buffer Tag that represents the texture for the render destination
 
-例えば、上記のサンプルでは以下のように`<renderer>`タグは記述されている。
+For example, in the above example, the `<renderer>` tag is described as follows.
 
 ```xml
-<renderer>
-  <texture-buffer name="bb1"/>
-  <render-quad material="new(render-image)" source="./img2.jpg" out="bb1"/>
-  <render-quad material="new(negate)" source="backbuffer(bb1)"/>
-</renderer>
+<Renderer>
+  <Texture-buffer name = "bb1" />
+  <Render-quad material = "new (render-image)" source = "./ img 2.jpg" out = "bb 1" />
+  <Render-quad material = "new (negate)" source = "backbuffer (bb 1)" />
+</ Renderer>
 ```
 
-#### texture-bufferタグ
+#### texture-buffer tag
 
-`<texture-buffer>`タグはレンダラーに結び付けられたカラーバッファを意味します。`name`属性をつけて特定の名前に結びついたバックバッファ用のテクスチャを定義します。
-また、このタグで登録されたテクスチャは、このレンダラーの行う描画の中で`sampler2D`型の変数に対してタグ側から、`backbuffer(texture-bufferのname)`により渡すことが可能です。
+The `<texture-buffer>` tag means the color buffer associated with the renderer. Define a texture for the back buffer associated with a specific name with the `name` attribute.
+The texture registered with this tag can be passed from the tag side to the variable of type `sampler2D` in the rendering done by this renderer by` backbuffer (texture-buffer name) `.
 
 
-#### render-quadタグ
+#### render-quad tag
 
-`<render-quad>`タグはレンダラーのタスクの一つで、`quad`要素を指定したマテリアルで描画します。`out`要素が指定されると、その対象に描画します。
+The `<render-quad>` tag is one of the renderer's tasks, drawing with the material with the `quad` element specified. When an `out` element is specified, it draws on that target.

@@ -1,67 +1,67 @@
 ---
-type: doc
-title: 目次
-order: 0
+Type: doc
+Title: Table of Contents
+Order: 0
 ---
 
-チュートリアルを始めましょう。このチュートリアルではWebエディタを活用して簡単にGrimoire.jsを試すことができます。
+Let's start the tutorial. In this tutorial you can easily experiment with Grimoire.js using the web editor.
 
 
-### 1. Grimoire.jsを使ってみる
-  * Grimoire.jsの読み込み
-  * GOMLの読み込み
+### 1. Try using Grimoire.js
+  * Loading Grimoire.js
+  * Loading GOML
 
-[チュートリアルをはじめる](/tutorial/01-getting-started.html)
-
-
-### 2. GOMLの記述
-  * GOMLとは？
-  * GOMLの記法について
-  * grimoirejs-fundamentalでサポートしているノード
-
-[チュートリアルをはじめる](/tutorial/02-handle-goml.html)
-
-### 3. GOMLのjavascript側からの操作
-  * Grimoireインターフェースについて
-  * トップレベルAPIについて
-  * 属性の上書き
-
-[チュートリアルをはじめる](/tutorial/03-handle-goml-with-js.html)
+[Start tutorial](/tutorial/01-getting-started.html)
 
 
-### 4. コンポーネントを追加してみる
-  * Optionalコンポーネントについて
+### 2. Description of GOML
+  * What is GOML?
+  * Notation of GOML
+  * Nodes supported by grimoirejs-fundamental
 
-[チュートリアルをはじめる](/tutorial/04-handle-component.html)
+[Start tutorial](/tutorial/02-handle-goml.html)
 
-### 5. コンポーネントの属性を操作してみる
-  * コンポーネントの追加
-  * コンポーネントインターフェースの使用
+### 3. Operation from the javascript side of GOML
+  * About the Grimoire interface
+  * About top level API
+  * Overwrite attribute
 
-[チュートリアルをはじめる](/tutorial/05-handle-component-with-js.html)
+[Start tutorial](/tutorial/03-handle-goml-with-js.html)
 
-### 6. ノードとコンポーネントの本質
 
-[チュートリアルをはじめる](/tutorial/06-node-and-component.html)
+### 4. Add a component
+  * About Optional component
 
-### 7. コンポーネントの作成
-  * オブジェクトを回転させる簡単なコンポーネント
+[Start tutorial](/tutorial/04-handle-component.html)
 
-[チュートリアルをはじめる](/tutorial/07-create-component.html)
+### 5. Try manipulating component attributes
+  * Add component
+  * Using component interfaces
 
-### 8. ノードを作ってみる
-  * registerNodeの仕様
+[Start tutorial](/tutorial/05-handle-component-with-js.html)
 
-[チュートリアルをはじめる](/tutorial/10-create-node.html)
+### 6. Node and component essence
 
-### 9. マテリアルを作ってみる
+[Start tutorial](/tutorial/06-node-and-component.html)
 
-[チュートリアルをはじめる](/tutorial/11-create-material.html)
+### 7. Creating Components
+  * Easy component to rotate object
 
-### 10. ポストエフェクトを作ってみる
+[Start tutorial](/tutorial/07-create-component.html)
 
-[チュートリアルをはじめる](/tutorial/12-create-post-effect.html)
+### 8. Create a node
+  * Specification of registerNode
 
-### 11. プラグインを作成してみる
+[Start tutorial](/tutorial/10-create-node.html)
 
-[チュートリアルをはじめる](/tutorial/13-create-plugin.html)
+### 9. Make a Material
+
+[Start tutorial](/tutorial/11-create-material.html)
+
+### 10. Creating a post effect
+
+[Start tutorial](/tutorial/12-create-post-effect.html)
+
+### 11. Create a plugin
+
+[Start tutorial](/tutorial/13-create-plugin.html)

@@ -1,62 +1,62 @@
 ---
-type: doc
-title: ダウンロード
-order: 0
+Type: doc
+Title: Download
+Order: 0
 ---
 
-# スタンドアロン
+# Standalone
 
-scriptタグで読み込んですぐに利用するためには、スタンドアロン版の使用が便利です。`GrimoireJS`及び`gr`がグローバル変数として登録されます。(`gr`は`noConflict`を用いて利用しないことも可能です。)
+In order to read it with the script tag and use it immediately, it is convenient to use the standalone version. `GrimoireJS` and` gr` are registered as global variables. (`Gr` can also not be used with` noConflict`.)
 
-<div class="primary-buttons"><a download href="https://github.com/GrimoireGL/grimoirejs-basic/raw/master/release/grimoirejs-preset-basic.zip">ダウンロード</a></div>
+<Div class = "primary-buttons"> <a download href="https://github.com/GrimoireGL/grimoirejs-basic/raw/master/release/grimoirejs-preset-basic.zip"> Download </a> </Div>
 
 > Note:
 >
-> 上のリンクでは`grimoirejs`, `grimoirejs-fundamental`, `grimoirejs-math`が同梱されている、 `grimoirejs-preset-basic`がダウンロードされます。
-> `grimoirejs-fundamental`を利用することで初めてレンダリングが行えるようになります。また`grimoirejs-fundamental`は`grimoirejs-math`に依存しているため、これらが含まれます。
+> The link above will download `grimoirejs-preset-basic`, which includes` grimoirejs`, `grimoirejs-fundamental` and` grimoirejs-math`.
+> `Grimoirejs-fundamental` will be available for rendering for the first time. Also `grimoirejs-fundamental` depends on` grimoirejs-math`, so these are included.
 
 ## CDN
 
-unpkg上で提供されているパッケージは常に最新版になっています。[こちら](https://unpkg.com/grimoirejs-preset-basic/register/grimoire-preset-basic.min.js)を利用すれば、手軽に組み込むことが可能です。
+The packages provided on unpkg are always up to date. [Here](https://unpkg.com/grimoirejs-preset-basic/register/grimoire-preset-basic.min.js), you can easily incorporate it.
 
 > Note:
 >
-> 上のリンクでは`grimoirejs`, `grimoirejs-fundamental`, `grimoirejs-math`が同梱されている、 `grimoirejs-preset-basic`がダウンロードされます。
+> The link above will download `grimoirejs-preset-basic`, which includes` grimoirejs`, `grimoirejs-fundamental` and` grimoirejs-math`.
 
-# npm
+# Npm
 
-すでに自作のアプリケーション環境がNPMを用いている場合や、babelなどを使ったり効率的に開発したい場合のためにnpmを用いる方法も用意されています。
+There is also a way to use npm for cases where your own application environment already uses NPM, or when you want to develop babel etc. efficiently.
 
 ```bash
-$ npm install grimoirejs --save
-$ npm install grimoirejs-math --save
-$ npm install grimoirejs-fundamental --save
+$ Npm install grimoirejs --save
+$ Npm install grimoirejs-math --save
+$ Npm install grimoirejs-fundamental - save
 ```
 
-この状態で、以下のように記述すれば同様にしてgrインターフェースが取得できます。
+In this state, if you describe it as follows, you can acquire gr interface in the same way.
 
 ```javascript
-import gr from "grimoirejs";
+Import gr from "grimoirejs";
 ```
 
-あるいは、`require`を用いて以下のようにも取得できます。
+Alternatively, you can also retrieve it using `require` as follows.
 
 ```javascript
-const gr = require("grimoirejs");
+Const gr = require ("grimoirejs");
 ```
 
 > Note:
 >
-> ただし、この状態でバンドリングなどにGrimoire.jsは中身に含まれず、scriptタグで読み込む必要があることに注意してください。あくまで参照を取ってくるだけの場合の記法です。
+> However, please note that in this state Grimoire.js is not included in the contents and it needs to be read with the script tag in bundling etc. It is a notation only when you only get a reference.
 
-もし、scriptタグなどで読み込まない場合は、以下のようにすることで実際にGrimoire.jsを走らせることが可能です。
+If you do not load with script tag etc., you can actually run Grimoire.js by doing as follows.
 
 ```javascript
-import gr from "grimoirejs/register";
+Import gr from "grimoirejs/register";
 ```
 
-この参照先には実際のgrimoirejsのコードが含まれるため、このままバンドリングなどをすると、grimoirejsのコードを取り込んだまま使用することが可能になります。
+Since this reference destination contains the code of actual grimoirejs, if you do bundling etc. as it is, you can use it while capturing the grimoirejs code.
 
 > Note:
 >
-> `grimoirejs-fundamental`, `grimoirejs-math` を利用する場合は同様にインポートし、バンドリングを行うことで利用可能になります。
+> If you use `grimoirejs-fundamental`,` grimoirejs-math`, you can import it and use it by doing bundling as well.

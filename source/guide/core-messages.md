@@ -1,92 +1,90 @@
 ---
-type: doc
-title: コアメッセージ
-order: 4
+Type: doc
+Title: Core message
+Order: 4
 ---
 
-すべてのメッセージは`$`から始まるメソッドによってハンドリングされます。
-これは、通常のメソッドとして作成したつもりのコンポーネントないのメソッドが別のコンポーネントが発行するメッセージによって起動してしまうことによるバグなどを抑制するためです。
+All messages are handled by methods starting with `$`.
+This is to suppress bugs etc. caused by a method or a method not intended to be created as a normal method being activated by a message issued by another component.
 
-# GrimoireJS自身が定義するメッセージ群
+# Group of messages defined by GrimoireJS itself
 
 ## treeInitialized
 
 ```typescript
-  function $treeInitialized(c: ITreeInitializedInfo): void;
+  Function $ treeInitialized (c: ITreeInitializedInfo): void;
 ```
 
 ```typescript
-interface ITreeInitializedInfo {
-    ownerScriptTag: HTMLScriptElement; // このGOMLを含んでいるスクリプトタグ
-    id: string; // 各ツリーに割り振られたユニークなID
+Interface ITreeInitializedInfo {
+    OwnerScriptTag: HTMLScriptElement;//script tag containing this GOML
+    Id: string;//Unique ID assigned to each tree
 }
 ```
 
-ツリーが初期化された際に呼び出されます。
-初期のGOMLの中に記述されているノードが全て初期化されると呼び出されます。
+Called when the tree is initialized.
+It is called when all the nodes described in the initial GOML are initialized.
 
-初期化後に追加されたいかなるコンポーネントには呼び出されることはありません。
+It will not be called for any components added after initialization.
 
 ## mount
 
 ```typescript
-  function $mount():void;
+  Function $ mount (): void;
 ```
 
-コンポーネントが属するノードがツリーに結びついた際に呼び出されます。
+Called when the node to which the component belongs is attached to the tree.
 
 ## unmount
 
 ```typescript
-  function $unmount():void;
+  Function $ unmount (): void;
 ```
 
-コンポーネントが属しているノードがツリーからデタッチされた際に呼び出されます。
+Called when the node to which the component belongs is detached from the tree.
 
 
-# ノード初期化時のアルゴリズム
+# Algorithm at node initialization
 
-あるノードNが親ノードPに属するように新たにノードNをインスタンス化する際、以下のような順序で初期化されることが想定されている。
+It is assumed that when node N is instantiated newly so that certain node N belongs to parent node P, it is initialized in the following order.
 ```
-1. CN = N,CP=P
-// コンポーネントの初期化処理
-2. CNをインスタンス化
-3. FOR c <= すべてのCNの必須コンポーネント
-3-1. cをインスタンス化してNへセット
-3-2. FOR a <= すべてのcの属性
-3-2-1. aをインスタンス化してcにセット
-3-2-2. aがCNの属性であると記録
+1. CN = N, CP = P//initialize component
+2. Instantiate CN
+3. FOR c <= Required component of all CN
+3-1. Instantiate c and set it to N
+3-2. FOR a <= Attributes of all c
+3-2-1. Instantiate a and set it to c
+3-2-2. Record that a is an attribute of CN
 
-4. c <= すべてのCNの追加コンポーネント(GOMLないで.COMPONENTSにより指定されたコンポーネント)
-4-1. cをインスタンス化してCNへセット
-4-2. FOR a <= すべてのcの属性
-4-2-1 aをインスタンス化してcにセット
-// 追加コンポーネントはコンポーネントのノードへ直接属性を記述するのでaがCNの属性であると記録する必要はなし
+4. c <= all CN additional components (components specified by .COMPONENTS without GOML)
+4-1. Instantiate c and set it to CN
+4-2. FOR a <= Attributes of all c
+4-2-1 Instantiate a and set it to c//Since the additional component describes the attribute directly to the node of the component, there is no need to record that a is an attribute of CN
 
 5. CN.parent = CP
 6. CP = CN
 
-7. CNに子ノードがいる場合は、2-7を繰り返す。(この処理が終わると、Nを根とするデタッチされたツリーが生成される。)
-(この時点で、コンポーネントではコンストラクタ以外は一切呼ばれておらず、属性も初期値の割り当ても一切行われていない)
+7. If there are child nodes in the CN, repeat 2-7. (When this process is over, a detached tree with N as the root is generated.)
+(At this point, the component has not been called at all except for the constructor, neither attribute nor initial value assignment)
 
-8. IF (P がnullでない && Pがマウント済み) || Pはnullであるが、Nがgomlのルートである(ルートでもなくPがnullなものは含まない(ただのデタッチされたツリー))
-8-1. Nのすべてのenabledな必須コンポーネントの属性の初期値を割り当て。
-(GOMLの値 > Nodeの初期値 > Attributeの初期値　の優先度で割り当て)
-8-2. Nのすべてのenabledな追加コンポーネントの属性の初期値を割り当て。
-(GOMLの値 > Attributeの初期値の優先度で割り当て)
-8-3. FOR c = Nに属するすべてのenabledなコンポーネント
-8-3-1. c.$awake(); // <- 初のmountの前に呼び出される。どのコンポーネントに対しても必ず1回しか呼び出されない
-8-4. SendMessage('mount')
+8. IF (P is not null & & P is mounted) || P is null but N is the root of goml (not root or P null is not included (just a detached tree) )
+8-1. Assign initial values ​​for all enabled essential components' attributes.
+(Assigned by GOML value> initial value of Node> priority of initial value of Attribute)
+8-2. Assign the initial value of the attribute of all enabled additional components of N.
+(Assigned by priority of initial value of GOML> Attribute)
+8-3. All enabled components belonging to FOR c = N
+8-3-1. C. $ Awake ();//<- invoked before the first mount. It is invoked only once for every component
+8-4. SendMessage ('mount')
 ```
 
-原則として、**マウントされていないコンポーネントはいかなる処理も呼び出されない**。これには属性の割り当ても含む。(コンストラクタを除く)
-(属性の中にはtreeに属さなければ確定しない属性が存在しうるため(セレクタ指定など))
+In principle, ** no component is invoked for any unmounted ** processes **. This also includes attribute assignment. (Except constructors)
+(Some attributes can not be fixed unless they belong to tree (selector specification etc.))
 
-ただし、コンポーネントのコンストラクタに限り、コンポーネントの作者は仮にツリーにマウントされていない状態の処理をすることはできる。
-(基本的にコンストラクタの使用は推奨されない)
+However, only in the constructor of the component, the creator of the component can process the state that it is not mounted in the tree.
+(Basically, use of constructor is not recommended)
 
 
-すべての属性は以下の条件を満たす。
-* すべての属性はコンバーターを一度通りコンポーネントに渡される。(defaultValueも含む)
-* disabledなコンポーネントには値を渡さない。
-* disabledなコンポーネントが属性変更をされた際、そのあとでenabledになったタイミングでコンポーネントに渡される。
+All attributes satisfy the following conditions.
+* All attributes are passed to the component once through the converter. (Including defaultValue)
+* Do not pass values ​​to disabled components.
+* When a disabled component is changed, it is passed to the component at the timing when it becomes enabled after that.

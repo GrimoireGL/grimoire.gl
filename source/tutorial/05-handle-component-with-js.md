@@ -1,34 +1,34 @@
 ---
-type: doc
-title: javascriptでコンポーネントを扱う
-order: 5
+Type: doc
+Title: Handle components with javascript
+Order: 5
 ---
 
-## 概要
+## Overview
 
-3章で行ったことと同様に、Grimoire.jsではコンポーネントをjavascriptから操作することができます。
-コンポーネントを操作するための機能として、ノードインターフェースでは`addComponent`メソッドを提供しています。
+As well as what we did in Chapter 3, Grimoire.js allows you to manipulate components from javascript.
+As a function for manipulating components, the node interface provides an `addComponent` method.
 
-## 学べること
+Learning #
 
-* コンポーネントに関するjavascriptによる操作
-* 追加したコンポーネントの属性の変更
+* Operation by javascript on components
+* Change the attributes of the added component
 
-### コンポーネントの追加
-コンポーネントを追加するためには`addComponent`メソッドを使用します。
-確認してみましょう。
+### Add Components
+To add a component we use the `addComponent` method.
+Let's check it.
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t05-01"></iframe>
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example#t05-01"> </ iframe>
 
-また、追加したコンポーネントに関しても、属性を変更することが可能です。
-ここでは`<camera>`タグについている`MouseCameraControl`コンポーネントの属性を変更してみましょう。
+Also, it is possible to change attributes for added components.
+Let's modify the attributes of the `MouseCameraControl` component for the` <camera> `tag here.
 
 ```javascript
-$$("camera").first().getComponent("MouseCameraControl").setAttribute("zoomSpeed", 1);
+$$ ("camera"). First (). GetComponent ("MouseCameraControl"). SetAttribute ("zoomSpeed", 1);
 ```
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t05-02"></iframe>
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example#t05-02"> </ iframe>
 
-> 次は、GOMLのノードとコンポーネントの性質を考えてみます。Grimoire.jsのデータ構造を学びましょう。
+> Next, consider the nature of GOML nodes and components. Learn the data structure of Grimoire.js.
 >
-> [ノードとコンポーネントの本質](/tutorial/06-node-and-component.html)
+> [Essence of nodes and components](/tutorial/06-node-and-component.html)

@@ -1,438 +1,436 @@
 ---
-type: doc
-title: カスタムマテリアルの仕様
-order: 2
+Type: doc
+Title: Specification of custom material
+Order: 2
 ---
 
-通常、Grimoire.jsのプログラムはWebGLによってcanvasに描画されます。このため、WebGLの仕様の一つに含まれるGLSLを用いてシェーダーをカスタマイズすることができます。
-直接GLSLをいじることも可能ですが、`materialタグ`の整合性などを考慮すると、Grimoire.js用の拡張シェーダー記法(Sort(ソール、フランス語で呪文))を用いるとより良いでしょう。
+Normally, programs of Grimoire.js are rendered in canvas by WebGL. Therefore, you can customize the shader using GLSL included in one of WebGL specifications.
+Although it is possible to directly interact with GLSL, it is better to use extended shader notation for Grimoire.js (Sort (spells in French)) for Grimoire.js, considering the consistency of the `material tag`.
 
-この記事では、このfundamentalが実装しているGLSLの独自拡張`Sort`(**ソール**)について解説します。
+In this article, we will explain GLSL 's own extension `Sort` (** Saul **) implemented by this fundamental.
 
-# マテリアルとは
+# What is Material
 
-`.sort`ファイルがなんであるかを理解するためには、まず`マテリアル`とはなんであるかを理解する必要があります。
-`Grimoire.js`において、`マテリアル`とは`ジオメトリ`と同時に扱われる概念です。ジオメトリはその **オリジナルの形状** を意味する概念である一方で、マテリアルはジオメトリをどのように描画するかという、`描画手法`の組を扱うための概念です。
+In order to understand what the `.sort` file is, you first need to understand what` material 'is.
+In `Grimoire.js`,` material` is a concept coincident with `geometry`. Geometry is a concept that means ** original shape **, while material is a concept for dealing with pairs of `drawing methods`, such as how to draw geometry.
 
-一つのジオメトリは、カメラ一つであったとしても、一回のレンダリングで複数回の描画がされる可能性があります。例えば、ポストエフェクトの関係で、シーンの全体を描画する前にシーン中の物体すべての`法線`を書き出さなければならないかもしれません。この場合`色`を書き込むための手法と、`法線`を書き込むための手法が必要になります。
+Even if one geometry is one camera, there is a possibility that drawing will be performed more than once with one rendering. For example, in relation to post effects, you may have to write out `normals` of all objects in the scene before drawing the whole scene. In this case you need a technique for writing `color` and a technique for writing `normal`.
 
-この一つあたりの手法を`Technique`(テクニック)と呼びます。レンダラーが、法線の画像データが欲しい時は、すべてのマテリアルとジオメトリの組みに対して、法線の描画に対応したテクニックをもつマテリアルに対して描画命令を出します。
+We refer to this technique as `Technique` (technique). When the renderer wants the image data of the normal, it issues a drawing command to the material having the technique corresponding to the drawing of the normal for all the material and geometry combination.
 
-一つの手法は複数個の手順によって成り立っているかもしれません。例えば、3Dグラフィクスでよくある手法の一つに、あらかじめ大きめに書いたものの上に小さくした物体を書いてエッジに見せるという手法があります。手書きで言えば、下地を描いてから、上の塗りをするように一つの手法が複数個の手順によって成り立っている可能性があるのです。この手順を`Pass`(パス)と呼びます。
+One method may consist of several procedures. For example, as one of the common methods in 3D graphics, there is a method of writing a small object on the large-sized one in advance and showing it to the edge. Speaking in handwriting, there is a possibility that one method is made up of multiple procedures, as if painting the top after painting the ground. This procedure is called `Pass`.
 
-つまり、一つのマテリアル(あるジオメトリを描画するための複数個の描画手法の集合)は、一つ以上のテクニック(描画手法)からなり、一つのテクニックは、一つ以上のパス(描画手順)からなります。
+That is, one material (a set of a plurality of drawing methods for drawing a certain geometry) is made up of one or more techniques (drawing methods), and one technique is one from more than one path (drawing procedure) Become.
 
-つまり、Material > Technique > Passの順番で包含関係があります。
+That is, there is an inclusion relation in the order of Material> Technique> Pass.
 
-一つのマテリアルを表現するsortファイルは、**Techniqueを省略して記述することは可能ですが、Passを省略して書くことはできません。**
-まずは、カスタムマテリアルの第一歩としてパスを記述して見ましょう。
+Although it is possible to describe a sort file representing one material by omitting ** Technique, Pass can not be written without writing it. **
+Let's start by describing the path as the first step of the custom material.
 
-# GOMLからのsortファイルの読み込み
+# Read sort file from GOML
 
 ## import-material
 
-`<import-material>`を用いて、記述したカスタムマテリアルを読み込むことができます。(カスタムマテリアルの記述法については後述)
+You can import the custom material you have written using `<import-material>`. (The description method of custom material is described later)
 
 ```xml
-<import-material typeName="test" src="something.sort"/>
+<Import-material typeName = "test" src = "something.sort"/>
 ```
 
-このように記述すると、`test`という名前を用いれば、`something.sort`に記述されたカスタムマテリアルを用いることができます。
+In this way, you can use the custom material described in `something.sort` by using the name` test`.
 
-一度、importされたマテリアルは二つの方法で指定が可能です。
+Once imported material can be specified in two ways.
 
-### 新しいマテリアルのインスタンスを作る場合
+### When creating an instance of a new material
 
 ```xml
-　<mesh material="new(test)"/>
+<Mesh material = "new (test)"/>
 ```
 
-マテリアルを受け取りうる要素に対して、`new(マテリアル名)`のように記述すると、その指定先に対して新しいインスタンスが作られます。
-マテリアルは読み込むマテリアルに応じて、 **動的に** 指定可能な属性が変化します(詳細は後述)。
-例えば、あるマテリアル`test`が`color`属性を`Color3`コンバーターによって受け取るとすればいかのような記述をすることができるようになります。
+If you write elements like 'new (material name) `for elements that can receive materials, a new instance will be created for that destination.
+Depending on the material to be read, the material ** dynamically change attributes that can be specified ** will change (details will be described later).
+For example, if one material `test` receives the` color` attribute via the `Color 3` converter, you can write something like that.
 
 ```xml
-   <mesh material="new(test)" color="yellow"/>
+   <Mesh material = "new (test)" color = "yellow"/>
 ```
 
-マテリアルを受け取りうる要素に対して、`new(マテリアル名)`のように記述すると、その指定先に対して新しいインスタンスが作られます。
-マテリアルは読み込むマテリアルに応じて、 **動的に** 指定可能な属性が変化します(詳細は後述)。
-例えば、あるマテリアル`test`が`color`属性を`Color3`コンバーターによって受け取るとすればいかのような記述をすることができるようになります。
+If you write elements like 'new (material name) `for elements that can receive materials, a new instance will be created for that destination.
+Depending on the material to be read, the material ** dynamically change attributes that can be specified ** will change (details will be described later).
+For example, if one material `test` receives the` color` attribute via the `Color 3` converter, you can write something like that.
 
 ```xml
-   <mesh material="new(test)" color="yellow"/>
+   <Mesh material = "new (test)" color = "yellow"/>
 ```
 
-### マテリアルタグによって共通のインスタンスを作成する場合
+### When creating a common instance with a material tag
 
 ```xml
-  <!--GOML直下-->
-  <material id="mat1" type="test" color="blue"/>
-  <!--scene内-->
-　<mesh material="#mat1"/>
-　<mesh material="#mat1"/>　
-  <mesh material="#mat1"/>
+  <! - Just under GOML ->
+  <Material id = "mat1" type = "test" color = "blue"/>
+  ? <! - Within scene ->
+<Mesh material = "# mat1"/>
+<Mesh material = "# mat1"/>
+  <Mesh material = "# mat1"/>
 ```
 
-このような記述をした場合、上記の3つのメッシュでは同じマテリアルが用いられます。`<material>`に指定されている`color`を変更すると3つすべての`color`変わります。
-このような指定の際は、`<mesh>`自身が`color`を受け取ることはないことに注意してください。
+In the case of such a description, the same material is used for the above three meshes. Changing `color` specified in` <material> `will change all three` color`.
+Please be aware that `<mesh>` itself will not receive `color` when making such a designation.
 
-### メッシュのマテリアルの初期値
+### Initial Value of Mesh Material
 
-ここで、一つ例としてmeshのマテリアルの初期値は`new(unlit)`となっています。また、`unlit`というマテリアルはデフォルトで読み込まれるシェーダーの一つです。
-このマテリアルは、`color`と`texture`という値を受け取りうるため、普段、`<mesh>`はこれらの値を指定できます。
+Here, as an example, the initial value of mesh's material is `new (unlit)`. Also, the material `unlit` is one of the shaders loaded by default.
+Since this material can accept `color` and` texture` values, `mesh>` can usually specify these values.
 
-つまり、マテリアルがこれ以外である時`color`や`texture`という属性は存在しません。
+That is, there are no `color` or` texture` attributes when the material is anything else.
 
-また、`material`を初期値としたまま多くのメッシュを使う場合、それぞれのメッシュに対してマテリアルのインスタンスが作成されるため非効率です。
-そのような際は、**共通にできる部分は`<material>`タグを用いて共通化することを推奨します。**
+Also, if you use many meshes with `material` as initial value, it is inefficient because instances of the material are created for each mesh.
+In such a case, it is recommended to share common parts with * `<material>` tags. **
 
-# パスの記述
+# Path description
 
-まずは、パスを記述する方法を解説します。
-パスは以下の要素によって成り立ちます。
+First, I will explain how to write a path.
+The path is made up of the following elements.
 
-* GLSLによって記述されたシェーダー
-* パスの描画前に実行されるglのステートを示した宣言文
-* その他Grimoire.jsとの相互運用性のために設けられた構文
+* Shaders described by GLSL
+* Declaration statement indicating the state of gl executed before drawing the path
+* Others Syntax established for interoperability with Grimoire.js
 
-## シェーダー言語の記述
+# # Shader language description
 
-### シェーダーとは
+### What is a shader?
 
-シェーダー言語はGPU上で動作する言語です。WebGLの本質は3Dをできることではなく、3D描画などを高速に行えるシェーダーという言語がGPU上で動かせることにあります。
-マテリアルによる頂点の移動や各ピクセルの色の決定などを高速にするために用いられます。
+Shader language is the language that runs on GPU. The essence of WebGL is not to be able to do 3D, but to be able to run on the GPU a language called shader that can perform 3D drawing at high speed.
+It is used to speed up the movement of apexes by materials and the color of each pixel.
 
-この特徴から、残念ながら **javascriptのみではシェーダーを記述することはできません。** 代わりに **GLSLという言語を用いられます。**
+Unfortunately from this feature, shaders can not be written with ** javascript alone. ** Instead, you can use the language ** GLSL. **
 
-残念ながら、このページではシェーダー言語の仕様や入門について深く触れることはできません。しかし、これらは一般的にデスクトップ環境で動作する`OpenGL`で用いられるものと全く同じ仕様の`GLSL`が動作するため、既存の学習資料が幾らか存在します。
-また、[ShaderToy](https://webgl.souhonzan.org/entry/?v=0600)や、[doxasさんの入門記事](http://qiita.com/doxas/items/b8221e92a2bfdc6fc211)などを参照すれば、入門することができるでしょう。
+Unfortunately, we can not deeply touch on shader language specifications and introduction on this page. However, since these are generally `GLSL` with exactly the same specification as those used in` OpenGL` which operates in the desktop environment, there are some existing learning materials.
+Also see [ShaderToy](https://webgl.souhonzan.org/entry/?v=0600) and [Introduction to doxas](http://qiita.com/doxas/items/b8221e92a2bfdc6fc211) Then you will be able to begin.
 
-### sort内のシェーダー
+### Shaders in sort
 
-sortのパス内にはそのまま直接シェーダーを記述することができます。
+You can write shaders directly in the sort's path.
 
 ```glsl
-@Pass{
-  // ここにシェーダーを記述する
+@ Pass {
+ //Write a shader here
 }
 ```
 
-**GLSLで記述されたシェーダーは必ず`@Pass`によって囲われなければなりません。**
+** Shaders written in GLSL must be enclosed by `@ Pass'. **
 
-このSortによって読み込まれたシェーダーでは、頂点シェーダーとして用いる場合、`#define VS`が、フラグメントシェーダーとして用いる場合は`#define FS`が挿入されます。
-これを用いることで同一ファイルで双方のシェーダーを用いることが可能になります。
+In the shader read by this Sort, `# define VS` is inserted when used as a vertex shader, and` #define FS` if it is used as a fragment shader.
+By using this, it becomes possible to use both shaders with the same file.
 
-例
+An example
 
 ```glsl
 
 #ifdef VS
-  void main(){
-    gl_Position = ~~~
-  }
-#endif
+  Void main () {
+    Gl_Position = ~~~
+  }
+# Endif
 
-#ifdef FS
-  void main(){
-    gl_FragColor = ~~~
-  }
-#endif
+# Ifdef FS
+  Void main () {
+    Gl_FragColor = ~~~
+  }
+# Endif
 
 ```
 
-あくまで、GLSLのマクロを利用したものなので、これらの`VS`で区切られたセクションや`FS`で区切られたセクションは複数回登場することもできます。
+Since it uses the GLSL macros to the last, the section delimited by these `VS` and the section delimited by` FS` can appear multiple times.
 
-### デフォルト定数
+### default constant
 
-また、いくつかの定数がデフォルトで定義されます。これらの定数はjavascriptの`Math.~~`でアクセスできる定数と全く同じものです。
+Also, some constants are defined by default. These constants are exactly the same as those accessible by javascript `Math. ~~`.
 
-```glsl
-// constants
+```glsl//constants
 #define PI 3.141592653589793
 #define E 2.718281828459045
 #define LN2 0.6931471805599453
 #define LN10 2.302585092994046
 #define LOG2E 1.4426950408889634
-#define LOG10E 0.4342944819032518
+#define LOG 10E 0.4342944819032518
 #define SQRT2 1.4142135623730951
-#define SQRT1_2 0.7071067811865476
+#define SQRT1 - 2 0.7071067811865476
 ```
 
-### フラグメントシェーダー内でのprecision
+### precision within a fragment shader
 
-以下のような記述をするとフラグメントシェーダーでの精度修飾子がついていないためGLSLの仕様上問題が起きます。
+When describing as follows, there is a problem in specification of GLSL because the precision modifier in the fragment shader is not attached.
 
 ```glsl
-varying vec2 vValue;
+Varying vec2 vValue;
 
 #ifdef VS
-  void main(){
-    gl_Position = ~~~
-  }
-#endif
+  Void main () {
+    Gl_Position = ~~~
+  }
+# Endif
 
-#ifdef FS
-  void main(){
-    gl_FragColor = ~~~
-  }
-#endif
+# Ifdef FS
+  Void main () {
+    Gl_FragColor = ~~~
+  }
+# Endif
 ```
 
-これは、頂点シェーダー、フラグメントシェーダーともに使われる`varying vec2 vValue`が先頭にあるためにfloatの精度修飾がないため問題になるからです。
-本来、フラグメントシェーダーの他のどの`float系`の変数宣言よりも前に`precision float mediump`などの記述が必要です。
-しかし、単に`precision mediump float;`と先頭に記述してしまえば、VSでも読み込まれてしまうのでエラーになってしまう。
-そこで、`FS_PRECマクロ`や`VS_PRECマクロ`があらかじめシェーダーの先頭に追加される。
+This is because there is no precision qualification of float because `verting vec2 vValue` used for both vertex shader and fragment shader is at the beginning, which is a problem.
+Originally, you need to write `precision float mediump` before the variable declaration of any other` float 'of the fragment shader.
+However, if you simply write `precision mediump float;` at the beginning, you will get an error because it will be loaded by VS as well.
+Therefore, `FS_PREC macro` and 'VS_PREC macro' are prefixed to the beginning of the shader.
 
-それぞれの定義は以下のようになっている。
+Each definition is as follows.
 
 ```glsl
-#ifdef FS
-  #define FS_PREC(prec,type) precision prec type;
-  #define VS_PREC(prec,type)
-#endif
+# Ifdef FS
+  #define FS_PREC (prec, type) precision prec type;
+  #define VS_PREC (prec, type)
+# Endif
 #ifdef VS
-  #define VS_PREC(prec,type) precision prec type;
-  #define FS_PREC(prec,type)
-#endif
+  #define VS_PREC (prec, type) precision prec type;
+  #define FS_PREC (prec, type)
+# Endif
 ```
 
-すなわち、シェーダーファイルの先頭に`FS_PREC(mediump,float)`と記述しておけば、実際にはフラグメントシェーダーの時のみmediump精度が用いられるようになる。
+In other words, if you write `FS_PREC (mediump, float)` at the beginning of the shader file, mediump precision will be used only when it is actually a fragment shader.
 
-### uniform変数
+### uniform variable
 
-uniform変数、attribute変数は共にアノテーションとセマンティクスを持ちます。
-意味の解説はとりあえず置いておいて、例えば以下のような記述があります。
+Both uniform and attribute variables have annotations and semantics.
+For the time being, leave a comment on the meaning, for example, the following description.
 
 ```glsl
-@MODELVIEWPROJECTION
-uniform mat4 matrixMVP;
+@ MODELVIEWPROJECTION
+Uniform mat4 matrix MVP;
 
-@HAS_TEXTURE{sampler:"theTexture"}
-uniform bool usingTexture;
+@ HAS_TEXTURE {sampler: "theTexture"}
+Uniform bool usingTexture;
 
-uniform sampler2D theTexture;
+Uniform sampler 2D theTexture;
 
-@{default:"yellow", type:"color"}
-uniform vec3 theColor;
+@ {Default: "yellow", type: "color"}
+Uniform vec3 theColor;
 ```
 
-つまり、文法としては以下の形式です。
+In other words, it has the following form as grammar.
 
 ```glsl
-@セマンティクス{アノテーション}
-uniformまたはattribute 型名 変数名; // ここは通常のGLSLの変数定義
+@ Semantics {annotation}
+Uniform or attribute type name variable name;//here is a regular GLSL variable definition
 ```
 
-**セマンティクスとアノテーションを両方省略することができます。** 省略した場合はセマンティクスは`USER_VALUE`(例外あり、詳しくは後述)、アノテーションは空になります。上記の例では、`theTexture`が両方省略されています。
-**セマンティクスだけ省略することができます** 省略した場合はセマンティクスは`USER_VALUE`(例外あり、詳しくは後述)、アノテーションは空になります。  上記の例では、`theColor`がセマンティクスのみ省略されています。
-**アノテーションだけ省略することができます** 省略された場合は空になります。上記の例では、`matrixMVP`のアノテーションだけ省略されています。
+** Both semantics and annotations can be omitted. ** If omitted, the semantics is `USER_VALUE` (with exceptions, details are described below), the annotation is empty. In the above example, both `theTexture` are omitted.
+** Only semantics can be omitted ** If omitted, the semantics is `USER_VALUE` (with exceptions, details are described below), the annotation is empty. In the above example, `theColor` has only semantics omitted.
+** Only annotations can be omitted ** If omitted, it is empty. In the above example, only the annotation of `matrix MVP` has been omitted.
 
-#### セマンティクス
+#### Semantics
 
-セマンティクスはその変数に何が代入されるべきかということを指します。
-例えば、セマンティクスが`MODELVIEWPROJECTION`と記述されているときは、その変数には描画していようとしている対象のメッシュのModel - View - Projection行列が渡されます。
-セマンティクスが`VIEWPORT`の時は、その変数には現在のビューポートの情報が渡されます。
+Semantics refers to what should be assigned to that variable.
+For example, if the semantics is described as `MODELVIEWPROJECTION`, that variable will be passed the Model - View - Projection matrix of the target mesh being drawn.
+When the semantics is `VIEWPORT`, the current viewport information is passed to that variable.
 
-セマンティクスによってあらかじめ、変数の受け渡しを担当するレジスター関数が決定され、パスの描画前に実行されます。
+The register function responsible for passing variables is determined beforehand by semantics and executed before the path is drawn.
 
-以下は、デフォルトの状態で定義されているセマンティクスのリストです。
-(このうちのほとんどは、ランタイムモデルフォーマットの`glTF`の[仕様](https://github.com/KhronosGroup/glTF/tree/master/specification/1.0#semantics)そのものです。実は、内部的なマテリアルの保持形式はglTFの仕様にかなり近い形で保持されています。)
+The following is a list of the semantics defined in the default state.
+(Most of this is the specification of `glTF` in the runtime model format (https://github.com/KhronosGroup/glTF/tree/master/specification/1.0# semantics) itself. Actually, the internal material The preservation form of it is kept very close to the specification of glTF.)
 
-##### glTFと仕様が同じもの
+##### same specification as glTF
 
-| Semantic                     | Type         | Description |
+| Semantic | Type | Description |
 |:----------------------------:|:------------:|-------------|
-| `LOCAL`                      | `FLOAT_MAT4` | Transforms from the node's coordinate system to its parent's.  This is the node's matrix property (or derived matrix from translation, rotation, and scale properties). |
-| `MODEL`                      | `FLOAT_MAT4` | Transforms from model to world coordinates using the transform's node and all of its ancestors. |
-| `VIEW`                       | `FLOAT_MAT4` | Transforms from world to view coordinates using the active camera node. |
-| `PROJECTION`                 | `FLOAT_MAT4` | Transforms from view to clip coordinates using the active camera node. |
-| `MODELVIEW`                  | `FLOAT_MAT4` | Combined `MODEL` and `VIEW`. |
-| `MODELVIEWPROJECTION`        | `FLOAT_MAT4` | Combined `MODEL`, `VIEW`, and `PROJECTION`. |
-| `MODELINVERSE`               | `FLOAT_MAT4` | Inverse of `MODEL`. |
-| `VIEWINVERSE`                | `FLOAT_MAT4` | Inverse of `VIEW`. |
-| `PROJECTIONINVERSE`          | `FLOAT_MAT4` | Inverse of `PROJECTION`. |
-| `MODELVIEWINVERSE`           | `FLOAT_MAT4` | Inverse of `MODELVIEW`. |
-| `MODELVIEWPROJECTIONINVERSE` | `FLOAT_MAT4` | Inverse of `MODELVIEWPROJECTION`. |
-| `MODELINVERSETRANSPOSE`      | `FLOAT_MAT3` | The inverse-transpose of `MODEL` without the translation.  This translates normals in model coordinates to world coordinates. |
-| `MODELVIEWINVERSETRANSPOSE`  | `FLOAT_MAT3` | The inverse-transpose of `MODELVIEW` without the translation.  This translates normals in model coordinates to eye coordinates. |
-| `VIEWPORT`                   | `FLOAT_VEC4` | The viewport's x, y, width, and height properties stored in the `x`, `y`, `z`, and `w` components, respectively.  For example, this is used to scale window coordinates to [0, 1]: `vec2 v = gl_FragCoord.xy / viewport.zw;` |
+| `LOCAL` |` FLOAT_MAT4` | Transforms from the node's coordinate system to its parent's. This is the node's matrix property (or derived matrix from translation, rotation, and scale properties). |
+| `MODEL` |` FLOAT_MAT4` | Transforms from model to world coordinates using the transformers node and all of its ancestors.
+| `VIEW` |` FLOAT_MAT4` | Transforms from world to view coordinates using the active camera node.
+| `PROJECTION` |` FLOAT_MAT4` | Transforms from view to clip coordinates using the active camera node. |
+| `MODELVIEW` |` FLOAT_MAT4` | Combined `MODEL` and` VIEW`.
+| `MODELVIEWPROJECTION` |` FLOAT_MAT4` | Combined `MODEL`,` VIEW`, and `PROJECTION`.
+| `MODELINVERSE` |` FLOAT_MAT4` | Inverse of `MODEL`. |
+| `VIEWINVERSE` |` FLOAT_MAT4` | Inverse of `VIEW`.
+| `PROJECTIONINVERSE` |` FLOAT_MAT4` | Inverse of `PROJECTION`. |
+| `MODELVIEWINVERSE` |` FLOAT_MAT4` | Inverse of `MODELVIEW`. |
+| `MODELVIEWPROJECTIONINVERSE` |` FLOAT_MAT4` | Inverse of `MODELVIEWPROJECTION`. |
+| `MODELINVERSETRANSPOSE` |` FLOAT_MAT 3` | The inverse-transpose of `MODEL` without translation. This translates normals in model coordinates to world coordinates.
+| `MODELVIEWINVERSETRANSPOSE` |` FLOAT_MAT3` | The inverse-transpose of `MODELVIEW` without this translation. This translates normals in model coordinates to eye coordinates.
+| `VIEWPORT` |` FLOAT_VEC4` | The viewport's x, y, width, and height properties stored in the `x`,` y`, `z`, and` w` components, respectively. For example, this is used to Scale window coordinates to [0, 1]: `vec2 v = gl_FragCoord.xy/viewport.zw;` |
 
-##### それ以外のもの
+##### Other than that
 
-| Semantic                     | Type         | Description |
+| Semantic | Type | Description |
 |:----------------------------:|:------------:|-------------|
-| `TIME`                      | `FLOAT` | 時間(ms単位) |
-| `HAS_TEXTURE` | `BOOL`| 有効なテクスチャが指定したsamplerに割り当てられているかどうか、詳細は後述 |
-| `USER_VALUE`  | `ANY` | 詳細は後述|
+| `TIME` |` FLOAT` | time (in ms) |
+| `HAS_TEXTURE` |` BOOL` | Whether valid textures are assigned to the specified sampler, see below for details |
+| `USER_VALUE` |` ANY` | Details are described below |
 
+#### Annotation
 
-#### アノテーション
-
-セマンティクスによって、レジスター関数は決定されますが、その他に引数が必要な場合があります。
-例えば、`HAS_TEXTURE`セマンティクスは、アノテーションの中に`sampler`という引数が必要です。この`HAS_TEXTURE`アノテーションは、  `sampler`に指定されている名前の変数に、有効なテクスチャが代入されているかどうかを判定した値が代入されます。
-
-```glsl
-@HAS_TEXTURE{sampler:"theTexture"}
-uniform bool usingTexture;
-
-uniform sampler2D theTexture;
-```
-
-上記の例では、`theTexture`に有効なテクスチャが代入されている時のみ渡されることになります。
-
-このように、アノテーションはレジスター関数が実際の割り当て時に用いる引数のセットです。アノテーションは`JSON`の形式をとりますが、 **キー名の`"`は省略可能です**
-
-### USER_VALUEセマンティクス
-
-このセマンティクスは、このuniform変数がGOMLに露出される変数であることを指します。
-例えば、この記事の最初の方で記述した`color`の例がこれにあたります。`<mesh>`の`material`属性など、マテリアルにGOMLから値を渡されることを示します。
-
-例えば、`USER_VALUE`セマンティクスが指定されているuniform変数`test`が`float`型なら、つまり、
+Register functions are determined by semantics, but other arguments may be required.
+For example, the `HAS_TEXTURE` semantics requires an argument` sampler` in the annotation. This `HAS_TEXTURE` annotation is assigned a value that determines whether a valid texture has been assigned to a variable named by` sampler`.
 
 ```glsl
-@USER_VALUE
-uniform float test;
+@ HAS_TEXTURE {sampler: "theTexture"}
+Uniform bool usingTexture;
+
+Uniform sampler 2D theTexture;
 ```
 
-の時、この値は`<mesh>`あるいは`<material>`に露出することになります。どちらが露出するかはどのような形で`material`を指定したかにより異なります。
-`new(~~)`の形式で指定したなら **そのメッシュ自身** 、クエリ形式で指定したなら **materialタグ** になります。
+In the above example, it is passed only when a valid texture is assigned to theTexture.
 
-#### コンバーターとdefaultアノテーション
+Thus, the annotation is the set of arguments the register function uses when actually allocating. Annotation takes the form `JSON`, but the ** key name` `` is optional **
 
-ほかのどの`GOML`内の`attribute`とも同じように、ユーザーが渡した値を`grimoire`が内部的に変換するため、コンバーターを介して実際の値は取得されます。
-どのコンバーターが利用されるかは、 **変数型**　と **アノテーション**　と **配列か否か** によって確定します。
+### USER_VALUE semantics
 
-また、`USER_VALUE`セマンティクスの指定されている変数は、`default`アノテーションを受け付けることができます。
-GOML側から値が指定されない場合、この値が **コンバーターを通ってから** 渡されることになります。
+This semantics indicates that this uniform variable is a variable exposed to GOML.
+For example, this is the example of `color` described at the beginning of this article. Indicates that values ​​are passed from GOML to material, such as `material` attribute of` <mesh> `.
 
-さらに、GOML側からも指定されず、`default`アノテーションによっても指定されない場合、`USER_VALUE`セマンティクスが指定されている場合は、それぞれの型によってきまるデフォルト値が渡されます。
+For example, if the uniform variable `test` with` USER_VALUE` semantics specified is of type `float`,
 
-つまり、
-
-```
-   GOMLによる指定値  >  defaultアノテーション  > 型によって決まるデフォルト値
+```glsl
+@ USER_VALUE
+Uniform float test;
 ```
 
-によって値は解決されます。
+, This value will be exposed to `<mesh>` or `<material>`. Which is exposed differs depending on how you specified `material`.
+If specified in the form `new (~~)` ** the mesh itself **, if specified in query form ** material tag **.
 
-| GLSL変数型                     |     コンバーター     | デフォルト値 |　備考 |　
+#### Converter and default annotation
+
+As with `attribute` in any other` GOML`, since `grimoire` internally converts the value passed by the user, the actual value is obtained via the converter.
+Which converters are used is determined by ** variable type **, ** annotation **, ** array or not **.
+
+Also, variables specified with `USER_VALUE` semantics can accept` default` annotations.
+If no value is specified from the GOML side, this value will be passed ** after passing the ** converter.
+
+In addition, if not specified by the GOML side and not specified by the `default` annotation, if` USER_VALUE` semantics are specified, the default value depending on each type is passed.
+
+That is,
+
+```
+   Specified value by GOML> default annotation> default value determined by type
+```
+
+Values ​​are resolved by.
+
+| GLSL Variable type | Converter | Default value | Remarks |
 |:----------------------------:|:------------:|:-------------:|:---:|
-|float|Number|0||
-|vec2|Vector2|(0,0)||
-|vec3|Vector3|(0,0,0)|`type`アノテーションが`color`でない時|
-|vec3|Color3|white|`type`アノテーションが`color`の時|
-|vec4|Vector4|(0,0,0,0)|`type`アノテーションが`color`でないとき|
-|vec4|Vector4|white(a=1)|`type`アノテーションが`color`の時|
-|bool|Boolean|false||
-|int|Number|0||
-|ivec2|Vector2|(0,0)||
-|ivec3|Vector3|(0,0,0)||
-|ivec4|Vector4|(0,0,0,0)||
-|sampler2D|Texture|白色 1*1 のテクスチャ||
-|mat4[]|Object|[0...0]|型はFloat32ArrayもしくはNumberの配列を利用可能|
+| Float | Number | 0 ||
+| Vec 2 | Vector 2 | (0, 0) ||
+| Vec3 | Vector3 | (0,0,0) | `type` when the annotation is not` color` |
+| Vec3 | Color3 | white | When the `type` annotation is` color` |
+| Vec4 | Vector4 | (0,0,0,0) | `type` if the annotation is not` color` |
+| Vec4 | Vector4 | white (a = 1) | `type` when the annotation is` color` |
+| Bool | Boolean | false ||
+| Int | Number | 0 ||
+| Ivec 2 | Vector 2 | (0, 0) ||
+| Ivec 3 | Vector 3 | (0, 0, 0) ||
+| Ivec 4 | Vector 4 | (0, 0, 0, 0) ||
+| Sampler2D | Texture | white 1 * 1 texture ||
+| Mat4 [] | Object | [0 ... 0] | type can use array of Float32Array or Number |
 
-この一覧にない型は現在未対応です。ただし、必要なものも多いため対応幅は順次拡大します。
+The types not in this list are currently unsupported. However, since there are also many things you need, the corresponding range will be gradually expanded.
 
-#### デフォルトセマンティクス
+#### Default Semantics
 
-利便性のため、また`v0.10`未満のライブラリからのアップデートの容易性を保つため、以下の変数名はデフォルトで次のセマンティクスが用いられます。
+For convenience and to maintain ease of updating from libraries under `v0.10`, the following variable names default to the following semantics.
 
 
-|変数名|セマンティクス|
+| Variable name | Semantics |
 |:-:|:-:|
-|_time| TIME|
-|_viewportSize| VIEWPORT_SIZE|
-|_matL| LOCAL|
-|_matM| MODEL|
-|_matV| VIEW|
-|_matP| PROJECTION|
-|_matVM| MODELVIEW|
-|_matPVM| MODELVIEWPROJECTION|
-|_matIM| MODELINVERSE|
-|_matIV| VIEWINVERSE|
-|_matIP| PROJECTIONINVERSE|
-|_matIVM| MODELVIEWINVERSE|
-|_matIPVM| MODELVIEWPROJECTIONINVERSE|
-|_matITM| MODELINVERSETRANSPOSE|
-|_matITVM| MODELVIEWINVERSETRANSPOSE|
+| _time | TIME |
+| _viewportSize | VIEWPORT_SIZE |
+| _ Mat L | LOCAL |
+| _matM | MODEL |
+| _ Mat V | VIEW |
+| _matP | PROJECTION |
+| _matVM | MODELVIEW |
+| _matPVM | MODELVIEWPROJECTION |
+| _matIM | MODELINVERSE |
+| _ Mat IV | VIEWINVERSE |
+| _matIP | PROJECTIONINVERSE |
+| _matIVM | MODELVIEWINVERSE |
+| _matIPVM | MODELVIEWPROJECTIONINVERSE |
+| _matITM | MODELINVERSETRANSPOSE |
+| _matITVM | MODELVIEWINVERSETRANSPOSE |
 
 
-### attribute変数
+### attribute variable
 
-#### attribute変数のセマンティクス
+#### semantics of attribute variable
 
-`uniform`変数と同様に、`attribute`変数もセマンティックスを持ちます。
-このセマンティクスは、どの`attribute`変数にジオメトリ中のどのバッファを利用すればいいのか決定するために存在します。
+Like the `uniform` variable, the` attribute` variable also has semantics.
+This semantics exists to determine which `attribute` variable to use which buffer in the geometry.
 
-例えば、全てのプリミティブのジオメトリは`POSITION`,`NORMAL`,`TEXCOORD`というバッファを保持しています。(もしも、自分でジオメトリを作っている方がいたとしたら、この限りではありません。)
+For example, the geometry of all primitives holds `POSITION`,` NORMAL`, `TEXCOORD` buffers. (If this was not the case, if there was someone who made geometry by yourself.)
 
 ```glsl
-@POSITION
-attribute vec3 value;
+@ POSITION
+Attribute vec3 value;
 ```
 
-と記述すれば、この`value`に、ジオメトリの`POSITION`バッファがバインドされることになります。
+If you write it, the `POSITION` buffer of the geometry will be bound to this` value`.
 
-#### デフォルトセマンティクス
+#### Default Semantics
 
-利便性のため、また`v0.10`未満のライブラリからのアップデートの容易性を保つため、以下の変数名はデフォルトで次のセマンティクスが用いられます。
+For convenience and to maintain ease of updating from libraries under `v0.10`, the following variable names default to the following semantics.
 
-|変数名|セマンティクス|
+| Variable name | Semantics |
 |:-:|:-:|
-|position|POSITION|
-|normal|NORMAL|
-|texCoord|TEXCOORD|
+| Position | POSITION |
+| Normal | NORMAL |
+| TexCoord | TEXCOORD |
 
-つまり、以下の二つのコードは同一の意味になります。
-
-```glsl
-@POSITION
-attribute vec3 position;
-```
+In other words, the following two codes have the same meaning.
 
 ```glsl
-attribute vec3 position;
+@ POSITION
+Attribute vec3 position;
 ```
 
-### @import文
-
-Sort内のシェーダーでは、外部ファイルの参照ができます。
-`@import`はC++で言えば`#include`のような存在です。しかし、特に特別なことはせず、単に参照先のスクリプトファイルを指定位置に挿入します。
-
-
-**文法**
-
-```
-@import("ファイルパス")
+```glsl
+Attribute vec3 position;
 ```
 
-ファイルパスとして受付可能なものは絶対パス及び相対パスです。一般的なURLとして動作します。
-また、外部リクエストは増やしたくないが、共通のスクリプトが存在する場合は、特定のエイリアスをこのファイルパスに用いて実際にはプログラム中に既に含まれたコードないから`@import`を解決することができます。
+### @import statement
 
-このような場合、`grimoirejs/lib/Material/ImportResolver`をrequireして、ImageResolverのコンストラクタへの参照を取得し以下のように記述することでこれを実現可能です。
+Shaders in Sort can reference external files.
+`@ Import` is like` #include` in C ++. However, we do not do anything special, but simply insert the referenced script file at the specified position.
 
-```
-    ImportResolver.addAliasToStatic("ThisIsAlias","何らかのコード");
-```
 
-このように記述すると、`@import("ThisIsAlias")`と言う表記に出くわすと、このコードが挿入されて外部に解決を試みません。
-
-## glステートの操作
-
-マテリアルによっては、glのステートを操作する必要があります。例えば、あるマテリアルで加算合成したい場合、本来描画する前に`gl.blendFunc(gl.ONE,gl.ONE)`と記述すると加算合成されます。
-(ブレンディングについては[こちらのツール](http://www.andersriggelsen.dk/glblendfunc.php)を利用すれば理解が捗るでしょう。)
-
-このように、特定のglステートを操作する関数をパスの実行前に呼び出す場合、以下のような構文を記述することにより可能です。
+**grammar**
 
 ```
-@Pass{
-  @BlendFunc(ONE,ONE)
-  // ここにシェーダーを記述
+@import ("file path")
+```
+
+Those that can be accepted as file paths are absolute paths and relative paths. It works as a general URL.
+Also, if you do not want to increase external requests, but there is a common script, use a specific alias for this file path and actually solve `@ import 'without code already included in the program I can.
+
+In this case, you can implement this by requiring `grimoirejs/lib/Material/ImportResolver` to obtain a reference to the ImageResolver constructor and describe it as follows.
+
+```
+    ImportResolver.addAliasToStatic ("ThisIsAlias", "some code");
+```
+
+In this way, if you encounter the expression `@ import (" ThisIsAlias ​​")` this code will be inserted and will not attempt to resolve to the outside.
+
+## Operation of the gl state
+
+Depending on the material, you need to manipulate the state of gl. For example, if you wish to synthesize with a material, add `gl.blendFunc (gl.ONE, gl.ONE)` `before summing and doing addition synthesis.
+(For blending, you can use [this tool](http://www.andersriggelsen.dk/glblendfunc.php) to improve your understanding.)
+
+In this way, when you call a function that manipulates a specific gl state before executing a path, it is possible to describe the syntax as follows.
+
+```
+@ Pass {
+  @ BlendFunc (ONE, ONE)
+ //Write a shader here
 }
 ```
 
-利用可能なglの関数は以下の通りです。
+Available gl functions are as follows.
 
 * [BlendFunc](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/blendFunc)
 * [BlendFuncSeparate](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/blendFuncSeparate)
@@ -448,197 +446,197 @@ Sort内のシェーダーでは、外部ファイルの参照ができます。
 * [PolygonOffset](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/polygonOffset)
 * [Scissor](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/scissor)
 
-また、これらを指定しなくとも初期値が読み込まれます。これらの初期値は以下の通りです。
+Also, even if you do not specify them, the initial value is read. These initial values ​​are as follows.
 
 ```js
 {
-  blendFuncSeparate: [WebGLRenderingContext.SRC_ALPHA, WebGLRenderingContext.ONE_MINUS_SRC_ALPHA, WebGLRenderingContext.SRC_ALPHA, WebGLRenderingContext.ONE_MINUS_SRC_ALPHA],
-  blendEquationSeparate: [WebGLRenderingContext.FUNC_ADD, WebGLRenderingContext.FUNC_ADD],
-  blendColor: [0, 0, 0, 0],
-  cullFace: [WebGLRenderingContext.BACK],
-  lineWidth: [1],
-  frontFace: [WebGLRenderingContext.CCW],
-  depthRange: [0, 1],
-  depthFunc: [WebGLRenderingContext.LESS]
+  BlendFuncSeparate: [WebGLRenderingContext.SRC_ALPHA, WebGLRenderingContext.ONE_MINUS_SRC_ALPHA, WebGLRenderingContext.SRC_ALPHA, WebGLRenderingContext.ONE_MINUS_SRC_ALPHA],
+  BlendEquationSeparate: [WebGLRenderingContext.FUNC_ADD, WebGLRenderingContext.FUNC_ADD],
+  BlendColor: [0, 0, 0, 0],
+  CullFace: [WebGLRenderingContext.BACK],
+  LineWidth: [1],
+  FrontFace: [WebGLRenderingContext.CCW],
+  DepthRange: [0, 1],
+  DepthFunc: [WebGLRenderingContext.LESS]
 }
 ```
 
-また、有効になっていないGLの機能の有効、無効を切り替えることができます。
+You can also switch the validity and invalidity of GL functions that are not enabled.
 
 ```glsl
-@Pass{
-  @Disable(CULL_FACE)
-  // ここにシェーダーを記述
+@ Pass {
+  @ Disable (CULL_FACE)
+ //Write a shader here
 }
 ```
 
-このように記述すると、カリングが無効になります。(`gl.disable(gl.CULL_FACE)`を行うのと同じ)
-つまり、裏面も描画されるようになります。
+In this way, culling will be invalid. (Equivalent to `gl.disable (gl.CULL_FACE)`)
+In other words, the back side will also be drawn.
 
-一方で、以下のように記述すればステンシルテストを有効にすることができます。(`gl.enable(gl.STENCIL_TEST)`を行うのと同じ)
+On the other hand, you can enable stencil test by writing as follows. (Same as doing `gl.enable (gl.STENCIL_TEST)`)
 
 ```glsl
-@Pass{
-  @Enable(STENCIL_TEST)
-  // ここにシェーダーを記述
+@ Pass {
+  @ Enable (STENCIL_TEST)
+ //Write a shader here
 }
 ```
 
-これらも、glのステートと同様に初期値が存在し以下がデフォルトでenabledとして指定されます。
+These as well as the state of gl have an initial value and the following are specified as enabled by default.
 
 * CULL_FACE
 * DEPTH_TEST
 * BLEND
 
-## その他の構文
+## Other syntax
 
-### マクロ
+### macro
 
-通常、GLSLでは`#define`や`#ifdef`などのC由来のプリプロセッサが用いれます。
-Grimoire.jsではこのマクロを、GOML側の変化によって動的に変更することが可能です。
+Normally, GLSL uses C-derived preprocessors such as `# define` and` # ifdef`.
+In Grimoire.js, it is possible to dynamically change this macro according to the change on GOML side.
 
-例えば、以下のような宣言がパス中に存在すると、
+For example, if the following declaration exists in the path,
 
 ```glsl
-@ExposeMacro(bool,useTexture,USE_TEXTURE,false)
+@ExposeMacro (bool, useTexture, USE_TEXTURE, false)
 ```
 
-シェーダーの文中に、`#define USE_TEXTURE false`や`#define USE_TEXTURE true`が、GOML側の`useTexture`属性によって挿入されます。
-ユーザーにとって見かけ上、マテリアルの`USER_VALUE`変数と同一ですが、変更された時点でシェーダーをリコンパイルするので、あまり変更が多い変数には用いられません。
-しかし、配列の大きさや、forループの数など、GLSL中で定数しか用いれない場所では効果を発揮します。
+`# Define USE_TEXTURE false` and` #define USE_TEXTURE true` are inserted in the shader's sentence by the `useTexture` attribute on GOML side.
+It is apparently the same as the material's `USER_VALUE` variable, but because it recompiles the shader when it is changed, it is not used for variables with too many changes.
+However, it takes effect in places where only constants are used in GLSL, such as the size of the array and the number of for loops.
 
-また、`@ExposeMacro`の第一引数は型で、これによりGOML側のコンバーターが決定されますが、`bool`と`int`のみが、それぞれ`Boolean`コンバーター、`Number`コンバーターによって渡されることになります。これ以外のコンバーターに対応していないことに気をつけてください。
+Also, the first argument of `@ ExposeMacro` is a type, which determines the converter on the GOML side, but only` bool` and `int` are passed by the` Boolean` converter, `Number` converter respectively . Please be aware that it is not compatible with other converters.
 
-# テクニックの記述
+# Technique description
 
-テクニックとは、マテリアルの中に複数の描画タイプを持っておくようにするための機構です。
+Technique is a mechanism to keep multiple drawing types in a material.
 
 ```glsl
-@Technique テクニック名{
-  @Pass{
-    ...
-  }
+@ Technique Technique name {
+  @ Pass {
+    ...
+  }
 
-  @Pass{
-    ...
-  }
+  @ Pass {
+    ...
+  }
 }
 ```
 
-のような構文をとります。
+It takes the following syntax.
 
-**Techniqueを省略してPassを記述すると、そのTechnique名はdefaultになります**
+** If Technique is omitted and Pass is described, its Technique name will be default **
 
-例えば、以下のようなマテリアルがあったとします。
+For example, suppose you have the following material.
 
 ```glsl
-@Technique T1{
-  @Pass{
-    ...
-  }
-  @Pass{
-    ...
-  }
+@ Technique T1 {
+  @ Pass {
+    ...
+  }
+  @ Pass {
+    ...
+  }
 }
 
-@Technique T2{
-  @Pass{
-    ...
-  }
-  @Pass{
-    ...
-  }
+@ Technique T2 {
+  @ Pass {
+    ...
+  }
+  @ Pass {
+    ...
+  }
 }
 ```
 
-この際、ある`<renderer>`タグで以下のように指定したとします。
+In this case, if you specify it with a `<renderer>` tag like this:
 
 ```xml
-<renderer>
-  <render-scene technique="T1"/>
-  <render-scene technique="T2"/>
-</renderer>
+<Renderer>
+  <Render-scene technique = "T1"/>
+  <Render-scene technique = "T2"/>
+</Renderer>
 ```
 
-この場合、`T1`テクニックを持つ全てのシーン要素を描画した後、`T2`テクニックを持つ全てのシーン要素を描画します。
-通常は、`default`テクニックが用いられるため、テクニックの指定がなくても問題ないのです。
+In this case, after drawing all the scene elements with the `T1` technique, draw all the scene elements with the` T2` technique.
+Usually, since the `default` technique is used, there is no problem without specifying a technique.
 
-しかし、ディファードシェーディングなど、複数回の描画を同一のメッシュに対して繰り返す場合はこの記法によって大きな威力を発揮します。
+However, if you repeat drawing more than once on the same mesh, such as deferred shading, this notation will show great power.
 
-## 描画順序
+## drawing order
 
-背景にシェーダーを用いたい場合など、先に描画しておきたかったり、デプス値への書き込みをしないパーティクルなど、Grimoire.jsによる描画順序を操作したい場合があります。
+When you want to use a shader as a background, you may want to manipulate the drawing order by Grimoire.js, such as those that you want to draw first, or do not write to depth values.
 
 ```glsl
-@Technique default{
-  @DrawOrder(NoAlpha)
-  @Pass{
-    ...
-  }
-  @Pass{
-    ...
-  }
+@ Technique default {
+  @ DrawOrder (NoAlpha)
+  @ Pass {
+    ...
+  }
+  @ Pass {
+    ...
+  }
 }
 ```
 
-のように記述すれば、このテクニックが描画される順序は`NoAlpha`であると言えます。
+If you write it like this, you can say that the order in which this technique is drawn is `NoAlpha`.
 
-**パスそれぞれに指定することはできないことに気をつけてください**
+** Please be careful that you can not specify it for each pass **
 
-また、デフォルトで指定可能な描画順序は以下の通りです。
+The drawing order that can be specified by default is as follows.
 
-|描画順序名|優先度|遠くから描画|
+| Drawing order name | Priority | Draw from a long distance |
 |:-:|:-:|:-:|
-|Background|1000|しない|
-|NoAlpha|2000|しない|
-|UseAlpha|3000|する|
-|NoDepth|4000|する|
-|Overlay|5000|する|
+| Background | 1000 | never |
+| NoAlpha | 2000 | never |
+| UseAlpha | 3000 | To |
+| NoDepth | 4000 | To |
+| Overlay | 5000 | To |
 
-つまり、あるテクニックが描画される際、同じテクニックを持つマテリアルは、この描画順序に基づいてレンダリングされます。
-また、遠くから描画する描画順序の場合は、同じ描画順序の時、遠い方を優先し、そうでないときは近い方から描画されます。
+That is, when a technique is drawn, materials with the same technique are rendered based on this rendering order.
+Also, in the case of drawing order to be drawn from a distance, the drawing order takes precedence when it is in the same drawing order, and from the closer side when not drawing it.
 
-通常、アルファ値を使う場合、遠くから描画しないと透けて見えなくなってしまいますが、使わない場合、近くから描画した方が深度テストで落ちるピクセルが多いため通常パフォーマンスが向上するはずです。
+Normally, when using alpha values, it will become invisible if you do not draw from a distance, but if you do not use it, you should improve performance usually because there are more pixels that are drawn from nearby because of the depth test.
 
-# 拡張
+# Extension
 
-この項では、以上で定義されたデフォルトの扱いについてそれぞれの拡張の方法について議論する。
+In this section we discuss each extension method for the default handling defined above.
 
-## 新しいUniform変数のセマンティクスを追加する
+# Add the semantics of the new Uniform variable
 
-新しいUniform変数のセマンティクスを追加するには、`UniformResolverRegistry`クラスを用います。
+To add the semantics of the new Uniform variable we use the `UniformResolverRegistry` class.
 
-以下のようにインポートします。
+Import as follows.
 
 ```javascript
-import UniformResolverRegistry from "grimoirejs-fundamental/ref/Material/UniformResolverRegistry";
+Import UniformResolverRegistry from "grimoirejs-fundamental/ref/Material/UniformResolverRegistry";
 ```
 
-あるいは、
+Alternatively,
 
 ```javascript
-var UniformResolverRegistry = gr.lib.fundamental.Material.UniformResolverRegistry;
+Var UniformResolverRegistry = gr.lib.fundamental.Material.UniformResolverRegistry;
 ```
 
-さらに、`UniformResolverRegistry.add`メソッドを用います。
+We also use the `UniformResolverRegistry.add` method.
 
 ```javascript
-UniformResolverRegistry.add("新しいセマンティクス名",変数レジスターを返す関数);
+UniformResolverRegistry.add ("new semantic name", a function that returns a variable register);
 ```
 
-例えば、
+For example,
 
 ```javascript
-UniformResolverRegistry.add("新しいセマンティクス名",(valInfo)=>{
-  return (proxy,args)=>{
-    proxy.uniformFloat(valInfo.name,0);
-  };
+UniformResolverRegistry.add ("New Semantics Name", (valInfo) => {
+  Return (proxy, args) => {
+    Proxy.uniformFloat (valInfo.name, 0);
+  };
 });
 ```
 
-のようなことを記述すれば、このセマンティクスに対しては0が代入されることになります。
+If you describe something like this, 0 will be substituted for this semantic.
 
-例えば、オーディオの変数を取れるようにしたりなど、この拡張性は非常に便利です。
-実際には以下のコードが非常に参考になるでしょう。
+For example, this extensibility is very useful, such as making it possible to take audio variables.
+In reality the following code will be very helpful.
 
 https://github.com/GrimoireGL/grimoirejs-fundamental/tree/master/src/Material/Uniforms

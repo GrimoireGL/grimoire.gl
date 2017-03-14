@@ -1,45 +1,45 @@
 ---
-type: doc
-title: ノードとコンポーネントの本質
-order: 6
+Type: doc
+Title: The essence of nodes and components
+Order: 6
 ---
-## 概要
+## Overview
 
-ここではノードとコンポーネントの本質を学びます。Grimoire.jsはデータ構造として木構造を持ちます。
+Learn the essence of nodes and components here. Grimoire.js has a tree structure as a data structure.
 
-## 学べること
+Learning #
 
-* Grimoire.jsのデータ構造
-* ノードとコンポーネントの性質
+* Data structure of Grimoire.js
+* Properties of nodes and components
 
-### Grimoire.jsのデータ構造
+### Data structure of Grimoire.js
 
-<img src="./images/06-node-and-component-01.png" width="480">
+<img src = ". / Images / 06 - node - and - component - 01.png" width = "480">
 
-Grimoire.jsでは、一つのGOMLに対して、一つの木が生成されます。上図は基本的なGOMLに関して、木構造を表したものです。
+In Grimoire.js, one tree is generated for one GOML. The above figure shows a tree structure with respect to basic GOML.
 
-<img src="./images/06-node-and-component-02.png" width="280">
+<img src = ". / Images / 06 - node - and - component - 02.png" width = "280">
 
-また各ノードは機能として、コンポーネントをリストにして持っています。`<mesh>`タグを例に考えてみると、移動や変形、回転の機能を持つ`Transform`コンポーネント、描画に関する機能を持つ`MeshRenderer`コンポーネントをデフォルトコンポーネントとして持っています。
+In addition, each node has a list of components as a function. Considering the `<mesh>` tag as an example, we have a `Transform` component which has functions of moving, transformation and rotation, and a` MeshRenderer` component with drawing related functions as default components.
 
-このように、各ノードは特定のコンポーネントの組み合わせにより、作成されます。
+In this way, each node is created by a combination of specific components.
 
-<img src="./images/06-node-and-component-03.png" width="480">
+<img src = ". / Images / 06 - node - and - component - 03.png" width = "480">
 
-書くコンポーネントはそれぞれが、適当な属性を持っています。先ほどの3章ではこのコンポーネントの属性をjavascriptを使用して変更していた、ということです。
+Each component to write has appropriate attributes. In the previous Chapter 3, we changed attributes of this component using javascript.
 
-タグとしてGOMLに記述されるノードはデフォルトコンポーネントの組み合わせを表したものです。実際にノードを作成する場合には、どのコンポーネントを組み合わせるのか、そのノードの名前を定義することが必要です。ユーザーはロジックを構築する際にはコンポーネントに記述することになります。
+A node described in GOML as a tag represents a combination of default components. When actually creating a node, it is necessary to define the name of the node to be combined. When building the logic, the user will write it in the component.
 
-コンポーネントの属性は対応するノードに露出します。
+Component attributes are exposed to the corresponding nodes.
 
 ```html
-<mesh position="0,0,0" scale="1,1,1" rotation-"y(30d)"></mesh>
+<Mesh position = "0, 0, 0" scale = "1, 1, 1" rotation - "y (30 d)"> </ mesh>
 ```
 
-そのためGOMLで上記のように記述することが可能になっています。
+Therefore, it is possible to describe as described above in GOML.
 
-ノードとコンポーネントの性質は以上です。
+The nature of the nodes and components is over.
 
-> 次はコンポーネントを自作してみましょう。また、制作したコンポーネントはnpmを通して外部に公開することが可能です。
+> Let's create our own components next. In addition, the created component can be released to the outside through npm.
 >
-> [コンポーネントを作成してみる](/tutorial/07-create-component.html)
+> [Try creating a component](/tutorial/07-create-component.html)

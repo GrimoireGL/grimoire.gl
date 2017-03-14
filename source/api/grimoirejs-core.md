@@ -1,814 +1,810 @@
 ---
-type: doc
-title: grimoirejs-core
-order: 1
+Type: doc
+Title: grimoirejs-core
+Order: 1
 ---
 
-Grimoire.jsの本体である**grimoirejs-core**のAPIドキュメントです。
-grimoirejs-coreの基本的な使い方に関しては、[ガイド](todo)を参照してください。
+It is the API document of ** grimoirejs-core ** which is the main body of Grimoire.js.
+For basic usage of grimoirejs - core, please refer to [Guide](todo).
 
-# グローバルインタフェース
-主にwebページ上からの操作のために用意されたインタフェース。
-Grimoire.jsを操作するためのオブジェクトは、`GrimoireInterface`クラスのインスタンスです。
-`GrimoireInterface`は`<script>`タグでWebページにロードされている場合、**`gr`グローバル変数からアクセスできます**。
-もしnpmを利用されるのであれば、以下のようにしてこのオブジェクトを参照できます。
+# Global interface
+An interface prepared primarily for operations from the web page.
+The object to manipulate Grimoire.js is an instance of the `GrimoireInterface` class.
+`GrimoireInterface` can be accessed from the **` gr` global variable if it is loaded into a web page with the `<script>` tag **.
+If you are using npm you can reference this object as follows.
 
 ```javascript
-var gr = require("grimoirejs");
+Var gr = require ("grimoirejs");
 ```
-また、webページ上では、`gr`と同じ参照を`GrimoireJS`グローバル変数からも得ることができます。
+Also on the web page you can get the same reference as `gr` from the` GrimoireJS` global variable.
 
 ## GrimoireInterface
-Grimoire.jsの設定、プラグインの追加や管理、ノードやコンポーネントへのアクセスを提供します。
+It provides configuration of Grimoire.js, addition and management of plugins, access to nodes and components.
 
-### 関数として呼び出す
-GrimoireInterfaceは関数として呼び出すことができます。このとき、引数に応じていくつかのオーバーロードがあります。
+### Call as a function
+GrimoireInterface can be called as a function. At this time, there are several overloads depending on the arguments.
 
-#### gr("selector")
-- **定義**
+#### gr ("selector")
+- ** Definition **
 
-  ```typescript
-  function gr(selector: string): GOMLInterface;
-  ```
-- **パラメータ**
-  - selector
+  ```typescript
+  Function gr (selector: string): GOMLInterface;
+  ```
+- ** Parameter **
+  - selector
 
-    対象となる*goml*が記述された`<script>`タグを指定するセレクタ
-- **使い方**
+    A selector specifying the `<script>` tag describing the target goml *
+- ** How to use **
 
-  セレクタで指定された、`type="text/goml"`の指定されている`<script>`タグを探索し、対応するツリーに対する`GomlInterface`を取得します。
-  `GomlInterface`については[こちら](todo)を参照してください。
-  たとえば、`html`上で以下のように２つの`gomlが`読み込まれていたとします。
+  Search for the specified `<script>` tag specified by the selector `type =" text/goml "` and get `GomlInterface` for the corresponding tree.
+  For information on `GomlInterface`, see [here](todo).
+  For example, if you have two `goml 'loaded on` html` as follows:
 
-  ```html
-  <script id="gomlId" class="gomlClass" type="text/goml" src="./hoge.goml"></script>
-  <script class="gomlClass" type="text/goml" src="./fuga.goml"></script>
-  ```
-  このとき、最初の`goml`を以下のように指定できます。
+  ```html
+  <Script id = "gomlId" class = "gomlClass" type = "text/goml" src = "./hoge.goml"> </script>
+  <Script class = "gomlClass" type = "text/goml" src = "./fuga.goml"> </script>
+  ```
+  At this time, you can specify the first `goml` as follows.
 
-  ```javascript
-  var goml = gr("#gomlId");
-  ```
-  また、以下のようにclassを指定するセレクタを渡して、複数の`goml`を同時に対象にできます。
+  ```javascript
+  Var goml = gr ("# gomlId");
+  ```
+  In addition, you can target multiple 'goml' s at the same time by passing a selector specifying class as below.
 
-  ```javascript
-  var gomls = gr("script.gomlClass");
-  ```
-  > *注意:*  
-  > 操作対象のGOMLは一つとは限りません。セレクタで指定される複数の対象同時に操作できます。また、セレクタの対象は`canvas`ではなく`script`タグである事に注意してください。
+  ```javascript
+  Var gomls = gr ("script.gomlClass");
+  ```
+  > * Attention: *
+  > There is no guarantee that one GOML is manipulated. Multiple targets specified by the selector can be operated simultaneously. Also note that the target of selector is `script` tag rather than` canvas`.
 
-#### gr(rootNode[])
+#### gr (rootNode [])
 
-- **定義**
+- ** Definition **
 
-  ```typescript
-  function gr(rootNodes: GomlNode[]): GOMLInterface;
-  ```
-- **パラメータ**
-  - rootNodes
+  ```typescript
+  Function gr (rootNodes: GomlNode []): GOMLInterface;
+  ```
+- ** Parameter **
+  - rootNodes
 
-    対象となる*goml*のツリーのルートノードの配列
-- **使い方**
+    Array of root nodes of the target * goml * tree
+- ** How to use **
 
-  引数で指定したルートノード群に対応するツリーに対する`GomlInterface`を取得します。
-  対象としたいツリーのルートノードが既にわかっている場合は、セレクタで指定するよりこちらのほうが高速です。それ以外の挙動は[セレクタで指定した場合](todo)と同じです。
+  Get `GomlInterface` for the tree corresponding to the root node group specified by argument.
+  If you already know the root node of the tree you want to target, this is faster than specifying with the selector. Other behaviors are the same as [When specified with selector](todo).
 
-#### gr(function)
+#### gr (function)
 
-  - **定義**
+  - ** Definition **
 
-    ```typescript
-    function gr(callback:()): void;
-    ```
-  - **パラメータ**
-    - callback
+    ```typescript
+    Function gr (callback :()): void;
+    ```
+  - ** Parameter **
+    - callback
 
-      ```javascript
-      function(scriptTags):void
-      ```
-      ページ上のgomlが全てマウントされた後に呼ばれるコールバック。引数としてページ上のすべての`goml`が記述された`<script>`タグの配列が渡されます。
-  - **使い方**
+      ```javascript
+      Function (scriptTags): void
+      ```
+      Callback called after all goml on the page is mounted. An array of `<script>` tags are passed as arguments describing all `goml` on the page.
+  - ** How to use **
 
-    通常、`goml`がマウントされる前にツリーを操作することはできません。従って、`gr(selector)`などの操作もこのコールバック内で行うことになります。
-    例えば以下のように、スクリプトからツリー上にオブジェクトを配置する場合に使用します
+    Normally you can not manipulate the tree before `goml` is mounted. Therefore, operations such as `gr (selector)` will also be done in this callback.
+    For example, use this to place an object on the tree from a script as follows
 
-    ```javascript
-    gr(function(scriptTags){
-      var gomlCount = scriptTags.length;
-      console.log("this page has "+gomlCount+" gomls.");
+    ```javascript
+    Gr (function (scriptTags) {
+      Var gomlCount = scriptTags.length;
+      Console.log ("this page has" + gomlCount + "gomls.");
 
-      var target = gr("#gomlId")("#targetNode");
-      for (let i = 0; i < 10; i++) {
-          target.addChildByName("mesh",{
-            geometry:"cube",
-            position:i+",0,0"
-          });
-      }
-    });
-    ```
+      Var target = gr ("# gomlId") ("# targetNode");
+      For (let i = 0; i <10; i ++) {
+          Target.addChildByName ("mesh", {
+            Geometry: "cube",
+            Position: i + ", 0, 0"
+          });
+      }
+    });
+    ```
 
-### プロパティ
+### Property
 
 #### nodeDeclarations
-`goml`上で利用可能なすべてのタグの定義を取得できます。
-- **構文**
+You can get the definition of all tags available on `goml`.
+- ** Syntax **
 
-  ```typescript
-  gr.nodeDeclarations
-  ```
-- **型**
+  ```typescript
+  Gr.nodeDeclarations
+  ```
+- ** Type **
 
-  NSDictionary<NodeDeclaration>
-- **使い方**
+  NSDictionary <NodeDeclaration>
+- ** How to use **
 
-  `gr.registerNode`メソッドによって登録されたすべてのノードがこのプロパティで管理されます。`goml`上でタグとして用いられるのはここから取得できるノードであり、それ以外にありません。
-  以下のようにして、利用可能なすべてのノード名を表示できます。
+  All nodes registered by the `gr.registerNode` method are managed by this property. It is a node that can be obtained from here, used as a tag on `goml`, and nothing else.
+  You can display all available node names as follows:
 
-  ```javascript
-  var nodes = gr.nodeDeclarations;
-  nodes.forEach(function(node){
-    console.log(node.name.fqn);
-  });
-  ```
+  ```javascript
+  Var nodes = gr.nodeDeclarations;
+  Nodes.forEach (function (node) {
+    Console.log (node.name.fqn);
+  });
+  ```
 
 #### componentDeclarations
-`goml`上で利用可能なすべてのコンポーネントの定義を取得できます。
-- **構文**
+You can get the definition of all the components available on `goml`.
+- ** Syntax **
 
-  ```typescript
-  gr.componentDeclarations
-  ```
-- **型**
+  ```typescript
+  Gr.componentDeclarations
+  ```
+- ** Type **
 
-  `NSDictionary<ComponentDeclaration>`
-- **使い方**
+  `NSDictionary <ComponentDeclaration>`
+- ** How to use **
 
-  `gr.registerComponent`メソッドによって登録されたすべてのコンポーネントがここで管理されます。`goml`上で用いられるコンポーネントはすべてここから取得でき、それ以外にはありません。
-  以下のようにして、利用可能なすべてのコンポーネント名を表示できます。
+  All components registered by the `gr.registerComponent` method are managed here. All components used on `goml` can be obtained from here, but nothing else.
+  You can display all available component names as follows:
 
-  ```javascript
-  var components = gr.componentDeclarations;
-  components.forEach(function(component){
-    console.log(component.name.fqn);
-  });
-  ```
+  ```javascript
+  Var components = gr.componentDeclarations;
+  Components.forEach (function (component) {
+    Console.log (component.name.fqn);
+  });
+  ```
 
 #### converters
-属性に利用可能なすべてのコンバータを取得します。
-- **構文**
+Get all the available converters for the attribute.
+- ** Syntax **
 
-  ```typescript
-  gr.converters
-  ```
-- **型**
+  ```typescript
+  Gr.converters
+  ```
+- ** Type **
 
-  `NSDictionary<IAttributeConverter>`
-- **使い方**
+  `NSDictionary <IAttributeConverter>`
+- ** How to use **
 
-  `gr.registerConverter`メソッドによって登録されたすべてのコンバータがここで管理されます。`goml`上で用いられるコンバータはすべてここから取得でき、それ以外にはありません。
-  以下のようにして、利用可能なすべてのコンポーネント名を表示できます。
+  All converters registered by `gr.registerConverter` method are managed here. All converters used on `goml` can be obtained from here, but nothing else.
+  You can display all available component names as follows:
 
-  ```javascript
-  var components = gr.componentDeclarations;
-  components.forEach(function(component){
-    console.log(component.name.fqn);
-  });
-  ```
-  コンバータ作成時に内部で別のコンバータを呼び出したい場合は、`Attribute.convert`メソッドが便利です。
+  ```javascript
+  Var components = gr.componentDeclarations;
+  Components.forEach (function (component) {
+    Console.log (component.name.fqn);
+  });
+  ```
+  The `Attribute.convert` method is useful if you want to call another converter internally when creating the converter.
 
 #### rootNodes
-ページ上のすべてのツリーのルートノードがここで管理されます。
-- **構文**
+The root nodes of all the trees on the page are managed here.
+- ** Syntax **
 
-  `gr.rootNodes`
-- **型**
+  `Gr.rootNodes`
+- ** Type **
 
-  `{ [rootNodeId: string]: GomlNode }`
-- **使い方**
+  `{[RootNodeId: string]: GomlNode}`
+- ** How to use **
 
 #### lib
-Grimoire.jsのバージョンなどのメタ情報や、内部で利用されたり、プラグインで追加されたクラスにアクセスできます。
-- **構文**
+You can access meta information such as the version of Grimoire.js and classes that are used internally or added by the plugin.
+- ** Syntax **
 
-  `gr.lib`
-- **型**
+  `Gr.lib`
+- ** Type **
 
-  `{
-    [key: string]: {
-      __VERSION__: string;
-      __NAME__: string;
-      [key: string]: any;
-    }
-  }`
-- **使い方**
+  `{
+    [Key: string]: {
+      __VERSION__: string;
+      __NAME__: string;
+      [Key: string]: any;
+    }
+  } `
+- ** How to use **
 
 #### loadTasks
-[`gr.register`メソッド](todo)によって追加されたロードタスクの配列。[`gr.resolvePlugins`](todo)メソッドを実行すると、先頭から順に非同期で呼び出されます。
-[`gr.clear`](todo)メソッドで内容がクリアされます。
-- **構文**
+Array of load tasks added by [`gr.register` method](todo). When the [`gr.resolvePlugins`](todo) method is executed, it is called asynchronously from the beginning.
+The contents are cleared with the [`gr.clear`](todo) method.
+- ** Syntax **
 
-  `gr.loadTasks`
-- **型**
+  `Gr.loadTasks`
+- ** Type **
 
-  `(() => Promise<void>)[]`
-- **使い方**
+  `(() => Promise <void>) []`
+- ** How to use **
 
 #### nodeDictionary
-ページ上に存在するすべてのマウント済みノードをここで管理します。ノードが`dispose`されるとここからも削除されます。
-- **型**
-  `{ [nodeId: string]: GomlNode }`
-- **使い方**
+We manage all the mounted nodes on the page here. It will be deleted from here if the node is `dispose`.
+- ** Type **
+  `{[NodeId: string]: GomlNode}`
+- ** How to use **
 
 #### componentDictionary
-ページ上に存在するすべてのマウント済みコンポーネントをここで管理します。コンポーネントが`dispose`されるとここからも削除されます。
-- **型**
+We manage all the mounted components that exist on the page here. When a component is `dispose` it will be deleted from here as well.
+- ** Type **
 
-  `{ [componentId: string]: Component }`
-- **使い方**
+  `{[ComponentId: string]: Component}`
+- ** How to use **
 
 #### initializedEventHandler
-[`gr(function)`](todo)で登録されたコールバック。
-- **型**
+Callback registered with [`gr (function)`](todo).
+- ** Type **
 
-  `((scriptTags: HTMLScriptElement[]) => void)[]`
-- **使い方**
+  `((ScriptTags: HTMLScriptElement []) => void) []`
+- ** How to use **
 
 
 #### debug
-デバッグオプション。デフォルトでtrue。
-trueのときは様々な警告が出力されますが、パフォーマンスが若干低下します。プロダクションでは`false`にしてください。
-- **型**
+Debugging options. True by default.
+When true, various warnings are output, but the performance slightly decreases. Please make it `false` in production.
+- ** Type **
 
-  `boolean`
-- **使い方**
-  ```javascript
-  gr.debug = false;
-  ```
+  `Boolean`
+- ** How to use **
+  ```javascript
+  Gr.debug = false;
+  ```
 
-### メソッド
+### Method
 
 #### ns
-- **定義**
+- ** Definition **
 
-  ```typescript
-   function ns(namespace: string): (name: string) => NamespacedIdentity;
-  ```
-- **使い方:**
+  ```typescript
+   Function ns (namespace: string): (name: string) => NamespacedIdentity;
+  ```
+- ** Usage: **
 
-  ノードやコンポーネントなどの識別に用いる名前空間オブジェクト(`NSIdentity`)を返します。
+  Returns a namespace object (`NSIdentity`) used to identify nodes, components, etc.
 
-  プラグインを作成する場合、外部のプラグインとの名前の競合を防ぐため、ノードやコンポーネントの指定は単に文字列で行うのではなく、可能な限り`NSIdentity`を利用してください。`NSIdentity`は`NSIdentity.from`から直接インスタンスを生成できますが、このメソッドは利便性のためのエイリアスとして用意されています。
+  When creating a plug-in, in order to prevent name conflict with an external plug-in, specify nodes and components not by string but use `NSIdentity` as much as possible. `NSIdentity` can create instances directly from` NSIdentity.from`, but this method is provided as an alias for convenience.
 
-  ```javascript
-  var g = gr.ns("http://grimoire.gl/ns/sample");
-  var id = g("TEST"); // be quivalent to NSIdentity.from("http://grimoire.gl/ns/sample","TEST")
-  ```
+  ```javascript
+  Var g = gr.ns ("http://grimoire.gl/ns/sample");
+  Var id = g ("TEST");//be quivalent to NSIdentity.from ("http://grimoire.gl/ns/sample", "TEST")
+  ```
 
 #### initialize
-`grimoirejs-core`で定義される標準のノードとコンポーネント、コンバータを登録します。通常はページがロードされたタイミングで自動的に呼ばれます。
-- **定義**
+Register the standard nodes and components defined by `grimoirejs - core 'and converters. Normally it will be called automatically when the page is loaded.
+- ** Definition **
 
-  `public initialize(): void`
-- **使い方**
+  `Public initialize (): void`
+- ** How to use **
 
 #### register
-プラグインの登録と初期化を行う関数を登録します。
-[`gr.resolvePlugins`](todo)メソッドで順に実行されます。
-- **定義**
+Register the function to register and initialize the plug-in.
+It is executed in order by the [`gr.resolvePlugins`](todo) method.
+- ** Definition **
 
-  `public register(loadTask: () => Promise<void>): void`
-- **使い方**
+  `Public register (loadTask: () => Promise <void>): void`
+- ** How to use **
 
 #### resolvePlugins
-[`gr.register`](todo)メソッドで登録された関数を順に実行します。通常、ページロード時に自動的に実行されます。
-- **定義**
+Execute functions registered in the [`gr.register`](todo) method in order. It is normally executed automatically when loading the page.
+- ** Definition **
 
-  `public async resolvePlugins(): Promise<void> `
-- **使い方**
+  `Public async resolvePlugins (): Promise <void>`
+- ** How to use **
 
 #### addRootNode
-Grimoire.jsで管理されるルートノードを追加します。
-`html`に読み込まれた`goml`は、ページロード時にパースされ、そのルートノードは自動的にこのメソッドに渡されます。
-追加したノードの`id`を返します。
-- **定義**
+Add a root node managed by Grimoire.js.
+`Goml` loaded in` html` is parsed on page loading and its root node is automatically passed to this method.
+Return the `id` of the added node.
+- ** Definition **
 
-  `public addRootNode(tag: HTMLScriptElement, rootNode: GomlNode): string`
-- **使い方**
+  `Public addRootNode (tag: HTMLScriptElement, rootNode: GomlNode): string`
+- ** How to use **
 
 #### getRootNode
-`goml`として読み込んだスクリプトタグを指定し、対応するツリーのルートノードを取得します。
-- **定義**
+Specify the script tag read as `goml` and get the root node of the corresponding tree.
+- ** Definition **
 
-  `public getRootNode(scriptTag: Element): GomlNode`
-- **使い方**
+  `Public getRootNode (scriptTag: Element): GomlNode`
+- ** How to use **
 
 #### clear
-GrimoireInterfaceの状態をクリアし、その後`initialize`します。
-クリアされるのは以下です。
+Clear the state of GrimoireInterface and then `initialize` afterwards.
+The following is cleared.
 
-+ nodeDeclarations
++ NodeDeclarations
 + ComponentDeclaration
-+ converters
-+ rootNodes
-+ loadTasks
-+ nodeDictionary
-+ componentDictionary
++ Converters
++ RootNodes
++ LoadTasks
++ NodeDictionary
++ ComponentDictionary
 
-- **定義**
+- ** Definition **
 
-  `public clear(): void`
-- **使い方**
+  `Public clear (): void`
+- ** How to use **
 
 
 #### registerComponent
-Grimoire.jsにコンポーネントを追加し、その`ComponentDeclaration`を返します。
-追加されたコンポーネントは、`goml`中で利用できるようになります。
-名前が重複していた場合、例外を投げます。
-コンポーネントは、オブジェクトかコンストラクタを指定します。
-`debug`フラグが立っている場合、命名規則にに則っていなければ警告します。
-`superComponent`には継承元コンポーネントを指定します。存在しなければ例外を投げます。
-- **定義**
+Add a component to Grimoire.js and return its `ComponentDeclaration`.
+The added component will be available in `goml`.
+If there are duplicate names, throw an exception.
+A component specifies an object or a constructor.
+If the `debug` flag is set, it warns if it does not conform to the naming convention.
+`SuperComponent` specifies the source component. Throws an exception if it does not exist.
+- ** Definition **
 
-  `public registerComponent(name: string | NSIdentity, obj: Object | (new () => Component), superComponent?: string | NSIdentity | (new () => Component)): ComponentDeclaration`
-- **使い方**
+  (New () => Component), superComponent ?: string | NSIdentity | (new () => Component)): ComponentDeclaration`
+- ** How to use **
 
-  コンポーネントの名前は`CamelCase`が推奨されます。
-  簡易的にコンポーネントを追加するのには、オブジェクトを渡すのが簡単です。
-  ```javascript
-  gr.registerComponent("ComponentName",{
-    attributes:{
-      hoge:{
-        converter:"Number",
-        default:777
-      },
-      fuga:{
-        converter:"String",
-        default:"Grimoire"
-      }
-    },
+  The name of the component is `CamelCase` is recommended.
+  It is easy to pass an object to add components simply.
+  ```
+  Gr.registerComponent ("ComponentName", {
+    Attributes: {
+      Hoge: {
+        Converter: "Number",
+        Default: 777
+      },
+      Fuga: {
+        Converter: "String",
+        Default: "Grimoire"
+      }
+    },
 
-    $awake(){
-      /*~~~*/
-    }
-  })
-  ```
-  また、コンストラクタを指定することもできます。
-  ```javascript
-  class ComponentName{
-    static get attributes(){
-      return {
-        hoge:{
-          converter:"Number",
-          default:777
-        },
-        fuga:{
-          converter:"String",
-          default:"Grimoire"
-        }
-      }
-    }
-    $awake(){
-      /*~~~*/
-    }
-  }
-  gr.registerComponent("ComponentName",ComponentName);
-  ```
-  ３つ目の引数に継承するコンポーネントを指定できます。
-  ここでも、コンストラクタか、名前で指定できます。
-  ```javascript
-  gr.registerComponent("ComponentName1",ComponentName1,"SuperComponent");
-  gr.registerComponent("ComponentName2",ComponentName2,SuperComponent);
-  ```
+    $ Awake () {
+     /* ~~~ */    }
+  })
+  ```
+  You can also specify a constructor.
+  ```javascript
+  Class ComponentName {
+    Static get attributes () {
+      Return {
+        Hoge: {
+          Converter: "Number",
+          Default: 777
+        },
+        Fuga: {
+          Converter: "String",
+          Default: "Grimoire"
+        }
+      }
+    }
+    $ Awake () {
+     /* ~~~ */    }
+  }
+  Gr.registerComponent ("ComponentName", ComponentName);
+  ```
+  You can specify the component to be inherited by the third argument.
+  Again, you can specify it by constructor or by name.
+  ```javascript
+  Gr.registerComponent ("ComponentName 1", ComponentName 1, "SuperComponent");
+  Gr.registerComponent ("ComponentName 2", ComponentName 2, SuperComponent);
+  ```
 
 #### registerNode
-Grimoire.jsにノードを追加します。
-追加されたノードは`goml`中で利用できます。
-名前が重複していた場合、例外を投げます。
-`debug`フラグが立っている場合、命名規則にに則っていなければ警告します。
-ノードが持つべきコンポーネントのリストを、識別子で指定します。
-ノードの属性の初期値を、指定することができます。
-`superNode`には継承元ノードを指定します。存在しなければ例外を投げます。
-`freezeAttributes`で、固定する属性を指定できます。
-固定した属性は、`goml`,`NodeInterface`からの操作を禁止し、
-`GomlNode`かコンポーネントのインスタンスからしか操作できなくなります。
+Add a node to Grimoire.js.
+The added node is available in `goml`.
+If there are duplicate names, throw an exception.
+If the `debug` flag is set, it warns if it does not conform to the naming convention.
+Specify the list of components that the node should have with an identifier.
+You can specify the initial value of the attribute of the node.
+For `superNode`, specify the source node to be inherited. Throws an exception if it does not exist.
+With `freezeAttributes`, you can specify the attributes to fix.
+Fixed attributes prohibit operations from `goml`,` NodeInterface`,
+You can only operate from `GomlNode` or an instance of the component.
 
-- **定義**
+- ** Definition **
 
-  `public registerNode(name: string | NSIdentity,
-    requiredComponents: (string | NSIdentity)[],
-    defaults?: { [key: string]: any } | NSDictionary<any>,
-    superNode?: string | NSIdentity,
-    freezeAttributes?: string[]): void`
-- **使い方**
+  `Public registerNode (name: string | NSIdentity,
+    RequiredComponents: (string | NSIdentity) [],
+    Defaults ?: {[key: string]: any} | NSDictionary <any>,
+    SuperNode ?: string | NSIdentity,
+    FreezeAttributes ?: string []): void`
+- ** How to use **
 
-  以下のように、ノードを追加します。
+  Add a node as follows.
 
-  ```javascript
-  gr.registerNode("node-name",["ComponentName"],{
-    hoge:100,
-    fuga:"js"
-  })
+  ```javascript
+  Gr.registerNode ("node-name", ["ComponentName"], {
+    Hoge: 100,
+    Fuga: "js"
+  })
 
-  gr.registerNode("node-name2",[],{
-    hoge:200,
-    fuga:"override default value 'js'."
-  },"node-name");
-  ```
-  属性の固定は、以下のような状況で有用でしょう。
-  ```javascript
-  gr.registerNode("cube",[],{
-    geometry:"cube"
-  },"mesh",["geometry"]);
-  ```
+  Gr.registerNode ("node-name 2", [], {
+    Hoge: 200,
+    Fuga: "override default value 'js'."
+  }, "Node-name");
+  ```
+  Fixing attributes is useful in the following situations.
+  ```javascript
+  Gr.registerNode ("cube", [], {
+    Geometry: "cube"
+  }, "Mesh", ["geometry"]));
+  ```
 
 #### registerConverter
-コンバータを追加します。
+Add a converter.
 
-- **定義**
+- ** Definition **
 
-  `public registerConverter(name: string | NSIdentity, converter: ((this: Attribute, val: any) => any)): void`
-- **使い方**
+  `Public registerConverter (name: string | NSIdentity, converter: ((this: Attribute, val: any) => any)): void`
+- ** How to use **
 
 #### overrideDeclaration
-ノードの宣言を上書きします。
-指定したノードが存在しないときは例外を投げます。
-`additionalComponents`でコンポーネントを追加することができます。
-コンポーネントを削除することはできません。
-`defaults`で属性の初期値を変更できます。
+Overwrite the declaration of the node.
+Throws an exception if the specified node does not exist.
+You can add components with `additionalComponents`.
+Components can not be deleted.
+You can change the initial value of the attribute with `defaults`.
 
-- **定義**
+- ** Definition **
 
-  `public overrideDeclaration(targetDeclaration: string | NSIdentity, additionalComponents: (string | NSIdentity)[]): NodeDeclaration`
-  `public overrideDeclaration(targetDeclaration: string | NSIdentity, defaults: { [attrName: string]: any }): NodeDeclaration`
-  `public overrideDeclaration(targetDeclaration: string | NSIdentity, additionalComponents: (string | NSIdentity)[], defaults: { [attrName: string]: any }): NodeDeclaration`
-- **使い方**
-  以下のようにして、カメラの初期値を書き換えることができます。
+  `Public overrideDeclaration (targetDeclaration: string | NSIdentity, additionalComponents: (string | NSIdentity) []): NodeDeclaration`
+  `Public overrideDeclaration (targetDeclaration: string | NSIdentity, defaults: {[attrName: string]: any}): NodeDeclaration`
+  NSIdentity, additionalComponents: (string | NSIdentity) [], defaults: {[attrName: string]: any}): NodeDeclaration`
+- ** How to use **
+  You can rewrite the initial value of the camera as follows.
 
-  ```javascript
-  gr.overrideDeclaration("camera",{
-    position:"10,3,10",
-    rotation:"y(45)"
-  })
-  ```
-  また、以下のようにして、カメラをマウスで操作できるようにできます。
-  (`MouseCameraControll`は、[grimoirejs-fundamental](url)に含まれます。)
+  ```javascript
+  Gr.overrideDeclaration ("camera", {
+    Position: "10, 3, 10",
+    Rotation: "y (45)"
+  })
+  ```
+  You can also make the camera operate with the mouse as follows.
+  (`MouseCameraControll` is included in [grimoirejs - fundamental](url).)
 
-  ```javascript
-  gr.overrideDeclaration("camera",["MouseCameraControll"])
-  ```
+  ```javascript
+  Gr.overrideDeclaration ("camera", ["MouseCameraControll"])
+  ```
 
 #### queryRootNodes
-内部使用
-- **定義**
+Internal use
+- ** Definition **
 
-  `public queryRootNodes(query: string): GomlNode[]`
-- **使い方**
+  `Public queryRootNodes (query: string): GomlNode []`
+- ** How to use **
 
 #### extendGrimoireInterface
-GrimoireInterfaceにメソッドを追加します。
-既に存在する識別子を指定すると、例外を投げます。
-**指定した関数内では、`this`はGrimoireInterfaceにバインドされます**
-- **定義**
+Add a method to GrimoireInterface.
+If you specify an identifier that already exists, you throw an exception.
+** Within the specified function, `this` is bound to GrimoireInterface **
+- ** Definition **
 
-  `public extendGrimoireInterface(name:string, func:Function):void`
-- **使い方**
+  `Public extendGrimoireInterface (name: string, func: Function): void`
+- ** How to use **
 
 #### extendGomlInterface
-GomlInterfaceにメソッドを追加します。
-既に存在する識別子を指定すると、例外を投げます。
-**指定した関数内では、`this`はGrimoireInterfaceにバインドされます**
-- **定義**
+Add a method to GomlInterface.
+If you specify an identifier that already exists, you throw an exception.
+** Within the specified function, `this` is bound to GrimoireInterface **
+- ** Definition **
 
-  `public extendGomlInterface(name:string, func:Function):void`
-- **使い方**
+  `Public extendGomlInterface (name: string, func: Function): void`
+- ** How to use **
 
 #### extendNodeInterface
-NodeInterfaceにメソッドを追加します。
-既に存在する識別子を指定すると、例外を投げます。
-**指定した関数内では、`this`はGrimoireInterfaceにバインドされます**
-- **定義**
+Add a method to NodeInterface.
+If you specify an identifier that already exists, you throw an exception.
+** Within the specified function, `this` is bound to GrimoireInterface **
+- ** Definition **
 
-  `public extendNodeInterface(name:string, func:Function):void`
-- **使い方**
+  `Public extendNodeInterface (name: string, func: Function): void`
+- ** How to use **
 
 
 ## GomlInterface
-複数、または単数のツリーを操作するためのインタフェースです。
-`GrimoireInterface`にクエリを渡して関数として呼び出すことで取得できます。
+An interface for manipulating multiple or single trees.
+You can obtain it by passing a query to `GrimoireInterface` and calling it as a function.
 
-### コンストラクタ
-constructor(rootNodes: GomlNode[])
-### 関数として呼び出し
-`gomlInterface`は関数として呼び出して、`NodeInterface`を取得できます。
-引数として、対象となるノードを指定するクエリを渡します。
-#### gr("selector")(query: string): NodeInterface;
-- **定義**
+### Constructor
+Constructor (rootNodes: GomlNode [])
+### Call as function
+`GomlInterface` can be called as a function to get` NodeInterface`.
+As an argument, pass in a query that specifies the target node.
+#### gr ("selector") (query: string): NodeInterface;
+- ** Definition **
 
-  ```typescript
-  function(selector: string): NodeInterface;
-  ```
-- **パラメータ**
-  - selector
+  ```typescript
+  Function (selector: string): NodeInterface;
+  ```
+- ** Parameter **
+  - selector
 
-    対象となるノードを指定するセレクタ
-- **使い方**
+    A selector that specifies the target node
+- ** How to use **
 
-  セレクタで指定されたノードを、対象となるすべてのツリーからそれぞれ探索して返します。
-  たとえば、`goml`上で以下のように２つのノードが読み込まれていたとします。
+  It searches and returns the nodes specified by the selector from all the target trees, respectively.
+  For example, suppose two nodes are loaded on `goml` as follows.
 
-  ```xml
-  <mesh id="nodeId" class="nodeClass"/>
-  <mesh class="nodeClass"/>
-  ```
-  この`goml`が`html`に以下のように埋め込まれていたとします。
-  ```html
-  <script id="main" type="text/goml" src="path/to/goml"></script>
-  ```
-  このとき、最初の`mesh`を以下のように指定できます。
+  ```xml
+  <Mesh id = "nodeId" class = "nodeClass"/>
+  <Mesh class = "nodeClass"/>
+  ```
+  Suppose that this `goml` is embedded in` html` as follows.
+  ```html
+  <Script id = "main" type = "text/goml" src = "path/to/goml"> </script>
+  ```
+  At this time, the first `mesh` can be specified as follows.
 
-  ```javascript
-  var node = gr("#main")("#nodeId");
-  ```
-  また、以下のようにclassを指定するセレクタを渡して、複数の`mesh`を同時に対象にできます。
+  ```javascript
+  Var node = gr ("# main") ("# nodeId");
+  ```
+  Also, you can pass multiple selectors specifying class as below to target multiple `mesh` at the same time.
 
-  ```javascript
-  var nodes = gr("#main")(".meshClass");
-  ```
-  > *注意:*  
-  > 操作対象のNodeは一つとは限りません。セレクタで指定される複数の対象同時に操作できます。
-### プロパティ
+  ```javascript
+  Var nodes = gr ("# main") (". MeshClass");
+  ```
+  > * Attention: *
+  > There is not necessarily one Node to be operated. Multiple targets specified by the selector can be operated simultaneously.
+### Property
 #### rootNodes
-GomlInterfaceが対象とするツリー群のルートノードのリストです。
-- **型**
+The list of root nodes of the tree group targeted by GomlInterface.
+- ** Type **
 
-  `GomlNode[]`
-- **使い方**
+  `GomlNode []`
+- ** How to use **
 
-### メソッド
+### Method
 #### getNodeById
 #### queryFunc
 
 
-## NodeInterface
-### コンストラクタ
-constructor(public nodes: GomlNode[][])
-### プロパティ
+## # NodeInterface
+### Constructor
+Constructor (public nodes: GomlNode [] []))
+### Property
 #### nodes
 #### count
 #### nodeDeclarations
-`goml`上で利用可能なすべてのタグの定義を取得できます。
-- **構文**
+You can get the definition of all tags available on `goml`.
+- ** Syntax **
 
-  ```typescript
-  gr.nodeDeclarations
-  ```
-- **型**
+  ```typescript
+  Gr.nodeDeclarations
+  ```
+- ** Type **
 
-  NSDictionary<NodeDeclaration>
-- **使い方**
+  NSDictionary <NodeDeclaration>
+- ** How to use **
 #### isEmpty
-### メソッド
+### Method
 #### get
 #### getAttribute
-属性を取得します。
-- **定義**
+Get the attribute.
+- ** Definition **
 
-  `public queryRootNodes(query: string): GomlNode[]`
-- **使い方**
+  `Public queryRootNodes (query: string): GomlNode []`
+- ** How to use **
 
 #### setAttribute
-属性を設定します。
+Set attributes.
 #### on
-イベントリスナを追加します
-- **定義**
-- **使い方**
+Add an event listener
+- ** Definition **
+- ** How to use **
 #### off
-イベントリスナを削除します
-- **定義**
-- **使い方**
+Delete the event listener
+- ** Definition **
+- ** How to use **
 #### append
-対象となるノードそれぞれに、指定したタグをパースした結果を追加します。
-- **定義**
+Add the result of parsing the specified tag to each target node.
+- ** Definition **
 
-  `public append(tag: string): NodeInterface`
-- **使い方**
+  `Public append (tag: string): NodeInterface`
+- ** How to use **
 #### remove
-対象となるノードを、ツリーから削除します。
-- **定義**
-- **使い方**
+Delete the target node from the tree.
+- ** Definition **
+- ** How to use **
 #### forEach
-対象となるノードそれぞれに対して関数を適用します。
-- **定義**
-- **使い方**
+Apply the function to each target node.
+- ** Definition **
+- ** How to use **
 #### find
-述語を満たす最初のノードを取得します
-- **定義**
-- **使い方**
+Get the first node that satisfies the predicate
+- ** Definition **
+- ** How to use **
 #### watch
-- **定義**
-- **使い方**
+- ** Definition **
+- ** How to use **
 #### setEnabled
-- **定義**
-- **使い方**
+- ** Definition **
+- ** How to use **
 #### children
-- **定義**
-- **使い方**
+- ** Definition **
+- ** How to use **
 #### addComponent
-- **定義**
-- **使い方**
+- ** Definition **
+- ** How to use **
 #### first
-最初のノードを取得します。
-- **定義**
-- **使い方**
+Get the first node.
+- ** Definition **
+- ** How to use **
 #### single
-最初のノードを取得しますが、このインタフェースの対象が単一でなければ例外を投げます。
-- **定義**
-- **使い方**
+It gets the first node, but throws an exception if the target of this interface is not single.
+- ** Definition **
+- ** How to use **
 #### filter
-- **定義**
-- **使い方**
+- ** Definition **
+- ** How to use **
 #### toArray
-対象を配列にして返します。
-- **定義**
-- **使い方**
+Returns an array of objects.
+- ** Definition **
+- ** How to use **
 #### addChildByName
-- **定義**
-- **使い方**
+- ** Definition **
+- ** How to use **
 #### sendMessage
-- **定義**
-- **使い方**
+- ** Definition **
+- ** How to use **
 #### broadcastMessage
-- **定義**
-- **使い方**
+- ** Definition **
+- ** How to use **
 
 
 
-# 基本クラス
-grimoirejs-coreでは、すべてのオブジェクトは`GomlNode`と`Component`,`Attribute`などの構造で表現されます。
-もしプラグインの作成に挑戦するのであれば、それらのクラスの機能を理解していたほうが良いでしょう。
-これらの設計指向については、[ガイド]()を参照してください。
+# Base class
+In grimoirejs-core, all objects are represented by structures such as `GomlNode`,` Component`, and `Attribute`.
+If you are trying to create a plug-in, you better understand the function of those classes.
+For information on these design orientations, please refer to [Guide]().
 
-## GomlNode
+# ## GomlNode
 ## Component
 ## Attribute
 ## Converter
-## NSIdentity
+## # NSIdentity
 ## NSDictionary
 
-# データ型
-プラグインの登録の際に利用されるデータ形式です。
+# Data type
+This is the data format used when registering plugins.
 ## NodeDeclaration
 ## ComponentDeclaration
 ## AttributeDeclaration
 
-# その他
-これらはgrimoirejs-coreの内部実装に利用されているクラスで、通常触れる機会はありません。
-しかし、Grimoire.jsの挙動を完全に制御するためにはこれらの仕組みを知る必要があります。
+# Other
+These are the classes used for the internal implementation of grimoirejs - core, and have no opportunity to touch them normally.
+However, in order to fully control the behavior of Grimoire.js, we need to know these mechanisms.
 ## GomlLoader
-## GomlParser
+# ## GomlParser
 ## Constants
 
-# 標準プラグイン
-grimoirejs-coreで定義される標準のノード、コンポーネント、コンバータです。
-## ノード
-説明
-### コンポーネント
-### 属性
-### 親
+# Standard plugin
+It is a standard node, component, converter that is defined by grimoirejs-core.
+## node
+Description
+### Component
+### Attributes
+### parent
 
-## コンポーネント
-説明
-###コンポーネント名
-#### 属性
-説明
-##### 名前
-##### コンバータ
-##### デフォルト
-#### 親
-#### 発行イベント
-
-
+##
+Description
+### Component name
+#### Attributes
+Description
+##### name
+##### converter
+##### Default
+#### parent
+#### Published event
 
 
 
 
-## コンバータ
+
+
+## converter
 ### String
-- **出力型**
+- ** Output type **
 
-  ```
-  string
-  ```
-- **入力型**
+  ```
+  String
+  ```
+- ** Input type **
 
-  * String ・・・ そのまま出力されます。
-  * Object ・・・ toString関数が存在する場合それが呼び出されます。
+  * String ..... Outputs as it is.
+  * Object ... it is called if toString function exists.
 
 ### Number
 
-- **出力型**
+- ** Output type **
 
-  ```
-  number
-  ```
-- **入力**
+  ```
+  Number
+  ```
+- ** Input **
 
-  * String・・・Number.parseNumberにより処理され出力されます。
-  * Number・・・そのまま出力されます。
+  * String · · · Processed and output by Number.parseNumber.
+  * Number ..................................
 
 ### Boolean
 
-- **出力型**
+- ** Output type **
 
-  ```
-  boolean
-  ```
-- **入力**
+  ```
+  Boolean
+  ```
+- ** Input **
 
-  * String・・・"true"もしくは"false"のみ
-  * Boolean・・・そのまま出力されます。
+  * String ... only "true" or "false"
+  * Boolean · · · Output as it is.
 
 ### Object
 
-- **出力型**
+- ** Output type **
 
-  ```
-  any
-  ```
-- **入力**
+  ```
+  Any
+  ```
+- ** Input **
 
-  * Object・・・そのまま出力されます。
+  * Object ... It is output as it is.
 
 ### Component
 
-- **出力型**
+- ** Output type **
 
-  ```
-  <T> where T extends Component
-  ```
-- **コンバーター引数**
+  ```
+  <T> where T extends Component
+  ```
+- ** Converter Argument **
 
-  * target・・・取得対象のコンポーネント名
-- **入力可能なもの**
+  * Target ... name of component to be acquired
+- ** What can be input **
 
-  * String・・・クエリとして解釈されます。属するツリーから該当する**最初の一つ**の**ノード**を見つけ出し、そこから`target`に合致するコンポーネントを取得します。
-  * GomlNode・・・対象となるノードの中から最初の`target`に合致するコンポーネントを取り出します。
-  * Component・・・そのまま渡されます(名称が`target`に指定されたものでない時例外がでます)
+  * String --- interpreted as a query. Find the corresponding ** node ** ** node ** from the tree to which it belongs, and get the component that matches `target` from there.
+  * GomlNode ... fetches the component matching the first `target` from the target nodes.
+  * Component ··· passed as it is (exceptions are given when the name is not specified as `target`)
 
 ### Enum
 
-- **出力型**
+- ** Output type **
 
-  ```
-  number
-  ```
-- **コンバーター引数**
+  ```
+  Number
+  ```
+- ** Converter Argument **
 
-  * table・・・列挙する対象のハッシュテーブル。keyはString、値はnumberです。
-- **入力**
+  * Table ... Hash table for enumeration. Key is String, value is number.
+- ** Input **
 
-  * String・・・テーブルのkeyとしてその値を返します。keyとして存在しないときは例外をなげます。
-  * number・・・そのまま通します
+  * String ... Returns its value as the key of the table. I will raise an exception if it does not exist as key.
+  * Number ... let it go through
 
 ### Array
 
-- **出力型**
+- ** Output type **
 
-  ```
-  Array
-  ```
-- **コンバーター引数**
+  ```
+  Array
+  ```
+- ** Converter Argument **
 
-  * type・・・配列の要素に適用されるコンバータ。存在しないと実行時に例外を投げます。
-- **入力**
+  * Type ... ... Converter applied to elements of array. If it does not exist, throw an exception at run time.
+- ** Input **
 
-  * String・・・ **半角スペース** で区切り、コンバータ引数で指定されたコンバータに通されます。
-  * Array・・・要素をそれぞれコンバータに通した新しい配列を返します。
+  * String ··· ** Separate by half-width space ** and passed through the converter specified by the converter argument.
+  * Array ... ... Returns a new array of elements passed through the converter.
 
 ### NumberArray
 
-- **出力型**
+- ** Output type **
 
-  ```
-  number[]
-  ```
-- **入力**
+  ```
+  Number []
+  ```
+- ** Input **
 
-  * String・・・ **,** (カンマ)で区切り、`Number.parseFloat`を通します。
-  * Array・・・そのまま返します。
+  * String · · · **, ** (comma), and pass through `Number.parseFloat`.
+  * Array · · · · · · Return directly.
 ### StringArray
 
-- **出力型**
+- ** Output type **
 
-  ```
-  Array
-  ```
-- **入力**
+  ```
+  Array
+  ```
+- ** Input **
 
-  * String・・・ **半角スペース** で区切って返します。
-  * Array・・・そのまま返します。
-
-
+  * String ··· ** Separate by half-width space ** and return it.
+  * Array · · · · · · Return directly.
 
 
 
@@ -827,36 +823,38 @@ grimoirejs-coreで定義される標準のノード、コンポーネント、�
 
 
 
-## AssetLoadingManager コンポーネント
-<!-- EDIT HERE(@Component)-->
-非同期的な解決を必要とするようなリソース群のロードを管理しているコンポーネント。
-このコンポーネントにより、初期時にロード画面を表示します。
-また、ロード終了後に他のコンポーネントに処理の開始を通知してレンダリングループを開始します。
-<!-- /EDIT HERE-->
-### 属性
-<!-- DO NOT EDIT -->
-<!-- ATTRS -->
-| 属性名 | コンバーター | デフォルト値 | その他 |
-|:------:|:------:|:------:|:------:|
-| loadingProgress | number | 0 | なし |
-| autoStart | boolean | true | なし |
 
-<!-- /ATTRS -->
-<!-- /DO NOT EDIT -->
-### loadingProgress 属性
 
- * `converter`: number
- * `defaultValue`: 0
+## AssetLoadingManager component
+<! - EDIT HERE (@Component) ->
+A component that manages the loading of resources that require asynchronous resolution.
+This component displays the load screen at the initial time.
+Also, after loading, notify other components of the processing start and start the rendering loop.
+<! -/EDIT HERE ->
+### Attributes
+<! - DO NOT EDIT ->
+<! - ATTRS ->
+| Attribute name | Converter | Default value | Other |
+|: ------: |: ------: |: ------: |: ------: |
+| LoadingProgress | number | 0 | none |
+| AutoStart | boolean | true | none |
 
-<!-- EDIT HERE(loadingProgress)-->
-読み取り専用。現在のロード状況を100分率で返します。
-<!-- /EDIT HERE-->
-### autoStart 属性
+<! -/ATTRS ->
+<! -/DO NOT EDIT ->
+### loadingProgress attribute
 
- * `converter`: boolean
- * `defaultValue`: true
+ * `Converter`: number
+ * `DefaultValue`: 0
 
-<!-- EDIT HERE(autoStart)-->
-リソースのロード終了後に自動的にレンダリングループを開始するかどうか。
-これがfalseの場合、ユーザーが自らLoopManagerに対してbeginメソッドを呼ばなければ、一切の描画処理は行われません。
-<!-- /EDIT HERE-->
+<! - EDIT HERE (loadingProgress) ->
+Read only. Returns the current load situation in 100% fraction.
+<! -/EDIT HERE ->
+### autoStart attribute
+
+ * `Converter`: boolean
+ * `DefaultValue`: true
+
+<! - EDIT HERE (autoStart) ->
+Whether to automatically start the rendering loop after loading resources.
+If this is false, if the user himself calls the begin method for LoopManager, no drawing process will be performed.
+<! -/EDIT HERE ->

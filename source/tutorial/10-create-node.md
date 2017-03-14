@@ -1,54 +1,54 @@
 ---
-type: doc
-title: ノードの作成
-order: 10
+Type: doc
+Title: Create node
+Order: 10
 ---
 
-## 概要
-この章ではGrimoire.jsで使用可能なノードを作成してみます。ノードを作成することで、ユーザはGOMLでそれを実際にタグとして使用することができます。基本的なノードを作成することを通して、ノード自作のための手順を学びましょう。
+## Overview
+In this chapter we will create a node usable in Grimoire.js. By creating a node, the user can actually use it as a tag in GOML. Learn the procedure for creating a node by creating a basic node.
 
-## 学べること
+Learning #
 
-* ノードの作成
+* Create node
 
-### ノードの作成
+### Creating a node
 
-コンポーネントを定義するにはregisterNodeメソッドを用います。
-registerNodeメソッドでは第一引数にノードの名前、第二引数に付属するデフォルトコンポーネント、第三引数に継承するタグを指定できます。
-基本的には以上により、Grimoireインターフェースで定義したタグを記述することができるようになります。
+Use the registerNode method to define a component.
+In the registerNode method, you can specify the name of the node as the first argument, the default component attached to the second argument, and the tag to inherit as the third argument.
+Basically, you can now write tags defined with the Grimoire interface.
 
-デフォルトコンポーネントに指定されている`Rotate`は"[コンポーネントを作成してみる](/tutorial/07-create-component.html)"のセクションのものです。
+The `Rotate` specified in the default component is from the section" Create component [/tutorial/07-create-component.html) ".
 
 ```javascript
-gr.registerComponent('Rotate', {
-  attributes: {
-    speed: {
-      default: '1',
-      converter: 'Number',
-    },
-  },
-  $mount: function() {
-    this.phi = 0;
-  },
-  $update: function() {
-    this.phi += this.getAttribute('speed');
-    this.node.setAttribute('rotation', this.phi + ',' + this.phi + ',' + this.phi);
-  },
+Gr.registerComponent ('Rotate', {
+  Attributes: {
+    Speed: {
+      Default: '1',
+      Converter: 'Number',
+    },
+  },
+  $ Mount: function () {
+    This.phi = 0;
+  },
+  $ Update: function () {
+    This.phi + = this.getAttribute ('speed');
+    This.node.setAttribute ('rotation', this.phi + ',' + this.phi + ',' + this.phi);
+  },
 });
 
-gr.registerNode("rotate", ["Rotate"], {}, "mesh");
+Gr.registerNode ("rotate", ["Rotate"], {}, "mesh");
 ```
 
-登録したノードはGOMLにタグとして使用可能になります。デフォルトコンポーネントとして追加したので、`speed`属性も指定可能です。
+Registered nodes can be used as tags in GOML. As we added it as default component, we can also specify the `speed` attribute.
 
 ```
-<rotate geometry="cube" position="0,0,0" color="#0000FF" speed="1" />
+<Rotate geometry = "cube" position = "0,0,0" color = "# 0000FF" speed = "1" />
 ```
 
-それでは確認してみましょう。
+Let's check it.
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t10-01"></iframe>
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example#t10-01"> </ iframe>
 
-> 次はマテリアルの自作を学びます。マテリアルは物体の質感を設定するために重要です。Grimoire.jsではマテリアルの作成とインポートを強くサポートしています。マテリアルを作成して、3D表現に幅をもたせましょう。
+> Next, I will learn about making my own material. Material is important for setting the material texture. Grimoire.js strongly supports the creation and import of materials. Let's create materials and give breadth to 3D representation.
 >
-> [マテリアルを自作してみる](/tutorial/11-create-material.html)
+> [Try making your own material](/tutorial/11-create-material.html)

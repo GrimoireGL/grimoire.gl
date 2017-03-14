@@ -1,64 +1,64 @@
 ---
-type: doc
-title: コンポーネントの作成
-order: 7
+Type: doc
+Title: Create component
+Order: 7
 ---
 
-## 概要
+## Overview
 
-この章ではGrimoire.jsで使用可能なコンポーネントを作成してみます。基本的なコンポーネントを作成することを通して、コンポーネント自作のための手順を学びましょう。
+In this chapter we will try to create a component that can be used in Grimoire.js. Learn the procedure for building your own components through creating basic components.
 
-## 学べること
+Learning #
 
-* コンポーネントの作成
+* Create component
 
-### コンポーネントの作成
+### Creating Components
 
-コンポーネントを定義するにはregisterComponentメソッドを用います。javascriptからコンポーネントを定義してみましょう。
+Use the registerComponent method to define a component. Let's define the component from javascript.
 
-* attributes - コンポーネントの属性を定義します
-    * default - 属性の初期値を設定します
-    * converter - 属性値の型を定義します。下の例では`Number`を指定しているので、数字として扱われます。
-* $awake - コンポーネントの初期化時に呼び出されます
-* $update - 毎フレーム呼び出されます
+* Attributes - Defines the attributes of the component
+    * Default - Sets the initial value of the attribute
+    * Converter - Defines the type of attribute value. In the example below `Number` is specified, so it is treated as a number.
+* $ Awake - called when initializing the component
+* $ Update - called every frame
 
-`$awake`や`$update`などのライフサイクルイベントの中では`this.node`でコンポーネントの属しているノードを取得できます。
+In a lifecycle event such as `$ awake` or` $ update`, `this.node` can get the node to which the component belongs.
 
 ```javascript
-gr.registerComponent('Rotate', {
-  attributes: {
-    speed: {
-      default: '1',
-      converter: 'Number',
-    },
-  },
-  $mount: function() {
-    this.phi = 0;
-  },
-  $update: function() {
-    this.phi += this.getAttribute('speed');
-    this.node.setAttribute('rotation', this.phi + ',' + this.phi + ',' + this.phi);
-  },
+Gr.registerComponent ('Rotate', {
+  Attributes: {
+    Speed: {
+      Default: '1',
+      Converter: 'Number',
+    },
+  },
+  $ Mount: function () {
+    This.phi = 0;
+  },
+  $ Update: function () {
+    This.phi + = this.getAttribute ('speed');
+    This.node.setAttribute ('rotation', this.phi + ',' + this.phi + ',' + this.phi);
+  },
 });
 ```
 
-最後に作ったコンポーネントを既存の`mesh`に動的に追加するために、ノードに対して`addComponent`を行います。
-この操作はGOMLがパースされてから行うべきなので、`gr(function() {})`の中で行います。
+In order to dynamically add the last created component to the existing `mesh`, we do` addComponent` on the node.
+This operation should be done after GOML is parsed, so do it in `gr (function () {})`.
 
 ```
-$$('mesh').addComponent('Rotate');
+$$ ('mesh'). AddComponent ('Rotate');
 ```
 
-それでは確認してみましょう。
+Let's check it.
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t07-01"></iframe>
-
-
-基本的なコンポーネントの制作に関しては以下の通りです。コンポーネント開発はユーザーの好きな環境で行うことができます。TypeScriptを用いた開発も可能です。
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example#t07-01"> </ iframe>
 
 
-詳しくは、[こちら](/tutorial/13-create-plugin.html)を参照してください。
+Production of basic components is as follows. Component development can be done in the user's favorite environment. Development using TypeScript is also possible.
 
-> 次はGOMLのノードを実際に作成してみます。
+
+For details, see [here](/tutorial/13-create-plugin.html).
+
+> Next, let's actually create a GOML node.
 >
-> [ノードを作ってみる](/tutorial/10-create-node.html)
+> [Try creating a node](/tutorial/10-create-node.html)

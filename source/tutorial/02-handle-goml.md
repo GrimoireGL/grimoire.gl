@@ -1,99 +1,99 @@
 ---
-type: doc
-title: GOMLを扱う
-order: 2
+Type: doc
+Title: Handling GOML
+Order: 2
 ---
 
-## 概要
+## Overview
 
-Grimoire.jsでは扱う3D空間をXML記法を用いて宣言的に記述することが可能です。ここでは基本的な3D空間の描画に必要なタグを含んでいる`grimoirejs-fundamental`プラグインを用いて、GOMLの基本的に記述について学びましょう。基本的にはユーザーはこの`grimoirejs-fundamental`プラグインを用いてWeb3Dの表現を組み立てることになります。
-`grimoirejs-fundamental`プラグインは[リファレンス](https://grimoire.gl/api/grimoirejs-fundamental.html)を参照することで詳細を知ることができます。今回はこのプラグインの中から基本的な3D表現に必要なタグの使い方を学びます。
+In Grimoire.js it is possible to declaratively describe 3D space to be handled using XML notation. Here let's learn about the basic description of GOML using the `grimoirejs-fundamental` plug-in which contains tags necessary for rendering the basic 3D space. Basically, the user will construct a representation of Web3D using this `grimoirejs-fundamental` plugin.
+The `grimoirejs-fundamental` plugin can be informed by referring to [Reference] (https://grimoire.gl/api/grimoirejs-fundamental.html). This time we will learn how to use tags necessary for basic 3D representation from this plugin.
 
-## 学べること
+Learning #
 
-* GOMLとは何か
-* GOMLタグの扱い方
-* GOMLタグの属性の扱い方
-* `grimoire-fundamental`プラグインを用いたシーンの記述方法
+* What is GOML
+* How to handle GOML tag
+* How to handle GOML tag attributes
+* How to describe scenes using `grimoire-fundamental` plugin
 
 
 
-以下に示すのが、基本的な3D表現を行うために必要な機能を記述したGOMLです。
+The following is a GOML describing the functions necessary for performing basic 3D representation.
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t02-01"></iframe>
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example#t02-01"> </ iframe>
 
-GOMLはGrimoire Object Markup Languageの略であり、描画するキャンバス内の状態をXMLで記述するための言語です。Grimoire.jsが定義しています。これから上記のサンプルを例にGOMLのタグについて確認してみましょう。
+GOML is an abbreviation of Grimoire Object Markup Language and is a language for describing the state in the canvas to draw in XML. Grimoire.js defines it. Let's check about the GOML tag from the above sample as an example.
 
-`<goml>`タグは一番基本となるタグです。キャンバス自体の状態に関わります。`width`や`height`属性でキャンバスの大きさを指定できます。また、`fullscreen`にも対応しています。セレクタにも対応しており、
-
-```html
-<goml containerId="main">
-```
-
-とすることでGOMLに対応するキャンバスを囲む`<div>`要素が取得されます。
-
-`<geometry>`タグはジオメトリを定義します。`name`属性でジオメトリの識別子を設定し、それらを`<mesh>`タグの`geometry`属性で指定することで、使うことができます。
-
-```xml
-<geometry name="cone" type="cone" divide="30" />
-```
-
-* `name`属性 - 識別子
-* `type`属性 - ジオメトリの種類。`cube`, `quad`, `triangle`, `sphere`, `corn`などがデフォルトで用意されています。
-その他にも各プリミティブ型ではそれに応じて、属性を持つことがあります。`cone`型では`divide`属性を持つことができます。これはメッシュの分割数を指定します。これはジオメトリの種類に依存した属性であり、各ジオメトリーに応じた属性を設定することが可能です。
-
-`<render>`タグは描画に関するタグです。sceneを描写する際に必要です。基本的な3Dの空間を描画する際には、この`<render>`のタグは省略することが可能です。
+The `<goml>` tag is the most basic tag. It concerns the state of the canvas itself. You can specify the size of the canvas with the `width` and` height` attributes. Also, it corresponds to `fullscreen`. It also supports selectors,
 
 ```html
-<renderer camera=".camera" viewport="0,0,100%,100%">
-  <render-scene/>
-<renderer/>
+<Goml containerId = "main">
 ```
 
-シーンの全容は`<scene>`タグの以下に記述します。3Dのループの処理はこのタグの内部のノードに対して行われることになります。基本的に`<scene>`には`<camera>`が存在します。
+This will get the `<div>` element that encloses the canvas corresponding to GOML.
+
+The `<geometry>` tag defines the geometry. You can use it by setting the geometry identifiers with the `name` attribute and specifying them with the` geometry` attribute of the `<mesh>` tag.
 
 ```xml
-<camera class="camera" near="0.01" far="40.0" aspect="1.5" fovy="45d" position="0,0,10" />
+<Geometry name = "cone" type = "cone" divide = "30" />
 ```
 
-`<camera>`タグはカメラを配置します。`<camera>`タグには`near,far,fovy,aspect`の属性を設定できます。
+* `Name` Attribute - Identifier
+* `Type` attribute - the type of geometry. `Cube`,` quad`, `triangle`,` sphere`, `corn` are provided by default.
+In addition, each primitive type may have attributes accordingly. The `cone` type can have the` divide` attribute. This specifies the division number of the mesh. This is an attribute depending on the type of geometry, it is possible to set attributes according to each geometry.
 
-これらはgrimoirejs-fundamentalプラグインを利用することにより、使用することができます。grimoirejs-fundamentalプラグインは多くのユーザーが利用することになるでしょう。
+The `<render>` tag is a tag related to drawing. It is necessary when describing a scene. When rendering basic 3D space, you can omit this `<render>` tag.
 
-grimoirejs-fundamentalがサポートしているタグには他にも、
+```html
+<Renderer camera = ". Camera" viewport = "0, 0, 100%, 100%">
+  <Render-scene />
+<Renderer />
+```
 
-* `<mesh>`
-* `<render-quad>`
-* `<texture>`
-
-などがあります。
-
-### 円錐を表示してみる
-
-それでは実際にgrimoire-fundamentalで定められたタグを使用してみましょう。
-円錐(cone)を表示するためにはジオメトリを`<geometry>`タグを用いて読み込む必要があります。ジオメトリの定義は`<scene>`の外に書きましょう。
+The whole scene is described below the `<scene>` tag. The processing of the 3D loop will be done to the node inside this tag. Basically there is `<camera>` in `<scene>`.
 
 ```xml
-<geometry name="cone" type="cone" divide="30" />
+<Camera class = "camera" near = "0.01" far = "40.0" aspect = "1.5" fovy = "45 d" position = "0, 0, 10" />
 ```
 
-ジオメトリを読み込んだら実際に表示するために`<mesh>`タグが必要です。`<geometry>`タグにconeが指定して、下のようにタグを`<scene>`以下に追加してみましょう。
+The `<camera>` tag places the camera. You can set attributes of `near, far, fovy, aspect` in the` <camera> `tag.
+
+These can be used by using the grimoirejs-fundamental plug-in. The grimoirejs-fundamental plugin will be used by many users.
+
+In addition to the tags supported by grimoirejs-fundamental,
+
+* `<Mesh>`
+* `<Render-quad>`
+* `<Texture>`
+
+there is ........., ........., etc.
+
+### Try to display a cone
+
+Let's actually use the tag defined by grimoire-fundamental.
+To display a cone we need to read the geometry using the `<geometry>` tag. Let's write the definition of the geometry outside the `<scene>`.
 
 ```xml
-<mesh geometry="cone" position="1,1,0" color="#99f" />
+<Geometry name = "cone" type = "cone" divide = "30" />
 ```
 
-### テクスチャを表示してみる
-
-次は画像をキャンバス内に表示してみます。下記のように`texture`属性に画像へのパスを指定することで、メッシュに画像を貼り付ける事ができます。
+After loading the geometry you need the `<mesh>` tag to actually display it. Let's add cone to the `<geometry>` tag and add the tag below `<scene>` as shown below.
 
 ```xml
-<mesh geometry="cube" position="0,0,0" texture="t02-01/img1.jpg" />
+<Mesh geometry = "cone" position = "1, 1, 0" color = "# 99 f" />
 ```
 
-このようにGrimorire.jsを利用することにより、キャンバス内の3D表現を宣言的に記述できます。
+### Try to display the texture
+
+Next I will try to display the image in the canvas. You can paste an image on the mesh by specifying the path to the image in the `texture` attribute as shown below.
+
+```xml
+<Mesh geometry = "cube" position = "0, 0, 0" texture = "t 02 - 01 / img 1.jpg" />
+```
+
+By using Grimorire.js like this you can declaratively describe the 3D representation in the canvas.
 
 
-> 次は読み込んだGOMLをJavaScriptから操作する方法を学びます。これによりGOMLで記述したタグやその属性を動的に変更することが可能になります。イベントハンドラを利用して、特定のタイミングで動作させることも可能です。
+> Next we will learn how to manipulate the loaded GOML from JavaScript. This makes it possible to dynamically change tags described in GOML and their attributes. It is also possible to use event handlers to operate at specific timing.
 >
-> [JavaScriptからGOMLを扱う](/tutorial/03-handle-goml-with-js.html)
+> [Handle GOML from JavaScript](/tutorial/03-handle-goml-with-js.html)

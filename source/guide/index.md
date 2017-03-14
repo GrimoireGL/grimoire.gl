@@ -1,287 +1,287 @@
 ---
-type: doc
-title: はじめに
-order: 1
+Type: doc
+Title: Introduction
+Order: 1
 ---
 
-# Grimoire.jsとは?
+# What is Grimoire.js?
 
-**Grimoire(グリモア).js** は、一言で言えば、**Web開発のためのWebGLフレームワーク** です。 高度な知識が要求され、既存のWebの開発フローに乗りにくい`WebGL`表現を、**既存のWeb開発のフローで** 、 **最小限のコードで** 、**簡単に** 、**プロダクションレベルで** 扱うためのフレームワークです。
+** Grimoire (Grimoire) .js ** is, in a nutshell, ** WebGL framework for web development ** **. `WebGL` expression which requires advanced knowledge and difficulty in existing Web development flow, ** in existing web development flow **, ** with minimal code **, easily ** , ** Framework for handling ** at the production level **.
 
-`WebGL`を扱うための技術は、つい最近までアプリケーションやゲーム開発のために進化したものでした。多くのライブラリは、それらに触れてきた開発者が、Web上で同様の機能を実装し、ユーザーもでこれに倣ってWebGLを扱うのが普通でした。
+The technology to deal with `WebGL` has evolved for application and game development until recently. In many libraries, it was common for developers who touched them to implement similar functions on the Web, and users also handle WebGL accordingly.
 
-`WebGL`もWebの一つの選択肢であり、他の画像や動画と同じようなレベルで簡単に扱えなければなりません。Webフロントエンドは日々フレームワークの進化によりその難しさは日々増しています。このような中でどうして`WebGL`のためだけに全く違う書き方をするということを押し付けることができるでしょうか?
+`WebGL` is also an option on the Web, and it must be handled easily at the same level as other images and movies. Everyday in the Web front end, its difficulty is increasing day by day as the framework evolves. Why can you impose to write completely different ways only for `WebGL` in such a situation?
 
-`Grimoire.js`は、このWebにおける`WebGL`のあり方を変えます。Webの人がWebの書き方流で扱え、もともとCGなどをいじっていた方は従来に似た書き方をすると、その部品はすぐにWeb畑の人が使えるようになる。**WebGLが画像や動画に次ぐWebエンジニアが持つ筆の一つにする。** それがGrimoire.jsの成し遂げることです。
+`Grimoire.js` changes the way of` WebGL` on this Web. People on the Web can deal with the writing style of the Web, and those who were originally tampering with CG and the like do write like the conventional one, the parts can be used by people in the Web field soon. ** WebGL makes it one of the brush possessed by Web engineers next to images and videos. ** That is what Grimoire.js accomplishes.
 
-# Grimoire.jsで何ができるの?
+# What can you do with Grimoire.js?
 
-さて、では具体的に **Grimoire.js** を用いてどのようなことができるのでしょうか?
+Well, then what exactly can you do with ** Grimoire.js **?
 
-例えば、単純に **3Dモデルを表示することもできます** し、
+For example, ** 3D model can be displayed simply **,
 
 ![](https://i.gyazo.com/2c6f811b72d565d76ef2b0f846af28bd.gif)
 
 https://cx20.github.io/gltf-test/examples/grimoiregl/index.html?model=VC&scale=0.2
 
-> glTF表示テスト by [@cx20](https://github.com/cx20)
+> GlTF display test by [@ cx 20](https://github.com/cx20)
 
-高度な **シェーダーアートを簡単に表示すること** もできます。
+Advanced ** You can also easily display shader art **.
 
 
-![ポストエフェクト](https://i.gyazo.com/9d519c71b24ae27fccd35413e44a5b73.gif)
+![Post effect](https://i.gyazo.com/9d519c71b24ae27fccd35413e44a5b73.gif)
 
 http://qiita.com/pnlybubbles/items/c87e8e7466ecdc11a23c
 
-> [ポストエフェクトする(Grimoire.js Advent Calender 2016)](http://qiita.com/pnlybubbles/items/c87e8e7466ecdc11a23c)[@pnlybubbles](https://github.com/pnlybubbles)
+> [Post effect (Grimoire.js Advent Calender 2016)](http://qiita.com/pnlybubbles/items/c87e8e7466ecdc11a23c) [@pnlybubbles](https://github.com/pnlybubbles)
 
-あるいは、**WebCamのようなHTML5の様々な機能と連携** したアプリケーションも作れます。
+Alternatively, you can also create applications ** linked with various functions of HTML5 like ** WebCam.
 
-![Webカメラサンプル](https://i.gyazo.com/b4ff87de431cf756f65e716525f41418.gif)
+![Web camera sample](https://i.gyazo.com/b4ff87de431cf756f65e716525f41418.gif)
 
 https://grimoiregl.github.io/grimoire.gl-example/#webcam
 
-> 公式サンプル
+> Official sample
 
-あなたがどのように、使いたいかにせよ、もしそれが`WebGL`の表現力を必要とするなら、十分に`Grimoire.js`の恩恵を受けることができるでしょう。
+Regardless of how you want to use it, if it requires expressivity of `WebGL`, you will be able to fully benefit from` Grimoire.js`.
 
-# はじめに
+# Introduction
 
-`Grimoire.js`を試すには、まず単純な`.html`を作成して以下の`<script>`でロードします。
+To test `Grimoire.js`, first create a simple` .html` and load it with the following `<script>`.
 
 ```html
-<script src="https://unpkg.com/grimoirejs-preset-basic/register/grimoire-preset-basic.js"></script>
+<Script src = "https://unpkg.com/grimoirejs-preset-basic/register/grimoire-preset-basic.js"> </script>
 ```
 
-このスクリプトは単なる`Grimoire.js`ではなく、いくつかのプラグインが入っているものです。このスクリプトで最初に必要な最低限の機能が利用できます。
+This script is not just `Grimoire.js` but it contains some plugins. The minimum required functions are available for the first time with this script.
 
-もし`minify`されたjsや、`npm`からの利用をしたいなら[ダウンロード](/guide/download.html)を参考にしてください。 **ただし、初心者にはまず`<script>`を用いての利用を推奨します。何事もシンプルなことから入るのが一番です**
+If you want to use `minify` js or` npm`, please refer to [download](/guide/download.html). ** However, beginners are encouraged to use `<script>` first. It is best to enter everything from simple things **
 
-# 宣言的なWebGLマークアップ
+# Declarative WebGL markup
 
-`Grimoire.js`では、WebGLを記述するためのマークアップ(GOML)を記述します。例えば、埋め込みたい位置に以下のように記述します。
+In `Grimoire.js`, write markup (GOML) for describing WebGL. For example, write it at the position you want to embed as follows.
 
 ```xml
-<script type="text/goml">
-  <goml>
-   <scene>
-    <camera/>
-    <mesh color="red" position="0,0,0"/>
-   </scene>
-  </goml>
-</script>
+<Script type = "text/goml">
+  <Goml>
+   <Scene>
+    <Camera/>
+    <Mesh color = "red" position = "0, 0, 0"/>
+   </Scene>
+  </Goml>
+</Script>
 ```
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-01">
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example/#guide-01">
 </iframe>
 
-このように、**`type='text/goml'`が指定されている`<script>`のある部分に`<canvas>`が挿入されて表示されます**
+In this way, `<canvas>` is inserted and displayed in a part of `<script>` where `* =` text/goml`` is specified **
 
-`<mesh>`の`position`属性を操作すれば、表示されている赤い四角形が動くのがわかります。一般的なHTMLの文章をいじるように このように宣言的に操作できるのです。
+By manipulating the `position` attribute of` <mesh> `, you can see that the displayed red rectangle moves. You can manipulate declaratively like this to interrogate general HTML sentences in this way.
 
-> GOMLファイルの読み込み
+> Load GOML file
 
-> javascriptファイルを読み込む際の`<script>`のように、`src="外部ファイルのURL"`を指定しても外部からgomlファイルを読み込むことができます。 このチュートリアルでは、簡略な説明のためhtmlに埋め込んでいますが、**通常は外部読み込みにすることを推奨します。**
+> You can read goml files from outside even by specifying `src =" external file URL "`, like `<script>` when reading javascript files. In this tutorial, it is embedded in html for a brief explanation, but ** It is usually recommended to use external loading. **
 
-当然、以下のように記述すれば複数個のキャンバスを扱うこともできます。
+Of course, if you describe it like this you can handle multiple canvases.
 
 ```xml
-<script type="text/goml">
-  <goml>
-   <scene>
-    <camera/>
-    <mesh color="red" position="0,0,0"/>
-   </scene>
-  </goml>
-</script>
-<script type="text/goml">
-  <goml>
-   <scene>
-    <camera/>
-    <mesh color="green" position="0,0,0"/>
-   </scene>
-  </goml>
-</script>
+<Script type = "text/goml">
+  <Goml>
+   <Scene>
+    <Camera/>
+    <Mesh color = "red" position = "0, 0, 0"/>
+   </Scene>
+  </Goml>
+</Script>
+<Script type = "text/goml">
+  <Goml>
+   <Scene>
+    <Camera/>
+    <Mesh color = "green" position = "0, 0, 0"/>
+   </Scene>
+  </Goml>
+</Script>
 ```
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-02">
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example/#guide-02">
 </iframe>
 
-# Javascriptによる操作
+# Operation with Javascript
 
 ```xml
-<script type="text/goml" id="canvas1">
-  <goml>
-   <scene>
-    <camera/>
-    <mesh color="red" position="0,0,0"/>
-   </scene>
-  </goml>
-</script>
-<script type="text/goml">
-  <goml>
-   <scene>
-    <camera/>
-    <mesh color="green" position="0,0,0"/>
-   </scene>
-  </goml>
-</script>
+<Script type = "text/goml" id = "canvas 1">
+  <Goml>
+   <Scene>
+    <Camera/>
+    <Mesh color = "red" position = "0, 0, 0"/>
+   </Scene>
+  </Goml>
+</Script>
+<Script type = "text/goml">
+  <Goml>
+   <Scene>
+    <Camera/>
+    <Mesh color = "green" position = "0, 0, 0"/>
+   </Scene>
+  </Goml>
+</Script>
 ```
 
-に対して、以下のようなJSを実行すると、`Grimoire.js`が読み込まれてから1秒後に上の立方体だけ青くなります。
+If you execute JS like the following, the upper cube becomes blue one second after `Grimoire.js` is loaded.
 
 ```javascript
-gr(function(){
-  setTimeout(function(){
-    gr("#canvas1")("mesh").setAttribute("color","blue");
-  },1000);
+Gr (function () {
+  SetTimeout (function () {
+    Gr ("# canvas 1") ("mesh"). SetAttribute ("color", "blue");
+  }, 1000);
 });
 ```
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-03">
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example/#guide-03">
 </iframe>
 
-`jQuery`を扱ったことがある人がいれば、似たようなAPIであると気がつくことでしょう。 `gr`は、`Grimoire.js`が定義するオブジェクトで、すべてのAPIはこれを通じてアクセスすることができます。
+If someone has dealt with `jQuery`, you will find that it is a similar API. `Gr` is an object defined by` Grimoire.js`, and all APIs can be accessed through this.
 
-**`gr`に`function`を渡した時には、`Grimoire.js`の初期化が終わったタイミングで呼ばれます**
+** When `function` is passed to` gr`, it is called at the timing when `Grimoire.js` is initialized **
 
-また、**`gr`に文字列を渡してクエリで`<script>`を指定し、それにたいして操作したいノードを取得するためのクエリを指定します** (grの最初の括弧で帰ってくるのは、ある`<script>`へのクエリということに注意してください。これは初めて使う方が陥りやすい最も多いミスの一つです。)
+Also, pass in a string to ** `gr` and specify` <script> `in the query and specify a query to get the node you want to manipulate against it ** (Return with the first parenthesis of gr Please be aware that it is a query to a certain `<script>`, which is one of the most common mistakes that people who use for the first time are prone to falling.
 
-# Grimoire.jsのノード・コンポーネントシステム
+# Node and component system of Grimoire.js
 
-これまでの議論は、他のタグベースのWebGLライブラリのものと変わりありません。 しかし、`Grimoire`におけるノードやコンポーネントのシステムを一度理解すれば、いかにこのノードのシステムがよくできているかわかることでしょう。
+The discussion so far is the same as that of other tag-based WebGL libraries. However, once you understand the system of nodes and components in `Grimoire`, you will see how well the system of this node is made.
 
-一般的にXMLやHTMLのDOMのシステムは、各ノードの親子関係を示すことができます。これはGOMLに於いても同じです。
+Generally, the DOM system of XML and HTML can show the parent-child relationship of each node. This is the same also in GOML.
 
-![](./images/nodes.png)
+![](./Images/nodes.png)
 
-実は、あるノードは **コンポーネント** と呼ばれる **一つの機能の集まり** によって構成されています。
+In fact, a node is composed of a collection of ** functions ** called ** components **.
 
 ![](./images/node-have-components.png)
 
-例えば、`<mesh>`は常に、`Transform`という、座標や回転量などを管理するコンポーネントと`MeshRenderer`という、表示部分を管理しているコンポーネントの組みを意味します。
+For example, `<mesh>` always means `Transform`, a component that manages coordinate and rotation, etc, and a set of` MeshRenderer` which manages the display part.
 
-`<camera>`は`Transform`と、カメラの変換の仕組みなどを管理している`Camera`コンポーネントの組を意味します。
+`<Camera>` stands for `Transform`, a set of` Camera` components that manage camera conversion mechanisms and so on.
 
-これらのコンポーネントは入力として**属性**を受け取ります。例えば、座標や回転量を管理する`Transform`は当然、`position`や`rotation`などの属性を持っています。
+These components receive ** attributes ** as input. For example, `Transform` which manages coordinates and rotation amount has obviously attributes such as` position` and `rotation`.
 
 ![](./images/component-have-attributes.png)
 
-`<mesh>`に渡した、`position`属性は、この`<mesh>`が持っている`Transform`コンポーネントに渡され、パラメーターとして使用されます。このような属性は全て同様にjavascriptで操作ができます。
+The `position` attribute passed to` <mesh> `is passed to the` Transform` component of this `<mesh>` and used as a parameter. All such attributes can be operated in javascript in the same way.
 
-ここで、コンポーネントの力を把握するために、以下のように記述してカメラを動かせるようにしてみましょう。
+Here, in order to grasp the power of the component, try to make the camera move by writing as follows.
 
 ```xml
-<script type="text/goml" id="canvas1">
-  <goml>
-   <scene>
-    <camera>
-      <camera.components>
-        <MouseCameraControl/>
-      </camera.components>
-    </camera>
-    <mesh color="red" position="0,0,0"/>
-   </scene>
-  </goml>
-</script>
+<Script type = "text/goml" id = "canvas 1">
+  <Goml>
+   <Scene>
+    <Camera>
+      <Camera.components>
+        <MouseCameraControl/>
+      </camera.components>
+    </Camera>
+    <Mesh color = "red" position = "0, 0, 0"/>
+   </Scene>
+  </Goml>
+</Script>
 ```
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-04">
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example/#guide-04">
 </iframe>
 
-以上のように、`<camera>`の子要素である`<camera.components>`の中に`<MouseCameraControl>`を入れたことにより、普段`<camera>`が持つ`Transform`と`Camera`の他に、`MouseCameraControl`をつけたことになります。
+As mentioned above, by inserting `<MouseCameraControl>` in `<camera.components>` which is a child element of `<camera>`, it is possible to use `Transform` and` Camera `MouseCameraControl` in addition to` MouseCameraControl`.
 
 ![](./images/optional-component.png)
 
-## コンポーネントを書いてみる
+## Write a component
 
-まだ、コンポーネントが何か議論していませんでしたね。ここでは例えばくっつけた対象を回転させ続けるコンポーネント、`Rotate`を作ってみることにしましょう。
+The component has not discussed anything yet. Let's try to make a component, `Rotate`, which keeps turning objects stuck together, for example.
 
 ```javascript
-gr.registerComponent("Rotate",{
-  attributes:{
-    speed:
-    {
-      default:1,
-      converter:"Number"
-    }
-  },
-  $mount:function(){
-    this.phi = 0;
-  },
-  $update:function(){
-    this.phi += this.getValue("speed");
-    this.node.setAttribute("rotation",this.phi + "," + this.phi + "," + this.phi);
-  }
+Gr.registerComponent ("Rotate", {
+  Attributes: {
+    Speed:
+    {
+      Default: 1,
+      Converter: "Number"
+    }
+  },
+  $ Mount: function () {
+    This.phi = 0;
+  },
+  $ Update: function () {
+    This.phi + = this.getValue ("speed");
+    This.node.setAttribute ("rotation", this.phi + "," + this.phi + "," + this.phi);
+  }
 })
 ```
-`attributes`内の要素はこのコンポーネントが受け取れるパラメーター名とその詳細になります。
-ここでは、深く触れないことにしますが、パラメータ名から分かる通り、数値であって、初期値が`1`であることを指し示しています。
+The elements in `attributes` are the parameter names and details that this component can accept.
+I will not touch it deeply here, but as you can see from the parameter name, it is a numeric value, indicating that the initial value is `1`.
 
-これを書いた上で、いかのようなgomlを書いてみましょう。
+Let's write goml like this after writing this.
 
 ```xml
-<script type="text/goml" id="canvas1">
-  <goml>
-   <scene>
-    <camera>
-      <camera.components>
-        <MouseCameraControl/>
-      </camera.components>
-    </camera>
-    <mesh color="red" position="0,0,0">
-      <mesh.components>
-        <Rotate/>
-      </mesh.components>
-    </mesh>
-   </scene>
-  </goml>
-</script>
+<Script type = "text/goml" id = "canvas 1">
+  <Goml>
+   <Scene>
+    <Camera>
+      <Camera.components>
+        <MouseCameraControl/>
+      </camera.components>
+    </Camera>
+    <Mesh color = "red" position = "0, 0, 0">
+      <Mesh.components>
+        <Rotate/>
+      </mesh.components>
+    </Mesh>
+   </Scene>
+  </Goml>
+</Script>
 ```
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-05">
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example/#guide-05">
 </iframe>
 
-以下の図は、あるコンポーネントのライフサイクルを表します。今全てを理解する必要はありませんが、この図は将来あなたの役に立つことでしょう。
+The following figure shows the lifecycle of a component. I do not need to understand everything now, but this figure will be useful to you in the future.
 
-![](./images/message-order.png)
+![](./Images/message-order.png)
 
-$から始まる関数は **メッセージハンドラー** と呼ばれ、コンポーネントのライフサイクルの随所で呼ばれることになります。
-このメッセージハンドラー内の`this`はそれぞれのインスタンスにバインドされます。
+Functions starting with $ are called ** message handlers ** and will be called everywhere in the component lifecycle.
+`This` in this message handler is bound to each instance.
 
-メッセージハンドラーに関してはまだまだ触れなくてはならないことも多いのですが、ここでは単なるイベントハンドラーという程度の理解で問題ありません。
+As for message handlers, there are many things that we have touched a lot, but here is just an event handler and understanding is OK.
 
-## ノードを定義してみる
+## Define a node
 
-もし、回転する`<mesh>`を大量に描きたいなら上のように書くのは不便ですね。ここで、`<rotated-mesh/>`なるものを用意するようにしてみましょう。
+If you want to draw a large amount of rotated `<mesh>`, it is inconvenient to write it as above. Let's try to prepare `<rotated-mesh/>`.
 
 ```javascript
-gr.registerNode("rotated-mesh",["Rotate"],{},"mesh");
+Gr.registerNode ("rotated-mesh", ["Rotate"], {}, "mesh");
 ```
 
 ```xml
-<script type="text/goml" id="canvas1">
-  <goml>
-   <scene>
-    <camera>
-      <camera.components>
-        <MouseCameraControl/>
-      </camera.components>
-    </camera>
-    <rotated-mesh color="red" position="-2,0,0"/>
-    <rotated-mesh color="green" position="0,0,0" speed="2"/>
-    <rotated-mesh color="blue" position="2,0,0" speed="3"/>
-   </scene>
-  </goml>
-</script>
+<Script type = "text/goml" id = "canvas 1">
+  <Goml>
+   <Scene>
+    <Camera>
+      <Camera.components>
+        <MouseCameraControl/>
+      </camera.components>
+    </Camera>
+    <Rotated-mesh color = "red" position = "- 2, 0, 0"/>
+    <Rotated-mesh color = "green" position = "0, 0, 0" speed = "2"/>
+    <Rotated-mesh color = "blue" position = "2, 0, 0" speed = "3"/>
+   </Scene>
+  </Goml>
+</Script>
 ```
 
-<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-06">
+<iframe class = "editor" src = "https://grimoiregl.github.io/grimoire.gl-example/#guide-06">
 </iframe>
 
-# 次は
+# next
 
-ここまで理解したあなたは`Grimoire.js`の最も基本的な仕組みを理解しています。全てはこの上に成り立っているのです。例外はありません。
+You understand the most basic mechanism of `Grimoire.js` so far. Everything is built on this. There is no exception.
 
-このような構造を把握した上で、あなたが恐らく聞きたくて聴きたくてたまらないのは描画周りでしょう。どうしたら、モデルが書けるのか、テクスチャが貼れるのか。
-そんなあなたは **[チュートリアル](/tutorial)** をする準備ができています。さあ、次の一歩へ進みましょう。
+After grasping such a structure, it would be around the drawing that you would probably want to listen and want to listen. How can we write a model and texture?
+You are ready to do ** [tutorial](/tutorial) **. Now let's move on to the next step.
