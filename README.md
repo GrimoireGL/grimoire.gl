@@ -1,6 +1,6 @@
 # grimoire.gl
 
-Grimoire.js team site powered by [hexo](hexo.io).
+Grimoire.js team site powered by [hexo](https://hexo.io).
 
 Pull requests welcome!
 

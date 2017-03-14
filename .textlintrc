@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "alex": {
+      "allow": []
+    },
+    "no-dead-link": {
+      "checkRelative": false,
+      "baseURI": null,
+      "ignore": []
+    },
+    "no-empty-section": true
+  }
+}
