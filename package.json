@@ -7,8 +7,7 @@
   },
   "scripts": {
     "test": "yarn run lint",
-    "lint": "textlint source/**/*.md -f pretty-error",
-    "lint:fix": "textlint --fix source/**/*.md -f pretty-error"
+    "lint": "textlint source/**/*.md -f pretty-error"
   },
   "dependencies": {
     "hexo": "^3.2.2",
