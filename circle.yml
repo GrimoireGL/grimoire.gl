@@ -2,8 +2,6 @@ machine:
   timezone: UTC
   node:
     version: 7.7.1
-  post:
-    - npm install -g npm@3
 deployment:
   production:
     branch: master
@@ -15,5 +13,5 @@ deployment:
       - ./node_modules/.bin/hexo deploy
 general:
   branches:
-    only:
-      - master
+    ignore:
+      - gh-pages
