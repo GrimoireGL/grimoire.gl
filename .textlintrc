@@ -8,6 +8,10 @@
       "baseURI": null,
       "ignore": []
     },
-    "no-empty-section": true
+    "no-empty-section": true,
+    "write-good": {
+      "passive": false,
+      "thereIs": false
+    }
   }
 }

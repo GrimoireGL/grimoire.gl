@@ -44,6 +44,10 @@ acorn@^2.1.0, acorn@^2.4.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-2.7.0.tgz#ab6e7d9d886aaca8b085bc3312b79a198433f0e7"
 
+adverb-where@~0.0.0:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/adverb-where/-/adverb-where-0.0.9.tgz#09c5cddd8d503b9fe5f76e0b8dc5c70a8f193e34"
+
 ajv-keywords@^1.0.0:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-1.5.1.tgz#314dd0a4b3368fad3dfcdc54ede6171b886daf3c"
@@ -2132,6 +2136,10 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
+no-cliches@~0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/no-cliches/-/no-cliches-0.1.0.tgz#f4eb81a551fecde813f8c611e35e64a5118dc38c"
+
 node-fetch@^1.0.1:
   version "1.6.3"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.6.3.tgz#dc234edd6489982d58e8f0db4f695029abcd8c04"
@@ -2388,6 +2396,10 @@ parse5@^1.5.1:
 parseurl@~1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/parseurl/-/parseurl-1.3.1.tgz#c8ab8c9223ba34888aa64a297b28853bec18da56"
+
+passive-voice@~0.0.0:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/passive-voice/-/passive-voice-0.0.1.tgz#6a9e1fbc1ca74b57ac35f0fcf8abb450bfca2ac8"
 
 path-exists@^2.0.0, path-exists@^2.1.0:
   version "2.1.0"
@@ -3241,6 +3253,13 @@ textlint-rule-no-empty-section@^1.1.0:
   dependencies:
     select-section "^0.4.0"
 
+textlint-rule-write-good@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/textlint-rule-write-good/-/textlint-rule-write-good-1.6.0.tgz#1346b5f5271602304d5943664123856f2bad1db6"
+  dependencies:
+    textlint-rule-helper "^2.0.0"
+    write-good "^0.10.0"
+
 textlint@^7.3.0:
   version "7.3.0"
   resolved "https://registry.yarnpkg.com/textlint/-/textlint-7.3.0.tgz#4d5ce36c8aa65a6c1fa6f2368b25c1b10b08b9a7"
@@ -3316,6 +3335,10 @@ to-vfile@^2.0.0:
     is-buffer "^1.1.4"
     vfile "^2.0.0"
     x-is-string "^0.1.0"
+
+too-wordy@~0.1.0:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/too-wordy/-/too-wordy-0.1.4.tgz#8e7b20a7b7a4d8fc3759f4e00c4929993d1b12f0"
 
 tough-cookie@^2.2.0, tough-cookie@~2.3.0:
   version "2.3.2"
@@ -3624,6 +3647,10 @@ warehouse@^2.2.0:
     is-plain-object "^2.0.1"
     lodash "^4.2.1"
 
+weasel-words@~0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/weasel-words/-/weasel-words-0.1.1.tgz#7137946585c73fe44882013853bd000c5d687a4e"
+
 webidl-conversions@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-2.0.1.tgz#3bf8258f7d318c7443c36f2e169402a1a6703506"
@@ -3693,6 +3720,16 @@ write-file-atomic@^1.1.2:
     graceful-fs "^4.1.11"
     imurmurhash "^0.1.4"
     slide "^1.1.5"
+
+write-good@^0.10.0:
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/write-good/-/write-good-0.10.2.tgz#9347173f2cbcf46e5600d321c78d4e5c4ebb5933"
+  dependencies:
+    adverb-where "~0.0.0"
+    no-cliches "~0.1.0"
+    passive-voice "~0.0.0"
+    too-wordy "~0.1.0"
+    weasel-words "~0.1.0"
 
 write@^0.2.1:
   version "0.2.1"
