@@ -61,7 +61,7 @@ The links introduced above are all CDN. You can just paste the links into your j
 
 # NPM
 
-**If you are stranger about javascript development. We suggest you to use direct include `<script>` tag instead of using npm.**
+**If you are stranger to javascript development, we suggest you to use direct include `<script>` tag instead of using npm.**
 
 All of the packages can be installed with npm.
 
