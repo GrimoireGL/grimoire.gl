@@ -76,13 +76,13 @@ The other packages are also provided via npm in same way.
 If you want to bundle all of files including grimoirejs, you need to call `/register` file first.
 
 ```js
-require("grimoirejs-preset-basic/register");
+const gr = require("grimoirejs-preset-basic/register");
 ```
 
 or
 
 ```js
-import "grimoirejs-preset-basic/register";
+import gr from "grimoirejs-preset-basic/register";
 ```
 
 This code will register all tags to prepare to use.
