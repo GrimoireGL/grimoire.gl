@@ -63,3 +63,10 @@ And most of core contributors are not native English speaker. We know some of ou
 If you could, please report that or send us PR.
 
 That would be helpful for us.
+
+## Contribute to codes
+
+As with any project, there are rules to contributing. Please see the [CONTRIBUTING.md](https://github.com/GrimoireGL/GrimoireJS/blob/master/CONTRIBUTING.md) in the core library repository.
+This guide includes how to setup build environments and rules to contribute
+
+Any projects managed by our organization also follows this guideline. Even you want to make your own plugin, it is desired to follow this guideline.
