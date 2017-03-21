@@ -11,7 +11,7 @@ Grimoire doesn't support IE11 and below. Please use Microsoft Edge instead.
 
 > Caution of WebGL extension Compatibility
 >
-> And some of plugin may require some extension of WebGL or some specific texture size at least to work.
+> Some of plugin may require some extension of WebGL or some specific texture size at least to work.
 > You can see [webglstats.com](https://webglstats.com/) to check compatibility of WebGL extensions.
 
 ## Release notes
@@ -41,7 +41,7 @@ You can simply download and link with `<script>` tag. `gr` will be registered as
 
 ## Download another plugins
 
-Grimoire is component oriented framework. All of features represented as tags and components are implemented as plugins.
+Grimoire is component oriented framework. Every features represented as tags and components are implemented as plugins.
 These plugins register some components and nodes to enable us to use them.
 
 In many case, you need to use another plugins for your work. You can just link them after the `grimoirejs` file.
@@ -57,7 +57,7 @@ This is official package lists maintained.
 
 The links introduced above are all CDN. You can just paste the links into your javascript file to use.
 
-**However, these links are linked to newest version. To prevent breaking your work by our update, make sure the versions are fixed.**
+**These are linking to the newest version. To prevent breaking your work by our update, make sure the versions are fixed.**
 
 # NPM
 
@@ -90,5 +90,5 @@ This code will register all tags to prepare to use.
 > What will occur when import without `register`?
 >
 > The code called by `register` is including actual grimoirejs code to be bundled.
-> However, the require code without `register` (for example `require('grimoirejs-preset-basic')`) is just referencing GrimoireJS variable which is global reference to Grimoire.js
+> The require code without `register` (for example `require('grimoirejs-preset-basic')`) is just referencing GrimoireJS variable which is global reference to Grimoire.js
 > This is used for fetching grimoire interface from npm without accessing global variable and linking actual grimoire.js code with `<script>` tag.

@@ -1,72 +1,65 @@
 ---
 type: doc
-title: コミュニティの仲間になろう
+title: Community
 order: 100
 ---
 
-Grimoire.jsプロジェクトは日々成長しています。 かつては一人で作り続けたプロジェクトから、何人かの方々が協力してくれるようなところまで到るまでになりました。
+Grimoire is growing day by day. Even I started alone, some contributors helps me now.
 
-このページを読んでいるあなたも、コミュニティに参加する準備ができていることでしょう。あなたのためにコミュニティが何ができるか、あなたが何をコミュニティにできるかこのページでは紹介します。
+Also you should have prepared to join our community. We introduce you what community can do for you and what you can do for community.
 
-まずは、**ようこそ。Grimoire.jsのコミュニティへ**
+First of all,**Welcome to the community of Grimoire.js**
 
-# コミュニケーションツール
+# Communication tools
 
-まずは協力を得るにせよ、協力いただけるにせよ何らかの形でコミュニティーに入らなければ話は始まりません。
+We are using these communication tool to help others. Our community have to be open and friendly.
 
-## slack
-
-私たちはSlackを利用して、日々`Grimoire.js`について議論しています。 あなたが今欲しいと思っている機能ももしかしたら今ここで議論されているかもしれません。
-あなたが今悩んでいる内容も、今まさに他の方々が悩んでいるような内容かもしれません。まずは参加をして始めましょう。
-
-**登録は以下のリンクから簡単にできます**
-
-[![Slack Status](https://grimoire-slackin.herokuapp.com/badge.svg)](https://grimoire-slackin.herokuapp.com/)
+All kind of works must be appriciated.
+The new contributor who made PR for a typo should have possibility to produce new feature in future. We should thank to every contributor every time.
 
 ## Github
 
-もし、バグに悩んだりソースコードに疑問があるならGithubを見るべきです。
-IssueやPull requestを投げることに躊躇わないでください。その一歩を踏めるどのような方も`Grimoire.js`にとっては大事なコミュニティの一人なのです。
+If you are struggling bugs, please see github.
+Please don't hesitate to send issues or PRs. Every users who won't hesitate to do that is important to us.
 
-https://github.com/GrimoireGL/GrimoireJS
+If that bugs are made from plugins, you should post the issue on each plugin repository. If you are not able to determine which plugins are cause, please rise that issue on core repository.
 
-もし、そのバグがコアのバグかどのバグかわからない場合はコアのIssueに書き込んでください。どのプラグインのバグか明確な場合、以下のページから対象となるレポジトリのIssueにお願いします。
+If you can determine the cause of the bug, you can find plugin repository from the URL below.
 
-https://github.com/GrimoireGL
+[Github organization](https://github.com/GrimoireGL)
 
-# コミュニティができること
+## slack
 
-## サポートを受ける
+We use slack for communicating with the other contributors.
 
-SlackやIssueで聞けば、あなたの今悩んでいる内容に解決できるような内容があるかもしれません。
+**You can register this team from the URL below**
 
-時にそれはバグかもしれません。そんな時、あなたのサポートはコミュニティにとって大きなプラスになります。
+[![Slack Status](https://grimoire-slackin.herokuapp.com/badge.svg)](https://grimoire-slackin.herokuapp.com/)
 
-# コミュニティにできること
 
-## バグレポート、プルリクエスト
+# What is the thing that community can do for you?
 
-バグ報告はとてもありがたい一つの貢献方法です。あなたの気がつきは、長く使っているコミュニティのメンバーも気がついていないかもしれません。
+## Receiving supports
 
-是非[Github](https://github.com/GrimoireGL/GrimoireJS)から伝えてください。明日の安定性はあなたのバグ報告から誕生します。
+You can find your problem in Github or ask the others with slack.
+Your problem can be a bug of library. Discussing about the problem is helpful for maintaining library.
 
-## ドキュメントの翻訳
 
-Grimoire.jsでは、現状ではGithub上を除く公式サイト上のドキュメントは日本語で記されています。
-しかし、これは最終的には英語になるべきであり、現状はコアチームの開発速度とドキュメントの維持の折衷案としてこの方法になっています。
+# What is the thing that you can do for the community?
 
-このプロジェクトでは、ドキュメントを翻訳する協力をしていただける方を募集しています。日本発のOSSが海外へ羽ばたくのに協力していただける方は是非ご協力ください。
-(この場合、お手数ですがまずslackにお入りください。)
+## Reporting bugs
 
-We are now looking for translators! Currently our documents are written in Japanese except some documents on Github.
-This is just for performance to write documents of core development team.  But we really want to translate all our documents in English.
+Reporting bugs are welcome. You can rise an issue on Github.
 
-If you are interested in our team, please join our slack by the link above.
+## Documents
 
-## ドキュメントを書く
-
-これらのページはGithub上の`md`ファイルから自動生成されています。誰でも以下のページから編集ができます。
+Our documents are written in markdown. And it is managed in the repository below.
 
 https://github.com/GrimoireGL/grimoire.gl/tree/master/source
 
-また、編集したいページの一番下の`Edit this page on Github`ボタンからも編集を開始できます。
+You can send PR to write document or edit from the link(`Edit this page on Github`) at the bottom of the page you want to edit.
+
+And most of core contributors are not native English speaker. We know some of our document can be make no sense.
+If you could, please report that or send us PR.
+
+That would be helpful for us.
