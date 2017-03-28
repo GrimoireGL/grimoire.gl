@@ -6,19 +6,20 @@ order: 1
 
 # Grimoire.jsとは?
 
-**Grimoire(グリモア).js** は、一言で言えば、**Web開発のためのWebGLフレームワーク** です。 高度な知識が要求され、既存のWebの開発フローに乗りにくい`WebGL`表現を、**既存のWeb開発のフローで** 、 **最小限のコードで** 、**簡単に** 、**プロダクションレベルで** 扱うためのフレームワークです。
+**Grimoire(グリモア).js** は、**Web開発のためのWebGLフレームワーク** です。 高度なグラフィクスの知識が要求され、既存のWebの開発フローに乗りにくい`WebGL`表現を、**既存のWeb開発のフローで** 、 **最小限のコードで** 、**簡単に** 、**プロダクションレベルで** 扱うためのフレームワークです。
 
-`WebGL`を扱うための技術は、つい最近までアプリケーションやゲーム開発のために進化したものでした。多くのライブラリは、それらに触れてきた開発者が、Web上で同様の機能を実装し、ユーザーもでこれに倣ってWebGLを扱うのが普通でした。
+`WebGL`を扱うための技術は、アプリケーションやゲーム開発にフォーカスしたものでした。既存の多くのWebGLライブラリは、それらに慣れ親しんだ開発者が同様のAPIをweb上に移植してきたものなので、これらを扱おうとするweb開発者は彼らの開発文化に従わなければなりませんでした。そしてそれは、web開発の文化とは大きく異なるものです。
 
-`WebGL`もWebの一つの選択肢であり、他の画像や動画と同じようなレベルで簡単に扱えなければなりません。Webフロントエンドは日々フレームワークの進化によりその難しさは日々増しています。このような中でどうして`WebGL`のためだけに全く違う書き方をするということを押し付けることができるでしょうか?
+`WebGL`には無限の表現力があります。しかし、画像や動画と同じくらい簡単に扱うことはできません。ただでさえ変化の激しいweb開発の世界で、`webGL`を扱うためだけに多大な学習コストを払わねばならないのは、webGL利用の大きな障壁になっています。
 
-`Grimoire.js`は、このWebにおける`WebGL`のあり方を変えます。Webの人がWebの書き方流で扱え、もともとCGなどをいじっていた方は従来に似た書き方をすると、その部品はすぐにWeb畑の人が使えるようになる。**WebGLが画像や動画に次ぐWebエンジニアが持つ筆の一つにする。** それがGrimoire.jsの成し遂げることです。
+`Grimoire.js`は、このWebにおける`WebGL`のあり方を変えます。グラフィクス系の開発者は、[彼らが慣れ親しんだやり方](conponent-system.html)で容易に機能を拡張し、Web開発者は[自分たちの知識の延長](03_JS-interface.html)で自然にそれを扱えるようにします。**WebGLをWebエンジニアにとって、画像や動画に次ぐ新しい筆にするのです。**
 
 # Grimoire.jsで何ができるの?
 
-さて、では具体的に **Grimoire.js** を用いてどのようなことができるのでしょうか?
+さて、**Grimoire.js** を使ってなにができるのでしょうか?
+いくつかの例を見てみましょう。
 
-例えば、単純に **3Dモデルを表示することもできます** し、
+最もシンプルな用途は、単純に **3Dモデルを表示すること** でしょう。
 
 ![](https://i.gyazo.com/2c6f811b72d565d76ef2b0f846af28bd.gif)
 
@@ -26,7 +27,7 @@ https://cx20.github.io/gltf-test/examples/grimoiregl/index.html?model=VC&scale=0
 
 > glTF表示テスト by [@cx20](https://github.com/cx20)
 
-高度な **シェーダーアートを簡単に表示すること** もできます。
+Grimoire.jsは簡単にシェーダーを記述できるので、高度な **シェーダーアートを簡単に表示すること** もできます。
 
 
 ![ポストエフェクト](https://i.gyazo.com/9d519c71b24ae27fccd35413e44a5b73.gif)
@@ -35,55 +36,54 @@ http://qiita.com/pnlybubbles/items/c87e8e7466ecdc11a23c
 
 > [ポストエフェクトする(Grimoire.js Advent Calender 2016)](http://qiita.com/pnlybubbles/items/c87e8e7466ecdc11a23c)[@pnlybubbles](https://github.com/pnlybubbles)
 
-あるいは、**WebCamのようなHTML5の様々な機能と連携** したアプリケーションも作れます。
+また、高度にwebのAPIに親和した設計は、**WebCamなどHTML5の様々な機能と連携** することも容易です。
 
 ![Webカメラサンプル](https://i.gyazo.com/b4ff87de431cf756f65e716525f41418.gif)
 
 https://grimoiregl.github.io/grimoire.gl-example/#webcam
 
-> 公式サンプル
-
-あなたがどのように、使いたいかにせよ、もしそれが`WebGL`の表現力を必要とするなら、十分に`Grimoire.js`の恩恵を受けることができるでしょう。
+あなたが`WebGL`の表現力を必要とするなら、それがどのようなものであっても、`Grimoire.js`の恩恵を受けることができるでしょう。
 
 # はじめに
 
-`Grimoire.js`を試すには、まず単純な`.html`を作成して以下の`<script>`でロードします。
+`Grimoire.js`を試すには、まず単純な`html`を作成して以下の`<script>`タグで読み込みます。
 
 ```html
 <script src="https://unpkg.com/grimoirejs-preset-basic/register/grimoire-preset-basic.js"></script>
 ```
 
-このスクリプトは単なる`Grimoire.js`ではなく、いくつかのプラグインが入っているものです。このスクリプトで最初に必要な最低限の機能が利用できます。
+> このスクリプトはピュアな`Grimoire.js`ではなく、それにいくつかの[標準プラグイン](url)が入ったものを読み込みます。このスクリプトでwebGLを扱うために必要な最低限の機能が利用できます。
 
-もし`minify`されたjsや、`npm`からの利用をしたいなら[ダウンロード](/guide/download.html)を参考にしてください。 **ただし、初心者にはまず`<script>`を用いての利用を推奨します。何事もシンプルなことから入るのが一番です**
+もし`minify`されたjsや、`npm`からの利用をしたいなら[インストール](installation.html)を参考にしてください。
 
-# 宣言的なWebGLマークアップ
+# WebGLをマークアップ
 
-`Grimoire.js`では、WebGLを記述するためのマークアップ(GOML)を記述します。例えば、埋め込みたい位置に以下のように記述します。
+`Grimoire.js`では、WebGLを記述するためのマークアップ([GOML](goml.html))を記述します。`html`の`<body>`に以下のように記述してみましょう。
 
 ```xml
-<script type="text/goml">
-  <goml>
-   <scene>
-    <camera/>
-    <mesh color="red" position="0,0,0"/>
-   </scene>
-  </goml>
-</script>
+<body>
+  <script type="text/goml">
+    <goml>
+     <scene>
+      <camera/>
+      <mesh color="red" position="0,0,0"/>
+     </scene>
+    </goml>
+  </script>
+</body>
 ```
 
 <iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-01">
 </iframe>
 
-このように、**`type='text/goml'`が指定されている`<script>`のある部分に`<canvas>`が挿入されて表示されます**
+このように、**`type='text/goml'`が指定されている`<script>`タグを埋め込むと、その位置に`<canvas>`が自動的に挿入されて表示されます**
 
-`<mesh>`の`position`属性を操作すれば、表示されている赤い四角形が動くのがわかります。一般的なHTMLの文章をいじるように このように宣言的に操作できるのです。
+`<mesh>`の`position`属性を操作すれば、表示されている赤い四角形が動くのがわかります。Grimoire.jsのオブジェクトは一般的なHTMLのドキュメントと同じように宣言的に操作できるのです。
 
-> GOMLファイルの読み込み
+> GOMLファイルの読み込み  
+> 通常のjavascriptファイルを読み込む際と同様に、`src="外部ファイルのURL"`を指定して外部からgomlファイルを読み込むこともできます。 このチュートリアルでは、簡略な説明のためhtmlに埋め込んでいますが、**通常は外部読み込みにすることを推奨します。**
 
-> javascriptファイルを読み込む際の`<script>`のように、`src="外部ファイルのURL"`を指定しても外部からgomlファイルを読み込むことができます。 このチュートリアルでは、簡略な説明のためhtmlに埋め込んでいますが、**通常は外部読み込みにすることを推奨します。**
-
-当然、以下のように記述すれば複数個のキャンバスを扱うこともできます。
+以下のように、複数個のキャンバスを扱うこともできます。
 
 ```xml
 <script type="text/goml">
@@ -128,7 +128,7 @@ https://grimoiregl.github.io/grimoire.gl-example/#webcam
 </script>
 ```
 
-に対して、以下のようなJSを実行すると、`Grimoire.js`が読み込まれてから1秒後に上の立方体だけ青くなります。
+このようなHTMLに対して、以下のようなJSを実行すると、`Grimoire.js`が読み込まれてから1秒後に上の立方体だけ青くなります。
 
 ```javascript
 gr(function(){
@@ -141,36 +141,20 @@ gr(function(){
 <iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-03">
 </iframe>
 
-`jQuery`を扱ったことがある人がいれば、似たようなAPIであると気がつくことでしょう。 `gr`は、`Grimoire.js`が定義するオブジェクトで、すべてのAPIはこれを通じてアクセスすることができます。
+もしあなたが`jQuery`を扱ったことがあれば、似たようなAPIであると気がつくでしょう。 `gr`は、`Grimoire.js`が定義するオブジェクトで、すべてのAPIはこれを通じてアクセスできます。
 
-**`gr`に`function`を渡した時には、`Grimoire.js`の初期化が終わったタイミングで呼ばれます**
+> `gr`に`function`を渡すと、Grimoire.jsがgomlの内容が読み込んだタイミングでコールバックされます
 
-また、**`gr`に文字列を渡してクエリで`<script>`を指定し、それにたいして操作したいノードを取得するためのクエリを指定します** (grの最初の括弧で帰ってくるのは、ある`<script>`へのクエリということに注意してください。これは初めて使う方が陥りやすい最も多いミスの一つです。)
+> また、`gr`オブジェクトに **スクリプトタグを指定するセレクタ** を指定し、続けて **操作したいノードを指定するセレクタを指定する** と、ノードを操作するインタフェースを取得できます。 (grに続くの最初の括弧で帰ってくるのは、スクリプトタグへのクエリということに注意してください。これは初めて使う人が陥りやすい最も多いミスの一つです。)
 
 # Grimoire.jsのノード・コンポーネントシステム
 
-これまでの議論は、他のタグベースのWebGLライブラリのものと変わりありません。 しかし、`Grimoire`におけるノードやコンポーネントのシステムを一度理解すれば、いかにこのノードのシステムがよくできているかわかることでしょう。
+ここまでは、他のタグベースのWebGLライブラリと同じような機能を紹介しました。
+しかし、`Grimoire.js`の最大の特長は、圧倒的な拡張性を実現する**ノードやコンポーネントのシステム**にあります。
 
-一般的にXMLやHTMLのDOMのシステムは、各ノードの親子関係を示すことができます。これはGOMLに於いても同じです。
-
-![](./images/nodes.png)
-
-実は、あるノードは **コンポーネント** と呼ばれる **一つの機能の集まり** によって構成されています。
-
-![](./images/node-have-components.png)
-
-例えば、`<mesh>`は常に、`Transform`という、座標や回転量などを管理するコンポーネントと`MeshRenderer`という、表示部分を管理しているコンポーネントの組みを意味します。
-
-`<camera>`は`Transform`と、カメラの変換の仕組みなどを管理している`Camera`コンポーネントの組を意味します。
-
-これらのコンポーネントは入力として**属性**を受け取ります。例えば、座標や回転量を管理する`Transform`は当然、`position`や`rotation`などの属性を持っています。
-
-![](./images/component-have-attributes.png)
-
-`<mesh>`に渡した、`position`属性は、この`<mesh>`が持っている`Transform`コンポーネントに渡され、パラメーターとして使用されます。このような属性は全て同様にjavascriptで操作ができます。
-
-ここで、コンポーネントの力を把握するために、以下のように記述してカメラを動かせるようにしてみましょう。
-
+例えば以下のような`goml`を記述してみましょう。
+Grimoire.jsは`goml`を、それぞれのタグをノードとするツリー構造として扱います。
+ただし、`<camera.components>`タグは通常のタグではなく、**`<camera>`タグにコンポーネントを追加するための記法** です。追加された`MouseCameraControl`コンポーネントは、マウスによって位置を操作するためのコンポーネントです。
 ```xml
 <script type="text/goml" id="canvas1">
   <goml>
@@ -189,15 +173,23 @@ gr(function(){
 <iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-04">
 </iframe>
 
-以上のように、`<camera>`の子要素である`<camera.components>`の中に`<MouseCameraControl>`を入れたことにより、普段`<camera>`が持つ`Transform`と`Camera`の他に、`MouseCameraControl`をつけたことになります。
+この`goml`では、カメラをマウスで操作できるようになりました。
+Grimoire.jsでは、ノードは **コンポーネント** と呼ばれる個別のモジュールの集まりで、複数のコンポーネント格納するコンテナのようなものです。コンポーネントについての詳細は、[ガイド]()で解説しています。
+
+![](./images/node-have-components.png)
+
+例えば`<mesh>`タグは、`Transform`という、座標や回転量などを管理するコンポーネントと`MeshRenderer`という、表示を管理しているコンポーネントがデフォルトで格納されています。
+また、`<camera>`タグは`Transform`と、カメラの本体の仕組みを管理している`Camera`コンポーネントが格納されます。
 
 ![](./images/optional-component.png)
+ノード名によって固有のデフォルトコンポーネントに加え、追加でコンポーネントを追加することで、その組み合わせによって様々な機能を実現できるのがノード・コンポーネントシステムの特長です。
 
-## コンポーネントを書いてみる
 
-まだ、コンポーネントが何か議論していませんでしたね。ここでは例えばくっつけた対象を回転させ続けるコンポーネント、`Rotate`を作ってみることにしましょう。
+## コンポーネントを作成する
 
-```javascript
+コンポーネントは新しく定義することもできます。ここでは例えばアタッチされたノード自身を回転させるコンポーネント、`Rotate`を作ってみることにしましょう。
+
+```javascript:index.js
 gr.registerComponent("Rotate",{
   attributes:{
     speed:
@@ -215,10 +207,17 @@ gr.registerComponent("Rotate",{
   }
 })
 ```
-`attributes`内の要素はこのコンポーネントが受け取れるパラメーター名とその詳細になります。
-ここでは、深く触れないことにしますが、パラメータ名から分かる通り、数値であって、初期値が`1`であることを指し示しています。
+`gr.registerComponent`でコンポーネントを登録することができます。詳細は[GrimoireInterface#registerComponent](url)で解説するのでここでは深く触れませんが、`attributes`の中にこのコンポーネントが受け取れるパラメーターを宣言できます。
+このパラメータは属性と呼ばれ、ここでは数値型で、初期値が`1`である属性が宣言されています。
+属性の詳細は[ガイド]()で解説しています。
 
-これを書いた上で、いかのようなgomlを書いてみましょう。
+このjavascriptを実行した上で、以下のようなgomlを書いてみましょう。
+
+> 先程のjavascriptは、Grimoire.jsを読み込むscriptタグの下に読み込むことで実行できます。
+```html
+<script src="https://unpkg.com/grimoirejs-preset-basic/register/grimoire-preset-basic.js"></script>
+<script src="./index.js"></script>
+```
 
 ```xml
 <script type="text/goml" id="canvas1">
@@ -242,18 +241,19 @@ gr.registerComponent("Rotate",{
 <iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example/#guide-05">
 </iframe>
 
+
 以下の図は、あるコンポーネントのライフサイクルを表します。今全てを理解する必要はありませんが、この図は将来あなたの役に立つことでしょう。
 
 ![](./images/message-order.png)
 
 $から始まる関数は **メッセージハンドラー** と呼ばれ、コンポーネントのライフサイクルの随所で呼ばれることになります。
-このメッセージハンドラー内の`this`はそれぞれのインスタンスにバインドされます。
+このメッセージハンドラー内の`this`はそれぞれのコンポーネントのインスタンスにバインドされます。
 
-メッセージハンドラーに関してはまだまだ触れなくてはならないことも多いのですが、ここでは単なるイベントハンドラーという程度の理解で問題ありません。
+[メッセージハンドラー]()はGrimoire.jsの中核を成す仕組みですが、ここでは単なるイベントハンドラーという程度の理解で問題ないでしょう。
 
 ## ノードを定義してみる
 
-もし、回転する`<mesh>`を大量に描きたいなら上のように書くのは不便ですね。ここで、`<rotated-mesh/>`なるものを用意するようにしてみましょう。
+もし、回転する`<mesh>`を頻繁に使うなら、上のように書くのは不便です。ここで、`<rotated-mesh/>`という新しいノードを作成してみましょう。
 
 ```javascript
 gr.registerNode("rotated-mesh",["Rotate"],{},"mesh");
@@ -281,7 +281,7 @@ gr.registerNode("rotated-mesh",["Rotate"],{},"mesh");
 
 # 次は
 
-ここまで理解したあなたは`Grimoire.js`の最も基本的な仕組みを理解しています。全てはこの上に成り立っているのです。例外はありません。
+ここまで理解したあなたは`Grimoire.js`の基本的な仕組みを理解しています。Grimoire.jsのノードやコンポーネントは、標準のものも含めてすべてこのように作成されています。`<goml>`,`<scene>`,`<camera>`などもそうであり、例外はありません。
 
-このような構造を把握した上で、あなたが恐らく聞きたくて聴きたくてたまらないのは描画周りでしょう。どうしたら、モデルが書けるのか、テクスチャが貼れるのか。
-そんなあなたは **[チュートリアル](/tutorial)** をする準備ができています。さあ、次の一歩へ進みましょう。
+簡単に機能を紹介してきましたが、Grimoire.jsを学ぶには実際に使ってみるのが一番の近道です。
+あなたのために、 **[発展的なガイド](/tutorial)** が用意されています。さあ、次の一歩へ進みましょう。
