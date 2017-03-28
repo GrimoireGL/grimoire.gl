@@ -251,9 +251,9 @@ gr.registerNode("rotated-mesh",["Rotate"],{},"mesh");
 
 # Whats next?
 
-These examples are only describes core features of grimoire in short. All components or nodes implemented in default are made with same way. There are no exeption.
+These examples are only describes core features of grimoire in short. All components or nodes implemented in default are made with same way. There are no exception.
 
-You might have understanded basic concept of Grimoire.
+You might have understood basic concept of Grimoire.
 
 We introduced some features in short, but it is the fastest way that use Grimoire in actual,
 Let's begin to learn Grimoire more with [tutorial](/tutorial.html).
