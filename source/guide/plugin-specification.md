@@ -1,36 +1,36 @@
 ---
 type: doc
-title: プラグイン仕様
+title: Plugin specification
 order: 3
 ---
 
-grimoire.jsでは、プラグインを用いてユーザーが新たに使用可能なタグが増えたり、インターフェースを拡張することができる。
-これらのプラグインを増やし、Web上に誰でも再利用可能な様々なタグベースの機能を蓄積するために、それぞれのプラグインは以下の仕様を満たす必要がある。
+To make any plugins are able to be worked with the other plugins fine, any plugins should match the specification below.
+If you can use template projects, you should use them. But, if you need to use your own development environments, read this specification to follow.
 
-これらの機能を満たすためのテンプレートを提供するためのパッケージを提供してはいるが、もし自前のビルド環境を用いる場合は以下の仕様を考慮しなければならない。
+# Directory structure
 
-# フォルダ構成
-
-プラグインをnpmにpublishする際には以下の2つのフォルダが必ず含まれる。
+Grimoire.js plugin of NPM package must include these directories.
 
 * ref
 * register
+* src
 
-# ファイル構成
+# File structures and purposes
 
 ## register/index.js
 
-プラグインのユーザーが`require("プラグイン名/register")`を読んだ際に読み込まれるファイルである。このjavascriptファイルには、プラグイン内の全ファイルがバンドリングされた状態で出力されるべきである。
+This is the file loaded with `require("<Plugin package name>/register")`.
+This file must contains all javascript entire bundled plugin project.
 
-また、このファイルのexportは以下のようなオブジェクトを出力する仕様を持つ。
+### Exported object
 
-例えば、あるプラグインが以下のようなファイルを持っていたとする。
+Assume a plugin have these files below.
 
 * src/A.js
 * src/B/C.js
 * src/B/D.js
 
-このようなファイルを持っている場合は、index.jsは以下のようなオブジェクトをexportしなくてはならない。
+The `export` object must be below.
 
 ```javascript
 {
@@ -42,22 +42,22 @@ grimoire.jsでは、プラグインを用いてユーザーが新たに使用可
 }
 ```
 
-また、同時にこのコードが呼ばれると出力する上記のようなオブジェクトそのものを`window.GrimoireJS.lib.{{ライブラリ名}}`に対して代入する必要がある。
+When the code required, plugin must assign the object above into `window.GrimoireJS.lib.{{Plugin package name}}`.
 
-**注意点**
+**Note**
 
-* バンドリング済みのファイルに、依存先のGrimoire.jsのプラグインは含めてはならない。
-(プラグイン内で`require("依存先ライブラリ名/register")`を呼んではならない。`require("依存先ライブラリ名/ref/PATH/TO/MODULE")`は参照なので問題ない。)
-* ソースフォルダの中では、フォルダAとファイルA.jsが同時に存在してはならない。(この場合、上記のindex.jsはうまく生成することができない。)
+* Bundled `index.js` must not contain any other plugins code that the plugin depend to.
+(Do not call `require("<Plugin name of dependency>/register")`in your library code. But,`require("<Plugin name of dependency>/ref/PATH/TO/MODULE")` is ok to include since that is just referencing the other object.)
+* Directory named `A` and a js file named `A.js` cannot exist in same time because of this specification.
 
-## refフォルダ
+## `ref` directory
 
-プラグインないの各ソースファイルに対して参照を取得するためのファイルが含まれる。
+The files to fetch reference of exported object inside of plugin should be included in this directory.
 
-例えば、`src/B/C.js`に対しては、以下のような内容をexportする`ref/B/C.js`を生成する。
+For instance,`ref/B/C.js` should be generated with following code for `src/B/C.js`.
 
 ```javascript
-window.GrimoireJS.lib.{{ライブラリ名}}.B.C;
+window.GrimoireJS.lib.<package name of dependency>.B.C;
 ```
 
 また、Typescriptを用いてライブラリにアクセスするユーザーを考慮するために、以下の2つのうちどちらかのファイルを上記の`src/B/C.js`に対して`ref/B/C.d.ts`を生成する必要がある。

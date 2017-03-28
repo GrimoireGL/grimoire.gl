@@ -70,3 +70,13 @@ As with any project, there are rules to contributing. Please see the [CONTRIBUTI
 This guide includes how to setup build environments and rules to contribute
 
 Any projects managed by our organization also follows this guideline. Even you want to make your own plugin, it is desired to follow this guideline.
+
+
+# Contact organizer
+
+If you need to contact organizer of this project because of the reasons below, please email me.
+
+
+```
+i.kakeru@<domain of this webpage>
+```
