@@ -42,7 +42,7 @@ The `export` object must be below.
 }
 ```
 
-When the code required, plugin must assign the object above into `window.GrimoireJS.lib.{{Plugin package name}}`.
+When the code required, plugin must assign the object above into `window.GrimoireJS.lib.{Plugin package name}`.
 
 **Note**
 
@@ -80,7 +80,7 @@ export default v;
 以下のオブジェクトをexportする必要がある。
 
 ```javascript
-window.GrimoireJS.lib.{{ライブラリ名}};
+window.GrimoireJS.lib.{ライブラリ名};
 ```
 
 # grimoirejs-cauldronのヘルパーコマンド

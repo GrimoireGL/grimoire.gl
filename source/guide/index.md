@@ -161,6 +161,7 @@ By adding some components to node, you can append a `behaviour` to the object.
 
 You can create component also.
 Let's create `Rotate` component to rotate a mesh.
+
 ```js
 gr.registerComponent("Rotate",{
   attributes:{
