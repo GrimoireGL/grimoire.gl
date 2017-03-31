@@ -1,5 +1,7 @@
 # grimoire.gl
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/GrimoireGL/grimoire.gl.svg)](https://greenkeeper.io/)
+
 Grimoire.js team site powered by [hexo](hexo.io).
 
 Pull requests welcome!
