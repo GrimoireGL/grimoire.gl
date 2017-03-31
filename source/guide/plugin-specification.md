@@ -1,11 +1,42 @@
 ---
 type: doc
-title: Plugin specification
+title: Plugin making
 order: 3
 ---
 
+# Boiler plate for plugins
+
+You can simply fork or copy the project to make plugins.
+
+## Boiler plate for typescript
+
+https://github.com/GrimoireGL/ts-boilerplate
+
+## Boiler plate for javascript
+
+https://github.com/GrimoireGL/js-boilerplate
+
+# Specification
+
 To make any plugins are able to be worked with the other plugins fine, any plugins should match the specification below.
 If you can use template projects, you should use them. But, if you need to use your own development environments, read this specification to follow.
+
+# Terms
+
+This specification refer some words described here.
+
+## Plugin name
+
+Same as NPM package name.
+
+## Short plugin name
+
+To make plugin name can be accessed in easy way, short plugin name is NPM package name transformed following way.
+
+* Remove head of `grimoirejs-`
+* Replace `-` with `_`
+
+Assume a plugin `grimoirejs-A-B-C`, the short plugin name of this plugin is `A_B_C`.
 
 # Directory structure
 
@@ -57,18 +88,18 @@ The files to fetch reference of exported object inside of plugin should be inclu
 For instance,`ref/B/C.js` should be generated with following code for `src/B/C.js`.
 
 ```javascript
-window.GrimoireJS.lib.<package name of dependency>.B.C;
+window.GrimoireJS.lib.<short plugin name of dependency>.B.C;
 ```
 
-また、Typescriptを用いてライブラリにアクセスするユーザーを考慮するために、以下の2つのうちどちらかのファイルを上記の`src/B/C.js`に対して`ref/B/C.d.ts`を生成する必要がある。
+Furthermore, plugins need to generate `ref/B/C.d.ts` with following way for the users want to use them with `Typescript`.
 
-**src/B/C.tsが存在するとき(プラグイン自体がTypescriptで記述されている時)**
+**When src/B/C.ts exists(When plugin use typescript for development)**
 
-ライブラリの`src/B/C.ts`をコンパイルされた時に生成される`d.ts`ファイル(型宣言ファイルを用いる)
+Copy the `d.ts` file generated from `src/B/C.d.ts` to `ref/B/C.d.ts`.
 
-**src/B/C.tsが存在しないとき(プラグイン自体がTypescriptで記述されていない時)**
+**When src/B/C.ts doesn't exists(When plugins pure javascript for development)**
 
-以下のような`d.ts`ファイルをそれぞれ生成する。
+Generate `d.ts` file like following code.
 
 ```typescript
 var v:any;
@@ -77,50 +108,39 @@ export default v;
 
 ## ref/index.js
 
-以下のオブジェクトをexportする必要がある。
+The following code must be exported.
 
 ```javascript
-window.GrimoireJS.lib.{ライブラリ名};
+window.GrimoireJS.lib.{short-plugin-name};
 ```
 
-# grimoirejs-cauldronのヘルパーコマンド
+# Helper commands in grimoirejs-cauldron
 
-上記の仕様を満たすためのいくつかの自動生成コマンドを、`grimoirejs-cauldron`パッケージが内包している。
+`grimoirejs-cauldron` would generate codes following the specification above.
 
-## generate-exposureコマンド
+## generate-exposure command
 
 ```bash
 $  cauldron generate-exposure --src ./src --dest ./src/index.ts --ts --main ./src/main.ts
 ```
 
-|パラメータ名|説明|
+|parameter|description|
 |:-:|:-:|
-|src|参照するファイル(プラグインで用いるファイル)の含まれるフォルダ|
-|dest|生成するjsファイル(typescriptの場合はtsファイル)|
-|ts|typescriptを生成すべきかどうか|
-|main|プラグインの登録処理で呼ばれるべきファイル(プラグインのエントリーポイント)|
+|src|Directory of source folder|
+|dest|`.ts` or `.js` file path exporting all objects to expose.|
+|ts|Use typescript or not|
+|main|Entry point of plugin|
 
-## generate-referenceコマンド
+## generate-reference command
 
 ```bash
 $  cauldron generate-reference --src ./src --dest ./src/index.ts --ts --main ./src/main.ts --dts ./ref
 ```
 
-|パラメータ名|説明|
+|parameter|description|
 |:-:|:-:|
-|src|参照するファイル(プラグインで用いるファイル)の含まれるフォルダ|
-|dest|生成するjsファイル(typescriptの場合はtsファイル)|
-|ts|typescriptを生成すべきかどうか|
-|main|プラグインの登録処理で呼ばれるべきファイル(プラグインのエントリーポイント)|
-|dts|dtsフォルダを生成する先(基本的にrefフォルダ)|
-
-# babelのポリフィル系の留意点
-
-refやregister内のjsファイルは全てbabel後、es2015準拠のコードでなければならない。ただし、`babel-polyfill`を各プラグインに入れてしまうと困ってしまうので、以下の例外を除いて`require("babel-polyfill")`や`transform-runtime`プラグインを用いてはならない。
-
-## preset
-
-Grimoire.jsには、babelの設定のpresetのように、複数のプラグインのセットをプリセットとしてインストールしたり、scriptタグとして用いることができる。
-このプリセットに`grimoirejs`が含まれるpresetを用いる場合、scriptタグで用いる対象のみ`babel-polyfill`を用いる必要がある。(**register/index.jsはrequireされた時に用いられるファイルであるからこれに含めてはならない**)
-
-また、他のプラグインをscriptからの読み込みで用いられうることを考えると、プラグインを`transform-runtime`プラグインを用いてバンドリングしてもならない。
+|src|Directory of source folder|
+|dest|`.ts` or `.js` file path exporting all objects to expose.|
+|ts|Use typescript or not|
+|main|Entry point of plugin|
+|dts|Directory of `d.ts` files|
