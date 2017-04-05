@@ -11,6 +11,5 @@ document.addEventListener("DOMContentLoaded",()=>{
     img.style.opacity = t;
     gr("#concept-canvas")("render-quad").setAttribute("progress",t);
     dim.style.opacity = Math.pow(Math.max(0,(ratio - 0.5)/0.5),2.0);
-    console.log(ratio);
   });
 })

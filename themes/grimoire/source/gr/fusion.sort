@@ -1,5 +1,5 @@
 @Pass{
-FS_PREC(mediump,float)
+FS_PREC(highp,float)
 @Disable(DEPTH_TEST)
 varying vec2 vUV;
 #ifdef VS
