@@ -71,6 +71,13 @@ You can use multiple canvases with 2 goml codes in same way.
 
 [SAMPLE](https://grimoiregl.github.io/grimoire.gl-example/#guide-02)
 
+> Grimoire.js inspector
+>
+> You can use chrome extension of Grimoire.js Devtool for making easier to use Grimoire.js.
+> This extension would be helpful during your training of Grimoire.js.
+> ![Grimoire.js inspector](https://i.gyazo.com/bdcabf661e27d9beb47c3342444ee3a0.png)
+> You can find more details and download from [here](./devtool.html)
+
 # Mutation with Javascript API
 
 ```xml
@@ -110,6 +117,8 @@ If you have used `jQuery` ever, you would notice that this API is very similar t
 > Waiting for initialized timing
 >
 > When you pass a function to `gr` as an argument, the function would be called after initializing grimoire.
+
+　
 
 > Querying objects
 >
@@ -250,9 +259,13 @@ gr.registerNode("rotated-mesh",["Rotate"],{},"mesh");
 
 [SAMPLE](https://grimoiregl.github.io/grimoire.gl-example/#guide-06)
 
-# Whats next?
-
 These examples are only describes core features of grimoire in short. All components or nodes implemented in default are made with same way. There are no exception.
 
+# Whats next?
+
 You might have understood basic concept of Grimoire.
+Grimoire provides some API like jQuery for Web engineers to use WebGL stuff under almost same way they have used in web development.
+And, Grimoire also provides API like Unity for 3D engineers to make components that enables us to collaborate with the other web engineers easily without considering what kind of comprehensive API should be provided to Web engineers.
+Grimoire connect each side of engineers by providing appropriate APIs for each engineers.
+
 Let's begin to learn Grimoire more with [tutorial](https://grimoire.gl/tutorial/).
