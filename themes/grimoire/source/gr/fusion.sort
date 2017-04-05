@@ -1,0 +1,65 @@
+@Pass{
+FS_PREC(mediump,float)
+@Disable(DEPTH_TEST)
+varying vec2 vUV;
+#ifdef VS
+  attribute vec3 position;
+
+  attribute vec2 texCoord;
+  uniform mat4 _matPVM;
+  void main(){
+    gl_Position = vec4(position,1);
+    vUV = texCoord;
+  }
+#endif
+
+#ifdef FS
+#define time _time*speed/10000.
+uniform float _time;
+uniform vec2 mouse;
+@{default:"1.0",range:"1,10"}
+uniform float speed;
+
+@{type:"color",default:"#00AAFF"}
+uniform vec3 color1;
+
+@{type:"color",default:"#FF7700"}
+uniform vec3 color2;
+
+@{default:0.5}
+uniform float center;
+
+@{default:0.2,range:"0,0.3"}
+uniform float stride;
+
+@{default:1.0,range:"0,1"}
+uniform float intensity;
+
+@{default:0.0,range:"0,1"}
+uniform float progress;
+
+#define MAX_ITER 12
+void main( void ) {
+
+	vec2 p = vUV;
+	float t = smoothstep(center - stride,center + stride,p.x);
+    vec3 col = mix(color1,color2,t);
+    p.x = 2.0 * p.x - 1.0;
+    p.y = 1.- abs(2.0 * p.y - 1.);
+	vec2 i = p;
+	float c = 0.0;
+	float inten = 1.0;
+
+
+	for (int n = 0; n < MAX_ITER; n++) {
+		float t = time * (1.0 - (1.0 / float(n+1)));
+		i = p + vec2(cos(t - i.x) + sin(t + i.y), sin(t - i.y) + cos(t + i.x));
+		c += length(vec2(p.x / (sin(i.x+t)/inten),p.y / (cos(i.y+t)/inten)))*intensity;
+	}
+	c /= float(MAX_ITER) ;
+	c *= pow(abs(p.x) , 3.0 * (1.0 - progress));
+
+	gl_FragColor = vec4(max(vec3(pow(c,1.1))*col,vec3(0.2)), 1.0);
+}
+#endif
+}

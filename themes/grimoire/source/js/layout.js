@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
   var marginComputedStyle = window.getComputedStyle(document.querySelector('#content'), '');
   var marginTop = parseFloat(marginComputedStyle.marginTop.slice(0, -2)) + parseFloat(marginComputedStyle.paddingTop.slice(0, -2));

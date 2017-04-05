@@ -1,0 +1,6 @@
+<goml>
+  <import-material typeName="fusion" src="gr/fusion.sort"/>
+  <renderer>
+    <render-quad material="new(fusion)"/>
+  </renderer>
+</goml>

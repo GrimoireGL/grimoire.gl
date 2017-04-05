@@ -1,4 +1,4 @@
-<script type="text/javascript" src="https://unpkg.com/grimoirejs-preset-basic@1.9.4/register/grimoire-preset-basic.js"></script>
+<script type="text/javascript" src="https://unpkg.com/grimoirejs-preset-basic/register/grimoire-preset-basic.js"></script>
 <div id="primary">
   <nav id="menu-wrap">
     <ul id="menu">
@@ -48,7 +48,7 @@
     </div>
   </div>
 </div>
-<div id="description">
+<!-- <div id="description">
   <div class="front">
     <h2 class="title">WebGLの表現力をもっと手軽に、あなたのサイトでも。</h2>
     <div class="content">2D、3Dのあらゆる表現を今まで使っていたタグを活用して取り入れることができます。もちろん、どんなWebフレームワークと組み合わせるのもあなたの自由です。</div>
@@ -92,6 +92,33 @@
       </li>
     </ul>
   </div>
+</div> -->
+<div id="concept">
+  <script id="concept-canvas" src="gr/fusion.goml" type="text/goml" charset="utf-8"></script>
+  <div class="concept-shadow-container">
+    <div class="concept-overlay-dim">
+    </div>
+    <div class="concept-overlay concept-top">
+      <h2 class="title">WebGL development is typically hard work...</h2>
+      <p><strong>Web engineers</strong> need to know graphics stuff such as render loop, 3D matehmatics and shaders.</p>
+      <p><strong>CG engineers</strong> are also confusing what kind of API should be provided for Web engineers whom co-work with.</p>
+      <p><strong>How should make use of powers of each side of engineers?</strong></p>
+    </div>
+    <div class="concept-logo">
+      <div class="concept-logo-inner">
+        <div id="logo-icon" class="concept-logo-icon"></div>
+      </div>
+    </div>
+    <div class="concept-overlay-bottom-wrap">
+      <div class="concept-overlay concept-bottom" id="bottom-detail">
+        <h2 class="title">Grimoire.js provide suitable APIs for each side</h2>
+        <p><strong>Web engineers</strong> can use WebGL stuff with markup like HTML and DOM operation API they used to.</p>
+        <p><strong>CG engineers</strong> can make components with API like Unity they used to.</p>
+        <p><strong>Web engineers</strong> can focus on layout of web pages and collaboration of the other web page functions.</p>
+        <p><strong>CG engineers</strong> can focus on shader stuff to visualize better or complex graphics algorithm they need.</p>
+      </div>
+    </div>
+  </div>
 </div>
 <div id="contributors">
   <div class="front">
@@ -115,3 +142,4 @@
 <script type="text/javascript">
 !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
 </script>
+<script src="js/concept.js" charset="utf-8"></script>
