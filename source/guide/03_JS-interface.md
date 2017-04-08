@@ -1,5 +1,7 @@
 ---
 type: doc
-title: JSインタフェース（仮）
+title: javascript interfaces
 order: 3
 ---
+
+[WIP]

@@ -9,6 +9,8 @@ order: 0
 Grimoire doesn't support IE11 and below. Please use Microsoft Edge instead.
 (Possibly works fine on IE11.)
 
+Chrome, Firefox, Safari, Chrome on Android and iPhone safari would works fine.
+
 > Caution of WebGL extension Compatibility
 >
 > Some of plugin may require some extension of WebGL or some specific texture size at least to work.
