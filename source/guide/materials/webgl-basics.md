@@ -47,6 +47,7 @@ By using power of GPU for specific calculation, renderer can have great performa
 ## Rendering pipelines
 
 Making sure rendering tasks being able to calculated independently, WebGL has specification that make sure how a polygons are calculated, what kind of arguments should be passed to GPU.
+And the calculation order and what should do in each stage is called `Rendering pipeline`.
 We need to know how to calculated a polygon to be displayed.
 
 ![](./images/polygon.svg)
@@ -69,4 +70,45 @@ Then the polygon would appear on display by writing the result of rendering into
 
 ## Rendering arguments
 
+In the rendering pipeline, we have passed some arguments needed for calculating color of pixels or position of vertices.
+GPU can accept 2 types of argument. These are `uniform variable` and `attribute variable`.
+
+`attribute variable` can be differed by each vertices. For example, position is different for each vertices. And normals is one of example of this.
+
+`uniform variable` is the argument cannot be differed by each vertices. For example, if you need texture, in the most of cases, same texture would be used for each vertices.
+
+|Variable type|Differ by|Examples|
+|:-:|:-:|:-:|
+|uniform|by Mesh(group of polygons)|Color,Texture, some cofficients|
+|attribute|by vertices|Position, normal, texture coordinate|
+
+The example is only in typically use case. Most important fact is there are 2 types of arguments and 1 of them is for entire mesh and 1 of them is for each vertices.
+
 ## Rendering states
+
+In sometimes, we might need to configure GPU to render correctly. For example, after rendering meshes, GPU would blend pixels if the alpha value of the pixel is not 1 and there was another pixel that intersect. We might need to configure rendering state for specifying how to blend each pixels.
+
+There are several configurations(We won't describe deeply about this section), but this is few example of them.
+
+* Culling
+* Depth test
+* Blends
+* Stencil test
+
+
+## And...?
+
+If you have not used GPU stuff yet, this section might be difficult. But, most important things are what should we input to gain output. And these description can be useful to understand what actually `Material` or `Geometry` do.
+
+This is summary of inputs I described above. Only 4 types of them is needed for rendering.
+
+* attribute variables
+* uniform variables
+* shaders(fragment shader and vertex shader)
+* rendering states
+
+Especially for Grimoire, We call set of `attribute variables` as `Geometry`.
+And the other inputs are `Material`.
+
+So, if you need to operate input related to `attribute variables`, you might need to operate Geometry API.
+If you need to operate the other input, you might need to operate Material API.
