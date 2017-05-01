@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <title>Artboard 5</title>
+  <g>
+    <polygon points="121.67 41.27 33.99 193.13 209.34 193.13 121.67 41.27" fill="#0071bc"/>
+    <circle cx="121.67" cy="44" r="5.5"/>
+    <circle cx="35.36" cy="192.33" r="5.5"/>
+    <circle cx="209" cy="192.33" r="5.5"/>
+  </g>
+  <text transform="translate(89.67 34)" font-size="12" font-family="MyriadPro-Regular, Myriad Pro"><tspan letter-spacing="-0.02em">P</tspan><tspan x="6.08" y="0">osition:(0,1,0)</tspan></text>
+  <text transform="translate(117.67 46)" font-size="8" fill="#fff" font-family="MyriadPro-Regular, Myriad Pro">p1</text>
+  <text transform="translate(30.66 194.62)" font-size="8" fill="#fff" font-family="MyriadPro-Regular, Myriad Pro">p2</text>
+  <text transform="translate(205.01 195.12)" font-size="8" fill="#fff" font-family="MyriadPro-Regular, Myriad Pro">p3</text>
+  <text transform="translate(13.67 209)" font-size="12" font-family="MyriadPro-Regular, Myriad Pro"><tspan letter-spacing="-0.02em">P</tspan><tspan x="6.08" y="0">osition:(-1,0,0)</tspan></text>
+  <text transform="translate(167.67 209)" font-size="12" font-family="MyriadPro-Regular, Myriad Pro"><tspan letter-spacing="-0.02em">P</tspan><tspan x="6.08" y="0">osition:(1,0,0)</tspan></text>
+  <g>
+    <polygon points="121.67 41.27 33.99 193.13 209.34 193.13 121.67 41.27" fill="#0071bc"/>
+    <circle cx="121.67" cy="44" r="5.5"/>
+    <circle cx="35.36" cy="192.33" r="5.5"/>
+    <circle cx="209" cy="192.33" r="5.5"/>
+  </g>
+  <text transform="translate(89.67 34)" font-size="12" font-family="MyriadPro-Regular, Myriad Pro"><tspan letter-spacing="-0.02em">P</tspan><tspan x="6.08" y="0">osition:(0,1,0)</tspan></text>
+  <text transform="translate(117.67 46)" font-size="8" fill="#fff" font-family="MyriadPro-Regular, Myriad Pro">p1</text>
+  <text transform="translate(30.66 194.62)" font-size="8" fill="#fff" font-family="MyriadPro-Regular, Myriad Pro">p2</text>
+  <text transform="translate(205.01 195.12)" font-size="8" fill="#fff" font-family="MyriadPro-Regular, Myriad Pro">p3</text>
+  <text transform="translate(13.67 209)" font-size="12" font-family="MyriadPro-Regular, Myriad Pro"><tspan letter-spacing="-0.02em">P</tspan><tspan x="6.08" y="0">osition:(-1,0,0)</tspan></text>
+  <text transform="translate(167.67 209)" font-size="12" font-family="MyriadPro-Regular, Myriad Pro"><tspan letter-spacing="-0.02em">P</tspan><tspan x="6.08" y="0">osition:(1,0,0)</tspan></text>
+</svg>

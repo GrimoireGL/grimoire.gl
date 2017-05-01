@@ -1,10 +1,26 @@
 <aside id="sidebar">
   <div id="doc-title"><%- doc.toUpperCase() %></div>
-  <ul id="list">
-    <% site.pages.filter(function(p) { return p.path.split('/')[0] === doc }).sort('order').each(function (p) { %>
-      <li class="<%- p.path === page.path ? 'active' : '' %>">
-        <a href="<%- url_for(p.path) %>"><%- p.title %></a>
-      </li>
-    <% }) %>
-  </ul>
+  <% site.pages
+    .map(function(p) { return p.path.split('/') })
+    .filter(function(path) { return path[0] === doc })
+    .map(function(s) { return s[1] })
+    .filter(function(s) { return !s.match(/\./) })
+    .filter(function(s, i, this_) { return this_.indexOf(s) === i })
+    .sort()
+    .forEach(function (section) { %>
+    <% var ss = section.match(/^[0-9]+_(.+)$/)[1] %>
+    <div id="doc-section">
+      <div id="doc-sub-title"><%= ss[0].toUpperCase() + ss.substr(1) %></div>
+      <ul id="list">
+        <% site.pages
+          .filter(function(p) { return p.path.split('/')[0] === doc && p.path.split('/')[1] === section })
+          .sort('order')
+          .each(function (p) { %>
+          <li class="<%- p.path === page.path ? 'active' : '' %>">
+            <a href="<%- url_for(p.path) %>"><%- p.title %></a>
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+  <% }) %>
 </aside>

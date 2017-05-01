@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <title>Artboard 7</title>
+  <polygon points="128.17 41.26 40.49 193.13 215.84 193.13 128.17 41.26" fill="#0071bc"/>
+  <g>
+    <g>
+      <circle cx="128.17" cy="44" r="5.5"/>
+      <text transform="translate(124.17 46)" font-size="8" fill="#fff" font-family="MyriadPro-Regular, Myriad Pro">p1</text>
+    </g>
+    <g>
+      <circle cx="41.86" cy="192.33" r="5.5"/>
+      <text transform="translate(37.16 194.62)" font-size="8" fill="#fff" font-family="MyriadPro-Regular, Myriad Pro">p2</text>
+    </g>
+    <g>
+      <circle cx="215.5" cy="192.33" r="5.5"/>
+      <text transform="translate(211.51 195.12)" font-size="8" fill="#fff" font-family="MyriadPro-Regular, Myriad Pro">p3</text>
+    </g>
+  </g>
+  <g>
+    <text transform="translate(96.17 34)" font-size="12" font-family="MyriadPro-Regular, Myriad Pro"><tspan letter-spacing="-0.02em">P</tspan><tspan x="6.08" y="0">osition:(0,1,0)</tspan></text>
+    <text transform="translate(20.17 209)" font-size="12" font-family="MyriadPro-Regular, Myriad Pro"><tspan letter-spacing="-0.02em">P</tspan><tspan x="6.08" y="0">osition:(-1,0,0)</tspan></text>
+    <text transform="translate(174.17 209)" font-size="12" font-family="MyriadPro-Regular, Myriad Pro"><tspan letter-spacing="-0.02em">P</tspan><tspan x="6.08" y="0">osition:(1,0,0)</tspan></text>
+  </g>
+  <g opacity="0.5">
+    <g>
+      <line x1="36.16" y1="44.67" x2="216.16" y2="44.67" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="36.16" y1="54.67" x2="216.16" y2="54.67" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="36.16" y1="64.67" x2="216.16" y2="64.67" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="36.16" y1="74.67" x2="216.16" y2="74.67" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="36.16" y1="84.67" x2="216.16" y2="84.67" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="36.16" y1="94.67" x2="216.16" y2="94.67" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="36.16" y1="104.67" x2="216.16" y2="104.67" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="36.16" y1="114.67" x2="216.16" y2="114.67" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="36.16" y1="124.67" x2="216.16" y2="124.67" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="36.16" y1="134.67" x2="216.16" y2="134.67" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="36.16" y1="144.67" x2="216.16" y2="144.67" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="36.16" y1="154.67" x2="216.16" y2="154.67" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="36.16" y1="164.67" x2="216.16" y2="164.67" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="36.16" y1="174.67" x2="216.16" y2="174.67" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="36.16" y1="184.67" x2="216.16" y2="184.67" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="36.16" y1="194.67" x2="216.16" y2="194.67" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+    </g>
+    <g>
+      <line x1="36.16" y1="194.5" x2="36.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="46.16" y1="194.5" x2="46.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="56.16" y1="194.5" x2="56.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="66.16" y1="194.5" x2="66.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="76.16" y1="194.5" x2="76.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="86.16" y1="194.5" x2="86.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="96.16" y1="194.5" x2="96.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="106.16" y1="194.5" x2="106.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="116.16" y1="194.5" x2="116.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="126.16" y1="194.5" x2="126.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="136.16" y1="194.5" x2="136.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="146.16" y1="194.5" x2="146.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="156.16" y1="194.5" x2="156.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="166.16" y1="194.5" x2="166.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="176.16" y1="194.5" x2="176.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="186.16" y1="194.5" x2="186.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="196.16" y1="194.5" x2="196.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="206.16" y1="194.5" x2="206.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+      <line x1="216.16" y1="194.5" x2="216.16" y2="44.75" fill="none" stroke="#ccc" stroke-miterlimit="10"/>
+    </g>
+  </g>
+</svg>

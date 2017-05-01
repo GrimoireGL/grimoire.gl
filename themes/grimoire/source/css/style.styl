@@ -93,8 +93,18 @@ nav
   margin-top 10px
   color color-primary
 
-#list
+#doc-sub-title
+  font-weight bold
+  font-size 15px
   text-align center
+  margin-bottom 20px
+  margin-top 10px
+  color color-primary
+
+#doc-section
+  margin-bottom 40px
+
+#list
   font-size 13px
   margin 0
   padding 0
@@ -106,10 +116,11 @@ nav
     &:first-child
       border-top 1px solid color-inverse-normal
     > a
+      text-align center
       box-sizing border-box
       text-decoration none
       display block
-      padding 12px 0 10px
+      padding 12px 20px 10px
       color color-inverse-normal
       transition .3s
       &:hover
@@ -123,7 +134,7 @@ nav
     > a
       background-color color-inverse-normal
       color color-inverse
-    ul
+    .sub-menu
       padding 0
       list-style none
       li
@@ -134,8 +145,12 @@ nav
         &:last-child
           padding-bottom 10px
           border-bottom 5px solid color-inverse-normal
+        &.h1
+          padding-left 15px
+        &.h2
+          padding-left 30px
         a
-          padding 5px 5px
+          padding 5px 0
           display block
           font-size 12px
           cursor pointer
