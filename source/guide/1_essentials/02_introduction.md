@@ -155,12 +155,12 @@ The appended component `<MouseCameraControl>` is the component to operate positi
 
 In grimoire, nodes are including several modules called as **component**. In other words, nodes are just a container containing some components.
 
-![](./images/node-have-components.png)
+![](../images/node-have-components.png)
 
 For example, `<mesh>` tag contains `Transform` component managing positions or rotations and `MeshRenderer` component managing rendering meshes by default.
 As another example, `<camera>` tag contains `Transform` component and `Camera` component managing camera feature to  project scene.
 
-![](./images/optional-component.png)
+![](../images/optional-component.png)
 
 Node names means what is default components are bound and what is the default values for the attributes.
 By adding some components to node, you can append a `behaviour` to the object.
@@ -228,7 +228,7 @@ After loading the javascript, you need to inject GOML file to use that.
 This figure describes lifecycle of a component. You don't need to understand now correctly, but this figure would be helpful in future.
 
 
-![](./images/message-order.png)
+![](../images/message-order.png)
 
 The functions begins with `$` are called `message handler`, and these are called in specific timings in component lifecycle.
 
