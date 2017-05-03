@@ -90,3 +90,34 @@ Ensure that you need to specify materials on each `<mesh>` tags.
 ## Material arguments
 
 Most of materials on Grimoire is created with custom material file `.sort`. Grimoire will generate attributes for this custom material file by parsing variables of shader code.
+
+Therefore, these arguments are completely depends on what material you need to use.
+But, this is argument list of official shaders.
+
+## `unlit` shader
+
+This is default value of material(if you didn't link forward-shading plugin).
+This shader not supports shadings. Just for painting with single color or attach texture.
+
+**arguments**
+
+* color(Color4)・・・solid color to draw the mesh
+* texture(Texture)・・・a texture to attach to mesh
+
+## `basic` shader
+
+This is a shader enabled by `forward-shading` plugin. If you need to use shading, you would need to use this shader.
+
+**arguments**
+
+* albedo(Color4)・・・baseColor on the mesh
+* texture(Texture)・・・baseColor of texture on the mesh(This color will be used with albedo by multiplying)
+* roughness(float)・・・0 to 1 value to specify how the mesh is rough.
+* roughnessTexture(Texture)・・・a texture containing roughness info. The texture needs to contain roughness in R channel.
+* metalic(float)・・・0 to 1 value to specify how the mesh is metalic.
+* emission(Color3)・・・the color of the mesh emitting. This color is not affected by shades.
+
+## Your custom material
+
+Of course you can make your own material. You should read [Custom material(WIP)]() document for making your own material.
+Even our official materials are written in same way as I wrote in the Custom material document.
