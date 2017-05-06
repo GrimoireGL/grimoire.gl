@@ -23,7 +23,7 @@ Of course, GPU is mostly used for graphics stuff including 3D. But, the possibil
 Today, we have good user friendly GUI applications including browsers. All of them are using display.
 If that was in game, contents shown on display would be refreshed 60 times or more per second.
 
-That mean 1920*1080(HD) display should calculate `1920*1080*60 = 124,416,000` pixels per second.
+That mean 1920\*1080(HD) display should calculate `1920*1080*60 = 124,416,000` pixels per second.
 And resolutions are growing day by day. Some people have 4K display requiring more computation power.
 
 ## GPU vs CPU
