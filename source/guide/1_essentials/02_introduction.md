@@ -76,7 +76,7 @@ You can use multiple canvases with 2 goml codes in same way.
 > You can use chrome extension of Grimoire.js Devtool for making easier to use Grimoire.js.
 > This extension would be helpful during your training of Grimoire.js.
 > ![Grimoire.js inspector](https://i.gyazo.com/bdcabf661e27d9beb47c3342444ee3a0.png)
-> You can find more details and download from [here](./devtool.html)
+> You can find more details and download from [here](../2_advanced/devtool.html)
 
 # Mutation with Javascript API
 
