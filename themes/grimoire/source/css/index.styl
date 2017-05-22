@@ -57,13 +57,32 @@ nav
   height 50px
 
 #menu
-  max-width 800px
+  max-width 1000px
   width 80%
   left 50%
   transform translate(-50%, 0)
   position absolute
   z-index 10
   menu(color-inverse-normal, color-primary)
+
+#menu-logo-wrap
+  display block
+  margin-top -13px
+  height 50px
+  flex-init()
+
+#menu-logo-icon
+  margin-bottom 2px
+  bg-image-alone()
+  width 50px
+  background-image logo-icon
+
+#menu-logo-font
+  margin-top 1px
+  margin-left 13px
+  bg-image-alone()
+  width 120px
+  background-image logo-font
 
 #logo-icon
   // z-index 10
