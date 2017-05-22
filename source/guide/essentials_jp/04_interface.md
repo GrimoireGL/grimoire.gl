@@ -3,59 +3,102 @@ type: doc
 title: インターフェース
 order: 30
 ---
-Grimoire.jsはGOMLを書くだけでも簡単な表示はできますが、もし他のUIとの連携したり、動的な表現を作り込みたいなら、**javascriptで操作する必要** があります。
-Grimoire.jsでは、様々な用途を想定して便利なAPIを多数用意しています。
-この項では、**主要な３つのインタフェース** を順番に紹介していきます。
-サンプルコードを通して、それらを使ってどのようなことができるのかを見ていきましょう。
+Grimoire.jsはGOMLを書くだけでも簡単な表示はできますが、もし他のUIとの連携したり、動的な表現を作り込みたいなら、**javascriptで操作** したくなるはずです。
+まずは、シーン上にキューブがあるとして、マウスが乗っているときだけその色を変更してみましょう。
+
+```xml
+<goml>
+  <scene>
+    <camera position="0,0,-10"/>
+    <mesh geometry="cube" color="red" position="0,0,0"/>
+  </scene>
+</goml>
+```
+
+```javascript
+gr("*")("mesh").on("mouseEnter",function(){
+  gr("*")("mesh").setAttribute("color","green");
+});
+gr("*")("mesh").on("mouseLeave",function(){
+  gr("*")("mesh").setAttribute("color","red");
+});
+```
+これだけのコードを記述して、ブラウザで表示してみましょう。マウスに応じて色が変化するはずです！
+
+このコードを少し詳しく見ていきましょう。あなたがもしjavascriptに精通していれば、
+`gr("*")("mesh").on`メソッドがイベントハンドラを登録する関数だと気づいたかもしれません。
+Grimoire.jsでは、**mouseEnter**,**mouseLeave** などのイベントに対してコールバック関数を登録することができます。
+コールバックを登録するするオブジェクトは`gr("*")("mesh")`という書き方で記述できます。
+この部分は、以下のように３段階に分かれています。
+@@図@@
+
+`gr`は、Grimoire.jsがグローバルに定義する唯一のオブジェクトで、**GrimoireInterface** と呼ばれます。
+`gr`にセレクタを渡して得られるオブジェクトは **GOMLInterface** で、さらにそれにセレクタを渡して **NodeInterface** が得られます。
+この3つのオブジェクトが、Grimoire.jsを操作するための最も基本的なインタフェースで、それぞれGrimoire.js全体、GOML単位、ノード単位での操作のために使います。
+ただの関数オブジェクトではありません。順番に見ていきましょう。
+
+
 
 #GrimoireInterface
-Grimoire.jsを読み込むと、`gr`オブジェクトがグローバルに定義されます。
-`gr`は、Grimoire.jsがグローバルに定義する唯一のオブジェクトで、**GrimoireInterface** と呼ばれます。
-`gr`オブジェクトはGrimoire.jsに関する設定を変更したり取得するためのオブジェクトです。
-Grimoire.jsに対するあらゆる操作はこのオブジェクトを経由することになります。
+Grimoire.jsを読み込むと、自動的に`gr`オブジェクトがグローバルに定義されます。
+このオブジェクトからGrimoire.js全体の設定を変更したり、取得したりできます。
+たとえば、Grimoire.jsがデフォルトで出力するデバッグ用コンソール出力をオフにしたければ、
 
-たとえば、デバッグ出力をoffにするときは
 ```javascript
   gr.debug=false;
 ```
 
-のように設定できます。
-デフォルトで`true`になっていますが、デバッグ用の警告が不要な本番環境では`false`にしておきましょう。
-他にもプラグインやノードの情報、コンポーネントの追加などの操作がここからできます。詳細はAPIリファレンスを参照してください。
+というように設定すればいいでしょう。
+他にも以下のような便利なAPIが用意されています。
 
-また、`gr`オブジェクトは関数として呼び出すこともできます。
-以下のように`gr`に関数を渡して呼び出すと、Grimoire.jsがロードされ、ページ上のGOMLが読み込まれた直後にコールバックされます。
+```javascript
+  //バージョン情報やプラグインの情報などが取得できます
+  var lib = gr.lib;
+
+  //すべてのノードが管理されます
+  var nodes = gr.nodeDictionary;
+
+  //読み込まれたプラグインや作成されたノードをすべてクリアしてピュアな状態に戻します。
+  gr.clear()
+```
+GrimoireInterfaceは以降に紹介するあらゆるAPIの起点となるオブジェクトなので、以降のガイド中でもたびたび登場します。
+必要であれば詳細なAPIリファレンスを参照してください。
+
+ところで、`gr`オブジェクトは関数として呼び出すこともできます。
 ```javascript
 gr(function(){
   console.log("Grimoire.js is loaded!")
-  })
+})
 ```
 
-> `gr`オブジェクトとまったく同じオブジェクトに`GrimoireJS`変数からもアクセスできます。
-もし`gr`オブジェクトが他に使用している変数と重複する場合は、`GrimoireJS.noConflict()`を呼び出すことで、`gr`への割り当てを解除することができます。
-
-GOML上にオブジェクトを大量に配置する場合などは、スクリプトで操作したくなります。
-このような場合は、**GOMLが読み込まれてから** 操作する必要があるので、このように記述します
+このように`gr`オブジェクトにコールバック関数を渡して呼び出すと、ページ上のGOMLがロードされた直後にコールバックされます。
+この機能は、**シーン上のオブジェクトを動的に操作するシチュエーション** などで非常によく使います。
+GOML上のオブジェクトを操作するなら、このように **GOMLが読み込まれたあと** に処理を行う必要があるからです。
 
 ```javascript
+  //10個のキューブを一列に配置します。
   gr(function(){
     for(var i=0;i<10;i++){
       var x = i-5;
+
+      //<mesh>タグを<scene>に追加します。
       gr("*")("scene").addChildByName("mesh",{geometry:"cube",position:[x,0,0]});
     }
   })
-  //error! GOML have not loaded yes.
+
+  //'scene'ノードはまだ読み込まれていないので、以下のコードは動作しません！
   //gr("*")("scene").addChildByName("mesh",{geometry:"cube",position:[0,0,0]});
 
 ```
 
-この例では10個のキューブを一列に配置しています。
-`gr(function(){...})`の外で操作すると、GOMLが読み込まれていないためエラーになります。
-
-よく見ると、ここでは`gr`に関数を渡す以外に`gr("*")("sene")`という使い方もしています。
+よく見ると、ここでは`gr`に関数を渡す以外に`gr("*")("scene")`という使い方もしています。
 `gr`は関数を渡すとロード時のコールバックになりますが、**文字列を渡すとGomlInterfaceを取得する関数になります**。
-ここで渡す文字列はGOMLを指定するためのセレクタです。GOMLを一つしか使わない場合は`"*"`を指定すれば問題ありません。
-詳細はAPIリファレンスを参照してください。
+
+ここで渡す文字列は、**GOMLを読み込んでいる<script>タグ** を指定するためのセレクタです。ただ、GOMLを一つしか使わない場合は`"*"`を指定してもいいでしょう。
+さて、GOMLInterfaceの取得方法と使い方を見てみましょう。
+
+> `gr`オブジェクトとまったく同じオブジェクトに`GrimoireJS`変数からもアクセスできます。
+もし`gr`オブジェクトが他に使用している変数と重複する場合は、`GrimoireJS.noConflict()`を呼び出すことで、`gr`への割り当てを解除することができます。
 
 #GOMLInterface
 
@@ -81,14 +124,14 @@ console.log(multiGomlInterface.rootNodes.length);// 2
 ```
 
 ただ、GomlInterfaceはGrimoireInterfaceほど多くの機能を持ちません。
-おそらくほとんどの場合、**関数として呼び出してNodeInterfaceを取得する** のに使うでしょう。
+ほとんどの場合、**関数として呼び出してNodeInterfaceを取得する** のに使うでしょう。
 
 ```javascript
 thirdNodeInterface = thirdGomlInterface("mesh");
 ```
 呼び出し方はGrimoireInterfaceと同様ですが、指定するのは**ノードを指定するセレクタ**です。
 
-ところで実際はGomlInterfaceを単体で使う機会は少ないため、大抵はGrimoireInterfaceからつなげて、
+実際はGomlInterfaceを単体で使う機会は少ないため、GrimoireInterfaceからつなげて、
 ```javascript
 var meshInThirdGoml = gr("#third-goml")("mesh");
 ```
@@ -96,4 +139,29 @@ var meshInThirdGoml = gr("#third-goml")("mesh");
 
 #NodeInterface
 ノードを操作するために最もよく使うであろうインタフェースです。
-上の項にもある通り、GrimoireInterfaceから取得します。
+NodeInterfaceを取得したら、あとは操作をするためのメソッドを呼び出すだけです。
+ノードを操作するために様々なAPIが用意されています。たとえば、
+
+```javascript
+//対象となるmeshの個数を表示します。
+console.log(gr("*")("mesh").count);
+
+//属性を取得します
+var pos = gr("*")("mesh").getAttribute("position");
+
+// 属性を設定します。ここでは、y座標を１大きくしています。
+gr("*")("mesh").setAttribute("position",[pox.x,pox.y+1,pos.z]);
+
+//メッシュの子ノードを追加します。
+gr("*")("mesh").append('<mesh geometry="cube" color="red"/>');
+
+//ノードにコンポーネントを追加します。
+gr("*")("camera").addComponent("MouseCameraControll");
+
+```
+
+などです。
+ちなみに、NodeInterfaceは **複数のノードを同時に対象にできる** ので
+すべてのメッシュを同時に色を変えることもできます。
+
+>GomlNodeのインスタンスとNodeInterface似たAPIを持っていますがは明確に異なるオブジェクトです。基本的にはNodeInterfaceからの操作で十分ですが、GomlNodeのインスタンスを直接操作する際は、これらの違いを意識しておきましょう。
