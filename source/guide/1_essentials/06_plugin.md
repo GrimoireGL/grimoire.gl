@@ -32,15 +32,17 @@ To suppress this message,please inject a line "gr.debug = false;" on the initial
 
 
 # 作成するには？
-プラグインを作成するには作ったコンポーネントを公開可能な形式にまとめる必要があります。
-プラグインを作成するためのツールとして、`grimoirejs-couldron`を用意しています。
-これは必要なビルド環境とテンプレート生成の機能を持っています。
 
-`grimoirejs-couldron`は`npm`でインストールできます。
+プラグインの作成は複雑なビルド環境を用意する必要があり、構築は非常に煩雑です。
+そのため、[構築済みのボイラーブレート](https://github.com/GrimoireGL/ts-boilerplate)を利用することを推奨します。
+ビルド環境は、`grimoirejs-couldron`というツールとしてまとめられています。
 
-```sh
-npm install -g grimoirejs-cauldron
+```bash
+git clone git@github.com:GrimoireGL/ts-boilerplate.git
 ```
+
+クローンしたら、`npm install`します。
+
 
 
 

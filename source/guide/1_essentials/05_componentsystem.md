@@ -61,10 +61,10 @@ gr.registerComponent("MouseColor",{
   },
 
   $awake:function(){
-    this.node.on("mouseEnter",function(){
+    this.node.on("mouseenter",function(){
       this.node.setAttribute("color",this.getAttribute("onColor"));
     });
-    this.node.on("mouseLeave",function(){
+    this.node.on("mouseleave",function(){
       this.node.setAttribute("color",this.getAttribute("offColor"));
     });
   }

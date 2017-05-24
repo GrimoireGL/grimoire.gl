@@ -30,8 +30,9 @@ GOMLは基本的に単なる`xml`です。例えば、以下のようなGOMLは�
 > この例に登場する、`goml`や`scene`などのノードは、標準プラグインである[grimoire-fundamental](url_to_repo)で定義されています。標準プラグインやコアで定義されるノード・コンポーネントのリストは[主要なタグ](url_to/08_tags)で紹介しています。
 
 ノードが持つ属性は、xml属性として指定することができます。
-それぞれの属性は、その属性の[コンバータ](urlto/05_componentsystem#converter)によって文字列から適切な値に変換されます。
+それぞれの属性は、その属性の[コンバータ](urlto/05_componentsystem#converter)によって文字列から内部で利用される値に変換されます。
 例えば、`<camera>`の`position`属性のコンバータは、[`Vector3`コンバータ](urlto/05_componentsystem#converter#vector3)です。
+`Vector3`コンバータは、"0,0,0"をVector3型のオブジェクトに変換します。
 属性値の文字列での具体的な記法については[各コンバータの仕様](urlto/05_componentsystem#converter)を参照してください。
 
 
@@ -129,9 +130,3 @@ GOMLをページ上に埋め込むには`<script>`タグに`type="text/goml"`を
 </body>
 ```
 埋め込まれたGOMLはページがロードされた直後に、Grimoire.jsが自動的に探索してパースします。
-
-# GOMLの読み込み
-Grimoire.jsは、初期化時に`GomlLoader`クラスの`loadForPage`メソッドを呼び出します。
-この関数は、ページ上に存在する`goml`を探索してパースします。
-実際のパース処理は`GomlParser.parse`メソッドで行います。
-ページ初期化後の任意のタイミングで動的にGOMLをパースしたいときはこれらのクラスを利用するといいでしょう。
