@@ -4,6 +4,7 @@
 @import '_util/misc'
 @import '_util/button'
 @import '_partial/syntax'
+@import '_partial/font-awesome.min.css'
 
 html
   height 100%
@@ -19,44 +20,79 @@ body
 #primary
   content-align = 'vertical'
   flex-init(content-align)
-  flex-center('both', content-align)
-  height 100%
-  min-height 700px
+  flex-center('horizontal', content-align)
   background-color color-inverse
-  box-shadow inset 0px 0px 200px rgba(0, 0, 0, .60)
+  // box-shadow inset 0px 0px 200px rgba(0, 0, 0, .60)
   text-align center
   position relative
   overflow-x hidden
+  overflow-y hidden
+  height 600px
+  > div
+    z-index 2
 
 #bg
   position absolute
-  z-index 0
   top 30%
   left 50%
   transform translate(-50%, -50%)
+
+div#bg
+  z-index 1
+
+div#logo-icon, div#logo-desc, div#logo-sub-desc
+  z-index 0
+
 
 canvas
   left 0px
 
 nav
-  width 350px
-  margin-bottom 60px
+  box-si1ing border-box
+  width 100%
+  margin-bottom 40px
   position relative
+  border-bottom 1px solid color-inverse-normal
+  margin-top 30px
+  height 50px
 
 #menu
-  width 350px
+  max-width 1000px
+  width 80%
+  left 50%
+  transform translate(-50%, 0)
   position absolute
   z-index 10
   menu(color-inverse-normal, color-primary)
+
+#menu-logo-wrap
+  display block
+  margin-top -13px
+  height 50px
+  flex-init()
+
+#menu-logo-icon
+  margin-bottom 2px
+  bg-image-alone()
+  width 50px
+  background-image logo-icon
+
+#menu-logo-font
+  margin-top 1px
+  margin-left 13px
+  bg-image-alone()
+  width 120px
+  background-image logo-font
 
 #logo-icon
   // z-index 10
   background-image logo-icon
   bg-image-alone()
-  height 220px
-  width 220px
+  height 140px
+  width 140px
 
 #logo-font
+  display none
   margin-top -2px
   // font-family 'Banda Regular'
   font-size 80px
@@ -89,10 +125,31 @@ nav
   box-shadow inset 0 0 2px rgba(0, 0, 0, 0.3)
 
 #logo-desc
-  margin-top 70px
-  font-size 16px
-  font-weight 400
+  margin-top 30px
+  font-size 40px
+  font-weight bold
+  color color-inverse-emphasis
+
+#logo-sub-desc
+  font-size 17px
+  line-height 1.8em
   color color-inverse-normal
+  width 700px
+
+#social
+  margin 24px 0 28px
+  font-size 15px
+  display flex
+  > div
+    margin 0 10px
+  i
+    margin-right 5px
+  a
+    color color-inverse-emphasis
+    text-decoration none
+
+    &:hover
+      opacity 0.7
 
 #primary-buttons
   width 500px
@@ -100,19 +157,13 @@ nav
   flex-init('horizontal')
   > div
     width 230px
-    position relative
   a
-    position absolute
-    z-index 10
     button(color-primary, color-inverse)
 
 #social-buttons
   margin-top 120px
-  position relative
   width 270px
   .wrap
-    z-index 10
-    position absolute
     flex-init('horizontal')
     justify-content center
     width 300px
@@ -199,7 +250,7 @@ black-section()
 
   text-align center
   text-shadow 0 1px 2px #000
-  padding 60px 80px 0
+  padding 60px 80px 80px
 
   .front
     padding 0 60px
@@ -219,9 +270,11 @@ black-section()
       list-style none
       padding 0
       margin 0
+    strong
+      color color-secondary
     .container
       box-sizing border-box
-      width 300px
+      width 400px
       padding 60px 0 0 0
       margin 0 20px
     .icon
@@ -236,6 +289,19 @@ black-section()
     .content
       color color-black-emphasis
       font-size 14px
+    .center
+      flex-init('vertical')
+      flex-center('both', 'vertical')
+    .plus
+      font-size 60px
+      color color-black-emphasis
+
+#examples
+  .front
+    font-size 20px
+    color color-black
+  .container
+    height 200px
 
 #contributors
   padding 70px 140px 80px

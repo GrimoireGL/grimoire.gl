@@ -2,97 +2,70 @@
 <div id="primary">
   <nav id="menu-wrap">
     <ul id="menu">
+      <li>
+        <a id="menu-logo-wrap" href="<%- url_for('/') %>">
+          <div id="menu-logo-icon"></div>
+          <div id="menu-logo-font"></div>
+        </a>
+      </li>
       <%- partial('_partial/menu') %>
     </ul>
   </nav>
   <div id="logo-icon"></div>
   <h1 id="logo-font">Grimoire.js</h1>
-  <h2 id="logo-desc">A WebGL framework for web development.</h2>
+  <h2 id="logo-desc">A WebGL framework for web development</h2>
+  <div id="logo-sub-desc">Grimoire.js gives you WebGL representation in modern web development flow, minimal codes, very easy and effective and production level.</div>
+  <div id="social">
+    <div class="demo"><a href="http://jsdo.it/tag/Grimoire.js"><i class="fa fa-asterisk" aria-hidden="true"></i><span>See how it works</span></a></div>
+    <div class="slack"><a href="https://grimoire-slackin.herokuapp.com/"><i class="fa fa-comments" aria-hidden="true"></i><span>Join to Slack</span></a></div>
+    <div class="github"><a href="https://github.com/GrimoireGL/GrimoireJS"><i class="fa fa-github-alt" aria-hidden="true"></i><span>Open source</span></a></div>
+  </div>
   <div id="primary-buttons">
     <div class="install">
-      <a href="<%- url_for('/guide/installation.html') %>">Install Latest</a>
+      <a href="<%- url_for('/guide/1_essentials/01_installation.html') %>">Install Latest</a>
     </div>
     <div class="start">
-      <a href="<%- url_for('/guide/') %>">Getting Started</a>
-    </div>
-  </div>
-  <div id="social-buttons">
-    <div class="wrap">
-      <a href="<%- url_for('https://twitter.com/grimoire_js') %>" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow @grimoire_js</a>
-      <script async defer src="https://grimoire-slackin.herokuapp.com/slackin.js"></script>
-      <iframe src="https://ghbtns.com/github-btn.html?user=GrimoireGL&repo=GrimoireJS&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+      <a href="<%- url_for('/guide/1_essentials/02_introduction.html') %>">Getting Started</a>
     </div>
   </div>
   <div id="bg">
     <script type="text/goml" src="gr/index.goml"></script>
   </div>
 </div>
-<div id="sample">
-  <div class="front">
-    <h2 class="title">One minute example</h2>
-  </div>
-  <div class="wrap">
-    <div class="card">
-      <%- partial('_partial/code1') %>
-      <a class="edit-button" title="Edit in web editor!" href="<%- url_for('https://grimoiregl.github.io/grimoire.gl-example/#simple') %>">GOML</a>
-    </div>
-    <div class="card">
-      <%- partial('_partial/code2') %>
-      <a class="edit-button" title="Edit in web editor!" href="<%- url_for('https://grimoiregl.github.io/grimoire.gl-example/#simple') %>">JavaScript</a>
-    </div>
-    <div class="card preview">
-      <script type="text/javascript" src="gr/rotate.js"></script>
-      <script type="text/javascript" src="gr/simple.js"></script>
-      <script type="text/goml" src="gr/simple.goml" id="simple"></script>
-      <a class="edit-button" title="Edit in web editor!" href="<%- url_for('https://grimoiregl.github.io/grimoire.gl-example/#simple') %>">Result</a>
-    </div>
-  </div>
-</div>
 <div id="description">
   <div class="front">
-    <h2 class="title">WebGLの表現力をもっと手軽に、あなたのサイトでも。</h2>
-    <div class="content">2D、3Dのあらゆる表現を今まで使っていたタグを活用して取り入れることができます。もちろん、どんなWebフレームワークと組み合わせるのもあなたの自由です。</div>
+    <h2 class="title">Grimoire.js acts as the bridge between WEB and CG.</h2>
+    <div class="content">WebGL development is typically hard due to the profound differences of the development flow between CG and WEB.</div>
   </div>
   <div class="small">
     <ul>
       <li>
         <div class="container">
-          <div class="icon"><span class="icon-workflow"></span></div>
-          <h3 class="title">Workflow</h3>
-          <div class="content">既存のWeb開発のフローのまま導入ができます。フレームワークやバージョン管理も今まで通り使うことが可能です。</div>
-        </div>
-      </li>
-      <li>
-        <div class="container">
           <div class="icon"><span class="icon-htmllike"></span></div>
-          <h3 class="title">HTML Like</h3>
-          <div class="content">複雑な3DCGの設定や表現もHTMLのような言語、GOMLを記述すれば容易に構築可能です。</div>
+          <h3 class="title">WEB side</h3>
+          <div class="content">Grimoire.js provides a <strong>HTML-like markup to describe the scenes</strong> and <strong>DOM-like operation APIs</strong> to handle it. Web engineers will no longer take the cares of the graphics staff such as render loop, 3D mathmatics.</div>
         </div>
       </li>
-      <li>
-        <div class="container">
-          <div class="icon"><span class="icon-interface"></span></div>
-          <h3 class="title">Event driven</h3>
-          <div class="content">インタラクティブな操作も、データ志向で記述することが可能です。</div>
-        </div>
+      <li class="center">
+        <div class="plus">+</div>
       </li>
       <li>
         <div class="container">
           <div class="icon"><span class="icon-component"></span></div>
-          <h3 class="title">Component</h3>
-          <div class="content">再利用性の高いコンポーネントベースの設計で、容易にWebGLの資産を構築できます。</div>
-        </div>
-      </li>
-      <li>
-        <div class="container">
-          <div class="icon"><span class="icon-plugin"></span></div>
-          <h3 class="title">Plugin</h3>
-          <div class="content">誰でも簡単にWeb上のWebGL共有資産にアクセスして活用、公開することができます。</div>
+          <h3 class="title">CG side</h3>
+          <div class="content">Grimoire.js provides a <strong>component system with APIs like Unity</strong>. CG engineers could focus on shader stuff to visualize better or complex graphics algorithm.</div>
         </div>
       </li>
     </ul>
   </div>
 </div>
+<!-- <div id="examples"> -->
+<!--   <div class="front"> -->
+<!--     <h2 class="title">Examples</h2> -->
+<!--   </div> -->
+<!--   <div class="container"> -->
+<!--   </div> -->
+<!-- </div> -->
 <div id="contributors">
   <div class="front">
     <h2 class="title">Contributors</h2>
@@ -102,11 +75,11 @@
   <div class="message">
     <a href="<%- url_for('https://github.com/GrimoireGL/GrimoireJS/graphs/contributors') %>" target="_blank">This list is automativally generated.</a>
   </div>
-  <a id="contribution-button" href="<%- url_for('/guide/community.html') %>">Contribute now</a>
+  <a id="contribution-button" href="<%- url_for('/guide/meta/community.html') %>">Contribute now</a>
   <script async defer type="text/javascript" src="js/load-contributors.js"></script>
 </div>
 <div id="footer">
-  <a id="get-started-button" href="<%- url_for('/guide/') %>">Getting Started</a>
+  <a id="get-started-button" href="<%- url_for('/guide/1_essentials/02_introduction.html') %>">Getting Started</a>
   <div id="footer-text">
     <div id="licence">Released under the <a href="<%- url_for('//opensource.org/licenses/MIT') %>">MIT License</a></div>
     <div id="copyright">Copyright (c) 2016 GrimoireGL</div>
