@@ -57,7 +57,8 @@ This is an example of GOML.
   </scene>
 </goml>
 ```
-
+> Basic plugin tags
+>
 > These nodes such as `goml`, `scene`, `mesh`,`camera` and `MouseCameraControl` component is registered with `grimoire-fundamental` plugin. By loading this plugin, you can use these basic nodes for rendering with WebGL.
 >`grimoire-fundamental` is included in `grimoirejs-preset-basic` (that can be downloaded from installation document).
 > When you are using `grimoirejs-preset-basic`, you don't need to load `grimoirejs-fundamental` additionally.
@@ -97,6 +98,7 @@ This is example to use [grimoirejs-physics](https://github.com/GrimoireGL/grimoi
 These components applied with this syntax is named `Optional components`.
 
 > Attributes of optional component
+>
 > Attributes of optional components should be written in **atrtibutes in component tag**.
 > It would not be affected when you applied value from node attribute.
 
