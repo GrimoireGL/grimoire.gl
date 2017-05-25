@@ -135,7 +135,7 @@ This is same for components.
 
     <mesh color="red" geometry="cube">
       <mesh.components>
-        <plugin1:Eatable/>
+        <plugin1:Edible/>
       </mesh.components>
     </mesh>
 
