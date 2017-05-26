@@ -1,0 +1,14 @@
+<goml>
+  <scene>
+    <camera>
+      <camera.components>
+        <MouseCameraControl></MouseCameraControl>
+      </camera.components>
+    </camera>
+    <mesh color="orange" geometry="sphere" position="0,-1.5,0" scale="0.5">
+      <mesh.components>
+        <Rigid move="false"></Rigid>
+      </mesh.components>
+    </mesh>
+  </scene>
+</goml>

@@ -59,13 +59,25 @@
     </ul>
   </div>
 </div>
-<!-- <div id="examples"> -->
-<!--   <div class="front"> -->
-<!--     <h2 class="title">Examples</h2> -->
-<!--   </div> -->
-<!--   <div class="container"> -->
-<!--   </div> -->
-<!-- </div> -->
+<div id="examples">
+  <div class="container" id="image360">
+    <script class="canvas" type="text/goml" src="gr/360-image/index.goml"></script>
+    <script src="gr/360-image/main.js"></script>
+    <div class="code-container">
+      <pre>
+        <code class="xml"><%= partial('_example/360-image.goml.ejs') %></code>
+        <div class="label">GOML</div>
+      </pre>
+      <pre>
+        <code class="js"><%= partial('_example/360-image.js.ejs') %></code>
+        <div class="label">JavaScript</div>
+      </pre>
+    </div>
+  </div>
+  <link rel="stylesheet" href="js/highlight/tomorrow-night.css">
+  <script src="js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</div>
 <div id="contributors">
   <div class="front">
     <h2 class="title">Contributors</h2>

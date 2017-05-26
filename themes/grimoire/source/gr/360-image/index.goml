@@ -1,0 +1,6 @@
+<goml>
+  <scene>
+    <camera position="0,0.2,0"></camera>
+    <mesh geometry="sphere" scale="-1,1,1" texture="gr/360-image/360.jpg"></mesh>
+  </scene>
+</goml>

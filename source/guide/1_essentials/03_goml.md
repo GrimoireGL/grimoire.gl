@@ -4,15 +4,46 @@ title: GOML
 order: 2
 ---
 
-# GOMLとは
-Grimoire.jsでは、すべてのオブジェクトはツリー構造となって扱われます。
-**GOML** はその構造を記述するためのマークアップ言語です。通常、拡張子`.goml`のファイルに記述されます。
-GOMLでは、GrimoireInterfaceに予め登録されたノードとコンポーネントをタグとして使用できます。
-ノードとコンポーネントについては、[Grimoire.jsのノード・コンポーネントシステム](urlto/compoentsystem)で解説しています。
+# What is GOML?
+
+All objects are treated as tree structure in Grimoire. **GOML** is a markup language to represent that structure.
+In generally, GOML have `.goml` as file extension.
+You can use syntax highlight in your editor with using syntax highlight because GOML is just a specific case of XML.
+
+Users can write node structures and components in GOML as tags. These nodes and components must be registered to `GrimoireInterface` before loading the GOML.
+You can read more about component systems or nodes in [Component system](/guide/1_essentials/05_componentsystem.html).
 
 
-# 文法
-GOMLは基本的に単なる`xml`です。例えば、以下のようなGOMLは正しく読み込まれます。
+# How to put GOML file to your page
+
+To embed GOML file in your webpage, you need to add script tag with `text/goml` type.
+
+```html
+<body>
+  <script type="text/goml">
+    <goml>
+      <scene>
+        <camera />
+        <mesh color="red" geometry="cube"/>
+      </scene>
+    </goml>
+  </script>
+</body>
+```
+
+We recommend to use external file to embed goml file like the code below.
+
+```html
+<body>
+  <script type="text/goml" src="./index.goml"></script>
+</body>
+```
+
+Grimoire will load goml files after constructing HTML DOM.(With DOMContentLoaded event).
+
+# Syntax
+
+This is an example of GOML.
 
 ```xml
 <goml>
@@ -26,20 +57,25 @@ GOMLは基本的に単なる`xml`です。例えば、以下のようなGOMLは�
   </scene>
 </goml>
 ```
+> Basic plugin tags
+>
+> These nodes such as `goml`, `scene`, `mesh`,`camera` and `MouseCameraControl` component is registered with `grimoire-fundamental` plugin. By loading this plugin, you can use these basic nodes for rendering with WebGL.
+>`grimoire-fundamental` is included in `grimoirejs-preset-basic` (that can be downloaded from installation document).
+> When you are using `grimoirejs-preset-basic`, you don't need to load `grimoirejs-fundamental` additionally.
+> Several nodes and components defined with default plugins are described in [Major tags](/guide/1_essentials/08_tags.html).
 
-> この例に登場する、`goml`や`scene`などのノードは、標準プラグインである[grimoire-fundamental](url_to_repo)で定義されています。標準プラグインやコアで定義されるノード・コンポーネントのリストは[主要なタグ](url_to/08_tags)で紹介しています。
+Attributes of nodes can be specified by attribute syntax of XML.
+All attributes in GOML is parsed as string initially. And then Grimoire will use `Converter` to convert them into ideal data type of the attribute internally.
+Converters can be different with the other attributes. For example, you can specify `0,0,0` to `position` attribute of `mesh`.
+The attribute will use `Position` converter to parse the string.
 
-ノードが持つ属性は、xml属性として指定することができます。
-それぞれの属性は、その属性の[コンバータ](urlto/05_componentsystem#converter)によって文字列から内部で利用される値に変換されます。
-例えば、`<camera>`の`position`属性のコンバータは、[`Vector3`コンバータ](urlto/05_componentsystem#converter#vector3)です。
-`Vector3`コンバータは、"0,0,0"をVector3型のオブジェクトに変換します。
-属性値の文字列での具体的な記法については[各コンバータの仕様](urlto/05_componentsystem#converter)を参照してください。
+You can read more about converter in [Component System](/guide/1_essentials/05_componentsystem.html).
 
 
-## オプショナルコンポーネント記法
-先程の例では、`<camera>`タグの子要素に`<camera.components>`タグがあり、さらにその子要素に`<MouseCameraControl>`タグがあります。
-このように、**あるノードのタグの子要素として`<タグ名.components>`というタグを配置する** ことは、**そのノードにコンポーネントを追加するための特別な記法です。**
-例えば、[grimoirejs-physics](https://github.com/GrimoireGL/grimoirejs-physics)プラグインを利用して`<mesh>`タグに物理演算の機能を付与するには、`<scene>`に`PhysicsWorld`コンポーネントを、`<mesh>`に`RigidBody`コンポーネントを以下のように追加します。
+## Optional component syntax
+
+In the previous example, `<MouseCameraControl>` tag is contained in `<camera.components>` tag that is child of `<camera>` tag.
+This is specific syntax to add components to the node.
 
 ```xml
 <goml>
@@ -56,19 +92,22 @@ GOMLは基本的に単なる`xml`です。例えば、以下のようなGOMLは�
   </scene>
 </goml>
 ```
-このようにノードに追加されたコンポーネントを、**オプショナルコンポーネント** と呼びます。
 
-> オプショナルコンポーネントの属性は、**コンポーネントのタグに直接書く** 点に注意してください。
-**ノードのタグに書いても反映されません。**
+This is example to use [grimoirejs-physics](https://github.com/GrimoireGL/grimoirejs-physics) plugin to apply physically simulation feature to `<scene>` and `<mesh>`.
 
-## 名前空間
-Grimoire.jsはプラグインによって多くのタグを利用することができますが、タグ数の増加に伴い、他のプラグインで定義されるタグとと名前が重複する可能性が高まります。
-Grimoire.jsでは、プラグインごとに **名前空間** を定義してこれらのタグを識別します。
-名前空間はプラグインごとに一意になるように設計されているので、これを利用することですべてのノード、コンポーネント、属性を識別可能です。
-名前空間の詳細は[ここ](urlto/plugin#namespace)を参照してください。
+These components applied with this syntax is named `Optional components`.
 
-たとえば、`grimoirejs-plugin1`と`grimoirejs-plugin2`が、それぞれ`<apple>`という名前のノード、`Eatable`というコンポーネントを定義していたとしましょう。
-この場合、以下のGOMLは`<apple>`がどちらのプラグインのものか判別できないため、エラーになります。
+> Attributes of optional component
+>
+> Attributes of optional components should be written in **atrtibutes in component tag**.
+> It would not be affected when you applied value from node attribute.
+
+## Namespace
+Grimoire is a framework extended by adding tags with plugins. However, if you need a lot of tags in your application, tag name can conflict the other plugins. All plugins have different **namespace** to identify these.
+**namespaces** are determined from `package.json` of the plugin package.
+
+For example there was two different plugins `grimoirejs-plugin1` and `grimoirejs-plugin2`. And let assume these plugins registered `<apple>` nodes and `Edible` components.
+In this situation, this goml code is invalid because Grimoire can not distinguish these tags.
 
 ```xml
 <goml>
@@ -79,7 +118,7 @@ Grimoire.jsでは、プラグインごとに **名前空間** を定義してこ
 </goml>
 ```
 
-`<apple>`が`grimoirejs-plugin1`のものであることを明示するためには、`<apple>`ノードにxml名前空間を付与します。
+To denote the `<apple>` is registered `grimoirejs-plugin1` explicitly, you need to apply xml namespace to `<apple>` tag.
 
 ```xml
 <goml xmlns:plugin1="HTTP://GRIMOIRE.GL/NS/GRIMOIREJS-PLUGIN1">
@@ -90,7 +129,7 @@ Grimoire.jsでは、プラグインごとに **名前空間** を定義してこ
 </goml>
 ```
 
-`Eatable`コンポーネントについても同様です。
+This is same for components.
 ```xml
 <goml xmlns:plugin1="HTTP://GRIMOIRE.GL/NS/GRIMOIREJS-PLUGIN1">
   <scene>
@@ -98,35 +137,10 @@ Grimoire.jsでは、プラグインごとに **名前空間** を定義してこ
 
     <mesh color="red" geometry="cube">
       <mesh.components>
-        <plugin1:Eatable/>
+        <plugin1:Edible/>
       </mesh.components>
     </mesh>
 
   </scene>
 </goml>
 ```
-
-# GOMLの埋め込み
-GOMLをページ上に埋め込むには`<script>`タグに`type="text/goml"`を指定して記述します。
-
-```html
-<body>
-  <script type="text/goml">
-    <goml>
-      <scene>
-        <camera />
-        <mesh color="red" geometry="cube"/>
-      </scene>
-    </goml>
-  </script>
-</body>
-```
-
-通常は、GOMLは別のファイルに分割することを推奨します。この場合は、`<script>`タグの`src`属性に、GOMLファイルを指定してください。
-
-```html
-<body>
-  <script type="text/goml" src="./index.goml"></script>
-</body>
-```
-埋め込まれたGOMLはページがロードされた直後に、Grimoire.jsが自動的に探索してパースします。
