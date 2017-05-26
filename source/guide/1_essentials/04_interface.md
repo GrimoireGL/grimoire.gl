@@ -1,6 +1,6 @@
 ---
 type: doc
-title: インターフェース
+title: Interfaces
 order: 30
 ---
 

@@ -3,9 +3,9 @@ type: doc
 title: ComponentSystem
 order: 40
 ---
+# What is component?
 
-ここまでのガイドで簡単なGOMLの例が何度か出てきました。
-今回は、GOMLを使って**ノードに機能を追加**してみましょう。
+This is simple GOML to show just a red cube.
 
 ```xml
 <goml>
@@ -16,8 +16,7 @@ order: 40
 </goml>
 ```
 
-これは非常に単純なGOMLです。キューブが一つだけ配置されていますが、何のインタラクションもありません。
-では、マウスで好きな方向にカメラを移動できるようにしてみましょう。
+You can make camera accepting user interactions. By adding `MouseCameraControl` like following way, user can controls camera by mouse.
 
 ```xml
 <goml>
@@ -32,20 +31,22 @@ order: 40
 </goml>
 ```
 
-変更点は、`<camera>`タグの子要素に`<camera.components>`タグを追加し、さらにその中に`<MouseCameraControl>`タグを追加した部分です。
-これを実行すると、マウスドラッグでカメラが移動することがわかります。
+This syntax is described in [GOML](/guide/1_essentials/03_goml.html) in detail. By this code, camera has a feature to be controlled by mouse. This is **component**.
 
-# コンポーネントとは？
-先程の例で追加した`MouseCameraControl`は**コンポーネント**と呼ばれます。
-コンポーネントはGOML上ではタグとして扱われ、ノードの子要素として配置して利用します。
+In Grimoire, users can add features to nodes as component.
 
-> 今までに登場した`goml`,`scene`,`mesh`などのタグは、**ノード** と呼ばれ、**コンポーネントとは異なります。**
-> GOMLで利用可能なタグはただひとつの例外を除いて、すべてノードかコンポーネントのどちらかです。
-> 例外とは、`<camera.components>`などの`.components`タグで、GOMLにコンポーネントをタグとして追加するときに必要となる特別なタグです。
+> What is differences between node?
+>
+> `component` and `node` can be written as `tag` in GOML. But these are completely different things.
+> `node` is structure like HTML elements or Gameobject in Unity.
+> `component` is features appended to nodes or MonoBehaviour in Unity.
+> All `nodes` contains `component`.
+>
+> In grimoire, all tags are `component` or `node` while there is an exception.
+> The exception is `.component` tag such as `<camera.components>`.
 
-いくつかのコンポーネントはあらかじめ用意されていますが、シチュエーションによってはそれ以上に様々な機能が必要になるかもしれません。
-そのために、コンポーネントを新しく作成するためのAPIが用意されています。
-コンポーネントの作成は、GrimoireInterfaceの`registerComponent`メソッドを利用します。
+You can make feature of Grimoire by adding components by using following API.
+To create component, you can use `registerComponent` method of GrimoireInterface.
 
 ```javascript
 gr.registerComponent("MouseColor",{
@@ -70,8 +71,9 @@ gr.registerComponent("MouseColor",{
   }
 })
 ```
-このスクリプトをwebページで実行すると、GOML上で`<MouseColorComponent/>`タグが利用できるようになります。
-このコンポーネントを`<mesh>`タグに追加して、表示してみましょう。
+
+This is example component to change color of mesh by hovering mouse. After executing this javascript, you can use `<MouseColorComponent/>` tag on GOML.
+Now you can append this component to meshes like below.
 
 ```xml
 <goml>
@@ -90,15 +92,16 @@ gr.registerComponent("MouseColor",{
 </goml>
 ```
 
-キューブの上にマウスを乗せると、色が変わるようになったはずです。
-このように、様々な機能がコンポーネントとしてモジュール化できます。
-コンポーネントとは、ノードにアタッチして利用する、モジュール化された機能そのものです。
+The cubes now have feature to change color if the mouses are hovering the meshes.
+All features can be modular and reusable as components in same way.
 
-# ノードの実態
-Grimoire.jsではタグはノードとコンポーネントの２種類しかありません。
-コンポーネントはノードにアタッチするモジュールでした。次はノードについて説明します。
+# What was node?
 
-ノードもコンポーネントと同じように自由に追加することができます。
+We have used nodes in guides. But what was node?
+As the previous section, node is just a container of components and have structures.
+
+User can add nodes like component with using `registerNode` method of GrimoireInterface.
+`registerNode` method accepts node name, list of components, default values of attribute and node name to inherit as arguments.
 
 ```javascript
 gr.registerNode("color-cube", ["MouseColorComponent"], {
@@ -108,9 +111,11 @@ gr.registerNode("color-cube", ["MouseColorComponent"], {
 }, "mesh");
 ```
 
-`gr.registerNode`メソッドは、**ノード名、コンポーネントのリスト、属性のデフォルト値、継承元ノード** を引数にとります。
-このコードは、`color-mesh`という名前で、既存の`mesh`タグに`MouseColorComponent`コンポーネントを追加し、属性を変更したものとして登録します。
-これによって、先程のGOMLをこのように書き換えられます。
+This code is adding `color-cube` that extends `mesh` tag and adding `MouseColorComponent`.
+Nodes can inherit containing components and default attributes from ancestor nodes inherited.
+If there was no default value was presented on node on `registerNode`, default value written in components are used.
+
+By using this node, the previous example can be rewritten like below.
 
 ```xml
 <goml>
@@ -125,9 +130,7 @@ gr.registerNode("color-cube", ["MouseColorComponent"], {
 </goml>
 ```
 
-新しく作成した`color-mesh`ノードで、`mesh`タグとコンポーネントを置き換えました。これは先程とまったく同じように動作します。
-`gr.registerNode`の引数を見ると、ノードが持つ情報は、属性とコンポーネントのリストと継承関係ですが、**実は継承で受け継がれるのは属性値とコンポーネントのリストの値だけ** です。つまり、ノードが持つ情報は **属性値とコンポーネントのリスト** であって、これらを格納して親子関係を保持するための単なる箱のようなものです。
-実際、標準で用いられるノードの定義は以下のようになっています。
+All nodes and plugins are defined in same way. Actually, `grimoirejs-fundamental` is registering nodes in following way.
 
 ```javascript
 GrimoireInterface.registerNode("goml", [
@@ -140,21 +143,23 @@ GrimoireInterface.registerNode("goml", [
     GrimoireInterface.registerNode("renderer", ["Renderer"]);
 ```
 
-すべてのノードは`registerNode`で作られています。特別なノードは基本的に一つもありません。
+All nodes are created with `registerNode`. There are no exception.
 
-> ノードの唯一の例外は、すべてのノードの基底ノードとなる、`grimoire-node-base`というノードです。
-> このノードだけは継承先が指定されない場合に自動的に基底となる特殊なノードです。
+## grimoire-node-base
 
+There is special node in Grimoire. `grimoire-node-base` is inherited when there was no node name to inherit was passed to `registerNode`. This is base node of every nodes.
 
-# 属性
+Every nodes have `grimoire-node-base` as ancestor.
 
-いままで、`<mesh geometry="cube" color="red" position="0,0,0"/>`とGOMLにタグを書いてきました。
-**属性** とは、このタグの属性のことで、実体はコンポーネントが保持しています。
-コンポーネントが持つ属性は、コンポーネントを作成するとき、`attributes`フィールドで指定できました。
-あくまで属性を持っているのはコンポーネントで、ノードは属性をもちません。
-GOML上でノードのタグに指定している属性は、**コンポーネントの同名属性に自動的に割り当てられます** 。
+# Attributes
 
-属性はただの値ではなく、2つの要素から構成されます。
+We have wrote `<mesh geometry="cube" color="red" position="0,0,0"/>` in GOML.
+Actual **attributes** are managed by components.
+
+Every components can contain attributes by adding `attributes` field on component declaration.
+Attributes of nodes are assigned to attributes of components having same name automatically.
+
+Attributes is defined with `converter` and `default`.
 
 ```javascript
 attributes:{
@@ -169,32 +174,22 @@ attributes:{
 }
 ```
 
-さきほどのMouseColorコンポーネントの`attributes`を見てみましょう。
-`attributes`には定義したい属性を列挙します。
-ここでは、`onColor`,`offColor`の２つです。
-それぞれの属性の中には、 **`converter`と`default`** というフィールドがあります。
-`converter`とは、GOML上の属性文字列を実際の値に変換するためのオブジェクトです。
-`Color4`コンバータを使えば、"red"という文字列を#ff0000のColorオブジェクトに変換できるようになります。
-`default`は属性の初期値です。なにも指定しない場合はこの値が使われます。
+Let see `attributes` field of `MouseColor` component in previous example.
+In this examples, there are `onColor` and `offColor` as attributes.
 
-> `default`の値には優先度があります。
-> ここで説明したコンポーネントのdefaultは、ノードで定義されるデフォルト値によって上書きされます。
+When attributes values are assigned, Grimoire will call converter to cast assigned values into ideal type to use in components.
+For example, if `Color4` converter was used, a string "red" can be converted into Color4 class instance containing #FF0000.
+`default` is default value of attributes.
 
+# Converter
 
-`default`はGOMLに書くときと同じような書式で設定します。
-`converter`は、標準で用意されたものを使うか、後から追加することもできます。
-詳細は次の項で解説します。
+Converter is a function to convert attribute values.
+Users are also able to add new Converter with `registerConverter` method of `GrimoireInterface`.
 
-
-# コンバータ
-コンバータは属性の値を文字列から変換するためのオブジェクトです。
-標準のコンバータの一覧と詳細はここを参照してください。
-
-これらのコンバータ以外のものを使いたい場合は、コンポーネントやノードと同じように、新しく作成する事ができます。
-コンバータは、変換のための関数を指定するだけで簡単に作成できます。
+This is definition of `Number` converter defined in basic plugins.
 
 ```javascript
-gr.registerConverter("Number", function(val): number {
+gr.registerConverter("Number", function(val) {
   if (typeof val === "number") {
     return val;
   } else if (typeof val === "string") {
@@ -205,25 +200,8 @@ gr.registerConverter("Number", function(val): number {
 });
 ```
 
-この`Number`コンバータは、`number`はそのまま通し、`string`は`Number.parseFloat`によって変換して値にしています。
-スクリプト上で`setAttribute()`を呼び出された場合など、 **文字列以外のオブジェクトが渡される可能性がある** ことに注意しましょう。
-変換できない場合は例外ではなく、`undefined`を返すようにします。
-また、コンバータの引数にnullを指定される場合がありますが、`undefined`を指定されることはありません。
-事前に値をベリファイしたり、より高機能なコンバータを作成するAPIも用意されています。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-a
+This `Number` converter will convert values if value are passed as string by calling `Number.parseFloat`.
+Make sure there is possibility that non-string value can be passed to converter. This can be happen `setAttribute` was called for example.
+Converter function must return `undefined` when passed values are non convertible.
+Converter argument can accept null but there is no possibility to accept `undefined`.
+If user assigned `undefined` to attribute by calling `setAttribute` API, Grimoire will throw exception.
