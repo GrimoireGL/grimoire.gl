@@ -35,7 +35,7 @@ You need to make simple HTML to use Grimoire.js. Then, you can link Grimoire.js 
 
 > This script is not `pure` Grimoire.js. This file includes several plugins you might need to use.
 
-If you need minified scirpt file or you want to use npm, please check [Installation](https://grimoire.gl/guide/1_essentials/installation.html) page.
+If you need minified scirpt file or you want to use npm, please check [Installation](https://grimoire.gl/guide/1_essentials/02_installation.html) page.
 
 # Markup for Grimoire.js
 

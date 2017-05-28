@@ -1,15 +1,17 @@
 ---
 type: doc
-title: プラグイン
+title: Plugins
 order: 50
 ---
 
-# プラグインとはなにか？
-Grimoire.jsは高い拡張性を持ったフレームワークです。
-一方で、そのためにコアに標準で備えられている機能は最小限になっています。
-Grimoire.jsを利用するほとんどの場合は、プラグインを適切に組み合わせて利用することになります。
+# What is plugins?
 
-今まで、Grimoire.jsを利用して簡単なサンプルを作ってきましたが、ページ読み込み時にGrimoire.jsのバージョン情報がコンソールに表示されていました。
+One of good aspect of Grimoire feature is their high extensibility.
+All of features can be extended and all of features we provide is implemented as the other users can do.
+In the contrary, features provided by core of Grimoire is minimum. Even WebGL features are not included in core features.
+Therefore, you will need to use plugins for using Grimoire.js for your application.
+
+Previously we introduced some of easy samples, there were version information about Grimoire.js on console of your browser like this.
 
 ```
 Grimoire.js v0.14.1-beta4
@@ -21,30 +23,103 @@ plugins:
 
 To suppress this message,please inject a line "gr.debug = false;" on the initializing timing.
 ```
-そのページで読み込んでいる`Grimoirejs-preset-basic`は、
+
+Most of our samples are using `grimoirejs-preset-basic` plugin. This plugin contains 3 packages to bundle. `grimoirejs`,`grimoirejs-math` and `grimoirejs-fundamental` is content of preset basic.
+
+You can notice this fact via your log on your console.
 
 - `grimoirejs-math`
 - `grimoirejs-fundamental`
 
-の２つのプラグインを含んでいます。標準的なwebGLレンダリングの機能をこれらが実装しています。
-このようにプラグインを組み合わせることで、必要に応じて様々な機能を組み合わせることができます。
-また、プラグインを新しく開発して、公開するための方法も用意しています。
+`grimoirejs-math` contains several math related classes such as Vector3, Matrix and so on. This plugin also register several converters like `Vector3Converter` for using in `grimoirejs-fundamental` or your applications.
+`grimoirejs-fundamental` contains many components used for rendering with WebGL. This plugin depends on `grimoirejs-math`.
 
 
-# 作成するには？
+# How can I create plugins?
 
-プラグインの作成は複雑なビルド環境を用意する必要があり、構築は非常に煩雑です。
-そのため、[構築済みのボイラーブレート](https://github.com/GrimoireGL/ts-boilerplate)を利用することを推奨します。
-ビルド環境は、`grimoirejs-couldron`というツールとしてまとめられています。
+Our plugins are just set of registering components, converters and nodes. These can contain the other classes used on components.
+Users can create plugins with javascript simply. But, Grimoire provides good tools for scaffolding environment for plugins.
 
-```bash
-git clone git@github.com:GrimoireGL/ts-boilerplate.git
+Our official packages are written in Typescript basically. This means users can receive tons of benefits if he use Typescript for development. Our scaffolding environment is providing Typescript environment.
+
+`grimoirejs-couldron` is our scaffolder for plugin environment. This package is scaffolder and also is build tool for Grimoire.
+You can install `grimoirejs-couldron` with the following command.
+
+```sh
+$ npm install grimoirejs-cauldron -g
 ```
 
-クローンしたら、`npm install`します。
+After installation of the command, you can call `cauldron` command on CLI.
+
+## Scaffolding your project
+
+You can run `cauldron init` command for scaffolding in empty folder.
+
+```sh
+$ cauldron init -n "grimoirejs-<your package name>"
+```
+
+All of grimoire plugin should have name which is beginning with `grimoirejs-`. Therefore, cauldron will show warning if you provides the name that is not matching our suggested name format. This command will clone our template project and rewrite some configurations on package.json.
+
+After generating the folder, you need to install dependency from npm. Please execute `npm install` for collecting dependencies.
+
+```sh
+$ npm install
+```
+
+Then all preparations are done.
+
+## Build your projects
+
+Our template contains some scripts on package.json initially. You can build or watch project with following commands.
+
+```sh
+$ npm run build
+```
+
+Bundled scripts will be generated on `register` folder on the project root. And several files used when the package was required from the other package is included in `ref` folder.
+**Do not rename these folder. These name is clearly defined in our plugin specification.**
+
+There are several flags to use build command.
+
+* env.browser・・・Generate only for browser(<Plugin name>.js and map file will be generated)
+* env.npm ・・・Generate only for npm publishing to be required from the other packages(index.js and map will be generated)
+* env.prod・・・This should be executed when you publish your package. This will produce the files produced by `env.browser` and `env.npm`. And minified javascript for browser environment will be generated also.
+
+```sh
+$ npm run build -- --env.browser
+```
 
 
 
+## Watch your projects
+
+If you are used to modern web development environment, you would need to watch the files to bundle them immediately.
+You can just call `npm start`. Watching also can accept all flags cited on `build` command.
+
+```sh
+$ npm start -- --env.prod
+```
+
+# Scaffolding source codes
+
+`cauldron` command also provides feature to scaffold components or converters.
+
+```sh
+$ cauldron scaffold -t component -n Foo
+$ cauldron scaffold -t converter -n Var
+```
+
+`src/Components/FooComponent.ts` will be generated by the command on first line.
+`src/Converter/VarConverter.ts` will be generated by secound line command.
+
+These commands are just generating file. You probably need to add `registerComponent` from `registerConverter` in `src/main.ts`.
 
 
-# 公開するには？
+## How to publish plugin?
+
+You can publish your own package with `npm publish`.
+Your package should contain `src`,`ref` and `register` folder. These folder is necessary for our plugins.
+
+We highly recommend to use CI to check the packages are valid. Our official packages are basically managed with CircleCI.
+These configurations must be helpful for you to grow your packages.
