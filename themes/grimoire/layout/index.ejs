@@ -78,18 +78,7 @@
   <script src="js/highlight.pack.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 </div>
-<div id="contributors">
-  <div class="front">
-    <h2 class="title">Contributors</h2>
-  </div>
-  <div id="avatars">
-  </div>
-  <div class="message">
-    <a href="<%- url_for('https://github.com/GrimoireGL/GrimoireJS/graphs/contributors') %>" target="_blank">This list is automativally generated.</a>
-  </div>
-  <a id="contribution-button" href="<%- url_for('/guide/3_meta/community.html') %>">Contribute now</a>
-  <script async defer type="text/javascript" src="js/load-contributors.js"></script>
-</div>
+<%- partial('_partial/contributor') %>
 <div id="footer">
   <a id="get-started-button" href="<%- url_for('/guide/1_essentials/02_introduction.html') %>">Getting Started</a>
   <div id="footer-text">
