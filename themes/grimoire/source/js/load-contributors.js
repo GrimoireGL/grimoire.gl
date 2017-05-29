@@ -22,7 +22,7 @@ xhr.addEventListener('load',function(){
         img.setAttribute('src', userContent.img);
         sn.innerText = name;
         sn.setAttribute('class', 'screen-name');
-        sn.setAttribute('href', "https://github.com" + name);
+        sn.setAttribute('href', "https://github.com/" + name);
         sn.setAttribute('target', '_blank');
         avatar.appendChild(img);
         avatar.appendChild(sn);
