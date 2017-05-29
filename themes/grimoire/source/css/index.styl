@@ -298,22 +298,24 @@ black-section()
       color color-black-emphasis
 
 #examples
-  position relative
+  background-color color-black
   .front
     font-size 20px
     color color-black
   .container
-    height 400px
+    position relative
+  .canvas-container
+    height 100%
   .code-container
     position absolute
+    display flex
     width 96%
     height 96%
     left 2%
     top 2%
-    display flex
-    justify-content space-between
+    > *
+      width 50%
   pre
-    width 49%
     background-color rgba(0, 0, 0, 0.7)
     color rgba(255, 255, 255, 0.5)
     box-sizing border-box
@@ -322,12 +324,48 @@ black-section()
     position relative
   code
     background-color rgba(0, 0, 0, 0)
+    height calc(100% - 43px)
   .label
     position absolute
     padding 6px 20px
     right 0
     top 0
     background-color rgba(0, 0, 0, 0.7)
+  .description
+    box-sizing border-box
+    padding 20px 40px
+    h2
+      margin-bottom 30px
+    p
+      margin 10px 0
+    a
+      color color-secondary
+      text-decoration underline
+      cursor pointer
+  #image360
+    height 400px
+    .code-container
+      justify-content space-between
+    .description
+      color #fff
+      text-shadow 0 1px 2px #000
+  #simple
+    height 600px
+    .canvas-container
+      position absolute
+      height 50%
+      width 50%
+      top 50%
+    .code-container
+      justify-content space-between
+    pre
+      height 50%
+      background-color rgba(0, 0, 0, 0.3)
+    .label
+      background-color rgba(0, 0, 0, 0.3)
+    .description
+      color color-black-emphasis
+      text-shadow 0 1px 2px #000
 
 #contributors
   padding 70px 140px 80px

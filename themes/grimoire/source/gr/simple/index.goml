@@ -1,10 +1,10 @@
 <goml>
   <scene>
-    <camera>
-      <camera.components>
-        <MouseCameraControl></MouseCameraControl>
-      </camera.components>
-    </camera>
-    <mesh texture="logo.png" geometry="cube"></mesh>
+    <camera></camera>
+    <mesh texture="gr/simple/logo.png" geometry="cube">
+      <mesh.components>
+        <Rotate speed="1,1,1" />
+      </mesh.components>
+    </mesh>
   </scene>
 </goml>
