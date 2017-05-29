@@ -1,16 +1,20 @@
-gr.debug = false;
+gr.debug = false
 gr(function() {
-  var mesh = gr("#main")("mesh");
-  mesh.on("mouseenter", () => {
-    mesh.setAttribute("scale", 2);
-  });
-  mesh.on("mouseleave", () => {
-    mesh.setAttribute("scale", 1);
-  });
-  var colors = ['white', 'gray', 'orange'];
-  var i = 0;
-  setInterval(function() {
-    mesh.setAttribute('color', colors[i % 3]);
-    i++;
-  }, 1000);
-});
+  var mesh = gr('#simple .canvas')('mesh')
+  document.querySelector('#simple .red')
+    .addEventListener('click', function () {
+      mesh.setAttribute('color', 'red')
+    })
+  document.querySelector('#simple .blue')
+    .addEventListener('click', function () {
+      mesh.setAttribute('color', 'blue')
+    })
+  document.querySelector('#simple .bigger')
+    .addEventListener('click', function () {
+      mesh.setAttribute('scale', '2.0')
+    })
+  document.querySelector('#simple .smaller')
+    .addEventListener('click', function () {
+      mesh.setAttribute('scale', '1.0')
+    })
+})

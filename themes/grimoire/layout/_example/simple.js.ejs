@@ -1,0 +1,15 @@
+gr(function() {
+  var mesh = gr('#simple .canvas')('mesh')
+  $('#simple .red').on('click', function () {
+    mesh.setAttribute('color', 'red')
+  })
+  $('#simple .blue').on('click', function () {
+    mesh.setAttribute('color', 'blue')
+  })
+  $('#simple .bigger').on('click', function () {
+    mesh.setAttribute('scale', '2.0')
+  })
+  $('#simple .smaller').on('click', function () {
+    mesh.setAttribute('scale', '1.0')
+  })
+})

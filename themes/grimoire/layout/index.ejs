@@ -61,17 +61,46 @@
 </div>
 <div id="examples">
   <div class="container" id="image360">
-    <script class="canvas" type="text/goml" src="gr/360-image/index.goml"></script>
-    <script src="gr/360-image/main.js"></script>
+    <div class="canvas-container">
+      <script class="canvas" type="text/goml" src="gr/360-image/index.goml"></script>
+      <script src="gr/360-image/main.js"></script>
+    </div>
     <div class="code-container">
       <pre>
         <code class="xml"><%= partial('_example/360-image.goml.ejs') %></code>
         <div class="label">GOML</div>
       </pre>
-      <pre>
-        <code class="js"><%= partial('_example/360-image.js.ejs') %></code>
-        <div class="label">JavaScript</div>
-      </pre>
+      <div class="description">
+        <h2>HTML-like markup</h2>
+        <p>asdf asdf asdf akjhasdkfh aksjdfhk asd kjahsdf</p>
+        <p>aasd h hh h asdofhiasd hh hjka hkasda aksjhdf kj hkjhakjshdf kjahsdfh jahsk kajsjd</p>
+      </div>
+    </div>
+  </div>
+  <div class="container" id="simple">
+    <div class="canvas-container">
+      <script class="canvas" type="text/goml" src="gr/simple/index.goml"></script>
+      <script src="gr/simple/main.js"></script>
+    </div>
+    <div class="code-container">
+      <div class="left description">
+        <h2>DOM-like operation APIs</h2>
+        <p>Grimoire.js can easy to collaborate with the other UI stuff.</p>
+        <p>Sometimes you want to change color of models to <a class="red">red</a> or <a class="blue">blue</a>.</p>
+        <p>Sometimes you want to scale models <a class="bigger">bigger</a> or <a class="smaller">smaller</a>.</p>
+        <p>All of mutations in Grimoire.js can be done with the way Web engineers used to.</p>
+        <p>Try <a>clicking</a> links above in this sentence.</p>
+      </div>
+      <div class="right">
+        <pre>
+          <code class="xml"><%= partial('_example/simple.goml.ejs') %></code>
+          <div class="label">GOML</div>
+        </pre>
+        <pre>
+          <code class="js"><%= partial('_example/simple.js.ejs') %></code>
+          <div class="label">JavaScript</div>
+        </pre>
+      </div>
     </div>
   </div>
   <link rel="stylesheet" href="js/highlight/tomorrow-night.css">
