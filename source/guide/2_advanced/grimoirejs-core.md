@@ -27,6 +27,116 @@ Grimoire.jsのすべての設定はここから行います。
 
 ## GomlInterface
 ## NodeInterface
+ノードインタフェースは、複数のノードを対象とした操作のためのインタフェースです。
+ブラウザ上では、以下のように利用されることが多いでしょう。
+
+```javascript
+gr(function(){
+
+  // obtain NodeInterface from GOMLInterface.
+  var nodeInterface = gr("*")("#mesh-id");
+
+  // operate node through NodeInterface. for example...
+  nodeInterface.setAttribute("color","yellow");
+})
+```
+
+ノードインタフェースは、[GomlNode](aaa)と似たようなインタフェースを備えているため、単独のGomlNodeを操作するのと同じように、複数のGomlNodeを操作できます。
+また、NodeInterfaceは、対象とするNodeをツリーごとに管理しています。
+
+```xml
+<!--A.goml imported to html with id="goml-a"-->
+<goml>
+  <scene id="scene-a">
+    <camera />
+    <mesh id="a1" color="red" geometry="cube"/>
+    <mesh id="a2" color="red" geometry="sphere"/>
+  </scene>
+</goml>
+
+<!--B.goml imported to html with id="goml-b"-->
+<goml>
+  <scene id="scene-b">
+    <camera />
+    <mesh id="b1" color="blue" geometry="cube"/>
+    <mesh id="b2" color="blue" geometry="sphere"/>
+  </scene>
+</goml>
+```
+
+```javascript
+gr(function(){
+  // target nodes are #a1,#a2.
+  var ni1 = gr("#goml-a")("mesh");
+
+  //all node in goml-a change color to yellow.
+  ni1.setAttribute("color","yellow");
+  console.log(ni1.count);// >> 2
+
+  // target nodes are all <mesh>. #a1,#a2,#b1 and #b2.
+  var ni2 = gr("*")("mesh");
+  console.log(ni2.count);// >> 4
+
+  console.log(ni2.nodes);// 2-dimension array of GomlNode. [[#a1,#a2],[#b1,#b2]]
+  console.log(ni2.nodes[1][0].getAttribute("id"));// >> 'b1'
+})
+```
+
+このように、`nodes`メソッドを使ってGomlNodeを2次元配列として取得できます。また、他にもGomlNodeを取得するための方法があります。
+
+```javascript
+gr(function(){
+  // target nodes are all <mesh>. #a1,#a2,#b1 and #b2.
+  var ni = gr("*")("mesh");
+  console.log(ni.first());// obtain first node. #a1.
+  console.log(ni.toArray());// [#a1,#a2,#b1,#b2]
+  console.log(ni.get());// quivalent to ni.first().
+  console.log(ni.get(3));// obtain third node. #b1.
+  console.log(ni.get(1,0));// obtain first node of second tree. #b1. similer to ni.nodes[1,0].
+})
+```
+
+NodeInterfaceは、対象とするノードを選択したり、それらに対して直接操作をすることができます。
+```javascript
+gr(function(){
+  // target is #scene-a and#scene-b.
+  var scene = gr("*")("scene");
+
+  // target is #a1,#a2,#b1 and #b2.
+  var meshes = scene.children();
+
+  console.log(meshes.getAttribute("id"));//>> a1 (get attribute of FIRST node.)
+  console.log(meshes.setAttribute("color","red"));//>> all meshes turn red.
+
+  // event listening for all meshes.
+  meshes.on("mouseenter",function(){
+    console.log("mouse is Enter to any mesh!");
+  });
+
+  // execute any function for all meshes.
+  meshed.foreach(function(node){
+    console.log(node.getAttribute("id"));//>>print 'a1','a2','b1' and 'b2'
+  });
+
+  // // target is #a2,#b2.
+  var seconds = meshed.filter(function(node){
+    return node.getAttribute("id").endsWith("2");
+  })
+
+  // convert to array of return value.
+  var mapped = seconds.map(function(node){
+    return node.getAttribute("id");
+  });
+  console.log(mapped);//>> [['a2'],['b2']]
+
+  // add node as green child to #a2,#b2
+  seconds.addChildByName("mesh",{color:"green"});
+
+  //add 'Rotate' component to green meshes.
+  seconds.children().addComponent("Rotate");
+})
+```
+詳細は、APIリファレンスを参照してください。
 
 # 基本クラス
 grimoirejs-coreでは、すべてのオブジェクトは`GomlNode`と`Component`,`Attribute`などの構造で表現されます。
