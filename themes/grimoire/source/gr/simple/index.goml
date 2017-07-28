@@ -1,7 +1,7 @@
 <goml>
   <scene>
-    <camera></camera>
-    <mesh texture="gr/simple/logo.png" geometry="cube">
+    <camera position="0,0.2,0"></camera>
+    <mesh texture="gr/simple/logo.png" geometry="cube" position="0,0,-9">
       <mesh.components>
         <Rotate speed="1,1,1" />
       </mesh.components>

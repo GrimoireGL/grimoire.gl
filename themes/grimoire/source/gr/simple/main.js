@@ -9,12 +9,14 @@ gr(function() {
     .addEventListener('click', function () {
       mesh.setAttribute('color', 'blue')
     })
-  document.querySelector('#simple .bigger')
-    .addEventListener('click', function () {
+  mesh.on('mouseenter', function () {
       mesh.setAttribute('scale', '2.0')
+      document.querySelector('#simple .bigger').classList.add("bold-label");
+      document.querySelector('#simple .smaller').classList.remove("bold-label");
     })
-  document.querySelector('#simple .smaller')
-    .addEventListener('click', function () {
+  mesh.on('mouseleave', function () {
       mesh.setAttribute('scale', '1.0')
+      document.querySelector('#simple .smaller').classList.add("bold-label");
+      document.querySelector('#simple .bigger').classList.remove("bold-label");
     })
 })

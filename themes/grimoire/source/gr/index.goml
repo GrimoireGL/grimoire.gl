@@ -1,5 +1,4 @@
 <goml width="800" height="900" enableLoader="false">
-    <geometry name="quad" type="quad" />
     <import-material typeName="shader" src="gr/index.sort" />
     <renderer camera=".camera" viewport="0, 0, 100%, 100%">
         <render-quad material="new(shader)" out="default" />

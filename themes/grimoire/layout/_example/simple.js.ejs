@@ -6,10 +6,14 @@ gr(function() {
   $('#simple .blue').on('click', function () {
     mesh.setAttribute('color', 'blue')
   })
-  $('#simple .bigger').on('click', function () {
+  mesh.on('mouseenter', function () {
     mesh.setAttribute('scale', '2.0')
+    $("#simple .bigger").addClass("bold-label");
+    $("#simple .smaller").removeClass("bold-label");
   })
-  $('#simple .smaller').on('click', function () {
+  mesh.on('mouseleave', function () {
     mesh.setAttribute('scale', '1.0')
+    $("#simple .smaller").addClass("bold-label");
+    $("#simple .bigger").removeClass("bold-label");
   })
 })

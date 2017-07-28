@@ -252,7 +252,8 @@ black-section()
   text-align center
   text-shadow 0 1px 2px #000
   padding 60px 80px 80px
-
+  .upper-margin
+    margin-top 20px
   .front
     padding 0 60px
     .title
@@ -302,6 +303,10 @@ black-section()
   .front
     font-size 20px
     color color-black
+  .no-pointer-events
+    pointer-events none
+  .all-pointer-events
+    pointer-events all
   .container
     position relative
   .canvas-container
@@ -315,6 +320,8 @@ black-section()
     top 2%
     > *
       width 50%
+  .bold-label
+    font-weight 600
   pre
     background-color rgba(0, 0, 0, 0.7)
     color rgba(255, 255, 255, 0.5)
@@ -342,6 +349,8 @@ black-section()
       color color-secondary
       text-decoration underline
       cursor pointer
+      &.bigger,&.smaller
+        color color-inverse
   #image360
     height 400px
     .code-container

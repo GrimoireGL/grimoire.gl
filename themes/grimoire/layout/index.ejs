@@ -1,4 +1,4 @@
-<script type="text/javascript" src="https://unpkg.com/grimoirejs-preset-basic@1.9.4/register/grimoire-preset-basic.js"></script>
+<script type="text/javascript" src="https://unpkg.com/grimoirejs-preset-basic@1.10.19/register/grimoire-preset-basic.js"></script>
 <div id="primary">
   <nav id="menu-wrap">
     <ul id="menu">
@@ -14,7 +14,7 @@
   <div id="logo-icon"></div>
   <h1 id="logo-font">Grimoire.js</h1>
   <h2 id="logo-desc">A WebGL framework for web development</h2>
-  <div id="logo-sub-desc">Grimoire.js gives you WebGL representation in modern web development flow, minimal codes, very easy and effective and production level.</div>
+  <div id="logo-sub-desc">Grimoire.js provides effective structure to make use of WebGL representational power in Web development.</div>
   <div id="social">
     <div class="demo"><a href="http://jsdo.it/tag/Grimoire.js"><i class="fa fa-asterisk" aria-hidden="true"></i><span>See how it works</span></a></div>
     <div class="slack"><a href="https://grimoire-slackin.herokuapp.com/"><i class="fa fa-comments" aria-hidden="true"></i><span>Join to Slack</span></a></div>
@@ -34,16 +34,17 @@
 </div>
 <div id="description">
   <div class="front">
-    <h2 class="title">Grimoire.js acts as the bridge between WEB and CG.</h2>
-    <div class="content">WebGL development is typically hard due to the profound differences of the development flow between CG and WEB.</div>
+    <h2 class="title">Grimoire.js provides a bridge between WEB and CG.</h2>
+    <div class="content">Using WebGL for Web development was typically hard due to the profound differences of the development flow.</div>
   </div>
   <div class="small">
     <ul>
       <li>
         <div class="container">
           <div class="icon"><span class="icon-htmllike"></span></div>
-          <h3 class="title">WEB side</h3>
-          <div class="content">Grimoire.js provides a <strong>HTML-like markup to describe the scenes</strong> and <strong>DOM-like operation APIs</strong> to handle it. Web engineers will no longer take the cares of the graphics staff such as render loop, 3D mathmatics.</div>
+          <h3 class="title">WEB developper</h3>
+          <div class="content">Web developers are used to mutate DOM operations and write event driven programs.</div>
+          <div class="content upper-margin">Grimoire.js provides a <strong>HTML-like markup to describe the scenes</strong> and <strong>DOM-like operation APIs</strong> to handle it. Web engineers no longer take the cares of the graphics staff such as render loop, 3D mathmatics.</div>
         </div>
       </li>
       <li class="center">
@@ -52,8 +53,9 @@
       <li>
         <div class="container">
           <div class="icon"><span class="icon-component"></span></div>
-          <h3 class="title">CG side</h3>
-          <div class="content">Grimoire.js provides a <strong>component system with APIs like Unity</strong>. CG engineers could focus on shader stuff to visualize better or complex graphics algorithm.</div>
+          <h3 class="title">CG developper</h3>
+          <div class="content">CG developers are used to use component based modular structure and write loop driven programs.</div>
+          <div class="content upper-margin">Grimoire.js provides a <strong>component system like Unity</strong>. CG engineers can focus on what they actually need to. CG engineers no longer need to think how to make easy APIs for Web engineer working with.</div>
         </div>
       </li>
     </ul>
@@ -72,8 +74,8 @@
       </pre>
       <div class="description">
         <h2>HTML-like markup</h2>
-        <p>You can incorporate 3D representation into the WEB with tag-based syntax like HTML.</p>
-        <p>Grimoire.js reduces barriers to 3D by providing the notation web engineers used to.</p>
+        <p>Grimoire.js provides a markup syntax for Web developers to design easily.</p>
+        <p>You can make new tags by your own or import plugins to use useful tags created by other developers.</p>
       </div>
     </div>
   </div>
@@ -82,16 +84,18 @@
       <script class="canvas" type="text/goml" src="gr/simple/index.goml"></script>
       <script src="gr/simple/main.js"></script>
     </div>
-    <div class="code-container">
-      <div class="left description">
-        <h2>DOM-like operation APIs</h2>
+    <div class="code-container no-pointer-events">
+      <div class="left description no-pointer-events">
+        <h2>DOM operation APIs</h2>
         <p>Grimoire.js can easy to collaborate with the other UI stuff.</p>
-        <p>Sometimes you want to change color of models to <a class="red">red</a> or <a class="blue">blue</a>.</p>
-        <p>Sometimes you want to scale models <a class="bigger">bigger</a> or <a class="smaller">smaller</a>.</p>
+        <ul class="all-pointer-events">
+          <li>Change color of models to <a class="red">red</a> or <a class="blue">blue</a> by click UI stuff.</li>
+          <li>Change scale models <a class="bigger">bigger</a> or <a class="smaller">smaller</a> by mouse over on a model.</li>
+        </ul>
         <p>All of mutations in Grimoire.js can be done with the way Web engineers used to.</p>
-        <p>Try <a>clicking</a> links above in this sentence.</p>
+        <p>Try <a>clicking</a> links above or hover mouse over the cube below.</p>
       </div>
-      <div class="right">
+      <div class="right all-pointer-events">
         <pre>
           <code class="xml"><%= partial('_example/simple.goml.ejs') %></code>
           <div class="label">GOML</div>
@@ -112,7 +116,7 @@
   <a id="get-started-button" href="<%- url_for('/guide/1_essentials/02_introduction.html') %>">Getting Started</a>
   <div id="footer-text">
     <div id="licence">Released under the <a href="<%- url_for('//opensource.org/licenses/MIT') %>">MIT License</a></div>
-    <div id="copyright">Copyright (c) 2016 GrimoireGL</div>
+    <div id="copyright">Copyright (c) 2017 GrimoireGL</div>
   </div>
 </div>
 <script type="text/javascript">
