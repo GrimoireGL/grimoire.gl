@@ -1,0 +1,33 @@
+import Component from "grimoirejs/ref/Node/Component";
+import ISceneUpdateArgument from "grimoirejs-fundamental/ref/SceneRenderer/ISceneUpdateArgument";
+import TransformComponent from "grimoirejs-fundamental/ref/Components/TransformComponent";
+import Vector3 from "grimoirejs-math/ref/Vector3";
+import gr from "grimoirejs";
+class Wave extends Component{
+  public static attributes = {
+    amp:{
+      default:1.0,
+      converter:"Number"
+    },
+    speed:{
+      default:1.0,
+      converter:"Number"
+    }
+  };
+
+  public amp:number;
+
+  public speed:number;
+
+  private transform: TransformComponent;
+
+  public $mount():void{
+    this.transform = this.node.getComponent(TransformComponent);
+    this.__bindAttributes(); // bind component attributes to fields
+  }
+  public $update(t:ISceneUpdateArgument):void{
+    this.transfrom.position = new Vector3(this.transform.position.X,Math.sin(this.speed * t.timer.timeInSecound) * this.amp,this.transform.position.Z);
+  }
+}
+gr.registerComponent("Wave",Wave);
+gr.registerNode("wave-mesh",["Wave"],{},"mesh"); // wave-mesh node is a mesh node with Wave component

@@ -1,0 +1,8 @@
+gr(()=>{
+  var hue = 0;
+  $("#shading").on("mousemove",()=>{
+    hue+=0.02;
+    // Setting uniform value from node attribute
+    gr("#shading .canvas").setAttribute("hue",hue%1);
+  });
+})

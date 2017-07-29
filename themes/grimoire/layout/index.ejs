@@ -87,7 +87,7 @@
     <div class="code-container no-pointer-events">
       <div class="left description no-pointer-events">
         <h2>DOM operation APIs</h2>
-        <p>Grimoire.js can easy to collaborate with the other UI stuff.</p>
+        <p>Grimoire.js can easy to collaborate with the other UI stuff. This is just a few samples.</p>
         <ul class="all-pointer-events">
           <li>Change color of models to <a class="red">red</a> or <a class="blue">blue</a> by click UI stuff.</li>
           <li>Change scale models <a class="bigger">bigger</a> or <a class="smaller">smaller</a> by mouse over on a model.</li>
@@ -107,9 +107,78 @@
       </div>
     </div>
   </div>
+  <div class="container" id="component">
+    <div class="canvas-container">
+      <script class="canvas" type="text/goml" src="gr/wave/index.goml"></script>
+      <script src="gr/wave/wave.js"></script>
+    </div>
+    <div class="code-container">
+      <div class="all-pointer-events">
+        <pre>
+          <code class="xml"><%= partial('_example/component.goml.ejs') %></code>
+          <div class="label">GOML</div>
+        </pre>
+        <pre class="typescript">
+          <code class="ts"><%= partial('_example/component.ts.ejs') %></code>
+          <div class="label">Typescript</div>
+        </pre>
+      </div>
+      <div class="description">
+        <div>
+          <h2>Simple and powerful architecture</h2>
+          <p>The previous features are mostly for Web engineers, but these features are customizable with component API like Unity.</p>
+          <p>All of nodes are just a set of components like modern game engines. And each components can be implemented by your own hand.</p>
+          <p>You would notice how this architecture is well formed and fit for CG development on Web.<p/>
+          <h2>Typescript ready</h2>
+          <p>All of API provided by Grimoire can be used from Typescript also. This feature improve your development speed and reduce bugs.</p>
+          <p>Even CG engineers who is not familiar with dynamic-typed language can use APIs easily.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" id="shading">
+    <div class="code-container">
+      <div class="description">
+        <div>
+          <h2>Powerful customizability for shading</h2>
+          <p>Representation power of WebGL is not limited to 3DCG. Shader art is also fantastic.</p>
+          <p>Grimoire provide extended GLSL feature (named .sort) to annotate only what actually need.</p>
+          <p>Shader engineer no need to care about how to pass the parameters to shader. Just write as uniform variable.</p>
+          <p>Once shader was written, material parameters can be mutated from node values.</p>
+        </div>
+      </div>
+      <div class="canvas-container">
+        <script class="canvas" type="text/goml" src="gr/shading/index.goml"></script>
+        <script src="gr/shading/main.js"></script>
+      </div>
+      <div class="all-pointer-events">
+        <pre>
+          <code class="xml"><%= partial('_example/shading.goml.ejs') %></code>
+          <div class="label">GOML</div>
+        </pre>
+        <pre>
+          <code class="js"><%= partial('_example/shading.js.ejs') %></code>
+          <div class="label">javascript</div>
+        </pre>
+        <pre class="shader">
+          <code class="glsl"><%= partial('_example/shading.sort.ejs') %></code>
+          <div class="label">Shader</div>
+        </pre>
+      </div>
+    </div>
+  </div>
   <link rel="stylesheet" href="js/highlight/tomorrow-night.css">
   <script src="js/highlight.pack.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
+</div>
+<div class="container" id="more">
+  <h2>And more...</h2>
+  <p>These are only few feature of Grimoire. There are also several pluins available implemented on these base features.</p>
+  <p>Grimoire is currently still under beta version. But, if you are really like new things or ambitiously think about WebGL future, this must be good project to use for fun.</p>
+  <p>Now you are ready to dive into our tutorial.</p>
+  <div class="start">
+    <a href="<%- url_for('/guide/1_essentials/02_introduction.html') %>">Getting Started</a>
+  </div>
 </div>
 <%- partial('_partial/contributor') %>
 <div id="footer">

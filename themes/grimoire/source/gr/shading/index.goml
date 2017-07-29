@@ -1,0 +1,7 @@
+<goml>
+  <import-material typeName="spots" src="gr/shading/shading.sort"/>
+  <scene>
+    <camera></camera>
+    <mesh material="new(spots)"/>
+  </scene>
+</goml>

@@ -351,6 +351,8 @@ black-section()
       cursor pointer
       &.bigger,&.smaller
         color color-inverse
+        &:hover
+          cursor default
   #image360
     height 400px
     .code-container
@@ -375,6 +377,54 @@ black-section()
     .description
       color color-black-emphasis
       text-shadow 0 1px 2px #000
+  #component
+    height 900px
+    .canvas-container
+      position absolute
+      height 100%
+      width 100%
+    .code-container
+      justify-content space-between
+    pre
+      height 40%
+      &.typescript
+        height 60%
+      background-color rgba(0, 0, 0, 0.3)
+    .label
+      background-color rgba(0, 0, 0, 0.3)
+    .description
+      background-color rgba(0,0,0,0.4)
+      color color-black-emphasis
+      text-shadow 0 1px 2px #000
+  #shading
+    height 800px
+    .canvas-container
+      position absolute
+      height 100%
+      width 50%
+    .code-container
+      justify-content space-between
+      .description
+        background-color rgba(0,0,0,0.3)
+        color color-black-emphasis
+        text-shadow 0 1px 2px #000
+    pre
+      height 20%
+      &.shader
+        height 60%
+      background-color rgba(0, 0, 0, 0.3)
+    .label
+      background-color rgba(0, 0, 0, 0.3)
+
+#more
+  text-align center
+  background-color color-black
+  margin 0px
+  padding 20px
+  color color-black-emphasis
+  .start
+    a
+      button(color-black-emphasis, color-black)
 
 #contributors
   padding 70px 140px 80px
