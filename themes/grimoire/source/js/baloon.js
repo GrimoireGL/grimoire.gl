@@ -48,6 +48,9 @@ function isClosed(message){
 }
 
 function checkExpire(dateText){
+  if(!dateText){
+    return false;
+  }
   if(Date.parse(dateText) > Date.now()){
     return false;
   }

@@ -1,9 +1,8 @@
 {
   "notifications":[
     {
-      "message":"6/11日(日)に**Grimoire.js勉強会**が渋谷ヒカリエにて開催されます。詳しくは→[イベントページ](https://grimoire.connpass.com/event/57906/)",
-      "condition":["lang:ja"],
-      "expire":"2017 6 10"
+      "message":"**Let's make awesome of WebGL with us! We are open for everyone.**  Join just for interest?  Contribute our document?  Write better renderer?  See more [Contributors](/guide/3_meta/community.html)",
+      "condition":[]
     }
   ]
 }
