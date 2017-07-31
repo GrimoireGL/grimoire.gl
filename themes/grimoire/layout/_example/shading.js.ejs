@@ -4,5 +4,7 @@ gr(()=>{
     hue+=0.02;
     // Setting uniform value from node attribute
     gr("#shading .canvas").setAttribute("hue",hue%1);
+    var hueDeg = Math.floor(360 * hue);
+    $("span.hue").text(hueDeg + "°").css('color',"hsl(" + hueDeg +", 50%, 50%)");
   });
 })
