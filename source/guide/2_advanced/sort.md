@@ -323,7 +323,7 @@ GOML側から値が指定されない場合、この値が **コンバーター�
 |vec3|Vector3|(0,0,0)|`type`アノテーションが`color`でない時|
 |vec3|Color3|white|`type`アノテーションが`color`の時|
 |vec4|Vector4|(0,0,0,0)|`type`アノテーションが`color`でないとき|
-|vec4|Vector4|white(a=1)|`type`アノテーションが`color`の時|
+|vec4|Color4|white(a=1)|`type`アノテーションが`color`の時|
 |bool|Boolean|false||
 |int|Number|0||
 |ivec2|Vector2|(0,0)||
@@ -444,7 +444,6 @@ Sort内のシェーダーでは、外部ファイルの参照ができます。
 * [DepthFunc](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/depthFunc)
 * [DepthRange](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/depthRange)
 * [FrontFace](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/frontFace)
-* [LineWidth](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/lineWidth)
 * [PolygonOffset](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/polygonOffset)
 * [Scissor](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/scissor)
 
