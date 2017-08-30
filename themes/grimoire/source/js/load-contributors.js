@@ -31,3 +31,14 @@ xhr.addEventListener('load',function(){
       document.getElementById("contributors-container-root").appendChild(typeContainer);
     }
 });
+var devtoolOpened = false;
+function openDevtool(){
+  if(!devtoolOpened){
+    var scTag = document.createElement("script");
+    scTag.src = "https://unpkg.com/grimoirejs-inspector@1.0.19/dist/devtool.browser.js";
+    document.body.appendChild(scTag);
+    var devtoolWrap = document.querySelector(".devtool-wrap");
+    devtoolWrap.style.height = "300px";
+    devtoolOpened = true;
+  }
+}

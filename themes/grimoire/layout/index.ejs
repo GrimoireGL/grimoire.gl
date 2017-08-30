@@ -172,17 +172,23 @@
   <script src="js/highlight.pack.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 </div>
-<div class="container" id="more">
-  <h2>And more...</h2>
-  <p>These are only few feature of Grimoire. There are also several pluins available implemented on these base features.</p>
-  <p>Grimoire is currently still under beta version. But, if you are really like new things or ambitiously think about WebGL future, this must be good project to use for fun.</p>
-  <p>Now you are ready to dive into our tutorial.</p>
-  <div class="start">
-    <a href="<%- url_for('/guide/1_essentials/02_introduction.html') %>">Getting Started</a>
+<div class="container" id="inspector">
+  <div class="description-container">
+    <h2>Inspector</h2>
+    <p>Web engineers typically use inspector when they create web stuff. Grimoire also provide <a href="<%- url_for('/guide/1_essentials/07_inspector.html')%>">own inspector tool</a> as chrome extension or npm package.</p>
+    <p>You don't need to install the extension in this page. You can experiment the tool just by clicking button below.</p>
+    <a id="get-started-button" onclick="openDevtool()">Open devtool</a>
+  </div>
+  <div class="devtool-wrap">
+    <div id="devtool"/>
   </div>
 </div>
 <%- partial('_partial/contributor') %>
 <div id="footer">
+  <h2>And more...</h2>
+  <p>These are only few feature of Grimoire. There are also several pluins available implemented on these base features.</p>
+  <p>Grimoire is currently still under beta version. But, if you are really like new things or ambitiously think about WebGL future, this must be good project to use for fun.</p>
+  <p>Now you are ready to dive into our tutorial.</p>
   <a id="get-started-button" href="<%- url_for('/guide/1_essentials/02_introduction.html') %>">Getting Started</a>
   <div id="footer-text">
     <div id="licence">Released under the <a href="<%- url_for('//opensource.org/licenses/MIT') %>">MIT License</a></div>
