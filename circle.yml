@@ -19,4 +19,4 @@ general:
       - master
 test:
   override:
-    - echo "Ya! No test, but all OK!!!"
+    - npm run test:dead-link

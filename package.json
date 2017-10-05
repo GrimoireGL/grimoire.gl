@@ -3,12 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "3.3.8"
+    "version": "3.3.9"
   },
   "scripts": {
-    "start": "hexo server"
+    "start": "hexo server",
+    "test:dead-link": "npm start & (sleep 3 && blc http://localhost:4000/ -ro)"
   },
   "dependencies": {
+    "broken-link-checker": "^0.7.6",
     "hexo": "^3.3.8",
     "hexo-autoprefixer": "^1.0.0",
     "hexo-deployer-git": "^0.3.1",
