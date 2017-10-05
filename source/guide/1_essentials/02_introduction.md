@@ -9,14 +9,12 @@ order: 1
 **Grimoire.js** is **WebGL framework for Web development** in short.
 
 Currently, WebGL designing require highly developed graphics knowledge and is very difficult to co-work in previous Web development flow.
-Grimoire.js is the framework that enables these design in **Previous web development flow**, **Minimal codes**, **Very easy and effective** and **Production level**.
+Grimoire.js is the framework that construct a bridge between Web engineer and CG engineer.
 
-Previous libraries to use WebGL is mostly focusing on game development not Web applications.
-Most of them are just ported API's grown in game development field and Web designers need to adopt them to follow that culture. And that culture is vastly differ from common web development culture.
+Previous libraries to use WebGL are mostly focusing on game development not Web applications.
+Most of them are just ported APIs grown in game development field and Web designers need to adopt them to follow that culture. And that culture is vastly differ from common web development culture.
 
-`WebGL` has infinity visualization possibility. However, it can't be used as easy as images or videos.
-
-But, you can, if your development using Grimoire.js.
+Our mission is `Making WebGL being a brush of Web development`.  We are making WebGL easier like the other brushes such as images or videos. We provide strong visualization possibility not only for CG engineers but also for Web engineers.
 
 # What Grimoire.js can do?
 
@@ -35,7 +33,7 @@ You need to make simple HTML to use Grimoire.js. Then, you can link Grimoire.js 
 
 > This script is not `pure` Grimoire.js. This file includes several plugins you might need to use.
 
-If you need minified scirpt file or you want to use npm, please check [Installation](https://grimoire.gl/guide/1_essentials/02_installation.html) page.
+If you need minified scirpt file or you want to use npm, please check [Installation](https://grimoire.gl/guide/1_essentials/01_installation.html) page.
 
 # Markup for Grimoire.js
 
@@ -64,8 +62,8 @@ All Grimoire.js objects can be operated just like HTML elements.
 
 > Loading GOML files
 >  
-> In the same way as loading javascript with `<script>` element, you can specify `src='URL of GOML file'` to load GOML file from out side.
-> In this tutorial, we use embedded GOML file, but we strongly recommend not to do so but link them.
+> In the same way as loading javascript with `<script>` element, you can specify `src='URL of GOML file'` to load GOML file from another file.
+> In this tutorial, we use embedded GOML file, but we strongly recommend not to do so.
 
 You can use multiple canvases with 2 goml codes in same way.
 
@@ -76,7 +74,7 @@ You can use multiple canvases with 2 goml codes in same way.
 > You can use chrome extension of Grimoire.js Devtool for making easier to use Grimoire.js.
 > This extension would be helpful during your training of Grimoire.js.
 > ![Grimoire.js inspector](https://i.gyazo.com/bdcabf661e27d9beb47c3342444ee3a0.png)
-> You can find more details and download from [here](../2_advanced/devtool.html)
+> You can find more details and download from [here](../1_essentials/07_inspector.html)
 
 # Mutation with Javascript API
 
