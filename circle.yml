@@ -13,10 +13,6 @@ deployment:
       - ./node_modules/.bin/hexo clean
       - ./node_modules/.bin/hexo generate
       - ./node_modules/.bin/hexo deploy
-general:
-  branches:
-    only:
-      - master
 test:
   override:
-    - echo "Ya! No test, but all OK!!!"
+    - npm run test:dead-link

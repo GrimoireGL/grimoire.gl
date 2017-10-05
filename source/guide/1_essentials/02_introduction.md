@@ -35,7 +35,7 @@ You need to make simple HTML to use Grimoire.js. Then, you can link Grimoire.js 
 
 > This script is not `pure` Grimoire.js. This file includes several plugins you might need to use.
 
-If you need minified scirpt file or you want to use npm, please check [Installation](https://grimoire.gl/guide/1_essentials/02_installation.html) page.
+If you need minified scirpt file or you want to use npm, please check [Installation](https://grimoire.gl/guide/1_essentials/01_installation.html) page.
 
 # Markup for Grimoire.js
 
@@ -76,7 +76,7 @@ You can use multiple canvases with 2 goml codes in same way.
 > You can use chrome extension of Grimoire.js Devtool for making easier to use Grimoire.js.
 > This extension would be helpful during your training of Grimoire.js.
 > ![Grimoire.js inspector](https://i.gyazo.com/bdcabf661e27d9beb47c3342444ee3a0.png)
-> You can find more details and download from [here](../2_advanced/devtool.html)
+> You can find more details and download from [here](../1_essentials/07_inspector.html)
 
 # Mutation with Javascript API
 
