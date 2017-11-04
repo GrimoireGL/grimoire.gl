@@ -1,0 +1,22 @@
+{
+    "search.exclude": {
+        ".DS_Store": true,
+        "Thumbs.db": true,
+        "db.json": true,
+        "*.log": true,
+        "node_modules/": true,
+        "public/": true,
+        ".deploy*/": true,
+        "reports": true
+    },
+    "files.exclude": {
+        ".DS_Store": true,
+        "Thumbs.db": true,
+        "db.json": true,
+        "*.log": true,
+        "node_modules/": true,
+        "public/": true,
+        ".deploy*/": true,
+        "reports": true
+    }
+}

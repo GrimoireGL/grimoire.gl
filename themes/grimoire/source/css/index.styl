@@ -276,7 +276,7 @@ black-section()
       color color-secondary
     .container
       box-sizing border-box
-      width 400px
+      width 350px
       padding 60px 0 0 0
       margin 0 20px
     .icon
@@ -504,6 +504,7 @@ one-column-desc()
     .small .container
       margin 0 auto
       padding 0
+      width 100%
 
 @media mq-small-pc
   #description
@@ -515,12 +516,15 @@ one-column-desc()
 
 @media mq-mobile
   one-column-desc()
+  #primary-buttons
+    width 100%
+  #logo-desc
+    font-size 25px
   #menu
     .bar
       display none
   #social
     flex-direction column
-
     > div
       margin 3px 0
   #sample
@@ -547,3 +551,25 @@ one-column-desc()
     padding 60px 30px
   .title
     margin-top 0
+  #examples .code-container
+    flex-direction column
+    &.reverse
+      flex-direction column-reverse
+    overflow-y scroll
+    &> *
+      width 100%
+  
+  #examples #simple .canvas-container
+    width 100%
+    top 0px
+  .dismiss-onsmall
+    visibility hidden
+  #examples .no-pointer-events
+    pointer-events all
+  #examples #shading .canvas-container
+    top 0px
+    bottom 0px
+    left 0px
+    right 0px
+    width auto
+    height auto

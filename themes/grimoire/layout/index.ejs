@@ -16,9 +16,24 @@
   <h2 id="logo-desc">A WebGL framework for web development</h2>
   <div id="logo-sub-desc">Grimoire.js provides effective structure to make use of WebGL representational power in Web development.</div>
   <div id="social">
-    <div class="demo"><a href="http://jsdo.it/tag/Grimoire.js"><i class="fa fa-asterisk" aria-hidden="true"></i><span>See how it works</span></a></div>
-    <div class="slack"><a href="https://grimoire-slackin.herokuapp.com/"><i class="fa fa-comments" aria-hidden="true"></i><span>Join to Slack</span></a></div>
-    <div class="github"><a href="https://github.com/GrimoireGL/GrimoireJS"><i class="fa fa-github-alt" aria-hidden="true"></i><span>Open source</span></a></div>
+    <div class="demo">
+      <a href="http://jsdo.it/tag/Grimoire.js">
+        <i class="fa fa-asterisk" aria-hidden="true"></i>
+        <span>See how it works</span>
+      </a>
+    </div>
+    <div class="slack">
+      <a href="https://grimoire-slackin.herokuapp.com/">
+        <i class="fa fa-comments" aria-hidden="true"></i>
+        <span>Join to Slack</span>
+      </a>
+    </div>
+    <div class="github">
+      <a href="https://github.com/GrimoireGL/GrimoireJS">
+        <i class="fa fa-github-alt" aria-hidden="true"></i>
+        <span>Open source</span>
+      </a>
+    </div>
   </div>
   <div id="primary-buttons">
     <div class="install">
@@ -28,8 +43,10 @@
       <a href="<%- url_for('/guide/1_essentials/02_introduction.html') %>">Getting Started</a>
     </div>
   </div>
-  <div id="bg">
-    <script id="top" type="text/goml" src="gr/index.goml"></script>
+  <div id="bg-container">
+    <div id="bg">
+      <script id="top" type="text/goml" src="gr/index.goml"></script>
+    </div>
   </div>
 </div>
 <div id="description">
@@ -41,10 +58,15 @@
     <ul>
       <li>
         <div class="container">
-          <div class="icon"><span class="icon-htmllike"></span></div>
+          <div class="icon">
+            <span class="icon-htmllike"></span>
+          </div>
           <h3 class="title">WEB developper</h3>
           <div class="content">Web developers are used to mutate DOM operations and write event driven programs.</div>
-          <div class="content upper-margin">Grimoire.js provides a <strong>HTML-like markup to describe the scenes</strong> and <strong>DOM-like operation APIs</strong> to handle it. Web engineers no longer take the cares of the graphics staff such as render loop, 3D mathmatics.</div>
+          <div class="content upper-margin">Grimoire.js provides a
+            <strong>HTML-like markup to describe the scenes</strong> and
+            <strong>DOM-like operation APIs</strong> to handle it. Web engineers no longer take the cares of the graphics staff such
+            as render loop, 3D mathmatics.</div>
         </div>
       </li>
       <li class="center">
@@ -52,10 +74,14 @@
       </li>
       <li>
         <div class="container">
-          <div class="icon"><span class="icon-component"></span></div>
+          <div class="icon">
+            <span class="icon-component"></span>
+          </div>
           <h3 class="title">CG developper</h3>
           <div class="content">CG developers are used to use component based modular structure and write loop driven programs.</div>
-          <div class="content upper-margin">Grimoire.js provides a <strong>component system like Unity</strong>. CG engineers can focus on what they actually need to. CG engineers no longer need to think how to make easy APIs for Web engineer working with.</div>
+          <div class="content upper-margin">Grimoire.js provides a
+            <strong>component system like Unity</strong>. CG engineers can focus on what they actually need to. CG engineers no longer
+            need to think how to make easy APIs for Web engineer working with.</div>
         </div>
       </li>
     </ul>
@@ -67,7 +93,7 @@
       <script id="image360" class="canvas" type="text/goml" src="gr/360-image/index.goml"></script>
       <script src="gr/360-image/main.js"></script>
     </div>
-    <div class="code-container">
+    <div class="code-container reverse">
       <pre>
         <code class="xml"><%= partial('_example/360-image.goml.ejs') %></code>
         <div class="label">GOML</div>
@@ -89,11 +115,16 @@
         <h2>DOM operation APIs</h2>
         <p>Grimoire.js can easy to collaborate with the other UI stuff. This is just a few samples.</p>
         <ul class="all-pointer-events">
-          <li>Change color of models to <a class="red">red</a> or <a class="blue">blue</a> by click UI stuff.</li>
-          <li>Change scale models <a class="bigger">bigger</a> or <a class="smaller">smaller</a> by mouse over on a model.</li>
+          <li>Change color of models to
+            <a class="red">red</a> or
+            <a class="blue">blue</a> by click UI stuff.</li>
+          <li class="dismiss-onsmall">Change scale models
+            <a class="bigger">bigger</a> or
+            <a class="smaller">smaller</a> by mouse over on a model.</li>
         </ul>
         <p>All of mutations in Grimoire.js can be done with the way Web engineers used to.</p>
-        <p>Try <a>clicking</a> links above or hover mouse over the cube below.</p>
+        <p>Try
+          <a>clicking</a> links above or hover mouse over the cube below.</p>
       </div>
       <div class="right all-pointer-events">
         <pre>
@@ -112,7 +143,7 @@
       <script id="wave" class="canvas" type="text/goml" src="gr/wave/index.goml"></script>
       <script src="gr/wave/wave.js"></script>
     </div>
-    <div class="code-container">
+    <div class="code-container reverse">
       <div class="all-pointer-events">
         <pre>
           <code class="xml"><%= partial('_example/component.goml.ejs') %></code>
@@ -126,12 +157,17 @@
       <div class="description">
         <div>
           <h2>Simple and powerful architecture</h2>
-          <p>The previous features are mostly for Web engineers, but these features are customizable with component API like Unity.</p>
-          <p>All of nodes are just a set of components like modern game engines. And each components can be implemented by your own hand.</p>
-          <p>You would notice how this architecture is well formed and fit for CG development on Web.<p/>
-          <h2>Typescript ready</h2>
-          <p>All of API provided by Grimoire can be used from Typescript also. This feature improve your development speed and reduce bugs.</p>
-          <p>Even CG engineers who is not familiar with dynamic-typed language can use APIs easily.</p>
+          <p>The previous features are mostly for Web engineers, but these features are customizable with component API like
+            Unity.
+          </p>
+          <p>All of nodes are just a set of components like modern game engines. And each components can be implemented by your
+            own hand.</p>
+          <p>You would notice how this architecture is well formed and fit for CG development on Web.
+            <p/>
+            <h2>Typescript ready</h2>
+            <p>All of API provided by Grimoire can be used from Typescript also. This feature improve your development speed
+              and reduce bugs.</p>
+            <p>Even CG engineers who is not familiar with dynamic-typed language can use APIs easily.</p>
         </div>
       </div>
     </div>
@@ -145,7 +181,11 @@
           <p>Grimoire provide extended GLSL feature (named .sort) to annotate only what actually need.</p>
           <p>Shader engineer no need to care about how to pass the parameters to shader. Just write as uniform variable.</p>
           <p>Once shader was written, material parameters can be mutated from node values.</p>
-          <p><strong>Shake mouse pointer on this section. Current hue: <span class="hue">0°</p></strong><p>
+          <p>
+            <strong>Shake mouse pointer on this section. Current hue:
+              <span class="hue">0°</p>
+          </strong>
+          <p>
         </div>
       </div>
       <div class="canvas-container">
@@ -175,26 +215,30 @@
 <div class="container" id="inspector">
   <div class="description-container">
     <h2>Inspector</h2>
-    <p>Web engineers typically use inspector when they create web stuff. Grimoire also provide <a href="<%- url_for('/guide/1_essentials/07_inspector.html')%>">own inspector tool</a> as chrome extension or npm package.</p>
+    <p>Web engineers typically use inspector when they create web stuff. Grimoire also provide
+      <a href="<%- url_for('/guide/1_essentials/07_inspector.html')%>">own inspector tool</a> as chrome extension or npm package.</p>
     <p>You don't need to install the extension in this page. You can experiment the tool just by clicking button below.</p>
     <a id="get-started-button" onclick="openDevtool()">Open devtool</a>
   </div>
   <div class="devtool-wrap">
-    <div id="devtool"/>
+    <div id="devtool" />
   </div>
 </div>
 <%- partial('_partial/contributor') %>
-<div id="footer">
-  <h2>And more...</h2>
-  <p>These are only few feature of Grimoire. There are also several pluins available implemented on these base features.</p>
-  <p>Grimoire is currently still under beta version. But, if you are really like new things or ambitiously think about WebGL future, this must be good project to use for fun.</p>
-  <p>Now you are ready to dive into our tutorial.</p>
-  <a id="get-started-button" href="<%- url_for('/guide/1_essentials/02_introduction.html') %>">Getting Started</a>
-  <div id="footer-text">
-    <div id="licence">Released under the <a href="<%- url_for('//opensource.org/licenses/MIT') %>">MIT License</a></div>
-    <div id="copyright">Copyright (c) 2017 GrimoireGL</div>
+  <div id="footer">
+    <h2>And more...</h2>
+    <p>These are only few feature of Grimoire. There are also several pluins available implemented on these base features.</p>
+    <p>Grimoire is currently still under beta version. But, if you are really like new things or ambitiously think about WebGL
+      future, this must be good project to use for fun.</p>
+    <p>Now you are ready to dive into our tutorial.</p>
+    <a id="get-started-button" href="<%- url_for('/guide/1_essentials/02_introduction.html') %>">Getting Started</a>
+    <div id="footer-text">
+      <div id="licence">Released under the
+        <a href="<%- url_for('//opensource.org/licenses/MIT') %>">MIT License</a>
+      </div>
+      <div id="copyright">Copyright (c) 2017 GrimoireGL</div>
+    </div>
   </div>
-</div>
-<script type="text/javascript">
-!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-</script>
+  <script type="text/javascript">
+    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');
+  </script>
