@@ -1,0 +1,69 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8-browsers
+    environment:
+      TZ: /usr/share/zoneinfo/UTC
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run: npm install
+      - save-cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ~/.local
+            - ~/.npm/_cacache
+            - node_modules
+  test:
+    docker:
+      - image: circleci/node:8-browsers
+    environment:
+      TZ: /usr/share/zoneinfo/UTC
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: test
+          command: npm run test:dead-link
+  deploy_master:
+    docker:
+      - image: circleci/node:8-browsers
+    environment:
+      TZ: /usr/share/zoneinfo/Asia/Tokyo
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: git configure
+          command: |
+           git config --global user.name "CircleCI";
+           git config --global user.email "pnlybubbles+circleci@gmail.com";
+      - run: ./node_modules/.bin/hexo clean
+      - run: ./node_modules/.bin/hexo generate
+      - run: ./node_modules/.bin/hexo deploy
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - build
+          filters:
+            branches:
+              ignore: gh-pages
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: gh-pages
+      - deploy_master:
+          requires:
+            - build
+            - test
+          filters:
+            branches:
+              only: master
