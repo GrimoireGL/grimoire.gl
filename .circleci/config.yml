@@ -33,7 +33,7 @@ jobs:
     docker:
       - image: circleci/node:8-browsers
     environment:
-      TZ: /usr/share/zoneinfo/Asia/Tokyo
+      TZ: /usr/share/zoneinfo/UTC
     steps:
       - checkout
       - restore_cache:
