@@ -9,14 +9,13 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
-      - run: echo 'export PATH=/home/circleci/project/node_modules/.bin:$PATH' >> $BASH_ENV
       - run: npm install
       - save-cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ~/.local
             - ~/.npm/_cacache
-            - node_modules
+            - ./node_modules
   test:
     docker:
       - image: circleci/node:8-browsers
@@ -26,7 +25,7 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
-      - run: echo 'export PATH=/home/circleci/project/node_modules/.bin:$PATH' >> $BASH_ENV
+      - run: npm install
       - run:
           name: test
           command: npm run test:dead-link
@@ -39,7 +38,7 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
-      - run: echo 'export PATH=/home/circleci/project/node_modules/.bin:$PATH' >> $BASH_ENV
+      - run: npm install
       - run:
           name: git configure
           command: |
