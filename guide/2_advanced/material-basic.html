@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>Material basics | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="What is material?Material is group of shader program codes and arguments used for rendering objects. For example, if you use forward-shading plugin to use lights, you can make so different rendering r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Material basics">
+<meta property="og:url" content="https://grimoire.gl/guide/2_advanced/material-basic.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="What is material?Material is group of shader program codes and arguments used for rendering objects. For example, if you use forward-shading plugin to use lights, you can make so different rendering r">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.402Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Material basics">
+<meta name="twitter:description" content="What is material?Material is group of shader program codes and arguments used for rendering objects. For example, if you use forward-shading plugin to use lights, you can make so different rendering r">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+    <aside id="sidebar">
+  <div id="doc-title">GUIDE</div>
+  
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Essentials</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/1_essentials/01_installation.html">Installation</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/02_introduction.html">Getting started</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/03_goml.html">GOML</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/04_interface.html">Interfaces</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/05_componentsystem.html">ComponentSystem</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/06_plugin.html">Plugins</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/07_inspector.html">Devtool</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/08_tags.html">主なタグ</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Advanced</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/2_advanced/webgl-basics.html">WebGL concepts</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/sort.html">カスタムマテリアルの仕様</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/plugin-specification.html">Plugin making</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/geometry-basic.html">Geometry basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-renderer.html">Renderer basics</a>
+            </li>
+          
+            <li class="active">
+              <a href="/guide/2_advanced/material-basic.html">Material basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-core.html">grimoirejs-core</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/typescript.html">Use Typescript</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Meta</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/3_meta/community.html">Community</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+  
+</aside>
+
+  
+  <div id="content">
+    <h1 id="content-title">Material basics</h1>
+    <h1 id="What-is-material"><a href="#What-is-material" class="headerlink" title="What is material?"></a>What is material?</h1><p>Material is group of shader program codes and arguments used for rendering objects.</p>
+<p>For example, if you use <code>forward-shading</code> plugin to use lights, you can make so different rendering result from different parameters.</p>
+<p><img src="https://i.gyazo.com/180f7e3a0ca2b5d67337f46ac3913a35.gif" alt=""></p>
+<blockquote>
+<p>You can see various appearance of cube that was made by changing material arguments.</p>
+</blockquote>
+<p>By understanding material of Grimoire, you can achieve an appearance you want to create.</p>
+<h1 id="material-attribute-on-mesh"><a href="#material-attribute-on-mesh" class="headerlink" title="material attribute on mesh"></a><code>material</code> attribute on mesh</h1><p>As we described in tutorial, we can specify <code>color</code> attribute as default.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mesh</span> <span class="attr">geometry</span>=<span class="string">"cube"</span> <span class="attr">color</span>=<span class="string">"yellow"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>You need to know there was omitted default value <code>material</code>. If we denote default value of <code>material</code>, it should be following code.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mesh</span> <span class="attr">geometry</span>=<span class="string">"cube"</span> <span class="attr">material</span>=<span class="string">"new(unlit)"</span> <span class="attr">color</span>=<span class="string">"yellow"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>new(unlit)</code> is just a default value of <code>material</code> on <code>MeshRenderer</code> component attached to <code>mesh</code>.</p>
+<blockquote>
+<p><code>forward-shading</code> plugin will rewrite default value of <code>material</code> on <code>MeshRenderer</code></p>
+<p>For users can use shader enabling shading by default, if you use <code>forward-shading</code> plugin, the plugin will rewrite default value of <code>material</code>.<br>The default value will be <code>new(basic)</code> when you use the plugin.</p>
+</blockquote>
+<p><code>material</code> attribute determine what kind of material arguments (such as <code>color</code> or <code>texture</code>) are available on that tag.<br>For instance, if you specified <code>new(unlit)</code> on a <code>&lt;mesh&gt;</code> tag, you will be able to specify <code>color</code> and <code>texture</code> attribute on the <code>&lt;mesh&gt;</code>. When you specified <code>new(basic)</code> enabled by linking <code>forward-shading</code> plugin, you will be able to specify <code>roughness</code> , <code>roughnessTexture</code> , <code>albedo</code> and so on.</p>
+<p>As you need to know what arguments are available when you want to use javascript function, material parameters are different and depends on what material used.</p>
+<h2 id="syntax-of-material-attribute"><a href="#syntax-of-material-attribute" class="headerlink" title="syntax of material attribute"></a>syntax of <code>material</code> attribute</h2><p>There are 2 types of syntax is available on material attribute.</p>
+<ul>
+<li><code>${query-to-material}</code></li>
+<li><code>new(${material-name})</code></li>
+</ul>
+<p><code>new()</code> syntax is very useful if you need to instanciate a <code>&lt;mesh&gt;</code> from javascript because it does not require instanciate the other tags such as <code>material</code>. However, if you have a lot of meshes that have same materials, you should use query syntax. It works more faster than ‘new syntax’.</p>
+<h3 id="query-syntax-on-material-attribute"><a href="#query-syntax-on-material-attribute" class="headerlink" title="query syntax on material attribute"></a>query syntax on material attribute</h3><p>You can use “query syntax” of material for sharing material configuration between meshes.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">goml</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">material</span> <span class="attr">class</span>=<span class="string">"mat1"</span> <span class="attr">type</span>=<span class="string">"unlit"</span> <span class="attr">color</span>=<span class="string">"yellow"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">camera</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">material</span>=<span class="string">".mat1"</span> <span class="attr">position</span>=<span class="string">"2,0,0"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">material</span>=<span class="string">".mat1"</span> <span class="attr">position</span>=<span class="string">"-2,0,0"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">material</span>=<span class="string">".mat1"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Ensure that you need to specify material arguments on <code>&lt;material&gt;</code> tag not <code>&lt;mesh&gt;</code> tag.</p>
+<h3 id="‘new’-syntax-on-material-attribute"><a href="#‘new’-syntax-on-material-attribute" class="headerlink" title="‘new’ syntax on material attribute"></a>‘new’ syntax on material attribute</h3><p>When you need to create material for each <code>&lt;mesh&gt;</code>, it is pain to make <code>&lt;material&gt;</code> for each <code>&lt;mesh&gt;</code>.<br>For these case, you can use “new syntax” of material for creating a material instance for the mesh.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">goml</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">camera</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">material</span>=<span class="string">"new(unlit)"</span> <span class="attr">color</span>=<span class="string">"yellow"</span> <span class="attr">position</span>=<span class="string">"2,0,0"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">material</span>=<span class="string">"new(unlit)"</span> <span class="attr">color</span>=<span class="string">"green"</span> <span class="attr">position</span>=<span class="string">"-2,0,0"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">material</span>=<span class="string">"new(unlit)"</span> <span class="attr">color</span>=<span class="string">"red"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Ensure that you need to specify materials on each <code>&lt;mesh&gt;</code> tags.</p>
+<h2 id="Material-arguments"><a href="#Material-arguments" class="headerlink" title="Material arguments"></a>Material arguments</h2><p>Most of materials on Grimoire is created with custom material file <code>.sort</code>. Grimoire will generate attributes for this custom material file by parsing variables of shader code.</p>
+<p>Therefore, these arguments are completely depends on what material you need to use.<br>But, this is argument list of official shaders.</p>
+<h2 id="unlit-shader"><a href="#unlit-shader" class="headerlink" title="unlit shader"></a><code>unlit</code> shader</h2><p>This is default value of material(if you didn’t link forward-shading plugin).<br>This shader not supports shadings. Just for painting with single color or attach texture.</p>
+<p><strong>arguments</strong></p>
+<ul>
+<li>color(Color4)・・・solid color to draw the mesh</li>
+<li>texture(Texture)・・・a texture to attach to mesh</li>
+</ul>
+<h2 id="basic-shader"><a href="#basic-shader" class="headerlink" title="basic shader"></a><code>basic</code> shader</h2><p>This is a shader enabled by <code>forward-shading</code> plugin. If you need to use shading, you would need to use this shader.</p>
+<p><strong>arguments</strong></p>
+<ul>
+<li>albedo(Color4)・・・baseColor on the mesh</li>
+<li>texture(Texture)・・・baseColor of texture on the mesh(This color will be used with albedo by multiplying)</li>
+<li>roughness(float)・・・0 to 1 value to specify how the mesh is rough.</li>
+<li>roughnessTexture(Texture)・・・a texture containing roughness info. The texture needs to contain roughness in R channel.</li>
+<li>metalic(float)・・・0 to 1 value to specify how the mesh is metalic.</li>
+<li>emission(Color3)・・・the color of the mesh emitting. This color is not affected by shades.</li>
+</ul>
+<h2 id="Your-custom-material"><a href="#Your-custom-material" class="headerlink" title="Your custom material"></a>Your custom material</h2><p>Of course you can make your own material. You should read <a href="">Custom material(WIP)</a> document for making your own material.<br>Even our official materials are written in same way as I wrote in the Custom material document.</p>
+
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/guide/2_advanced/material-basic.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

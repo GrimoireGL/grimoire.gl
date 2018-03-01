@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://grimoire.gl/tutorial/index.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.414Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/tutorial/10-create-node.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.410Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/tutorial/11-create-material.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.410Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/tutorial/12-create-post-effect.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.410Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/tutorial/07-create-component.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.410Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/tutorial/05-handle-component-with-js.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.406Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/tutorial/06-node-and-component.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.406Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/tutorial/03-handle-goml-with-js.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.406Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/index.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.406Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/tutorial/04-handle-component.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.406Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/tutorial/02-handle-goml.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.406Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/tutorial/01-getting-started.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.406Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/2_advanced/material-basic.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.402Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/2_advanced/sort.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.402Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/2_advanced/webgl-basics.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.402Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/3_meta/community.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.402Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/2_advanced/typescript.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.402Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/2_advanced/plugin-specification.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.402Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/1_essentials/04_interface.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/example/index.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/example/example-008.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/2_advanced/grimoirejs-core.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/example/example-009.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/2_advanced/grimoirejs-renderer.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/1_essentials/02_introduction.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/2_advanced/geometry-basic.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/1_essentials/08_tags.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/1_essentials/07_inspector.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/1_essentials/05_componentsystem.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/1_essentials/06_plugin.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/1_essentials/03_goml.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/example/example-010.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/guide/1_essentials/01_installation.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/example/example-007.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.394Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/api/grimoirejs-math.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.394Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/example/example-002.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.394Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/example/example-003.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.394Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/api/top-level-apis.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.394Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/example/example-004.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.394Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/example/example-005.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.394Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/example/example-006.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.394Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/api/grimoirejs-core.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.394Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/blog/index.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.394Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/api/grimoirejs-fundamental.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.394Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/api/index.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.394Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/api/GomlNode.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.394Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/api/Utility.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.394Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/api/Component.html</loc>
+    
+    <lastmod>2018-03-01T20:25:14.394Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://grimoire.gl/2016/07/15/hello-world/</loc>
+    
+    <lastmod>2018-03-01T20:25:14.394Z</lastmod>
+    
+  </url>
+  
+</urlset>

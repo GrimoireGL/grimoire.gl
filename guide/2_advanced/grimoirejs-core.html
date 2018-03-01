@@ -1,0 +1,1250 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>grimoirejs-core | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="はじめにGrimoire.jsの本体であるgrimoirejs-coreについてのドキュメントです。grimoirejs-coreは、Grimoire.jsで用いられるすべての基盤であり、あらゆるプラグインを管理、統括します。grimoirejs-coreは主に以下の機能を持ちます。  GomlNode,Componentの定義の管理 webページがロードされたときのgomlのパース GomlNo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="grimoirejs-core">
+<meta property="og:url" content="https://grimoire.gl/guide/2_advanced/grimoirejs-core.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="はじめにGrimoire.jsの本体であるgrimoirejs-coreについてのドキュメントです。grimoirejs-coreは、Grimoire.jsで用いられるすべての基盤であり、あらゆるプラグインを管理、統括します。grimoirejs-coreは主に以下の機能を持ちます。  GomlNode,Componentの定義の管理 webページがロードされたときのgomlのパース GomlNo">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.398Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="grimoirejs-core">
+<meta name="twitter:description" content="はじめにGrimoire.jsの本体であるgrimoirejs-coreについてのドキュメントです。grimoirejs-coreは、Grimoire.jsで用いられるすべての基盤であり、あらゆるプラグインを管理、統括します。grimoirejs-coreは主に以下の機能を持ちます。  GomlNode,Componentの定義の管理 webページがロードされたときのgomlのパース GomlNo">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+    <aside id="sidebar">
+  <div id="doc-title">GUIDE</div>
+  
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Essentials</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/1_essentials/01_installation.html">Installation</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/02_introduction.html">Getting started</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/03_goml.html">GOML</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/04_interface.html">Interfaces</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/05_componentsystem.html">ComponentSystem</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/06_plugin.html">Plugins</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/07_inspector.html">Devtool</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/08_tags.html">主なタグ</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Advanced</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/2_advanced/webgl-basics.html">WebGL concepts</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/sort.html">カスタムマテリアルの仕様</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/plugin-specification.html">Plugin making</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/geometry-basic.html">Geometry basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-renderer.html">Renderer basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/material-basic.html">Material basics</a>
+            </li>
+          
+            <li class="active">
+              <a href="/guide/2_advanced/grimoirejs-core.html">grimoirejs-core</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/typescript.html">Use Typescript</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Meta</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/3_meta/community.html">Community</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+  
+</aside>
+
+  
+  <div id="content">
+    <h1 id="content-title">grimoirejs-core</h1>
+    <h1 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h1><p>Grimoire.jsの本体である<strong>grimoirejs-core</strong>についてのドキュメントです。<br>grimoirejs-coreは、Grimoire.jsで用いられるすべての基盤であり、あらゆるプラグインを管理、統括します。<br>grimoirejs-coreは主に以下の機能を持ちます。</p>
+<ul>
+<li>GomlNode,Componentの定義の管理</li>
+<li>webページがロードされたときの<code>goml</code>のパース</li>
+<li>GomlNodeやComponentのツリー構造の管理</li>
+<li>Gomlノード間のメッセージング管理</li>
+</ul>
+<p>このページではまず、主にwebページ上でGrimoire.jsを操作するために利用されるインタフェースについて解説します。<br>次に、各種プラグイン開発の際に必要となるであろう基本クラス群と、そこで利用されるデータ型について説明し、最後に、Grimoire.jsのシステムに関わるいくつかのクラスを紹介します。</p>
+<h1 id="インタフェース"><a href="#インタフェース" class="headerlink" title="インタフェース"></a>インタフェース</h1><p>Grimoire.jsの機能を利用するとき最も頻繁に利用するのは、globalに<code>gr</code>という識別子で現れる<code>GrimoireInterface</code>です。<br>Grimoire.jsのすべての設定はここから行います。<br><code>GrimoireInterface</code>から、<code>GomlInterface</code>,<code>NodeInterface</code>を取得できます。</p>
+<h2 id="GrimoireInterface"><a href="#GrimoireInterface" class="headerlink" title="GrimoireInterface"></a>GrimoireInterface</h2><h2 id="GomlInterface"><a href="#GomlInterface" class="headerlink" title="GomlInterface"></a>GomlInterface</h2><h2 id="NodeInterface"><a href="#NodeInterface" class="headerlink" title="NodeInterface"></a>NodeInterface</h2><h1 id="基本クラス"><a href="#基本クラス" class="headerlink" title="基本クラス"></a>基本クラス</h1><p>grimoirejs-coreでは、すべてのオブジェクトは<code>GomlNode</code>と<code>Component</code>,<code>Attribute</code>などの構造で表現されます。<br>これらの設計指向については、<a href="">ガイド</a>を参照してください。</p>
+<h2 id="GomlNode"><a href="#GomlNode" class="headerlink" title="GomlNode"></a>GomlNode</h2><h2 id="Component"><a href="#Component" class="headerlink" title="Component"></a>Component</h2><h2 id="Attribute"><a href="#Attribute" class="headerlink" title="Attribute"></a>Attribute</h2><h2 id="Converter"><a href="#Converter" class="headerlink" title="Converter"></a>Converter</h2><h2 id="NSIdentity"><a href="#NSIdentity" class="headerlink" title="NSIdentity"></a>NSIdentity</h2><h2 id="NSDictionary"><a href="#NSDictionary" class="headerlink" title="NSDictionary"></a>NSDictionary</h2><h1 id="データ型"><a href="#データ型" class="headerlink" title="データ型"></a>データ型</h1><h2 id="NodeDeclaration"><a href="#NodeDeclaration" class="headerlink" title="NodeDeclaration"></a>NodeDeclaration</h2><h2 id="ComponentDeclaration"><a href="#ComponentDeclaration" class="headerlink" title="ComponentDeclaration"></a>ComponentDeclaration</h2><h2 id="AttributeDeclaration"><a href="#AttributeDeclaration" class="headerlink" title="AttributeDeclaration"></a>AttributeDeclaration</h2><h1 id="その他"><a href="#その他" class="headerlink" title="その他"></a>その他</h1><h2 id="GomlLoader"><a href="#GomlLoader" class="headerlink" title="GomlLoader"></a>GomlLoader</h2><h2 id="GomlParser"><a href="#GomlParser" class="headerlink" title="GomlParser"></a>GomlParser</h2><h2 id="Constants"><a href="#Constants" class="headerlink" title="Constants"></a>Constants</h2><h2 id="コンバーター"><a href="#コンバーター" class="headerlink" title="コンバーター"></a>コンバーター</h2><h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p><strong>出力型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string</span><br></pre></td></tr></table></figure>
+<p><strong>入力可能なもの</strong></p>
+<ul>
+<li>String ・・・ そのまま出力されます。</li>
+<li>Object ・・・ toString関数が存在する場合それが呼び出されます。</li>
+</ul>
+<h3 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h3><p><strong>出力型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">number</span><br></pre></td></tr></table></figure>
+<p><strong>入力可能なもの</strong></p>
+<ul>
+<li>String・・・Number.parseNumberにより処理され出力されます。</li>
+<li>Number・・・そのまま出力されます。</li>
+</ul>
+<h3 id="Boolean"><a href="#Boolean" class="headerlink" title="Boolean"></a>Boolean</h3><p><strong>出力型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">boolean</span><br></pre></td></tr></table></figure>
+<p><strong>入力可能なもの</strong></p>
+<ul>
+<li>String・・・”true”もしくは”false”のみ</li>
+<li>Boolean・・・そのまま出力されます。</li>
+</ul>
+<h3 id="Component-1"><a href="#Component-1" class="headerlink" title="Component"></a>Component</h3><p><strong>出力型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T&gt; where T extends Component</span><br></pre></td></tr></table></figure>
+<p><strong>コンバーター引数</strong></p>
+<ul>
+<li>target・・・取得対象のコンポーネント名</li>
+</ul>
+<p><strong>入力可能なもの</strong></p>
+<ul>
+<li>String・・・クエリとして解釈されます。属するツリーから該当する<strong>最初の一つ</strong>の<strong>ノード</strong>を見つけ出し、そこから<code>target</code>に合致するコンポーネントを取得します。</li>
+<li>GomlNode・・・対象となるノードの中から最初の<code>target</code>に合致するコンポーネントを取り出します。</li>
+<li>Component・・・そのまま渡されます(名称が<code>target</code>に指定されたものでない時例外がでます)</li>
+</ul>
+<h3 id="Vector2"><a href="#Vector2" class="headerlink" title="Vector2"></a>Vector2</h3><p><strong>出力型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vector2</span><br></pre></td></tr></table></figure>
+<p><strong>入力可能なもの</strong></p>
+<ul>
+<li>String・・・Vector2.parseにより処理されます。</li>
+<li>Vector2・・・そのまま渡されます。</li>
+</ul>
+<h3 id="Vector3"><a href="#Vector3" class="headerlink" title="Vector3"></a>Vector3</h3><p><strong>出力型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vector3</span><br></pre></td></tr></table></figure>
+<p><strong>入力可能なもの</strong></p>
+<ul>
+<li>String・・・Vector3.parseにより処理されます。</li>
+<li>Vector3・・・そのまま処理されます。</li>
+</ul>
+<h3 id="Vector4"><a href="#Vector4" class="headerlink" title="Vector4"></a>Vector4</h3><p><strong>出力型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vector4</span><br></pre></td></tr></table></figure>
+<p><strong>入力可能なもの</strong></p>
+<ul>
+<li>String・・・Vector4.parseにより処理されます。</li>
+<li>Vector4・・・そのまま処理されます。</li>
+</ul>
+<h3 id="Color3"><a href="#Color3" class="headerlink" title="Color3"></a>Color3</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Color3</span><br></pre></td></tr></table></figure>
+<p><strong>入力可能なもの</strong></p>
+<ul>
+<li>String・・・Color3.parseにより処理されます。</li>
+<li>Color3・・・そのまま処理されます。</li>
+<li>Color4・・・Alpha値を無視したColor3を生成して渡されます。</li>
+</ul>
+<h3 id="Color4"><a href="#Color4" class="headerlink" title="Color4"></a>Color4</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Color4</span><br></pre></td></tr></table></figure>
+<p><strong>入力可能なもの</strong></p>
+<ul>
+<li>String・・・Color4.parseにより処理されます。</li>
+<li>Color4・・・そのまま処理されます。</li>
+<li>Color3・・・Alpha値を1.0としたColor4を生成して渡されます。</li>
+</ul>
+<h2 id="AssetLoadingManager-コンポーネント"><a href="#AssetLoadingManager-コンポーネント" class="headerlink" title="AssetLoadingManager コンポーネント"></a>AssetLoadingManager コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<p>非同期的な解決を必要とするようなリソース群のロードを管理しているコンポーネント。<br>このコンポーネントにより、初期時にロード画面を表示します。<br>また、ロード終了後に他のコンポーネントに処理の開始を通知してレンダリングループを開始します。<br><!-- /EDIT HERE--></p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">loadingProgress</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">autoStart</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">true</td>
+<td style="text-align:center">なし</td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="loadingProgress-属性"><a href="#loadingProgress-属性" class="headerlink" title="loadingProgress 属性"></a>loadingProgress 属性</h3><ul>
+<li><code>converter</code>: number</li>
+<li><code>defaultValue</code>: 0</li>
+</ul>
+<!-- EDIT HERE(loadingProgress)-->
+<p>読み取り専用。現在のロード状況を100分率で返します。<br><!-- /EDIT HERE--></p>
+<h3 id="autoStart-属性"><a href="#autoStart-属性" class="headerlink" title="autoStart 属性"></a>autoStart 属性</h3><ul>
+<li><code>converter</code>: boolean</li>
+<li><code>defaultValue</code>: true</li>
+</ul>
+<!-- EDIT HERE(autoStart)-->
+<p>リソースのロード終了後に自動的にレンダリングループを開始するかどうか。<br>これがfalseの場合、ユーザーが自らLoopManagerに対してbeginメソッドを呼ばなければ、一切の描画処理は行われません。<br><!-- /EDIT HERE--></p>
+<h2 id="Camera-コンポーネント"><a href="#Camera-コンポーネント" class="headerlink" title="Camera コンポーネント"></a>Camera コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<p>シーンの描画をするカメラの役割をするコンポーネントです。<br>シーン中の物体を描画する際にこのコンポーネントにより生成されたビュー行列や射影行列が用いられます。</p>
+<!-- /EDIT HERE-->
+<h3 id="属性-1"><a href="#属性-1" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">fovy</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">0.3</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">near</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">0.01</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">far</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">aspect</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">1.6</td>
+<td style="text-align:center">なし</td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="fovy-属性"><a href="#fovy-属性" class="headerlink" title="fovy 属性"></a>fovy 属性</h3><ul>
+<li><code>converter</code>: number</li>
+<li><code>defaultValue</code>: 0.3</li>
+</ul>
+<!-- EDIT HERE(fovy)-->
+<p>視野角。ラジアン単位で指定します。<br>1/2π以上の値は指定できません。<br><!-- /EDIT HERE--></p>
+<h3 id="near-属性"><a href="#near-属性" class="headerlink" title="near 属性"></a>near 属性</h3><ul>
+<li><code>converter</code>: number</li>
+<li><code>defaultValue</code>: 0.01</li>
+</ul>
+<!-- EDIT HERE(near)-->
+<p>近クリップ面(カメラから物体が映る最短の距離)を指定します。<br>必ず、正の値を指定する必要があります。<br><!-- /EDIT HERE--></p>
+<h3 id="far-属性"><a href="#far-属性" class="headerlink" title="far 属性"></a>far 属性</h3><ul>
+<li><code>converter</code>: number</li>
+<li><code>defaultValue</code>: 10</li>
+</ul>
+<!-- EDIT HERE(far)-->
+<p>遠クリップ面(カメラから物体が映る最長の距離)を指定します。<br>遠ければ遠いほどいいわけではなく、近クリップ面との差があまりにも大きすぎると、物体の前後関係が曖昧になってしまう場所が発生し得ます。<br><!-- /EDIT HERE--></p>
+<h3 id="aspect-属性"><a href="#aspect-属性" class="headerlink" title="aspect 属性"></a>aspect 属性</h3><ul>
+<li><code>converter</code>: number</li>
+<li><code>defaultValue</code>: 1.6</li>
+</ul>
+<!-- EDIT HERE(aspect)-->
+<p>スクリーン上のアスペクト比を指定します。<br><!-- /EDIT HERE--></p>
+<h2 id="CanvasInitializer-コンポーネント"><a href="#CanvasInitializer-コンポーネント" class="headerlink" title="CanvasInitializer コンポーネント"></a>CanvasInitializer コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<p>キャンバスの初期化を司るコンポーネントです。<br>このコンポーネントに対してtreeInitializedが呼ばれた瞬間にスクリプトタグの存在した場所に対して<code>&lt;canvas&gt;</code>タグの生成を試みます。<br><!-- /EDIT HERE--></p>
+<h3 id="属性-2"><a href="#属性-2" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">width</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">640</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">height</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">480</td>
+<td style="text-align:center">なし</td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="width-属性"><a href="#width-属性" class="headerlink" title="width 属性"></a>width 属性</h3><ul>
+<li><code>converter</code>: number</li>
+<li><code>defaultValue</code>: 640</li>
+</ul>
+<!-- EDIT HERE(width)-->
+<p>キャンバスの幅を指します。<br><!-- /EDIT HERE--></p>
+<h3 id="height-属性"><a href="#height-属性" class="headerlink" title="height 属性"></a>height 属性</h3><ul>
+<li><code>converter</code>: number</li>
+<li><code>defaultValue</code>: 480</li>
+</ul>
+<!-- EDIT HERE(height)-->
+<p>キャンバスの高さを指します。<br><!-- /EDIT HERE--></p>
+<h2 id="Geometry-コンポーネント"><a href="#Geometry-コンポーネント" class="headerlink" title="Geometry コンポーネント"></a>Geometry コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<p>あるプリミティブなどのジオメトリを含まれているGOML内でで使用可能にします。<br>このコンポーネントは<code>type</code>属性に合わせて必要な属性値を動的に生成します。<br><!-- /EDIT HERE--></p>
+<h3 id="属性-3"><a href="#属性-3" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">type</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">undefined</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">name</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">undefined</td>
+<td style="text-align:center">なし</td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="type-属性"><a href="#type-属性" class="headerlink" title="type 属性"></a>type 属性</h3><ul>
+<li><code>converter</code>: string</li>
+<li><code>defaultValue</code>: undefined</li>
+</ul>
+<!-- EDIT HERE(type)-->
+<p>生成するジオメトリのタイプです。任意のジオメトリを<code>GeometryFactory.addType</code>から追加することによりユーザーが独自のパラメーターを割り当てたジオメトリを作成することができます。<br><!-- /EDIT HERE--></p>
+<h3 id="name-属性"><a href="#name-属性" class="headerlink" title="name 属性"></a>name 属性</h3><ul>
+<li><code>converter</code>: string</li>
+<li><code>defaultValue</code>: undefined</li>
+</ul>
+<!-- EDIT HERE(name)-->
+<p>生成したジオメトリにつける名前です。これを用いて<code>GeometryConverter</code>は対象となるジオメトリを識別します。<br>例えば、<code>MeshRenderer</code>の<code>geometry</code>属性などに指定する名前になります。<br><!-- /EDIT HERE--></p>
+<h2 id="GeometryRegistory-コンポーネント"><a href="#GeometryRegistory-コンポーネント" class="headerlink" title="GeometryRegistory コンポーネント"></a>GeometryRegistory コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<p>Geometryの登録に関する処理をあらかじめ行うためのコンポーネントです。</p>
+<p>gomlノードにあらかじめ含められており、ユーザーが直接いじる必要はほぼありません。<br><!-- /EDIT HERE--><br>属性なし</p>
+<h2 id="LoopManager-コンポーネント"><a href="#LoopManager-コンポーネント" class="headerlink" title="LoopManager コンポーネント"></a>LoopManager コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<p>レンダリングループを管理するコンポーネントです。<br>loopEnabledがtrueである場合、自動的にそのブラウザのrequestAnimationFrameの際に処理を実行します。<br><!-- /EDIT HERE--></p>
+<h3 id="属性-4"><a href="#属性-4" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">loopEnabled</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">false</td>
+<td style="text-align:center">なし</td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="loopEnabled-属性"><a href="#loopEnabled-属性" class="headerlink" title="loopEnabled 属性"></a>loopEnabled 属性</h3><ul>
+<li><code>converter</code>: boolean</li>
+<li><code>defaultValue</code>: false</li>
+</ul>
+<!-- EDIT HERE(loopEnabled)-->
+<p>ループが有効かどうか。<br>通常、この属性を編集する必要はありません。AssetLoadingManagerコンポーネントがロード終了時に自動的にtrueにマークします。<br><!-- /EDIT HERE--></p>
+<h2 id="Material-コンポーネント"><a href="#Material-コンポーネント" class="headerlink" title="Material コンポーネント"></a>Material コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<!-- /EDIT HERE-->
+<h3 id="属性-5"><a href="#属性-5" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">type</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">undefined</td>
+<td style="text-align:center">なし</td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="type-属性-1"><a href="#type-属性-1" class="headerlink" title="type 属性"></a>type 属性</h3><ul>
+<li><code>converter</code>: string</li>
+<li><code>defaultValue</code>: undefined</li>
+</ul>
+<!-- EDIT HERE(type)-->
+<!-- /EDIT HERE-->
+<h2 id="MaterialContainer-コンポーネント"><a href="#MaterialContainer-コンポーネント" class="headerlink" title="MaterialContainer コンポーネント"></a>MaterialContainer コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<!-- /EDIT HERE-->
+<h3 id="属性-6"><a href="#属性-6" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">material</td>
+<td style="text-align:center">material</td>
+<td style="text-align:center">undefined</td>
+<td style="text-align:center"><code>componentBoundTo</code><br> “_materialComponent” <br>    <br>  <br></td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="material-属性"><a href="#material-属性" class="headerlink" title="material 属性"></a>material 属性</h3><ul>
+<li><code>converter</code>: material</li>
+<li><code>defaultValue</code>: undefined</li>
+</ul>
+<!-- EDIT HERE(material)-->
+<!-- /EDIT HERE-->
+<h2 id="MaterialImporter-コンポーネント"><a href="#MaterialImporter-コンポーネント" class="headerlink" title="MaterialImporter コンポーネント"></a>MaterialImporter コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<!-- /EDIT HERE-->
+<h3 id="属性-7"><a href="#属性-7" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">type</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">undefined</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">src</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">undefined</td>
+<td style="text-align:center">なし</td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="type-属性-2"><a href="#type-属性-2" class="headerlink" title="type 属性"></a>type 属性</h3><ul>
+<li><code>converter</code>: string</li>
+<li><code>defaultValue</code>: undefined</li>
+</ul>
+<!-- EDIT HERE(type)-->
+<!-- /EDIT HERE-->
+<h3 id="src-属性"><a href="#src-属性" class="headerlink" title="src 属性"></a>src 属性</h3><ul>
+<li><code>converter</code>: string</li>
+<li><code>defaultValue</code>: undefined</li>
+</ul>
+<!-- EDIT HERE(src)-->
+<!-- /EDIT HERE-->
+<h2 id="MaterialManager-コンポーネント"><a href="#MaterialManager-コンポーネント" class="headerlink" title="MaterialManager コンポーネント"></a>MaterialManager コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<!-- /EDIT HERE-->
+<p>属性なし</p>
+<h2 id="MeshRenderer-コンポーネント"><a href="#MeshRenderer-コンポーネント" class="headerlink" title="MeshRenderer コンポーネント"></a>MeshRenderer コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<!-- /EDIT HERE-->
+<h3 id="属性-8"><a href="#属性-8" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">geometry</td>
+<td style="text-align:center">geometry</td>
+<td style="text-align:center">“quad”</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">targetBuffer</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">“default”</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">layer</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">“default”</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">drawCount</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">Number.MAX_VALUE</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">drawOffset</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">なし</td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="geometry-属性"><a href="#geometry-属性" class="headerlink" title="geometry 属性"></a>geometry 属性</h3><ul>
+<li><code>converter</code>: geometry</li>
+<li><code>defaultValue</code>: “quad”</li>
+</ul>
+<!-- EDIT HERE(geometry)-->
+<!-- /EDIT HERE-->
+<h3 id="targetBuffer-属性"><a href="#targetBuffer-属性" class="headerlink" title="targetBuffer 属性"></a>targetBuffer 属性</h3><ul>
+<li><code>converter</code>: string</li>
+<li><code>defaultValue</code>: “default”</li>
+</ul>
+<!-- EDIT HERE(targetBuffer)-->
+<!-- /EDIT HERE-->
+<h3 id="layer-属性"><a href="#layer-属性" class="headerlink" title="layer 属性"></a>layer 属性</h3><ul>
+<li><code>converter</code>: string</li>
+<li><code>defaultValue</code>: “default”</li>
+</ul>
+<!-- EDIT HERE(layer)-->
+<!-- /EDIT HERE-->
+<h3 id="drawCount-属性"><a href="#drawCount-属性" class="headerlink" title="drawCount 属性"></a>drawCount 属性</h3><ul>
+<li><code>converter</code>: number</li>
+<li><code>defaultValue</code>: Number.MAX_VALUE</li>
+</ul>
+<!-- EDIT HERE(drawCount)-->
+<!-- /EDIT HERE-->
+<h3 id="drawOffset-属性"><a href="#drawOffset-属性" class="headerlink" title="drawOffset 属性"></a>drawOffset 属性</h3><ul>
+<li><code>converter</code>: number</li>
+<li><code>defaultValue</code>: 0</li>
+</ul>
+<!-- EDIT HERE(drawOffset)-->
+<!-- /EDIT HERE-->
+<h2 id="MouseCameraControl-コンポーネント"><a href="#MouseCameraControl-コンポーネント" class="headerlink" title="MouseCameraControl コンポーネント"></a>MouseCameraControl コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<!-- /EDIT HERE-->
+<h3 id="属性-9"><a href="#属性-9" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">rotateX</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">rotateY</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">moveZ</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">moveSpeed</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">なし</td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="rotateX-属性"><a href="#rotateX-属性" class="headerlink" title="rotateX 属性"></a>rotateX 属性</h3><ul>
+<li><code>converter</code>: number</li>
+<li><code>defaultValue</code>: 1</li>
+</ul>
+<!-- EDIT HERE(rotateX)-->
+<!-- /EDIT HERE-->
+<h3 id="rotateY-属性"><a href="#rotateY-属性" class="headerlink" title="rotateY 属性"></a>rotateY 属性</h3><ul>
+<li><code>converter</code>: number</li>
+<li><code>defaultValue</code>: 1</li>
+</ul>
+<!-- EDIT HERE(rotateY)-->
+<!-- /EDIT HERE-->
+<h3 id="moveZ-属性"><a href="#moveZ-属性" class="headerlink" title="moveZ 属性"></a>moveZ 属性</h3><ul>
+<li><code>converter</code>: number</li>
+<li><code>defaultValue</code>: 1</li>
+</ul>
+<!-- EDIT HERE(moveZ)-->
+<!-- /EDIT HERE-->
+<h3 id="moveSpeed-属性"><a href="#moveSpeed-属性" class="headerlink" title="moveSpeed 属性"></a>moveSpeed 属性</h3><ul>
+<li><code>converter</code>: number</li>
+<li><code>defaultValue</code>: 1</li>
+</ul>
+<!-- EDIT HERE(moveSpeed)-->
+<!-- /EDIT HERE-->
+<h2 id="RenderBuffer-コンポーネント"><a href="#RenderBuffer-コンポーネント" class="headerlink" title="RenderBuffer コンポーネント"></a>RenderBuffer コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<!-- /EDIT HERE-->
+<h3 id="属性-10"><a href="#属性-10" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">name</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">undefined</td>
+<td style="text-align:center">なし</td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="name-属性-1"><a href="#name-属性-1" class="headerlink" title="name 属性"></a>name 属性</h3><ul>
+<li><code>converter</code>: string</li>
+<li><code>defaultValue</code>: undefined</li>
+</ul>
+<!-- EDIT HERE(name)-->
+<!-- /EDIT HERE-->
+<h2 id="Renderer-コンポーネント"><a href="#Renderer-コンポーネント" class="headerlink" title="Renderer コンポーネント"></a>Renderer コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<!-- /EDIT HERE-->
+<h3 id="属性-11"><a href="#属性-11" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">camera</td>
+<td style="text-align:center">component</td>
+<td style="text-align:center">“camera”</td>
+<td style="text-align:center"><code>target</code><br> “CAMERA”<br>    <br></td>
+</tr>
+<tr>
+<td style="text-align:center">viewport</td>
+<td style="text-align:center">viewport</td>
+<td style="text-align:center">“auto”</td>
+<td style="text-align:center">なし</td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="camera-属性"><a href="#camera-属性" class="headerlink" title="camera 属性"></a>camera 属性</h3><ul>
+<li><code>converter</code>: component</li>
+<li><code>defaultValue</code>: “camera”</li>
+</ul>
+<!-- EDIT HERE(camera)-->
+<!-- /EDIT HERE-->
+<h3 id="viewport-属性"><a href="#viewport-属性" class="headerlink" title="viewport 属性"></a>viewport 属性</h3><ul>
+<li><code>converter</code>: viewport</li>
+<li><code>defaultValue</code>: “auto”</li>
+</ul>
+<!-- EDIT HERE(viewport)-->
+<!-- /EDIT HERE-->
+<h2 id="RendererManager-コンポーネント"><a href="#RendererManager-コンポーネント" class="headerlink" title="RendererManager コンポーネント"></a>RendererManager コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<!-- /EDIT HERE-->
+<h3 id="属性-12"><a href="#属性-12" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">bgColor</td>
+<td style="text-align:center">color4</td>
+<td style="text-align:center">new Color4(0, 0, 0, 1)</td>
+<td style="text-align:center">なし</td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="bgColor-属性"><a href="#bgColor-属性" class="headerlink" title="bgColor 属性"></a>bgColor 属性</h3><ul>
+<li><code>converter</code>: color4</li>
+<li><code>defaultValue</code>: new Color4(0, 0, 0, 1)</li>
+</ul>
+<!-- EDIT HERE(bgColor)-->
+<!-- /EDIT HERE-->
+<h2 id="RenderQuad-コンポーネント"><a href="#RenderQuad-コンポーネント" class="headerlink" title="RenderQuad コンポーネント"></a>RenderQuad コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<!-- /EDIT HERE-->
+<h3 id="属性-13"><a href="#属性-13" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">out</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">“default”</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">depthBuffer</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">undefined</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">targetBuffer</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">“default”</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">clearColor</td>
+<td style="text-align:center">color4</td>
+<td style="text-align:center">“#0000”</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">clearColorEnabled</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">true</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">clearDepthEnabled</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">true</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">clearDepth</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">1.0</td>
+<td style="text-align:center">なし</td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="out-属性"><a href="#out-属性" class="headerlink" title="out 属性"></a>out 属性</h3><ul>
+<li><code>converter</code>: string</li>
+<li><code>defaultValue</code>: “default”</li>
+</ul>
+<!-- EDIT HERE(out)-->
+<!-- /EDIT HERE-->
+<h3 id="depthBuffer-属性"><a href="#depthBuffer-属性" class="headerlink" title="depthBuffer 属性"></a>depthBuffer 属性</h3><ul>
+<li><code>converter</code>: string</li>
+<li><code>defaultValue</code>: undefined</li>
+</ul>
+<!-- EDIT HERE(depthBuffer)-->
+<!-- /EDIT HERE-->
+<h3 id="targetBuffer-属性-1"><a href="#targetBuffer-属性-1" class="headerlink" title="targetBuffer 属性"></a>targetBuffer 属性</h3><ul>
+<li><code>converter</code>: string</li>
+<li><code>defaultValue</code>: “default”</li>
+</ul>
+<!-- EDIT HERE(targetBuffer)-->
+<!-- /EDIT HERE-->
+<h3 id="clearColor-属性"><a href="#clearColor-属性" class="headerlink" title="clearColor 属性"></a>clearColor 属性</h3><ul>
+<li><code>converter</code>: color4</li>
+<li><code>defaultValue</code>: “#0000”</li>
+</ul>
+<!-- EDIT HERE(clearColor)-->
+<!-- /EDIT HERE-->
+<h3 id="clearColorEnabled-属性"><a href="#clearColorEnabled-属性" class="headerlink" title="clearColorEnabled 属性"></a>clearColorEnabled 属性</h3><ul>
+<li><code>converter</code>: boolean</li>
+<li><code>defaultValue</code>: true</li>
+</ul>
+<!-- EDIT HERE(clearColorEnabled)-->
+<!-- /EDIT HERE-->
+<h3 id="clearDepthEnabled-属性"><a href="#clearDepthEnabled-属性" class="headerlink" title="clearDepthEnabled 属性"></a>clearDepthEnabled 属性</h3><ul>
+<li><code>converter</code>: boolean</li>
+<li><code>defaultValue</code>: true</li>
+</ul>
+<!-- EDIT HERE(clearDepthEnabled)-->
+<!-- /EDIT HERE-->
+<h3 id="clearDepth-属性"><a href="#clearDepth-属性" class="headerlink" title="clearDepth 属性"></a>clearDepth 属性</h3><ul>
+<li><code>converter</code>: number</li>
+<li><code>defaultValue</code>: 1.0</li>
+</ul>
+<!-- EDIT HERE(clearDepth)-->
+<!-- /EDIT HERE-->
+<h2 id="RenderScene-コンポーネント"><a href="#RenderScene-コンポーネント" class="headerlink" title="RenderScene コンポーネント"></a>RenderScene コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<!-- /EDIT HERE-->
+<h3 id="属性-14"><a href="#属性-14" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">layer</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">“default”</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">depthBuffer</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">undefined</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">out</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">“default”</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">clearColor</td>
+<td style="text-align:center">color4</td>
+<td style="text-align:center">“#0000”</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">clearColorEnabled</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">true</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">clearDepthEnabled</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">true</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">clearDepth</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">1.0</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">material</td>
+<td style="text-align:center">material</td>
+<td style="text-align:center">undefined</td>
+<td style="text-align:center"><code>componentBoundTo</code><br> “_materialComponent”<br>    <br></td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="layer-属性-1"><a href="#layer-属性-1" class="headerlink" title="layer 属性"></a>layer 属性</h3><ul>
+<li><code>converter</code>: string</li>
+<li><code>defaultValue</code>: “default”</li>
+</ul>
+<!-- EDIT HERE(layer)-->
+<!-- /EDIT HERE-->
+<h3 id="depthBuffer-属性-1"><a href="#depthBuffer-属性-1" class="headerlink" title="depthBuffer 属性"></a>depthBuffer 属性</h3><ul>
+<li><code>converter</code>: string</li>
+<li><code>defaultValue</code>: undefined</li>
+</ul>
+<!-- EDIT HERE(depthBuffer)-->
+<!-- /EDIT HERE-->
+<h3 id="out-属性-1"><a href="#out-属性-1" class="headerlink" title="out 属性"></a>out 属性</h3><ul>
+<li><code>converter</code>: string</li>
+<li><code>defaultValue</code>: “default”</li>
+</ul>
+<!-- EDIT HERE(out)-->
+<!-- /EDIT HERE-->
+<h3 id="clearColor-属性-1"><a href="#clearColor-属性-1" class="headerlink" title="clearColor 属性"></a>clearColor 属性</h3><ul>
+<li><code>converter</code>: color4</li>
+<li><code>defaultValue</code>: “#0000”</li>
+</ul>
+<!-- EDIT HERE(clearColor)-->
+<!-- /EDIT HERE-->
+<h3 id="clearColorEnabled-属性-1"><a href="#clearColorEnabled-属性-1" class="headerlink" title="clearColorEnabled 属性"></a>clearColorEnabled 属性</h3><ul>
+<li><code>converter</code>: boolean</li>
+<li><code>defaultValue</code>: true</li>
+</ul>
+<!-- EDIT HERE(clearColorEnabled)-->
+<!-- /EDIT HERE-->
+<h3 id="clearDepthEnabled-属性-1"><a href="#clearDepthEnabled-属性-1" class="headerlink" title="clearDepthEnabled 属性"></a>clearDepthEnabled 属性</h3><ul>
+<li><code>converter</code>: boolean</li>
+<li><code>defaultValue</code>: true</li>
+</ul>
+<!-- EDIT HERE(clearDepthEnabled)-->
+<!-- /EDIT HERE-->
+<h3 id="clearDepth-属性-1"><a href="#clearDepth-属性-1" class="headerlink" title="clearDepth 属性"></a>clearDepth 属性</h3><ul>
+<li><code>converter</code>: number</li>
+<li><code>defaultValue</code>: 1.0</li>
+</ul>
+<!-- EDIT HERE(clearDepth)-->
+<!-- /EDIT HERE-->
+<h3 id="material-属性-1"><a href="#material-属性-1" class="headerlink" title="material 属性"></a>material 属性</h3><ul>
+<li><code>converter</code>: material</li>
+<li><code>defaultValue</code>: undefined</li>
+</ul>
+<!-- EDIT HERE(material)-->
+<!-- /EDIT HERE-->
+<h2 id="Scene-コンポーネント"><a href="#Scene-コンポーネント" class="headerlink" title="Scene コンポーネント"></a>Scene コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<!-- /EDIT HERE-->
+<p>属性なし</p>
+<h2 id="Texture-コンポーネント"><a href="#Texture-コンポーネント" class="headerlink" title="Texture コンポーネント"></a>Texture コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<!-- /EDIT HERE-->
+<h3 id="属性-15"><a href="#属性-15" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">src</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">undefined</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">minFilter</td>
+<td style="text-align:center">enum</td>
+<td style="text-align:center">“LINEAR”</td>
+<td style="text-align:center"><code>table</code><br> <br>        LINEAR: WebGLRenderingContext.LINEAR,<br>        NEAREST: WebGLRenderingContext.NEAREST,<br>        NEAREST_MIPMAP_NEAREST: WebGLRenderingContext.NEAREST_MIPMAP_NEAREST,<br>        NEAREST_MIPMAP_LINEAR: WebGLRenderingContext.NEAREST_MIPMAP_LINEAR,<br>        LINEAR_MIPMAP_NEAREST: WebGLRenderingContext.LINEAR_MIPMAP_NEAREST,<br>        LINEAR_MIPMAP_LINEAR: WebGLRenderingContext.LINEAR_MIPMAP_LINEAR<br>      <br>    <br></td>
+</tr>
+<tr>
+<td style="text-align:center">magFilter</td>
+<td style="text-align:center">enum</td>
+<td style="text-align:center">“LINEAR”</td>
+<td style="text-align:center"><code>table</code><br> <br>        LINEAR: WebGLRenderingContext.LINEAR,<br>        NEAREST: WebGLRenderingContext.NEAREST<br>      <br>    <br></td>
+</tr>
+<tr>
+<td style="text-align:center">wrapS</td>
+<td style="text-align:center">enum</td>
+<td style="text-align:center">“REPEAT”</td>
+<td style="text-align:center"><code>table</code><br> <br>        REPEAT: WebGLRenderingContext.REPEAT,<br>        MIRRORED_REPEAT: WebGLRenderingContext.MIRRORED_REPEAT,<br>        CLAMP_TO_EDGE: WebGLRenderingContext.CLAMP_TO_EDGE<br>      <br>    <br></td>
+</tr>
+<tr>
+<td style="text-align:center">wrapT</td>
+<td style="text-align:center">enum</td>
+<td style="text-align:center">“REPEAT”</td>
+<td style="text-align:center"><code>table</code><br> <br>        REPEAT: WebGLRenderingContext.REPEAT,<br>        MIRRORED_REPEAT: WebGLRenderingContext.MIRRORED_REPEAT,<br>        CLAMP_TO_EDGE: WebGLRenderingContext.CLAMP_TO_EDGE<br>      <br>    <br>  <br></td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="src-属性-1"><a href="#src-属性-1" class="headerlink" title="src 属性"></a>src 属性</h3><ul>
+<li><code>converter</code>: string</li>
+<li><code>defaultValue</code>: undefined</li>
+</ul>
+<!-- EDIT HERE(src)-->
+<!-- /EDIT HERE-->
+<h3 id="minFilter-属性"><a href="#minFilter-属性" class="headerlink" title="minFilter 属性"></a>minFilter 属性</h3><ul>
+<li><code>converter</code>: enum</li>
+<li><code>defaultValue</code>: “LINEAR”</li>
+</ul>
+<!-- EDIT HERE(minFilter)-->
+<!-- /EDIT HERE-->
+<h3 id="magFilter-属性"><a href="#magFilter-属性" class="headerlink" title="magFilter 属性"></a>magFilter 属性</h3><ul>
+<li><code>converter</code>: enum</li>
+<li><code>defaultValue</code>: “LINEAR”</li>
+</ul>
+<!-- EDIT HERE(magFilter)-->
+<!-- /EDIT HERE-->
+<h3 id="wrapS-属性"><a href="#wrapS-属性" class="headerlink" title="wrapS 属性"></a>wrapS 属性</h3><ul>
+<li><code>converter</code>: enum</li>
+<li><code>defaultValue</code>: “REPEAT”</li>
+</ul>
+<!-- EDIT HERE(wrapS)-->
+<!-- /EDIT HERE-->
+<h3 id="wrapT-属性"><a href="#wrapT-属性" class="headerlink" title="wrapT 属性"></a>wrapT 属性</h3><ul>
+<li><code>converter</code>: enum</li>
+<li><code>defaultValue</code>: “REPEAT”</li>
+</ul>
+<!-- EDIT HERE(wrapT)-->
+<!-- /EDIT HERE-->
+<h2 id="TextureBuffer-コンポーネント"><a href="#TextureBuffer-コンポーネント" class="headerlink" title="TextureBuffer コンポーネント"></a>TextureBuffer コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<!-- /EDIT HERE-->
+<h3 id="属性-16"><a href="#属性-16" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">name</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">undefined</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">format</td>
+<td style="text-align:center">enum</td>
+<td style="text-align:center">WebGLRenderingContext.RGBA</td>
+<td style="text-align:center"><code>table</code><br> <br>        RGBA: WebGLRenderingContext.RGBA,<br>        RGB: WebGLRenderingContext.RGB<br>      <br>    <br>  <br></td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="name-属性-2"><a href="#name-属性-2" class="headerlink" title="name 属性"></a>name 属性</h3><ul>
+<li><code>converter</code>: string</li>
+<li><code>defaultValue</code>: undefined</li>
+</ul>
+<!-- EDIT HERE(name)-->
+<!-- /EDIT HERE-->
+<h3 id="format-属性"><a href="#format-属性" class="headerlink" title="format 属性"></a>format 属性</h3><ul>
+<li><code>converter</code>: enum</li>
+<li><code>defaultValue</code>: WebGLRenderingContext.RGBA</li>
+</ul>
+<!-- EDIT HERE(format)-->
+<!-- /EDIT HERE-->
+<h2 id="Transform-コンポーネント"><a href="#Transform-コンポーネント" class="headerlink" title="Transform コンポーネント"></a>Transform コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<!-- /EDIT HERE-->
+<h3 id="属性-17"><a href="#属性-17" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">“position”</td>
+<td style="text-align:center">vector3</td>
+<td style="text-align:center">Vector3.Zero</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">“rotation”</td>
+<td style="text-align:center">rotation3</td>
+<td style="text-align:center">Quaternion.Identity</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">“scale”</td>
+<td style="text-align:center">vector3</td>
+<td style="text-align:center">Vector3.One</td>
+<td style="text-align:center">なし</td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="“position”-属性"><a href="#“position”-属性" class="headerlink" title="“position” 属性"></a>“position” 属性</h3><ul>
+<li><code>converter</code>: vector3</li>
+<li><code>defaultValue</code>: Vector3.Zero</li>
+</ul>
+<!-- EDIT HERE("position")-->
+<!-- /EDIT HERE-->
+<h3 id="“rotation”-属性"><a href="#“rotation”-属性" class="headerlink" title="“rotation” 属性"></a>“rotation” 属性</h3><ul>
+<li><code>converter</code>: rotation3</li>
+<li><code>defaultValue</code>: Quaternion.Identity</li>
+</ul>
+<!-- EDIT HERE("rotation")-->
+<!-- /EDIT HERE-->
+<h3 id="“scale”-属性"><a href="#“scale”-属性" class="headerlink" title="“scale” 属性"></a>“scale” 属性</h3><ul>
+<li><code>converter</code>: vector3</li>
+<li><code>defaultValue</code>: Vector3.One</li>
+</ul>
+<!-- EDIT HERE("scale")-->
+<!-- /EDIT HERE-->
+<h2 id="ノード"><a href="#ノード" class="headerlink" title="ノード"></a>ノード</h2>
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/guide/2_advanced/grimoirejs-core.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

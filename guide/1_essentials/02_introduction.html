@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>Getting started | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="What’s Grimoire.js?Grimoire.js is WebGL framework for Web development in short. Currently, WebGL designing require highly developed graphics knowledge and is very difficult to co-work in previous Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Getting started">
+<meta property="og:url" content="https://grimoire.gl/guide/1_essentials/02_introduction.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="What’s Grimoire.js?Grimoire.js is WebGL framework for Web development in short. Currently, WebGL designing require highly developed graphics knowledge and is very difficult to co-work in previous Web">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.398Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Getting started">
+<meta name="twitter:description" content="What’s Grimoire.js?Grimoire.js is WebGL framework for Web development in short. Currently, WebGL designing require highly developed graphics knowledge and is very difficult to co-work in previous Web">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+    <aside id="sidebar">
+  <div id="doc-title">GUIDE</div>
+  
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Essentials</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/1_essentials/01_installation.html">Installation</a>
+            </li>
+          
+            <li class="active">
+              <a href="/guide/1_essentials/02_introduction.html">Getting started</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/03_goml.html">GOML</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/04_interface.html">Interfaces</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/05_componentsystem.html">ComponentSystem</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/06_plugin.html">Plugins</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/07_inspector.html">Devtool</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/08_tags.html">主なタグ</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Advanced</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/2_advanced/webgl-basics.html">WebGL concepts</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/sort.html">カスタムマテリアルの仕様</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/plugin-specification.html">Plugin making</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/geometry-basic.html">Geometry basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-renderer.html">Renderer basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/material-basic.html">Material basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-core.html">grimoirejs-core</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/typescript.html">Use Typescript</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Meta</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/3_meta/community.html">Community</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+  
+</aside>
+
+  
+  <div id="content">
+    <h1 id="content-title">Getting started</h1>
+    <h1 id="What’s-Grimoire-js"><a href="#What’s-Grimoire-js" class="headerlink" title="What’s Grimoire.js?"></a>What’s Grimoire.js?</h1><p><strong>Grimoire.js</strong> is <strong>WebGL framework for Web development</strong> in short.</p>
+<p>Currently, WebGL designing require highly developed graphics knowledge and is very difficult to co-work in previous Web development flow.<br>Grimoire.js is the framework that construct a bridge between Web engineer and CG engineer.</p>
+<p>Previous libraries to use WebGL are mostly focusing on game development not Web applications.<br>Most of them are just ported APIs grown in game development field and Web designers need to adopt them to follow that culture. And that culture is vastly differ from common web development culture.</p>
+<p>Our mission is <code>Making WebGL being a brush of Web development</code>.  We are making WebGL easier like the other brushes such as images or videos. We provide strong visualization possibility not only for CG engineers but also for Web engineers.</p>
+<h1 id="What-Grimoire-js-can-do"><a href="#What-Grimoire-js-can-do" class="headerlink" title="What Grimoire.js can do?"></a>What Grimoire.js can do?</h1><p>Several samples are available using Grimoire.js.</p>
+<ul>
+<li><a href="https://pnlybubbles.github.io/custom-sushi-3d/" target="_blank" rel="noopener">SUSHI</a></li>
+<li><a href="http://jsdo.it/tag/Grimoire.js" target="_blank" rel="noopener">Many samples created by third party</a></li>
+</ul>
+<h1 id="Getting-started"><a href="#Getting-started" class="headerlink" title="Getting started"></a>Getting started</h1><p>You need to make simple HTML to use Grimoire.js. Then, you can link Grimoire.js with the following tag.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/grimoirejs-preset-basic/register/grimoire-preset-basic.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>This script is not <code>pure</code> Grimoire.js. This file includes several plugins you might need to use.</p>
+</blockquote>
+<p>If you need minified scirpt file or you want to use npm, please check <a href="https://grimoire.gl/guide/1_essentials/01_installation.html">Installation</a> page.</p>
+<h1 id="Markup-for-Grimoire-js"><a href="#Markup-for-Grimoire-js" class="headerlink" title="Markup for Grimoire.js"></a>Markup for Grimoire.js</h1><p><code>Grimoire.js</code> use simple markup file to configure initial state of the canvas. This markup language is called as <code>GOML</code>.<br>Let’s write the code below in your html.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/goml"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">goml</span>&gt;</span></span></span><br><span class="line"><span class="xml">     <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">camera</span>/&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">color</span>=<span class="string">"red"</span> <span class="attr">position</span>=<span class="string">"0,0,0"</span>/&gt;</span></span></span><br><span class="line"><span class="xml">     <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span></span><br><span class="line"><span class="undefined">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://grimoiregl.github.io/grimoire.gl-example/#guide-01" target="_blank" rel="noopener">SAMPLE</a></p>
+<p>Grimoire.js try to read <code>&lt;script&gt;</code> element specified <code>type=&#39;text/goml&#39;</code> and insert <code>&lt;canvas&gt;</code> element at the same position.</p>
+<p>Let’s modify position attribute on <code>&lt;mesh&gt;</code>. You might realized you could moved the mesh.<br>All Grimoire.js objects can be operated just like HTML elements.</p>
+<blockquote>
+<p>Loading GOML files</p>
+<p>In the same way as loading javascript with <code>&lt;script&gt;</code> element, you can specify <code>src=&#39;URL of GOML file&#39;</code> to load GOML file from another file.<br>In this tutorial, we use embedded GOML file, but we strongly recommend not to do so.</p>
+</blockquote>
+<p>You can use multiple canvases with 2 goml codes in same way.</p>
+<p><a href="https://grimoiregl.github.io/grimoire.gl-example/#guide-02" target="_blank" rel="noopener">SAMPLE</a></p>
+<blockquote>
+<p>Grimoire.js inspector</p>
+<p>You can use chrome extension of Grimoire.js Devtool for making easier to use Grimoire.js.<br>This extension would be helpful during your training of Grimoire.js.<br><img src="https://i.gyazo.com/bdcabf661e27d9beb47c3342444ee3a0.png" alt="Grimoire.js inspector"><br>You can find more details and download from <a href="../1_essentials/07_inspector.html">here</a></p>
+</blockquote>
+<h1 id="Mutation-with-Javascript-API"><a href="#Mutation-with-Javascript-API" class="headerlink" title="Mutation with Javascript API"></a>Mutation with Javascript API</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/goml"</span> <span class="attr">id</span>=<span class="string">"canvas1"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">goml</span>&gt;</span></span></span><br><span class="line"><span class="xml">   <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">camera</span>/&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">color</span>=<span class="string">"red"</span> <span class="attr">position</span>=<span class="string">"0,0,0"</span>/&gt;</span></span></span><br><span class="line"><span class="xml">   <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/goml"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">goml</span>&gt;</span></span></span><br><span class="line"><span class="xml">   <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">camera</span>/&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">color</span>=<span class="string">"green"</span> <span class="attr">position</span>=<span class="string">"0,0,0"</span>/&gt;</span></span></span><br><span class="line"><span class="xml">   <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Let’s prepare GOML code like above and execute a javascript below.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gr(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    gr(<span class="string">"#canvas1"</span>)(<span class="string">"mesh"</span>).setAttribute(<span class="string">"color"</span>,<span class="string">"blue"</span>);</span><br><span class="line">  &#125;,<span class="number">1000</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Then, you can see that the color of a mesh in the one of the canvas are changed after 1 secound.</p>
+<p><a href="https://grimoiregl.github.io/grimoire.gl-example/#guide-03" target="_blank" rel="noopener">SAMPLE</a></p>
+<p>If you have used <code>jQuery</code> ever, you would notice that this API is very similar to jQuery API.</p>
+<blockquote>
+<p>Waiting for initialized timing</p>
+<p>When you pass a function to <code>gr</code> as an argument, the function would be called after initializing grimoire.</p>
+</blockquote>
+<p>　</p>
+<blockquote>
+<p>Querying objects</p>
+<p>When you pass a string which is query string for the <strong><code>&lt;script&gt;</code> element</strong> to <code>gr</code> as an argument, the returned object is the interface to manipulate nodes in releated canvas.<br>And you can query in the goml same way. In the example above, the queried objects are whole mesh included in the script quried with <code>#canvas1</code>.</p>
+</blockquote>
+<h1 id="Node-Component-system"><a href="#Node-Component-system" class="headerlink" title="Node, Component system"></a>Node, Component system</h1><p>Acutually, the most important aspect of grimoire is not the feature we can write in almost same way as Web development.<br>Even we develop good abstraction for WebGL to use in same way as web development, WebGL has tons of possibility to visualize. It is impossible that we prepare all tags for every web engineers.</p>
+<p>However, component system of grimoire gives us good solution.</p>
+<p>Let’s see the GOML code below. Grimoire.js treat tags as nodes constructing tree structure.<br>But, the syntax <code>&lt;camera.components&gt;</code> is not ordinary tag but the syntax to append a component to <code>&lt;camera&gt;</code> tag.<br>The appended component <code>&lt;MouseCameraControl&gt;</code> is the component to operate positions and rotation with mouse operation.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/goml"</span> <span class="attr">id</span>=<span class="string">"canvas1"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">goml</span>&gt;</span></span></span><br><span class="line"><span class="xml">   <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">camera</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">camera.components</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">MouseCameraControl</span>/&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">camera.components</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">camera</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">color</span>=<span class="string">"red"</span> <span class="attr">position</span>=<span class="string">"0,0,0"</span>/&gt;</span></span></span><br><span class="line"><span class="xml">   <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://grimoiregl.github.io/grimoire.gl-example/#guide-04" target="_blank" rel="noopener">SAMPLE</a></p>
+<p>In grimoire, nodes are including several modules called as <strong>component</strong>. In other words, nodes are just a container containing some components.</p>
+<p><img src="../images/node-have-components.png" alt=""></p>
+<p>For example, <code>&lt;mesh&gt;</code> tag contains <code>Transform</code> component managing positions or rotations and <code>MeshRenderer</code> component managing rendering meshes by default.<br>As another example, <code>&lt;camera&gt;</code> tag contains <code>Transform</code> component and <code>Camera</code> component managing camera feature to  project scene.</p>
+<p><img src="../images/optional-component.png" alt=""></p>
+<p>Node names means what is default components are bound and what is the default values for the attributes.<br>By adding some components to node, you can append a <code>behaviour</code> to the object.</p>
+<h2 id="Creating-component"><a href="#Creating-component" class="headerlink" title="Creating component"></a>Creating component</h2><p>You can create component also.<br>Let’s create <code>Rotate</code> component to rotate a mesh.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">gr.registerComponent(<span class="string">"Rotate"</span>,&#123;</span><br><span class="line">  attributes:&#123;</span><br><span class="line">    speed:</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">default</span>:<span class="number">1</span>,</span><br><span class="line">      converter:<span class="string">"Number"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  $mount:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.phi = <span class="number">0</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  $update:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.phi += <span class="keyword">this</span>.getValue(<span class="string">"speed"</span>);</span><br><span class="line">    <span class="keyword">this</span>.node.setAttribute(<span class="string">"rotation"</span>,<span class="keyword">this</span>.phi + <span class="string">","</span> + <span class="keyword">this</span>.phi + <span class="string">","</span> + <span class="keyword">this</span>.phi);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>You can register component with <code>gr.registerComponent</code>. We don’t touch with component system in deeply here, but you can declare parameters which this component can receive.<br>These parameters are called <code>attribute</code>. In this example, the attribute <code>speed</code> is number type and default value is 1.</p>
+<p>After loading the javascript, you need to inject GOML file to use that.</p>
+<blockquote>
+<p>Load javascript file to declare components</p>
+<p>You can simply link script tag with the code below.<br>Make sure you need to load script tag after grimoire.js loaded.<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/grimoirejs-preset-basic/register/grimoire-preset-basic.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./index.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/goml"</span> <span class="attr">id</span>=<span class="string">"canvas1"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">goml</span>&gt;</span></span></span><br><span class="line"><span class="xml">   <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">camera</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">camera.components</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">MouseCameraControl</span>/&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">camera.components</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">camera</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">color</span>=<span class="string">"red"</span> <span class="attr">position</span>=<span class="string">"0,0,0"</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">mesh.components</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">Rotate</span>/&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">mesh.components</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">mesh</span>&gt;</span></span></span><br><span class="line"><span class="xml">   <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://grimoiregl.github.io/grimoire.gl-example/#guide-05" target="_blank" rel="noopener">SAMPLE</a></p>
+<p>This figure describes lifecycle of a component. You don’t need to understand now correctly, but this figure would be helpful in future.</p>
+<p><img src="../images/message-order.png" alt=""></p>
+<p>The functions begins with <code>$</code> are called <code>message handler</code>, and these are called in specific timings in component lifecycle.</p>
+<h2 id="Define-node"><a href="#Define-node" class="headerlink" title="Define node"></a>Define node</h2><p>If you need a lot of rotated mesh, the examples are inconvenient.<br>You can declare new node <code>rotated-mesh</code> which is originally <code>mesh</code> tag and just attached with <code>Rotate</code> component.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gr.registerNode(<span class="string">"rotated-mesh"</span>,[<span class="string">"Rotate"</span>],&#123;&#125;,<span class="string">"mesh"</span>);</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/goml"</span> <span class="attr">id</span>=<span class="string">"canvas1"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">goml</span>&gt;</span></span></span><br><span class="line"><span class="xml">   <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">camera</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">camera.components</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">MouseCameraControl</span>/&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">camera.components</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">camera</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">rotated-mesh</span> <span class="attr">color</span>=<span class="string">"red"</span> <span class="attr">position</span>=<span class="string">"-2,0,0"</span>/&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">rotated-mesh</span> <span class="attr">color</span>=<span class="string">"green"</span> <span class="attr">position</span>=<span class="string">"0,0,0"</span> <span class="attr">speed</span>=<span class="string">"2"</span>/&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">rotated-mesh</span> <span class="attr">color</span>=<span class="string">"blue"</span> <span class="attr">position</span>=<span class="string">"2,0,0"</span> <span class="attr">speed</span>=<span class="string">"3"</span>/&gt;</span></span></span><br><span class="line"><span class="xml">   <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://grimoiregl.github.io/grimoire.gl-example/#guide-06" target="_blank" rel="noopener">SAMPLE</a></p>
+<p>These examples are only describes core features of grimoire in short. All components or nodes implemented in default are made with same way. There are no exception.</p>
+<h1 id="Whats-next"><a href="#Whats-next" class="headerlink" title="Whats next?"></a>Whats next?</h1><p>You might have understood basic concept of Grimoire.<br>Grimoire provides some API like jQuery for Web engineers to use WebGL stuff under almost same way they have used in web development.<br>And, Grimoire also provides API like Unity for 3D engineers to make components that enables us to collaborate with the other web engineers easily without considering what kind of comprehensive API should be provided to Web engineers.<br>Grimoire connect each side of engineers by providing appropriate APIs for each engineers.</p>
+<p>Let’s begin to learn Grimoire more with <a href="https://grimoire.gl/tutorial/">tutorial</a>.</p>
+
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/guide/1_essentials/02_introduction.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>マテリアルの自作 | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概要Grimoire.jsのfundamentalプラグインには強力なマテリアルの作成・インポート機能が含まれている。これにより、シェーダーの作成者は最小限の労力でマテリアルを作成し公開できるとともに、利用者はすぐにインポートして、タグベースのインターフェースで利用できる。 この章ではシェーダーを活用したマテリアルの作成について解説する。そのため、GLSLの文法がある程度前提になる解説が多々存在す">
+<meta property="og:type" content="article">
+<meta property="og:title" content="マテリアルの自作">
+<meta property="og:url" content="https://grimoire.gl/tutorial/11-create-material.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="概要Grimoire.jsのfundamentalプラグインには強力なマテリアルの作成・インポート機能が含まれている。これにより、シェーダーの作成者は最小限の労力でマテリアルを作成し公開できるとともに、利用者はすぐにインポートして、タグベースのインターフェースで利用できる。 この章ではシェーダーを活用したマテリアルの作成について解説する。そのため、GLSLの文法がある程度前提になる解説が多々存在す">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.410Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="マテリアルの自作">
+<meta name="twitter:description" content="概要Grimoire.jsのfundamentalプラグインには強力なマテリアルの作成・インポート機能が含まれている。これにより、シェーダーの作成者は最小限の労力でマテリアルを作成し公開できるとともに、利用者はすぐにインポートして、タグベースのインターフェースで利用できる。 この章ではシェーダーを活用したマテリアルの作成について解説する。そのため、GLSLの文法がある程度前提になる解説が多々存在す">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+    <aside id="sidebar">
+  <div id="doc-title">TUTORIAL</div>
+  
+    <ul id="list">
+      
+        <li class="">
+          <a href="/tutorial/index.html">目次</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/01-getting-started.html">Grimorie.jsを使ってみる</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/02-handle-goml.html">GOMLを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/03-handle-goml-with-js.html">JavascriptでGOMLを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/04-handle-component.html">コンポーネントを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/05-handle-component-with-js.html">javascriptでコンポーネントを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/06-node-and-component.html">ノードとコンポーネントの本質</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/07-create-component.html">コンポーネントの作成</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/10-create-node.html">ノードの作成</a>
+        </li>
+      
+        <li class="active">
+          <a href="/tutorial/11-create-material.html">マテリアルの自作</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/12-create-post-effect.html">ポストエフェクトを作成する</a>
+        </li>
+      
+    </ul>
+  
+</aside>
+
+  
+  <div id="content">
+    <h1 id="content-title">マテリアルの自作</h1>
+    <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>Grimoire.jsのfundamentalプラグインには強力なマテリアルの作成・インポート機能が含まれている。<br>これにより、シェーダーの作成者は最小限の労力でマテリアルを作成し公開できるとともに、<br>利用者はすぐにインポートして、タグベースのインターフェースで利用できる。</p>
+<p>この章ではシェーダーを活用したマテリアルの作成について解説する。そのため、GLSLの文法がある程度前提<br>になる解説が多々存在する。<br><strong>もし、GLSLにまったく触れたことがない、それがなんであるかがわからない読者は一度<code>ShaderToy</code>などを<br>利用してGLSLに触れてみることを強く推奨する。</strong></p>
+<h2 id="Sortファイル"><a href="#Sortファイル" class="headerlink" title="Sortファイル"></a>Sortファイル</h2><p>このライブラリにおけるシェーダーファイルの形式はGLSLを拡張したSORT(ソール)によって記述される。<br>GLSL単体では、単一のシェーダー(頂点シェーダーもしくはフラグメントシェーダー)を複数個記述して、<br>javascriptなどから操作することにより初めて利用できるが、このSORTを利用することによって、<br><code>マルチパスレンダリング</code>、<code>GLステートの操作</code>、<code>uniform変数の初期値の設定</code>、<code>外部ファイルのインポート</code><br>などが可能になる。</p>
+<h3 id="sortファイルの文法"><a href="#sortファイルの文法" class="headerlink" title="sortファイルの文法"></a>sortファイルの文法</h3><p>以下は簡単なsortファイルの例である。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Pass</span><br><span class="line">@BlendFunc(ONE,ONE)</span><br><span class="line">FS_PREC(<span class="keyword">mediump</span>,<span class="type">float</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">#ifdef VS</span></span><br><span class="line">  <span class="keyword">attribute</span> <span class="type">vec3</span> position;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">uniform</span> <span class="type">mat4</span> _matPVM;</span><br><span class="line"></span><br><span class="line">  <span class="type">void</span> main()&#123;</span><br><span class="line">    <span class="built_in">gl_Position</span> = _matPVM * <span class="type">vec4</span>(position,<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">#endif</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#ifdef FS</span></span><br><span class="line">  @&#123;type:"color", default:"#381794"&#125;</span><br><span class="line">  <span class="keyword">uniform</span> <span class="type">vec4</span> color;</span><br><span class="line"></span><br><span class="line">  <span class="type">void</span> main()&#123;</span><br><span class="line">    <span class="built_in">gl_FragColor</span> = color;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">#endif</span></span><br></pre></td></tr></table></figure>
+<p>通常のシェーダーについて見慣れている人ならば、上記のコードが以下によって構築されていることがわかるだろう。</p>
+<ul>
+<li>通常のGLSLのコード</li>
+<li>通常のGLSLのマクロ</li>
+<li><code>@</code>から始まる文</li>
+</ul>
+<p><strong>さわってみよう1</strong></p>
+<p>まずは上記のコードを読み込んだ以下のコードを読んで、uniform変数としてマテリアルに記述<br>されている<code>color</code>がマテリアルタグから操作できることを見て欲しい。</p>
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t11-01" allowfllscreen=""></iframe>
+
+<h3 id="sortのuniform変数"><a href="#sortのuniform変数" class="headerlink" title="sortのuniform変数"></a>sortのuniform変数</h3><p>sortのuniform変数はその変数名の付け方によって2つに大別される。</p>
+<ul>
+<li>ユーザーUniform変数</li>
+<li>環境Uniform変数</li>
+</ul>
+<p><code>_</code>から<strong>始まらない</strong>変数は<strong>ユーザーUniform変数</strong>であり、<code>_</code>から<strong>始まる</strong>変数は<strong>環境Uniform変数</strong>である。</p>
+<p>例えば、上記のコードの例で言えば<code>color</code>は<strong>ユーザーUniform変数</strong>であり、<code>_matPVM</code>は<strong>環境Uniform変数</strong>である。</p>
+<p>また、どちらのタイプのuniform変数でも変数の宣言の上部に@から始まるJSONを記述することにより、<code>初期値</code>や<code>設定</code>などの付加情報を変数に結びつけることができる。この付加情報を<strong>アノテーション</strong>と言う。</p>
+<p>例:</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@&#123;type:"color", default:"#381794"&#125;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec4</span> color;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>アノテーションのJSON</p>
+<p>アノテーションのJSONはJSON5ライブラリによってパースされている。そのため、キー部分の<code>&quot;</code>は省略できる。</p>
+</blockquote>
+<h4 id="環境Uniform変数"><a href="#環境Uniform変数" class="headerlink" title="環境Uniform変数"></a>環境Uniform変数</h4><p>環境Uniform変数は、プラグインなどが、変数名に応じて自動的に値をシェーダーに割り当てる際に利用される。<br><code>fundamental</code>自身もこの機能を利用して利用する機会が多いであろういくつかの変数を定義している。</p>
+<blockquote>
+<p>grimoirejs-fundamentalの代表的な環境Uniform変数</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">変数型</th>
+<th style="text-align:center">変数名</th>
+<th style="text-align:center">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">float</td>
+<td style="text-align:center">_time</td>
+<td style="text-align:center">Grimoire.js読み込み時からの時間</td>
+</tr>
+<tr>
+<td style="text-align:center">vec2</td>
+<td style="text-align:center">_viewportSize</td>
+<td style="text-align:center">レンダリング対象のビューポートサイズ(px単位)</td>
+</tr>
+<tr>
+<td style="text-align:center">mat4</td>
+<td style="text-align:center">_matM</td>
+<td style="text-align:center">モデル行列</td>
+</tr>
+<tr>
+<td style="text-align:center">mat4</td>
+<td style="text-align:center">_matV</td>
+<td style="text-align:center">ビュー行列</td>
+</tr>
+<tr>
+<td style="text-align:center">mat4</td>
+<td style="text-align:center">_matP</td>
+<td style="text-align:center">プロジェクション行列</td>
+</tr>
+<tr>
+<td style="text-align:center">mat4</td>
+<td style="text-align:center">_matPV</td>
+<td style="text-align:center">プロジェクション * ビュー行列</td>
+</tr>
+<tr>
+<td style="text-align:center">mat4</td>
+<td style="text-align:center">_matVM</td>
+<td style="text-align:center">ビュー行列 * モデル行列</td>
+</tr>
+<tr>
+<td style="text-align:center">mat4</td>
+<td style="text-align:center">_matPVM</td>
+<td style="text-align:center">レンダリング対象のモデルのプロジェクション行列 * ビュー行列 * モデル行列</td>
+</tr>
+<tr>
+<td style="text-align:center">vec3</td>
+<td style="text-align:center">_cameraPosition</td>
+<td style="text-align:center">カメラ座標(ワールド座標系)</td>
+</tr>
+<tr>
+<td style="text-align:center">vec3</td>
+<td style="text-align:center">_cameraDirection</td>
+<td style="text-align:center">カメラ向き(ワールド座標系)</td>
+</tr>
+</tbody>
+</table>
+<p>詳細は<a href="https://grimoire.gl/guide/sort.html">sortシェーダー</a>が参考になる。</p>
+</blockquote>
+<h4 id="ユーザーUniform変数"><a href="#ユーザーUniform変数" class="headerlink" title="ユーザーUniform変数"></a>ユーザーUniform変数</h4><p>ユーザーUniform変数は、タグを通じてユーザーがインタラクション可能な値をシェーダーに割り当てる際に利用される。<br>(一般的にユーザーがいじらないであろう調整用の変数やガウス分布の係数の配列などもこちらで作成して、コンポーネントから割り当てる。)</p>
+<p>ユーザーUniform変数には初期値を持つことができる。この際には、対象となるuniform変数のアノテーションのdefault要素にデフォルトとなる値を入れる。</p>
+<p>タグ側での値の指定は対応した型のコンバーターによって行われる。</p>
+<p>例えば、<code>sampler2D</code>型のuniform変数にはテクスチャへのファイルパスをタグ側から読み込むことができる。</p>
+<p>それぞれの型に対応したコンバーターが何になるか等、詳細の説明は <a href="https://grimoire.gl/guide/sort.html">sortシェーダー</a>を参考にして欲しい。</p>
+<blockquote>
+<p>vec3,vec4型のコンバーター</p>
+<p>vec3,vec4型はデフォルトではベクトル型のコンバーターが指定される。<br>すなわち、<code>1,2,3</code>という指定や<code>n(1,2,3)</code>などの指定が可能であるが、色のコンバーターではないので<code>red</code>や<code>#330000</code>などの指定はできない。</p>
+<p>ただし、vec3,vec4のアノテーションに<code>type:&quot;color&quot;</code>を指定すると、使われるコンバーターは色の指定用のものになる。</p>
+</blockquote>
+<h3 id="sortのattribute変数"><a href="#sortのattribute変数" class="headerlink" title="sortのattribute変数"></a>sortのattribute変数</h3><p>attribute変数はジオメトリー内の同名のバッファとして登録されているものから用いる。<br>デフォルトで登録されているプリミティブは初期状態で以下のようなバッファを持つ。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">変数型</th>
+<th style="text-align:center">変数名</th>
+<th style="text-align:center">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">vec3</td>
+<td style="text-align:center">position</td>
+<td style="text-align:center">モデル空間の頂点座標</td>
+</tr>
+<tr>
+<td style="text-align:center">vec3</td>
+<td style="text-align:center">normal</td>
+<td style="text-align:center">モデル空間の法線(正規化済み)</td>
+</tr>
+<tr>
+<td style="text-align:center">vec3</td>
+<td style="text-align:center">texCoord</td>
+<td style="text-align:center">テクスチャ座標</td>
+</tr>
+</tbody>
+</table>
+<p><strong>さわってみよう2</strong></p>
+<p>以下の例は上記の説明を参考にいくつかの機能を使ったものである。</p>
+<p>違う変数を使って見たり、初期値を変えて実際に試してみよう。</p>
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t11-02" allowfllscreen=""></iframe>
+
+<h3 id="プリファレンス"><a href="#プリファレンス" class="headerlink" title="プリファレンス"></a>プリファレンス</h3><p>シェーダーを用いる際はしばしば適切なglステートの設定がなければ動作しないものがある。そのため、sortシェーダーではシェーダー内部でglステートの設定を明示できる。</p>
+<p><code>@Pass</code> 以外の<code>@プリファレンス名(引数...)</code>の形式をとるものを<strong>プリファレンス</strong>と呼ぶ。</p>
+<p>これらはパスの描画時にGLのステートに設定を与えるなどの機能を持つ。以下は、定義済みのプリファレンスである。</p>
+<h4 id="WebGLのAPIと同一のもの"><a href="#WebGLのAPIと同一のもの" class="headerlink" title="WebGLのAPIと同一のもの"></a>WebGLのAPIと同一のもの</h4><ul>
+<li>BlendFunc</li>
+<li>BlendFuncSeparate</li>
+<li>BlendEquation</li>
+<li>BlendEquationSeparate</li>
+<li>CullFace</li>
+</ul>
+<p>これらは、同名のWebGLの関数と同じ引数リストを持ち、同様の指定により処理を指定できる。</p>
+<p>例えば、<code>@CullFace(FRONT)</code>と記述したマテリアルで描画が行われると前方がカリングされる。</p>
+<p><strong>さわってみよう3</strong></p>
+<p>以下の例はブレンド設定をSORTからいじったものである。違う設定を使って見たりして実験してみよう。</p>
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t11-03" allowfllscreen=""></iframe>
+
+<h4 id="マクロ値の公開"><a href="#マクロ値の公開" class="headerlink" title="マクロ値の公開"></a>マクロ値の公開</h4><p>ループ回数など、uniform変数だけでは渡せない変数の場合に動的にシェーダーのマクロを書き換えたい場合がある。<br>そのような場合、<code>@ExposeMacro</code>プリファレンスを使うと特定のマクロの値をタグ側から操作可能になる。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@ExposeMacro(型,GOML側の属性名,マクロ名,初期値)</span><br></pre></td></tr></table></figure>
+<p>現状では型として取れるものは以下の二つである。</p>
+<ul>
+<li>int</li>
+<li>bool</li>
+</ul>
+<p>boolが指定された際、初期値に利用可能な値はtrueもしくはfalseのみである。intが指定された場合、整数が指定可能である。(小数が指定された場合切り捨てられる)</p>
+<p>例えば、以下のように指定する。<br><figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@ExposeMacro(<span class="type">int</span>,loopCount,LOOP_COUNT,<span class="number">5</span>)</span><br><span class="line">@ExposeMacro(<span class="type">bool</span>,useTexture,USE_TEXTURE,<span class="literal">true</span>)</span><br></pre></td></tr></table></figure></p>
+<p>また、上記の例ではタグに値が特に存在しなかった場合以下のようなマクロが挿入される。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#define LOOP_COUNT 5</span></span><br><span class="line"><span class="meta">#define USE_TEXTURE</span></span><br></pre></td></tr></table></figure>
+<p><strong>bool型はその値ではなくフラグの存在、非存在によってその値を表現することに注意。</strong></p>
+<p>以下の例は、球体の法線を描画したものであるが、法線の計算手法をワールド空間にするかビュー空間にするかをタグ側から設定できるようになっている。</p>
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t11-05" allowfllscreen=""></iframe>
+
+<h3 id="マルチパスレンダリング"><a href="#マルチパスレンダリング" class="headerlink" title="マルチパスレンダリング"></a>マルチパスレンダリング</h3><p>エッジの描画のシェーダーなどでは、1回の描画だけでは目的の画が得られないことがある。その際、複数回の描画(マルチパスレンダリング)をする必要がある。</p>
+<p>今までの解説では、一回分の描画(シングルパス)の記述に必要な部分だけを解説したが、SORTでは、複数回の描画を一つのシェーダーで記述することができる。</p>
+<p>SORTの<code>@Pass</code>ディレクティブはその終わりから、次の<code>@Pass</code>までを一つのパスとみなすための文法である。<br>これらそれぞれの描画(パス)は、上から順に描画される。</p>
+<p><strong>さわってみよう4</strong><br>例えば、以下の例では<code>前面をカリングにして少し拡大</code>したあと、<code>背面をカリングにして通常描画</code>することによってエッジを書いたサンプルである。</p>
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t11-04" allowfllscreen=""></iframe>
+
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/tutorial/11-create-material.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

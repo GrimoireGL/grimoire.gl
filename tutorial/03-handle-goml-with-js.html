@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>JavascriptでGOMLを扱う | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概要GOMLで宣言したノード、コンポーネントの属性は、javascriptを読み込むことにより操作することができます。 Grimoire.jsでは、canvas部分を操作する際に容易に扱うことのできるインターフェースを提供しています。この章では、実際にGrimoireのインターフェースを用いて実際にコンポーネントの属性を変更して見ましょう。 今回は、インターフェースのノードに関する基本的な操作を行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavascriptでGOMLを扱う">
+<meta property="og:url" content="https://grimoire.gl/tutorial/03-handle-goml-with-js.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="概要GOMLで宣言したノード、コンポーネントの属性は、javascriptを読み込むことにより操作することができます。 Grimoire.jsでは、canvas部分を操作する際に容易に扱うことのできるインターフェースを提供しています。この章では、実際にGrimoireのインターフェースを用いて実際にコンポーネントの属性を変更して見ましょう。 今回は、インターフェースのノードに関する基本的な操作を行">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.406Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavascriptでGOMLを扱う">
+<meta name="twitter:description" content="概要GOMLで宣言したノード、コンポーネントの属性は、javascriptを読み込むことにより操作することができます。 Grimoire.jsでは、canvas部分を操作する際に容易に扱うことのできるインターフェースを提供しています。この章では、実際にGrimoireのインターフェースを用いて実際にコンポーネントの属性を変更して見ましょう。 今回は、インターフェースのノードに関する基本的な操作を行">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+    <aside id="sidebar">
+  <div id="doc-title">TUTORIAL</div>
+  
+    <ul id="list">
+      
+        <li class="">
+          <a href="/tutorial/index.html">目次</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/01-getting-started.html">Grimorie.jsを使ってみる</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/02-handle-goml.html">GOMLを扱う</a>
+        </li>
+      
+        <li class="active">
+          <a href="/tutorial/03-handle-goml-with-js.html">JavascriptでGOMLを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/04-handle-component.html">コンポーネントを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/05-handle-component-with-js.html">javascriptでコンポーネントを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/06-node-and-component.html">ノードとコンポーネントの本質</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/07-create-component.html">コンポーネントの作成</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/10-create-node.html">ノードの作成</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/11-create-material.html">マテリアルの自作</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/12-create-post-effect.html">ポストエフェクトを作成する</a>
+        </li>
+      
+    </ul>
+  
+</aside>
+
+  
+  <div id="content">
+    <h1 id="content-title">JavascriptでGOMLを扱う</h1>
+    <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>GOMLで宣言したノード、コンポーネントの属性は、javascriptを読み込むことにより操作することができます。 Grimoire.jsでは、canvas部分を操作する際に容易に扱うことのできるインターフェースを提供しています。この章では、実際にGrimoireのインターフェースを用いて実際にコンポーネントの属性を変更して見ましょう。</p>
+<p>今回は、インターフェースのノードに関する基本的な操作を行います。トップレベルAPIの詳細は、<a href="https://grimoire.gl/api/">APIReference</a> を参照すると良いでしょう。</p>
+<h2 id="学べること"><a href="#学べること" class="headerlink" title="学べること"></a>学べること</h2><ul>
+<li>Canvasのjavascript側からの取得</li>
+<li>GOMLのノードに関するjavascriptによる操作</li>
+<li>ノードの属性の変更</li>
+</ul>
+<h3 id="canvasの取得"><a href="#canvasの取得" class="headerlink" title="canvasの取得"></a>canvasの取得</h3><p>まずcanvasを取得するためのjavascriptを読み込みます。<br><code>index.html</code>に<code>index.js</code>を読み込みましょう。</p>
+<p>これでcanvasを取得するための準備は整いました(以下のWebエディタでは既に読み込んであります)。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gr(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> $$ = gr(<span class="string">"#main"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>操作するキャンバス部分を取得する際にはGrimoireインターフェース内で取得するようにします。これはcanvas生成前に取得が行われることを防ぐためです。</p>
+</blockquote>
+<p>以下のようにセレクタを用いて、Grimoire.jsが扱うキャンバス部分を取得できます。複数のGOMLを読み込んでいる場合等、これを利用することにより、書くキャンバスに対して明示的な操作を行うことが可能になります。</p>
+<h3 id="meshの属性を変更してみる"><a href="#meshの属性を変更してみる" class="headerlink" title="meshの属性を変更してみる"></a>meshの属性を変更してみる</h3><p>それでは、まず<code>&lt;mesh&gt;</code>ノードに対して<code>position</code>属性を上書きしてみましょう。</p>
+<p>ノードに対して、デフォルトコンポーネントの属性を変化させるためには<code>setAttribute(&quot;属性名&quot;, value)</code>を用います。valueには,書く属性が対応しているコンバーターに適した値を指定することが可能です。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gr(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> $$ = gr(<span class="string">"#main"</span>);</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      $$(<span class="string">"mesh"</span>).setAttribute(<span class="string">"position"</span>, <span class="string">"3,0,0"</span>);</span><br><span class="line">    &#125;,<span class="number">1000</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>以上の記述により1秒後にmeshのポジションが(3,0,0)に移動しているはずです。<br>確認してみましょう。</p>
+&lt;iframe class=”editor” src=”<a href="https://grimoiregl.github.io/grimoire.gl-example#t03-01&quot;allowfllscreen&gt;" target="_blank" rel="noopener">https://grimoiregl.github.io/grimoire.gl-example#t03-01&quot;allowfllscreen&gt;</a>
+
+<blockquote>
+<p>ノード名で指定した場合には、同じノード名を持つノードの全てが取得されます。ある特定のノードに対して操作を行う際にはセレクタを活用しましょう。</p>
+</blockquote>
+<p>他にもGrimoireのノードインターフェースには、<br>ノードのインターフェースでは、ノードの構造に関する操作(destroy, append)、ノードの属性に関する操作(setAttribute,getAttribute)、また、イベントハンドラの登録(on,off)を行うことができます。</p>
+<ul>
+<li>get</li>
+<li>addComponent <strong>(次の章で扱います)</strong></li>
+<li>append</li>
+<li>children</li>
+<li>compareClass</li>
+<li>find</li>
+<li>off</li>
+<li>on</li>
+<li>remove</li>
+<li>foreach</li>
+<li>single</li>
+<li>count</li>
+</ul>
+<p>現在は上記のメソッドがサポートされています。</p>
+<h3 id="動的にmeshを追加してみる"><a href="#動的にmeshを追加してみる" class="headerlink" title="動的にmeshを追加してみる"></a>動的にmeshを追加してみる</h3><iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t03-02" allowfllscreen=""></iframe>
+
+<p><code>append</code>メソッドを使ってみましょう<br>このメソッド<code>append(&#39;&lt;tag&gt;&#39;)</code>を用いることにより、Javascriptからノードを指定した箇所に追加することができます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$$(<span class="string">"mesh"</span>).append(<span class="string">'&lt;mesh geometry="cube" position="0,1,0" color="green" /&gt;'</span>);</span><br></pre></td></tr></table></figure>
+<p>上記のように記述することで、緑色のCubeが(0,1,0)に表示されるはずです。</p>
+<blockquote>
+<p>次はコンポーネントの扱い方を学びます。 GOMLで宣言したノードには標準でデフォルトコンポーネントが付属していますが、後からコンポーネントをGOML内で追加することができます。次の章ではこのオプショナルコンポーネントについて詳しく扱います。</p>
+</blockquote>
+<blockquote>
+<p><a href="/tutorial/04-handle-component.html">コンポーネントを扱ってみる</a></p>
+</blockquote>
+
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/tutorial/03-handle-goml-with-js.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

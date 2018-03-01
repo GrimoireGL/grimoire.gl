@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>Top-Level API | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Grimoire.jsを初めて用いる際、最初に扱うjavascriptのAPIはおそらくこれらのトップレベルAPIでしょう。 これらのAPIによってユーザーは自身のサービスのロジックにマッチした形で3Dのキャンバス部分を操作することが容易になります。  トップレベルのAPIは以上の図のように主に4つに分割され、それぞれ役割が異なります。  GrimoireInterface主に特定のGOMLソース">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Top-Level API">
+<meta property="og:url" content="https://grimoire.gl/api/top-level-apis.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="Grimoire.jsを初めて用いる際、最初に扱うjavascriptのAPIはおそらくこれらのトップレベルAPIでしょう。 これらのAPIによってユーザーは自身のサービスのロジックにマッチした形で3Dのキャンバス部分を操作することが容易になります。  トップレベルのAPIは以上の図のように主に4つに分割され、それぞれ役割が異なります。  GrimoireInterface主に特定のGOMLソース">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.394Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Top-Level API">
+<meta name="twitter:description" content="Grimoire.jsを初めて用いる際、最初に扱うjavascriptのAPIはおそらくこれらのトップレベルAPIでしょう。 これらのAPIによってユーザーは自身のサービスのロジックにマッチした形で3Dのキャンバス部分を操作することが容易になります。  トップレベルのAPIは以上の図のように主に4つに分割され、それぞれ役割が異なります。  GrimoireInterface主に特定のGOMLソース">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+  <div id="content">
+    <h1 id="content-title">Top-Level API</h1>
+    <p>Grimoire.jsを初めて用いる際、最初に扱うjavascriptのAPIはおそらくこれらのトップレベルAPIでしょう。 これらのAPIによってユーザーは自身のサービスのロジックにマッチした形で3Dのキャンバス部分を操作することが容易になります。</p>
+<p><img src="./images/Grimoire-interface-describe.png" alt="top-level-interface"></p>
+<p>トップレベルのAPIは以上の図のように主に4つに分割され、それぞれ役割が異なります。</p>
+<hr>
+<h1 id="GrimoireInterface"><a href="#GrimoireInterface" class="headerlink" title="GrimoireInterface"></a>GrimoireInterface</h1><p>主に<strong>特定のGOMLソースに依存しない</strong>対象に対して操作するAPIを提供します。</p>
+<p><strong>例</strong></p>
+<ul>
+<li>registerNodeメソッド</li>
+<li>registerComponentメソッド</li>
+<li>…etc</li>
+</ul>
+<p>GrimoireInterfaceは<code>&lt;script&gt;</code>タグを用いて単にWebページにロードされている場合、<code>window.gr</code>に代入されます。</p>
+<p>GrimoireInterfaceはnpmを用いて以下のようにしても取得することができます。この場合window以下を書き換えることなくGrimoireInterfaceが利用可能です。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gr = <span class="built_in">require</span>(<span class="string">"grimoirejs"</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="gr-“selector”"><a href="#gr-“selector”" class="headerlink" title="gr(“selector”)"></a>gr(“selector”)</h2><ul>
+<li><p><strong>定義</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gr</span>(<span class="params">selector: <span class="built_in">string</span></span>): <span class="title">GOMLInterface</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使い方</strong></p>
+<p>GrimoireInterfaceは関数としてセレクタを渡すことができます。 このセレクタはGOMLを選択するための記法であり、<code>text=&quot;text/goml&quot;</code>の指定されているノードを取得するためのセレクタを指定します。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> theCanvas = gr(<span class="string">"script.mainCanvas"</span>);</span><br></pre></td></tr></table></figure>
+<p>例えば、上記の例では<code>mainCanvas</code>クラスが指定されたscriptタグ全てが結びついているGOMLに対して処理をするインターフェースが取得されます。</p>
+<blockquote>
+<p>注意:</p>
+</blockquote>
+<blockquote>
+<p>取得される操作対象のGOMLが一つとは限らない事に気をつけてください。取得する対象が<code>canvas</code>ではなく<code>script</code>である事に注意してください。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="gr-ns-namespace"><a href="#gr-ns-namespace" class="headerlink" title="gr.ns(namespace)"></a>gr.ns(namespace)</h2><ul>
+<li><p><strong>定義</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ns</span>(<span class="params"><span class="keyword">namespace</span>: <span class="built_in">string</span></span>): (<span class="params">name: <span class="built_in">string</span></span>) =&gt; <span class="title">NamespacedIdentity</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使い方:</strong></p>
+<p>nsメソッドはGrimoire.jsが用いる各ノードやコンポーネントなどの名前の識別のために名前空間を用いるために使います。</p>
+<p>自分以外の人が用いるであろうコンポーネントやノードを作成する場合、名称が被って競合するのを防ぐために利用する必要があるでしょう。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> g = gr.ns(<span class="string">"http://grimoire.gl/ns/sample"</span>);</span><br><span class="line"><span class="keyword">var</span> id = g(<span class="string">"TEST"</span>); <span class="comment">//完全修飾名 TEST | HTTP://GRIMOIRE.GL/NS/SAMPLEを意味するオブジェクトとなる。</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="registerComponent"><a href="#registerComponent" class="headerlink" title="registerComponent"></a>registerComponent</h2><ul>
+<li><p><strong>定義</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> IAttributeDeclaration &#123;</span><br><span class="line">  converter: <span class="built_in">string</span> | NamespacedIdentity;</span><br><span class="line">  defaultValue: <span class="built_in">any</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">registerComponent</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">     name: <span class="built_in">string</span> | NamespacedIdentity,</span></span></span><br><span class="line"><span class="function"><span class="params">     attributes: &#123; [name: <span class="built_in">string</span>]: IAttributeDeclaration &#125;,</span></span></span><br><span class="line">     component: Object | (new () =&gt; Component)</span><br><span class="line">): <span class="built_in">void</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使い方</strong></p>
+<p>指定した名称のコンポーネントを追加します。 引数<code>name</code>が<code>NamespacedIdentity</code>として指定されると、名前空間を含んだタグとして区別されます。 一方で引数<code>name</code>が<code>string</code>である際は名前空間を<strong>デフォルト名前空間</strong>として処理します。</p>
+<p>引数<code>attributes</code>はこのコンポーネントが公開する属性です。これは値として<code>IAttributeDeclaration</code>を持つプレーンオブジェクトです。このプレーンオブジェクトのkeyが属性名として用いられます。(常に名前空間はこのコンポーネントの名前空間です。) ユーザーはこのattributesに指定されている属性に対してGOMLを通じて代入したりattrメソッドなどを通じて値を操作できたりします。</p>
+<p>引数<code>component</code>は新しく登録したいコンポーネントの<code>コンストラクタとなる関数</code>もしくは<code>プレーンオブジェクト</code>です。 ただし、プレーンオブジェクトはメソッド内部でコンストラクタに変換します。また、コンストラクタを指定する場合はそのコンストラクタのスーパークラスにComponentが入っていなければなりません。</p>
+</li>
+</ul>
+<h2 id="registerNode"><a href="#registerNode" class="headerlink" title="registerNode"></a>registerNode</h2><ul>
+<li><p><strong>定義</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">registerNode</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  name: <span class="built_in">string</span> | NamespacedIdentity,</span></span></span><br><span class="line">  requiredComponents: (string | NamespacedIdentity)[],</span><br><span class="line">  defaultValues?: &#123; [key: <span class="built_in">string</span>]: <span class="built_in">any</span> &#125; | NamespacedDictionary&lt;<span class="built_in">any</span>&gt;,</span><br><span class="line">  superNode?: <span class="built_in">string</span> | NamespacedIdentity,</span><br><span class="line">  requiredComponentsForChildren?: (<span class="built_in">string</span> | NamespacedIdentity)[]</span><br><span class="line">): <span class="built_in">void</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使い方</strong></p>
+<p>新たに指定した名称のノードを追加します。引数<code>name</code>が<code>NamespacedIdentity</code>として指定されると、名前空間を含んだタグとして区別されます。一方で引数<code>name</code>が<code>string</code>である際は名前空間を<strong>デフォルト名前空間</strong>として処理します。</p>
+<p>引数<code>requiredComponents</code>はその名称のノードが初期状態のときに保持するコンポーネントの配列を持ちます。この配列は要素として<code>string</code>もしくは<code>NamespacedIdentity</code>を持つことができます。 この配列を受け取った際、<code>string</code>な要素は自動的に名前空間を<strong>デフォルト名前空間</strong>として処理します。</p>
+<p>引数<code>defaultValues</code>はこのノードの各属性の初期値を表します。この引数に対して単なるプレーンオブジェクトすなわち<code>{[key: string]: any}</code>を渡した場合は、<code>key</code>を属性名として解釈し、属性の名前空間として<strong>ノードの名前空間</strong>を用います。もし、ノードの名前空間外の属性に対して初期値を割り当てたい場合は<code>NamespacedDictionary&lt;any&gt;</code>を用いてこの引数を割り当てます。</p>
+<blockquote>
+<p>デフォルト値の割り当て優先順位:</p>
+</blockquote>
+<blockquote>
+<p>あるノードが読み込まれた時に属性に割り当てられる値は以下の優先順位に従って割り当てられます。</p>
+</blockquote>
+<blockquote>
+<p><code>GOMLによる指定 &gt; registerNode内のdefaultValuesによる指定 &gt; registerComponent内のattributesによる指定</code></p>
+</blockquote>
+<blockquote>
+<p>すなわち、初期ロード時にGOMLに記述されていない属性についてはregisterNode内のdefaultValuesが検索され、それも見つからない場合はregisterComponent内のattributesから初期値をロードします。</p>
+</blockquote>
+<p>引数<code>superNode</code>はこのノードが設定を継承する元のノード名を指定します。この引数が指定されると、<code>superNode</code>に対応付いたノードの<code>requiredComponents</code>,<code>defaultValues</code>,<code>requiredComponentsForChildren</code>が再帰的に引き継がれます。</p>
+<p>引数<code>requiredComponentsForChildren</code>はこのノードの子ノードに指定されるノードに要求するコンポーネントの名称のリストを受け取ります。 この要素が指定されると、このノード以下の子ノードとしてGOML内などに記述されるすべての要素は指定されたコンポーネントを所持している必要があります。</p>
+</li>
+</ul>
+<h1 id="GOMLInterface"><a href="#GOMLInterface" class="headerlink" title="GOMLInterface"></a>GOMLInterface</h1><p>主に<strong>特定のGOMLのソースに依存する</strong>対象に対して操作するAPIを提供します。</p>
+<p>GOMLInterfaceを介して、ひとつまたは複数のGOMLを操作できます。<br>GOMLInterfaceは、主にGrimoireInterfaceを関数として呼び出して取得できます。<br>このときセレクタの対象になったGOMLが、このGOMLInterfaceの操作対象となります。</p>
+<p><strong>例</strong></p>
+<ul>
+<li>(なし)</li>
+</ul>
+<h2 id="gr-“gomlSelector”-“nodeSelector”"><a href="#gr-“gomlSelector”-“nodeSelector”" class="headerlink" title="gr(“gomlSelector”)(“nodeSelector”)"></a>gr(“gomlSelector”)(“nodeSelector”)</h2><ul>
+<li><p><strong>定義</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params">selector: <span class="built_in">string</span></span>): <span class="title">NodeInterface</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使い方</strong></p>
+<p>GomlInterfaceは関数としてセレクタを渡すことができます。 このセレクタはNodeを選択するための記法であり、このGOMLInterfaceが対象とするGOML群のもつNodeTreeのノードを取得するためのセレクタを指定します。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cubes = gr(<span class="string">"script.mainCanvas"</span>)(<span class="string">"cube"</span>);</span><br></pre></td></tr></table></figure>
+<p>例えば、上記の例では<code>mainCanvas</code>クラスが指定されたscriptタグ全てが結びついているGOMLの中で、<code>cube</code>クラスが指定された全てのノードを対象とするインターフェースが取得できます。</p>
+<blockquote>
+<p>注意:</p>
+</blockquote>
+<blockquote>
+<p>取得される操作対象のノードが一つとは限らない事に気をつけてください。</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h1 id="NodeInterface"><a href="#NodeInterface" class="headerlink" title="NodeInterface"></a>NodeInterface</h1><p>主に<strong>特定のNode</strong>に対して操作するAPIを提供します。</p>
+<p>ひとつ、または複数のノードを対象とした操作を提供します。</p>
+<p><strong>例</strong></p>
+<ul>
+<li>appendメソッド</li>
+<li>getComponentメソッド</li>
+<li>forEachメソッド</li>
+<li>removeメソッド</li>
+<li>…etc</li>
+</ul>
+<h2 id="gr-“gomlSelector”-“nodeSelector”-“componentSelector”"><a href="#gr-“gomlSelector”-“nodeSelector”-“componentSelector”" class="headerlink" title="gr(“gomlSelector”)(“nodeSelector”)(“componentSelector”)"></a>gr(“gomlSelector”)(“nodeSelector”)(“componentSelector”)</h2><ul>
+<li><p><strong>定義</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params">selector: <span class="built_in">string</span></span>): <span class="title">ComponentInterface</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使い方</strong></p>
+<p>NodeInterfaceは関数としてセレクタを渡すことができます。 このセレクタはComponentを選択するための記法であり、対象とするノード群の中からコンポーネントを指定します</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> components = gr(<span class="string">"script.mainCanvas"</span>)(<span class="string">"cube"</span>)(<span class="string">"a"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="isEmpty"><a href="#isEmpty" class="headerlink" title="isEmpty"></a>isEmpty</h2><p>このNodeInterfaceの対象が一つ以上存在するか確認します。<br>存在すればtrue,一つも存在しなければfalseを返します。<br>  <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(gr(<span class="string">"script.mainCanvas"</span>)(<span class="string">"cube"</span>).isEmpty())&#123;</span><br><span class="line">  <span class="comment">//nodeInterface is empty!</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="get"><a href="#get" class="headerlink" title="get"></a>get</h2><p>対象となるノード群からノードを指定して取り出します。<br>gomlとノードのインデックスを指定することができます。<br>gomlのインデックスを省略すると、すべてのgomlに渡って指定したインデックスのノードを返します。<br>引数を指定しないと、最初のノードを返します。<br>どの場合も、指定した位置にノードが存在しないときは例外を投げます。<br>  <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> nodeInterface = gr(<span class="string">"script.mainCanvas"</span>)(<span class="string">"cube"</span>);</span><br><span class="line"><span class="keyword">var</span> gomlIndex = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">var</span> nodeIndex = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">if</span>(nodeInterface.isEmpty())&#123;</span><br><span class="line">  <span class="keyword">var</span> firstNode = nodeInterface.get();<span class="comment">//error: this NodeInterface is empty.</span></span><br><span class="line">  <span class="keyword">var</span> secondNode = nodeInterface.get(nodeIndex);<span class="comment">//error: index out of range.</span></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> firstNode = nodeInterface.get();</span><br><span class="line">  <span class="keyword">var</span> secondNode = nodeInterface.get(nodeIndex);</span><br><span class="line">  <span class="keyword">var</span> secondNodeIsThirdGOML = nodeInterface.get(gomlIndex,nodeIndex);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="getAttribute"><a href="#getAttribute" class="headerlink" title="getAttribute"></a>getAttribute</h2><p>属性名を指定して、対象ノードの<strong>最初のノードの</strong>属性を取得します。<br>  <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cube_position = gr(<span class="string">"script.mainCanvas"</span>)(<span class="string">"cube"</span>).getAttribute(<span class="string">"position"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(cube_position.X);</span><br><span class="line"><span class="built_in">console</span>.log(cube_position.Y);</span><br><span class="line"><span class="built_in">console</span>.log(cube_position.Z);</span><br></pre></td></tr></table></figure></p>
+<h2 id="setAttribute"><a href="#setAttribute" class="headerlink" title="setAttribute"></a>setAttribute</h2><p>属性名を指定して、<strong>すべての対象ノードの</strong>属性を設定します<br>  <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gr(<span class="string">"script.mainCanvas"</span>)(<span class="string">"cube"</span>).setAttribute(<span class="string">"color"</span>,<span class="string">"red"</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="addComponent"><a href="#addComponent" class="headerlink" title="addComponent"></a>addComponent</h2><p>すべての対象ノードにコンポーネントを追加します。<br>  <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gr(<span class="string">"script.mainCanvas"</span>)(<span class="string">"cube"</span>).addComponent(<span class="string">"rotateAround"</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="append"><a href="#append" class="headerlink" title="append"></a>append</h2><p>すべての対象ノードに対して、指定したタグを持つノードを子要素に追加します。<br>  <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gr(<span class="string">"script.mainCanvas"</span>)(<span class="string">"cube"</span>).append(<span class="string">"&lt;mesh geometry="</span>quad<span class="string">" color="</span>brown<span class="string">" /&gt;"</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="children"><a href="#children" class="headerlink" title="children"></a>children</h2><p>特定のノード群の子要素を対象とする、新しいnodeInterfaceを取得します。</p>
+<h2 id="off"><a href="#off" class="headerlink" title="off"></a>off</h2><p>対象ノードに指定したイベントリスナが登録されていれば削除します</p>
+<h2 id="on"><a href="#on" class="headerlink" title="on"></a>on</h2><p>対象ノードにイベントリスナを追加します。</p>
+<h2 id="remove"><a href="#remove" class="headerlink" title="remove"></a>remove</h2><p>対象ノードをすべて削除します。<br>  <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gr(<span class="string">"script.mainCanvas"</span>)(<span class="string">"cube"</span>).remove();</span><br></pre></td></tr></table></figure></p>
+<h2 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a>forEach</h2><p>このノードインタフェースが対象とするすべてのノードに対して反復処理を行います。<br>ノードと、そのノードのgomlのインデックス、goml上でのインデックスを参照できます。<br>  <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gr(<span class="string">"script.mainCanvas"</span>)(<span class="string">"cube"</span>).forEach(<span class="function">(<span class="params">node,gomlIndex,nodeIndex</span>)=&gt;</span>&#123;</span><br><span class="line">  node.setAttribute(<span class="string">"position"</span>,<span class="string">`<span class="subst">$&#123;gomlIndex&#125;</span>,<span class="subst">$&#123;nodeIndex&#125;</span>,0`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="setEnable"><a href="#setEnable" class="headerlink" title="setEnable"></a>setEnable</h2><p>このノードインタフェースが対象とするノードを有効、または無効にします。<br>  <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gr(<span class="string">"script.mainCanvas"</span>)(<span class="string">"cube"</span>).setEnabled(<span class="literal">false</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="first"><a href="#first" class="headerlink" title="first"></a>first</h2><p>対象のノード群の、ひとつ目のノードを返します。存在しない時、nullを返します。</p>
+<h2 id="single"><a href="#single" class="headerlink" title="single"></a>single</h2><p>対象ノード群が唯一のノードのみを含むとき、それを返します。ノード数が０または２以上のとき、例外を投げます。</p>
+<h2 id="count"><a href="#count" class="headerlink" title="count"></a>count</h2><p>対象ノードの個数を数えます。<br>  <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> count = gr(<span class="string">"script.mainCanvas"</span>)(<span class="string">"cube"</span>).count();</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="ComponentInterface"><a href="#ComponentInterface" class="headerlink" title="ComponentInterface"></a>ComponentInterface</h1><p>主に<strong>特定のNodeに属しているコンポーネント</strong>に対する処理に利用します。</p>
+<ul>
+<li>attrメソッド</li>
+<li>destroyメソッド</li>
+<li>…etc</li>
+</ul>
+<h2 id="getAttribute-1"><a href="#getAttribute-1" class="headerlink" title="getAttribute"></a>getAttribute</h2><p>特定のコンポーネント群のAttributeを返します。または、特定のAttributeに値をセットします。</p>
+<h2 id="setAttribute-1"><a href="#setAttribute-1" class="headerlink" title="setAttribute"></a>setAttribute</h2><h2 id="destroy"><a href="#destroy" class="headerlink" title="destroy"></a>destroy</h2><p>指定したコンポーネント群を消去します。</p>
+<h2 id="count-1"><a href="#count-1" class="headerlink" title="count"></a>count</h2><p>対象ノードの個数を数えます。<br>  <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> count = gr(<span class="string">"script.mainCanvas"</span>)(<span class="string">"cube"</span>).count();</span><br></pre></td></tr></table></figure></p>
+<h2 id="get-1"><a href="#get-1" class="headerlink" title="get"></a>get</h2><p>対象となるコンポーネント群からコンポーネントを指定して取り出します。存在しないとnull、曖昧性があるとerrorを投げる</p>
+
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/api/top-level-apis.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

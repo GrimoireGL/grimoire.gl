@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>コンポーネントを扱う | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概要Grimoire.jsではコードの再利用性を高めるための手段としてコンポーネントを定めています。これによりユーザーは構築したロジックを、異なるノードに容易に適用することができます。ここでいうコンポーネントとは、全てのノードの基礎となるものです。コンポーネントを組み合わせることにより、一つの特定の機能を持ったノードが作成されます。 学べること デフォルトコンポーネントとオプショナルコンポーネント">
+<meta property="og:type" content="article">
+<meta property="og:title" content="コンポーネントを扱う">
+<meta property="og:url" content="https://grimoire.gl/tutorial/04-handle-component.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="概要Grimoire.jsではコードの再利用性を高めるための手段としてコンポーネントを定めています。これによりユーザーは構築したロジックを、異なるノードに容易に適用することができます。ここでいうコンポーネントとは、全てのノードの基礎となるものです。コンポーネントを組み合わせることにより、一つの特定の機能を持ったノードが作成されます。 学べること デフォルトコンポーネントとオプショナルコンポーネント">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.406Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="コンポーネントを扱う">
+<meta name="twitter:description" content="概要Grimoire.jsではコードの再利用性を高めるための手段としてコンポーネントを定めています。これによりユーザーは構築したロジックを、異なるノードに容易に適用することができます。ここでいうコンポーネントとは、全てのノードの基礎となるものです。コンポーネントを組み合わせることにより、一つの特定の機能を持ったノードが作成されます。 学べること デフォルトコンポーネントとオプショナルコンポーネント">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+    <aside id="sidebar">
+  <div id="doc-title">TUTORIAL</div>
+  
+    <ul id="list">
+      
+        <li class="">
+          <a href="/tutorial/index.html">目次</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/01-getting-started.html">Grimorie.jsを使ってみる</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/02-handle-goml.html">GOMLを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/03-handle-goml-with-js.html">JavascriptでGOMLを扱う</a>
+        </li>
+      
+        <li class="active">
+          <a href="/tutorial/04-handle-component.html">コンポーネントを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/05-handle-component-with-js.html">javascriptでコンポーネントを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/06-node-and-component.html">ノードとコンポーネントの本質</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/07-create-component.html">コンポーネントの作成</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/10-create-node.html">ノードの作成</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/11-create-material.html">マテリアルの自作</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/12-create-post-effect.html">ポストエフェクトを作成する</a>
+        </li>
+      
+    </ul>
+  
+</aside>
+
+  
+  <div id="content">
+    <h1 id="content-title">コンポーネントを扱う</h1>
+    <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>Grimoire.jsではコードの再利用性を高めるための手段としてコンポーネントを定めています。これによりユーザーは構築したロジックを、異なるノードに容易に適用することができます。ここでいうコンポーネントとは、全てのノードの基礎となるものです。コンポーネントを組み合わせることにより、一つの特定の機能を持ったノードが作成されます。</p>
+<h2 id="学べること"><a href="#学べること" class="headerlink" title="学べること"></a>学べること</h2><ul>
+<li>デフォルトコンポーネントとオプショナルコンポーネントについて</li>
+<li>オプショナルコンポーネントに関するGOMLの記述方法</li>
+</ul>
+<h3 id="デフォルトコンポーネントとオプショナルコンポーネント"><a href="#デフォルトコンポーネントとオプショナルコンポーネント" class="headerlink" title="デフォルトコンポーネントとオプショナルコンポーネント"></a>デフォルトコンポーネントとオプショナルコンポーネント</h3><p>Grimoire.jsのコンポーネントは、デフォルトコンポーネントとオプショナルコンポーネントの２種類に分かれます。<br>GOMLに記載される<code>&lt;mesh&gt;</code>などのタグには、タグ名に応じて最初から複数のコンポーネントが付属しています(Transformコンポーネントなど)。これらのコンポーネントをデフォルトコンポーネントと呼びます。<br>これに対し、ユーザーがGOML等で後から追加したコンポーネントをオプショナルコンポーネントとしています。</p>
+<blockquote>
+<p>オプショナルコンポーネントを追加する際には、そのコンポーネントが依存しているコンポーネントが存在する可能性があります。その際には依存しているコンポーネントも含めて、オプショナルコンポーネントとして明示的にノードに追加することが必要です。</p>
+</blockquote>
+<h3 id="オプショナルコンポーネントの追加"><a href="#オプショナルコンポーネントの追加" class="headerlink" title="オプショナルコンポーネントの追加"></a>オプショナルコンポーネントの追加</h3><p>GOMLからノードにオプショナルコンポーネントを追加することが可能です。そのためには、ノードの子要素に追加するコンポーネントを明治する必要があります。そのための記述が以下の通りです。</p>
+<p><code>&lt;camera&gt;</code>タグにマウス操作を可能にするコンポーネントを追加することを例に考えてみます。記法は以下の通りです。これを<code>&lt;camera&gt;</code>タグの子要素に追加することで、コンポーネントの追加は終了です。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">camera.components</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">MouseCameraControl</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">camera.components</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>MouseCameraControlはgrimoirejs-fundamentalがサポートしているタグです。ユーザはコンポーネントを作成してすることも可能です。詳しくは<a href="/tutorial/07-create-component.html">コンポーネントを作成してみる</a>に記載しています。</p>
+</blockquote>
+<p>対象のタグに、<code>&lt;対象のタグの名前.components&gt;追加するコンポーネントのタグ&lt;/対象のタグの名前.components&gt;</code>とする必要があります。</p>
+<p>実際にコンポーネントが追加されていることを確認してみましょう。</p>
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t04-01"></iframe>
+
+
+
+<blockquote>
+<p>次はコンポーネントの操作に関して、Javascriptから操作することを学びます。これにより、動的にコンポーネントの追加、変更が可能になります。</p>
+<p><a href="/tutorial/05-handle-component-with-js.html">javascript側からOptionalComponentを操作してみる</a></p>
+</blockquote>
+
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/tutorial/04-handle-component.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

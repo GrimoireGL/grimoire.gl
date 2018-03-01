@@ -1,0 +1,70 @@
+@Pass {
+  @DepthFunc(LEQUAL)
+  @BlendFunc(SRC_ALPHA, ONE_MINUS_SRC_ALPHA)
+  FS_PREC(highp,float)
+  #ifdef VS
+  attribute vec3 position;
+    void main(){
+      gl_Position = vec4(position, 1.);
+    }
+  #endif
+
+  #ifdef FS
+    const int _ParticlesAmount = 6;
+
+    uniform float _time;
+    uniform vec2 _viewportSize;
+
+    float rnd(float x)
+    {
+      return fract(sin(dot(vec2(x + 47.49,38.2467 / (x + 2.3)), vec2(12.9898, 78.233))) * (43758.5453));
+    }
+
+    float drawRect(vec2 uv, vec2 bottomLeft, vec2 topRight, float d) {
+      float ret;
+      ret = smoothstep(bottomLeft.x-d, bottomLeft.x+d, uv.x);
+      ret *= smoothstep(bottomLeft.y-d, bottomLeft.y+d, uv.y);
+      ret *= 1.0 - smoothstep(topRight.y-d, topRight.y+d, uv.y);
+      ret *= 1.0 - smoothstep(topRight.x-d, topRight.x+d, uv.x);
+      return ret;
+    }
+
+    vec4 alphaBlend(vec4 base, vec4 blend)
+    {
+      float alpha = blend.a + base.a * (1.0 - blend.a);
+      return vec4((base.rgb * base.a * (1.0 - blend.a) + blend.rgb * blend.a) / (alpha == 0.0 ? 1.0 : alpha), alpha);
+    }
+
+    void main()
+    {
+      vec2 uv = (2.0 * gl_FragCoord.xy - _viewportSize.xy) / min(_viewportSize.x, _viewportSize.y);
+      gl_FragColor = vec4(1.0, 1.0, 1.0, 0.0);
+
+      float j;
+      float move_max = 1.0;
+      vec2 spawn_center = vec2(0.0, -0.2);
+      vec2 spawn_size = vec2(0.6, 0.5);
+      vec2 rect_size = vec2(0.023);
+
+      for (int i = 0; i < _ParticlesAmount; i++)
+      {
+        j = float(i);
+        float rnd1 = rnd(cos(j));
+        float delayedTime = (0.2 + 0.2 * rnd1) * _time * 0.0005;
+        float d = floor(delayedTime / move_max);
+        float rnd2 = rnd(j * d);
+        float rnd3 = rnd(j * j * d);
+        float r = delayedTime / move_max - d;
+        float x_wave = 0.03 * sin(delayedTime * 7.0 + 6.282 / j);
+        vec2 spawn = vec2(rnd2, rnd3) * spawn_size - spawn_size * 0.5;
+        float ease = pow(2.0, 20.0 * (r - 1.0));
+        float y_move = -1.0 * move_max * ease + move_max * 0.5;
+        float opacity = 1.0 - ease - pow(2.0, -30.0 * r);
+        float scale = 1.0 - 0.8 * rnd1 + 0.05 * sin(1.5 * _time * 0.001 + 6.282 / j);
+        vec2 center = (uv + spawn_center + spawn + vec2(x_wave, y_move)) * scale;
+        gl_FragColor = alphaBlend(gl_FragColor, vec4(vec3(1, 0.647, 0), 0.3 * opacity * drawRect(center, rect_size * -2.0, rect_size * 2.0, 0.1)));
+        gl_FragColor = alphaBlend(gl_FragColor, vec4(vec3(0.0, 0.0, 0.0), 0.5 * opacity * drawRect(center, rect_size * -1.0, rect_size, 0.01)));
+      }
+    }
+  #endif
+}

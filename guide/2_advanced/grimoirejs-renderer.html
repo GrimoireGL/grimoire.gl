@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>Renderer basics | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="IntroductionRendering scene is just one of rendering strategy in Grimoire.js. You can also do many things with rendering system of Grimoire.js. Basics of using rendering related nodesThis GOML code is">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Renderer basics">
+<meta property="og:url" content="https://grimoire.gl/guide/2_advanced/grimoirejs-renderer.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="IntroductionRendering scene is just one of rendering strategy in Grimoire.js. You can also do many things with rendering system of Grimoire.js. Basics of using rendering related nodesThis GOML code is">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.398Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Renderer basics">
+<meta name="twitter:description" content="IntroductionRendering scene is just one of rendering strategy in Grimoire.js. You can also do many things with rendering system of Grimoire.js. Basics of using rendering related nodesThis GOML code is">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+    <aside id="sidebar">
+  <div id="doc-title">GUIDE</div>
+  
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Essentials</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/1_essentials/01_installation.html">Installation</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/02_introduction.html">Getting started</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/03_goml.html">GOML</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/04_interface.html">Interfaces</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/05_componentsystem.html">ComponentSystem</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/06_plugin.html">Plugins</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/07_inspector.html">Devtool</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/08_tags.html">主なタグ</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Advanced</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/2_advanced/webgl-basics.html">WebGL concepts</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/sort.html">カスタムマテリアルの仕様</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/plugin-specification.html">Plugin making</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/geometry-basic.html">Geometry basics</a>
+            </li>
+          
+            <li class="active">
+              <a href="/guide/2_advanced/grimoirejs-renderer.html">Renderer basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/material-basic.html">Material basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-core.html">grimoirejs-core</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/typescript.html">Use Typescript</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Meta</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/3_meta/community.html">Community</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+  
+</aside>
+
+  
+  <div id="content">
+    <h1 id="content-title">Renderer basics</h1>
+    <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>Rendering scene is just one of rendering strategy in Grimoire.js. You can also do many things with rendering system of Grimoire.js.</p>
+<h1 id="Basics-of-using-rendering-related-nodes"><a href="#Basics-of-using-rendering-related-nodes" class="headerlink" title="Basics of using rendering related nodes"></a>Basics of using rendering related nodes</h1><p>This GOML code is starting point of learning Grimoire.js renderer.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">goml</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">camera</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">color</span>=<span class="string">"red"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>When you inspect this code with Grimoire.js devtool, you can find there are more tags that is automatically generated. Actual goml tree structure should be like the code below.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">goml</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">camera</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">color</span>=<span class="string">"red"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">renderer</span>&gt;</span> <span class="comment">&lt;!--This tag was complemented--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">render-scene</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">renderer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>This is starting point to dive rendering structure in Grimoire.js.</p>
+<h2 id="for-customizing-region-to-be-rendered"><a href="#for-customizing-region-to-be-rendered" class="headerlink" title="\ for customizing region to be rendered"></a>\<renderer> for customizing region to be rendered</renderer></h2><p><code>&lt;renderer&gt;</code> node manage regions to be rendered. When this node was not generated by GOML file initially, Grimoire.js will create this node for complementing.</p>
+<h3 id="Viewport-of-rendering-region"><a href="#Viewport-of-rendering-region" class="headerlink" title="Viewport of rendering region"></a>Viewport of rendering region</h3><p>You can customize region of viewport by using <code>viewport</code> attribute of <code>&lt;renderer&gt;</code>. Viewport is a term meaning a region to be rendered.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">goml</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">camera</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">color</span>=<span class="string">"red"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">renderer</span> <span class="attr">viewport</span>=<span class="string">"0,0,50%,100%"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Viewport attribute can accept comma separated values. This values are parsed as <code>X from left, Y from bottom, Width, Height</code>. <strong>Make sure that the Y values are calculated from bottom edge</strong></p>
+<p>If there were no unit at a digit, that means px. If there were % as unit, it is calculated from canvas width and height.</p>
+<p>You can create multiple renderer in a GOML.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">goml</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">camera</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">color</span>=<span class="string">"red"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">renderer</span> <span class="attr">viewport</span>=<span class="string">"0,0,50%,100%"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">renderer</span> <span class="attr">viewport</span>=<span class="string">"0,50%,50%,100%"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Render-stages-for-customizing-what-happen-in-rendering-time"><a href="#Render-stages-for-customizing-what-happen-in-rendering-time" class="headerlink" title="Render stages for customizing what happen in rendering time"></a>Render stages for customizing what happen in rendering time</h2><p>Render stages are nodes to specify how to draw viewport region. If there was no child in <code>&lt;renderer&gt;</code>, Grimoire create <code>&lt;render-scene&gt;</code> node as child of <code>&lt;renderer&gt;</code>.</p>
+<p>Therefore, the previous example are complemented, and actual GOML structure should be like this.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">goml</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">camera</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">color</span>=<span class="string">"red"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">renderer</span> <span class="attr">viewport</span>=<span class="string">"0,0,50%,100%"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">render-scene</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">renderer</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">renderer</span> <span class="attr">viewport</span>=<span class="string">"0,50%,50%,100%"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">render-scene</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">renderer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Using-different-camera-in"><a href="#Using-different-camera-in" class="headerlink" title="Using different camera in \"></a>Using different camera in \<render-scene></render-scene></h3><p>You can use multiple camera in different renderer by using <code>camera</code> attribute in <code>&lt;render-scene&gt;</code>.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">goml</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">camera</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">color</span>=<span class="string">"red"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">renderer</span> <span class="attr">viewport</span>=<span class="string">"0,0,50%,100%"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">renderer</span> <span class="attr">viewport</span>=<span class="string">"0,50%,50%,100%"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="for-offscreen-rendering"><a href="#for-offscreen-rendering" class="headerlink" title="\ for offscreen rendering"></a>\<rendering-target> for offscreen rendering</rendering-target></h2><h2 id="Grimoire-js-renderer-deep-dive"><a href="#Grimoire-js-renderer-deep-dive" class="headerlink" title="Grimoire.js renderer deep dive"></a>Grimoire.js renderer deep dive</h2>
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/guide/2_advanced/grimoirejs-renderer.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

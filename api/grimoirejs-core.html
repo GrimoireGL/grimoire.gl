@@ -1,0 +1,651 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>grimoirejs-core | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Grimoire.jsの本体であるgrimoirejs-coreのAPIドキュメントです。grimoirejs-coreの基本的な使い方に関しては、ガイドを参照してください。 グローバルインタフェース主にwebページ上からの操作のために用意されたインタフェース。Grimoire.jsを操作するためのオブジェクトは、GrimoireInterfaceクラスのインスタンスです。GrimoireInte">
+<meta property="og:type" content="article">
+<meta property="og:title" content="grimoirejs-core">
+<meta property="og:url" content="https://grimoire.gl/api/grimoirejs-core.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="Grimoire.jsの本体であるgrimoirejs-coreのAPIドキュメントです。grimoirejs-coreの基本的な使い方に関しては、ガイドを参照してください。 グローバルインタフェース主にwebページ上からの操作のために用意されたインタフェース。Grimoire.jsを操作するためのオブジェクトは、GrimoireInterfaceクラスのインスタンスです。GrimoireInte">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.394Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="grimoirejs-core">
+<meta name="twitter:description" content="Grimoire.jsの本体であるgrimoirejs-coreのAPIドキュメントです。grimoirejs-coreの基本的な使い方に関しては、ガイドを参照してください。 グローバルインタフェース主にwebページ上からの操作のために用意されたインタフェース。Grimoire.jsを操作するためのオブジェクトは、GrimoireInterfaceクラスのインスタンスです。GrimoireInte">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+  <div id="content">
+    <h1 id="content-title">grimoirejs-core</h1>
+    <p>Grimoire.jsの本体である<strong>grimoirejs-core</strong>のAPIドキュメントです。<br>grimoirejs-coreの基本的な使い方に関しては、<a href="todo">ガイド</a>を参照してください。</p>
+<h1 id="グローバルインタフェース"><a href="#グローバルインタフェース" class="headerlink" title="グローバルインタフェース"></a>グローバルインタフェース</h1><p>主にwebページ上からの操作のために用意されたインタフェース。<br>Grimoire.jsを操作するためのオブジェクトは、<code>GrimoireInterface</code>クラスのインスタンスです。<br><code>GrimoireInterface</code>は<code>&lt;script&gt;</code>タグでWebページにロードされている場合、<strong><code>gr</code>グローバル変数からアクセスできます</strong>。<br>もしnpmを利用されるのであれば、以下のようにしてこのオブジェクトを参照できます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gr = <span class="built_in">require</span>(<span class="string">"grimoirejs"</span>);</span><br></pre></td></tr></table></figure>
+<p>また、webページ上では、<code>gr</code>と同じ参照を<code>GrimoireJS</code>グローバル変数からも得ることができます。</p>
+<h2 id="GrimoireInterface"><a href="#GrimoireInterface" class="headerlink" title="GrimoireInterface"></a>GrimoireInterface</h2><p>Grimoire.jsの設定、プラグインの追加や管理、ノードやコンポーネントへのアクセスを提供します。</p>
+<h3 id="関数として呼び出す"><a href="#関数として呼び出す" class="headerlink" title="関数として呼び出す"></a>関数として呼び出す</h3><p>GrimoireInterfaceは関数として呼び出すことができます。このとき、引数に応じていくつかのオーバーロードがあります。</p>
+<h4 id="gr-“selector”"><a href="#gr-“selector”" class="headerlink" title="gr(“selector”)"></a>gr(“selector”)</h4><ul>
+<li><p><strong>定義</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gr</span>(<span class="params">selector: <span class="built_in">string</span></span>): <span class="title">GOMLInterface</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>パラメータ</strong></p>
+<ul>
+<li><p>selector</p>
+<p>対象となる<em>goml</em>が記述された<code>&lt;script&gt;</code>タグを指定するセレクタ</p>
+</li>
+</ul>
+</li>
+<li><p><strong>使い方</strong></p>
+<p>セレクタで指定された、<code>type=&quot;text/goml&quot;</code>の指定されている<code>&lt;script&gt;</code>タグを探索し、対応するツリーに対する<code>GomlInterface</code>を取得します。<br><code>GomlInterface</code>については<a href="todo">こちら</a>を参照してください。<br>たとえば、<code>html</code>上で以下のように２つの<code>gomlが</code>読み込まれていたとします。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">id</span>=<span class="string">"gomlId"</span> <span class="attr">class</span>=<span class="string">"gomlClass"</span> <span class="attr">type</span>=<span class="string">"text/goml"</span> <span class="attr">src</span>=<span class="string">"./hoge.goml"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">class</span>=<span class="string">"gomlClass"</span> <span class="attr">type</span>=<span class="string">"text/goml"</span> <span class="attr">src</span>=<span class="string">"./fuga.goml"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>このとき、最初の<code>goml</code>を以下のように指定できます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> goml = gr(<span class="string">"#gomlId"</span>);</span><br></pre></td></tr></table></figure>
+<p>また、以下のようにclassを指定するセレクタを渡して、複数の<code>goml</code>を同時に対象にできます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gomls = gr(<span class="string">"script.gomlClass"</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><em>注意:</em><br>操作対象のGOMLは一つとは限りません。セレクタで指定される複数の対象同時に操作できます。また、セレクタの対象は<code>canvas</code>ではなく<code>script</code>タグである事に注意してください。</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="gr-rootNode"><a href="#gr-rootNode" class="headerlink" title="gr(rootNode[])"></a>gr(rootNode[])</h4><ul>
+<li><p><strong>定義</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gr</span>(<span class="params">rootNodes: GomlNode[]</span>): <span class="title">GOMLInterface</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>パラメータ</strong></p>
+<ul>
+<li><p>rootNodes</p>
+<p>対象となる<em>goml</em>のツリーのルートノードの配列</p>
+</li>
+</ul>
+</li>
+<li><p><strong>使い方</strong></p>
+<p>引数で指定したルートノード群に対応するツリーに対する<code>GomlInterface</code>を取得します。<br>対象としたいツリーのルートノードが既にわかっている場合は、セレクタで指定するよりこちらのほうが高速です。それ以外の挙動は<a href="todo">セレクタで指定した場合</a>と同じです。</p>
+</li>
+</ul>
+<h4 id="gr-function"><a href="#gr-function" class="headerlink" title="gr(function)"></a>gr(function)</h4><ul>
+<li><p><strong>定義</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function gr(callback:()): void;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>パラメータ</strong></p>
+<ul>
+<li><p>callback</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params">scriptTags</span>):<span class="title">void</span></span></span><br></pre></td></tr></table></figure>
+<p>ページ上のgomlが全てマウントされた後に呼ばれるコールバック。引数としてページ上のすべての<code>goml</code>が記述された<code>&lt;script&gt;</code>タグの配列が渡されます。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>使い方</strong></p>
+<p>通常、<code>goml</code>がマウントされる前にツリーを操作することはできません。従って、<code>gr(selector)</code>などの操作もこのコールバック内で行うことになります。<br>例えば以下のように、スクリプトからツリー上にオブジェクトを配置する場合に使用します</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">gr(<span class="function"><span class="keyword">function</span>(<span class="params">scriptTags</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> gomlCount = scriptTags.length;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"this page has "</span>+gomlCount+<span class="string">" gomls."</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> target = gr(<span class="string">"#gomlId"</span>)(<span class="string">"#targetNode"</span>);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">      target.addChildByName(<span class="string">"mesh"</span>,&#123;</span><br><span class="line">        geometry:<span class="string">"cube"</span>,</span><br><span class="line">        position:i+<span class="string">",0,0"</span></span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="プロパティ"><a href="#プロパティ" class="headerlink" title="プロパティ"></a>プロパティ</h3><h4 id="nodeDeclarations"><a href="#nodeDeclarations" class="headerlink" title="nodeDeclarations"></a>nodeDeclarations</h4><p><code>goml</code>上で利用可能なすべてのタグの定義を取得できます。</p>
+<ul>
+<li><p><strong>構文</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gr.nodeDeclarations</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>型</strong></p>
+<p>NSDictionary<nodedeclaration></nodedeclaration></p>
+</li>
+<li><p><strong>使い方</strong></p>
+<p><code>gr.registerNode</code>メソッドによって登録されたすべてのノードがこのプロパティで管理されます。<code>goml</code>上でタグとして用いられるのはここから取得できるノードであり、それ以外にありません。<br>以下のようにして、利用可能なすべてのノード名を表示できます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> nodes = gr.nodeDeclarations;</span><br><span class="line">nodes.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">node</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(node.name.fqn);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="componentDeclarations"><a href="#componentDeclarations" class="headerlink" title="componentDeclarations"></a>componentDeclarations</h4><p><code>goml</code>上で利用可能なすべてのコンポーネントの定義を取得できます。</p>
+<ul>
+<li><p><strong>構文</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gr.componentDeclarations</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>型</strong></p>
+<p><code>NSDictionary&lt;ComponentDeclaration&gt;</code></p>
+</li>
+<li><p><strong>使い方</strong></p>
+<p><code>gr.registerComponent</code>メソッドによって登録されたすべてのコンポーネントがここで管理されます。<code>goml</code>上で用いられるコンポーネントはすべてここから取得でき、それ以外にはありません。<br>以下のようにして、利用可能なすべてのコンポーネント名を表示できます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> components = gr.componentDeclarations;</span><br><span class="line">components.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">component</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(component.name.fqn);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="converters"><a href="#converters" class="headerlink" title="converters"></a>converters</h4><p>属性に利用可能なすべてのコンバータを取得します。</p>
+<ul>
+<li><p><strong>構文</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gr.converters</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>型</strong></p>
+<p><code>NSDictionary&lt;IAttributeConverter&gt;</code></p>
+</li>
+<li><p><strong>使い方</strong></p>
+<p><code>gr.registerConverter</code>メソッドによって登録されたすべてのコンバータがここで管理されます。<code>goml</code>上で用いられるコンバータはすべてここから取得でき、それ以外にはありません。<br>以下のようにして、利用可能なすべてのコンポーネント名を表示できます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> components = gr.componentDeclarations;</span><br><span class="line">components.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">component</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(component.name.fqn);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>コンバータ作成時に内部で別のコンバータを呼び出したい場合は、<code>Attribute.convert</code>メソッドが便利です。</p>
+</li>
+</ul>
+<h4 id="rootNodes"><a href="#rootNodes" class="headerlink" title="rootNodes"></a>rootNodes</h4><p>ページ上のすべてのツリーのルートノードがここで管理されます。</p>
+<ul>
+<li><p><strong>構文</strong></p>
+<p><code>gr.rootNodes</code></p>
+</li>
+<li><p><strong>型</strong></p>
+<p><code>{ [rootNodeId: string]: GomlNode }</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="lib"><a href="#lib" class="headerlink" title="lib"></a>lib</h4><p>Grimoire.jsのバージョンなどのメタ情報や、内部で利用されたり、プラグインで追加されたクラスにアクセスできます。</p>
+<ul>
+<li><p><strong>構文</strong></p>
+<p><code>gr.lib</code></p>
+</li>
+<li><p><strong>型</strong></p>
+<p>`{<br>  [key: string]: {</p>
+<pre><code>__VERSION__: string;
+__NAME__: string;
+[key: string]: any;
+</code></pre><p>  }<br>}`</p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="loadTasks"><a href="#loadTasks" class="headerlink" title="loadTasks"></a>loadTasks</h4><p><a href="todo"><code>gr.register</code>メソッド</a>によって追加されたロードタスクの配列。<a href="todo"><code>gr.resolvePlugins</code></a>メソッドを実行すると、先頭から順に非同期で呼び出されます。<br><a href="todo"><code>gr.clear</code></a>メソッドで内容がクリアされます。</p>
+<ul>
+<li><p><strong>構文</strong></p>
+<p><code>gr.loadTasks</code></p>
+</li>
+<li><p><strong>型</strong></p>
+<p><code>(() =&gt; Promise&lt;void&gt;)[]</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="nodeDictionary"><a href="#nodeDictionary" class="headerlink" title="nodeDictionary"></a>nodeDictionary</h4><p>ページ上に存在するすべてのマウント済みノードをここで管理します。ノードが<code>dispose</code>されるとここからも削除されます。</p>
+<ul>
+<li><strong>型</strong><br><code>{ [nodeId: string]: GomlNode }</code></li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="componentDictionary"><a href="#componentDictionary" class="headerlink" title="componentDictionary"></a>componentDictionary</h4><p>ページ上に存在するすべてのマウント済みコンポーネントをここで管理します。コンポーネントが<code>dispose</code>されるとここからも削除されます。</p>
+<ul>
+<li><p><strong>型</strong></p>
+<p><code>{ [componentId: string]: Component }</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="initializedEventHandler"><a href="#initializedEventHandler" class="headerlink" title="initializedEventHandler"></a>initializedEventHandler</h4><p><a href="todo"><code>gr(function)</code></a>で登録されたコールバック。</p>
+<ul>
+<li><p><strong>型</strong></p>
+<p><code>((scriptTags: HTMLScriptElement[]) =&gt; void)[]</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h4><p>デバッグオプション。デフォルトでtrue。<br>trueのときは様々な警告が出力されますが、パフォーマンスが若干低下します。プロダクションでは<code>false</code>にしてください。</p>
+<ul>
+<li><p><strong>型</strong></p>
+<p><code>boolean</code></p>
+</li>
+<li><strong>使い方</strong><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gr.debug = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="メソッド"><a href="#メソッド" class="headerlink" title="メソッド"></a>メソッド</h3><h4 id="ns"><a href="#ns" class="headerlink" title="ns"></a>ns</h4><ul>
+<li><p><strong>定義</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ns</span>(<span class="params"><span class="keyword">namespace</span>: <span class="built_in">string</span></span>): (<span class="params">name: <span class="built_in">string</span></span>) =&gt; <span class="title">NamespacedIdentity</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使い方:</strong></p>
+<p>ノードやコンポーネントなどの識別に用いる名前空間オブジェクト(<code>NSIdentity</code>)を返します。</p>
+<p>プラグインを作成する場合、外部のプラグインとの名前の競合を防ぐため、ノードやコンポーネントの指定は単に文字列で行うのではなく、可能な限り<code>NSIdentity</code>を利用してください。<code>NSIdentity</code>は<code>NSIdentity.from</code>から直接インスタンスを生成できますが、このメソッドは利便性のためのエイリアスとして用意されています。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> g = gr.ns(<span class="string">"http://grimoire.gl/ns/sample"</span>);</span><br><span class="line"><span class="keyword">var</span> id = g(<span class="string">"TEST"</span>); <span class="comment">// be quivalent to NSIdentity.from("http://grimoire.gl/ns/sample","TEST")</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="initialize"><a href="#initialize" class="headerlink" title="initialize"></a>initialize</h4><p><code>grimoirejs-core</code>で定義される標準のノードとコンポーネント、コンバータを登録します。通常はページがロードされたタイミングで自動的に呼ばれます。</p>
+<ul>
+<li><p><strong>定義</strong></p>
+<p><code>public initialize(): void</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="register"><a href="#register" class="headerlink" title="register"></a>register</h4><p>プラグインの登録と初期化を行う関数を登録します。<br><a href="todo"><code>gr.resolvePlugins</code></a>メソッドで順に実行されます。</p>
+<ul>
+<li><p><strong>定義</strong></p>
+<p><code>public register(loadTask: () =&gt; Promise&lt;void&gt;): void</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="resolvePlugins"><a href="#resolvePlugins" class="headerlink" title="resolvePlugins"></a>resolvePlugins</h4><p><a href="todo"><code>gr.register</code></a>メソッドで登録された関数を順に実行します。通常、ページロード時に自動的に実行されます。</p>
+<ul>
+<li><p><strong>定義</strong></p>
+<p><code>public async resolvePlugins(): Promise&lt;void&gt;</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="addRootNode"><a href="#addRootNode" class="headerlink" title="addRootNode"></a>addRootNode</h4><p>Grimoire.jsで管理されるルートノードを追加します。<br><code>html</code>に読み込まれた<code>goml</code>は、ページロード時にパースされ、そのルートノードは自動的にこのメソッドに渡されます。<br>追加したノードの<code>id</code>を返します。</p>
+<ul>
+<li><p><strong>定義</strong></p>
+<p><code>public addRootNode(tag: HTMLScriptElement, rootNode: GomlNode): string</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="getRootNode"><a href="#getRootNode" class="headerlink" title="getRootNode"></a>getRootNode</h4><p><code>goml</code>として読み込んだスクリプトタグを指定し、対応するツリーのルートノードを取得します。</p>
+<ul>
+<li><p><strong>定義</strong></p>
+<p><code>public getRootNode(scriptTag: Element): GomlNode</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h4><p>GrimoireInterfaceの状態をクリアし、その後<code>initialize</code>します。<br>クリアされるのは以下です。</p>
+<ul>
+<li>nodeDeclarations</li>
+<li>ComponentDeclaration</li>
+<li>converters</li>
+<li>rootNodes</li>
+<li>loadTasks</li>
+<li>nodeDictionary</li>
+<li>componentDictionary</li>
+</ul>
+<ul>
+<li><p><strong>定義</strong></p>
+<p><code>public clear(): void</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="registerComponent"><a href="#registerComponent" class="headerlink" title="registerComponent"></a>registerComponent</h4><p>Grimoire.jsにコンポーネントを追加し、その<code>ComponentDeclaration</code>を返します。<br>追加されたコンポーネントは、<code>goml</code>中で利用できるようになります。<br>名前が重複していた場合、例外を投げます。<br>コンポーネントは、オブジェクトかコンストラクタを指定します。<br><code>debug</code>フラグが立っている場合、命名規則にに則っていなければ警告します。<br><code>superComponent</code>には継承元コンポーネントを指定します。存在しなければ例外を投げます。</p>
+<ul>
+<li><p><strong>定義</strong></p>
+<p><code>public registerComponent(name: string | NSIdentity, obj: Object | (new () =&gt; Component), superComponent?: string | NSIdentity | (new () =&gt; Component)): ComponentDeclaration</code></p>
+</li>
+<li><p><strong>使い方</strong></p>
+<p>コンポーネントの名前は<code>CamelCase</code>が推奨されます。<br>簡易的にコンポーネントを追加するのには、オブジェクトを渡すのが簡単です。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">gr.registerComponent(<span class="string">"ComponentName"</span>,&#123;</span><br><span class="line">  attributes:&#123;</span><br><span class="line">    hoge:&#123;</span><br><span class="line">      converter:<span class="string">"Number"</span>,</span><br><span class="line">      <span class="keyword">default</span>:<span class="number">777</span></span><br><span class="line">    &#125;,</span><br><span class="line">    fuga:&#123;</span><br><span class="line">      converter:<span class="string">"String"</span>,</span><br><span class="line">      <span class="keyword">default</span>:<span class="string">"Grimoire"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  $awake()&#123;</span><br><span class="line">    <span class="comment">/*~~~*/</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>また、コンストラクタを指定することもできます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ComponentName</span></span>&#123;</span><br><span class="line">  <span class="keyword">static</span> get attributes()&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      hoge:&#123;</span><br><span class="line">        converter:<span class="string">"Number"</span>,</span><br><span class="line">        <span class="keyword">default</span>:<span class="number">777</span></span><br><span class="line">      &#125;,</span><br><span class="line">      fuga:&#123;</span><br><span class="line">        converter:<span class="string">"String"</span>,</span><br><span class="line">        <span class="keyword">default</span>:<span class="string">"Grimoire"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  $awake()&#123;</span><br><span class="line">    <span class="comment">/*~~~*/</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">gr.registerComponent(<span class="string">"ComponentName"</span>,ComponentName);</span><br></pre></td></tr></table></figure>
+<p>３つ目の引数に継承するコンポーネントを指定できます。<br>ここでも、コンストラクタか、名前で指定できます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gr.registerComponent(<span class="string">"ComponentName1"</span>,ComponentName1,<span class="string">"SuperComponent"</span>);</span><br><span class="line">gr.registerComponent(<span class="string">"ComponentName2"</span>,ComponentName2,SuperComponent);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="registerNode"><a href="#registerNode" class="headerlink" title="registerNode"></a>registerNode</h4><p>Grimoire.jsにノードを追加します。<br>追加されたノードは<code>goml</code>中で利用できます。<br>名前が重複していた場合、例外を投げます。<br><code>debug</code>フラグが立っている場合、命名規則にに則っていなければ警告します。<br>ノードが持つべきコンポーネントのリストを、識別子で指定します。<br>ノードの属性の初期値を、指定することができます。<br><code>superNode</code>には継承元ノードを指定します。存在しなければ例外を投げます。<br><code>freezeAttributes</code>で、固定する属性を指定できます。<br>固定した属性は、<code>goml</code>,<code>NodeInterface</code>からの操作を禁止し、<br><code>GomlNode</code>かコンポーネントのインスタンスからしか操作できなくなります。</p>
+<ul>
+<li><p><strong>定義</strong></p>
+<p><code>public registerNode(name: string | NSIdentity,
+  requiredComponents: (string | NSIdentity)[],
+  defaults?: { [key: string]: any } | NSDictionary&lt;any&gt;,
+  superNode?: string | NSIdentity,
+  freezeAttributes?: string[]): void</code></p>
+</li>
+<li><p><strong>使い方</strong></p>
+<p>以下のように、ノードを追加します。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gr.registerNode(<span class="string">"node-name"</span>,[<span class="string">"ComponentName"</span>],&#123;</span><br><span class="line">  hoge:<span class="number">100</span>,</span><br><span class="line">  fuga:<span class="string">"js"</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">gr.registerNode(<span class="string">"node-name2"</span>,[],&#123;</span><br><span class="line">  hoge:<span class="number">200</span>,</span><br><span class="line">  fuga:<span class="string">"override default value 'js'."</span></span><br><span class="line">&#125;,<span class="string">"node-name"</span>);</span><br></pre></td></tr></table></figure>
+<p>属性の固定は、以下のような状況で有用でしょう。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gr.registerNode(<span class="string">"cube"</span>,[],&#123;</span><br><span class="line">  geometry:<span class="string">"cube"</span></span><br><span class="line">&#125;,<span class="string">"mesh"</span>,[<span class="string">"geometry"</span>]);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="registerConverter"><a href="#registerConverter" class="headerlink" title="registerConverter"></a>registerConverter</h4><p>コンバータを追加します。</p>
+<ul>
+<li><p><strong>定義</strong></p>
+<p><code>public registerConverter(name: string | NSIdentity, converter: ((this: Attribute, val: any) =&gt; any)): void</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="overrideDeclaration"><a href="#overrideDeclaration" class="headerlink" title="overrideDeclaration"></a>overrideDeclaration</h4><p>ノードの宣言を上書きします。<br>指定したノードが存在しないときは例外を投げます。<br><code>additionalComponents</code>でコンポーネントを追加することができます。<br>コンポーネントを削除することはできません。<br><code>defaults</code>で属性の初期値を変更できます。</p>
+<ul>
+<li><p><strong>定義</strong></p>
+<p><code>public overrideDeclaration(targetDeclaration: string | NSIdentity, additionalComponents: (string | NSIdentity)[]): NodeDeclaration</code><br><code>public overrideDeclaration(targetDeclaration: string | NSIdentity, defaults: { [attrName: string]: any }): NodeDeclaration</code><br><code>public overrideDeclaration(targetDeclaration: string | NSIdentity, additionalComponents: (string | NSIdentity)[], defaults: { [attrName: string]: any }): NodeDeclaration</code></p>
+</li>
+<li><p><strong>使い方</strong><br>以下のようにして、カメラの初期値を書き換えることができます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gr.overrideDeclaration(<span class="string">"camera"</span>,&#123;</span><br><span class="line">  position:<span class="string">"10,3,10"</span>,</span><br><span class="line">  rotation:<span class="string">"y(45)"</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>また、以下のようにして、カメラをマウスで操作できるようにできます。<br>(<code>MouseCameraControll</code>は、<a href="url">grimoirejs-fundamental</a>に含まれます。)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gr.overrideDeclaration(<span class="string">"camera"</span>,[<span class="string">"MouseCameraControll"</span>])</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="queryRootNodes"><a href="#queryRootNodes" class="headerlink" title="queryRootNodes"></a>queryRootNodes</h4><p>内部使用</p>
+<ul>
+<li><p><strong>定義</strong></p>
+<p><code>public queryRootNodes(query: string): GomlNode[]</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="extendGrimoireInterface"><a href="#extendGrimoireInterface" class="headerlink" title="extendGrimoireInterface"></a>extendGrimoireInterface</h4><p>GrimoireInterfaceにメソッドを追加します。<br>既に存在する識別子を指定すると、例外を投げます。<br><strong>指定した関数内では、<code>this</code>はGrimoireInterfaceにバインドされます</strong></p>
+<ul>
+<li><p><strong>定義</strong></p>
+<p><code>public extendGrimoireInterface(name:string, func:Function):void</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="extendGomlInterface"><a href="#extendGomlInterface" class="headerlink" title="extendGomlInterface"></a>extendGomlInterface</h4><p>GomlInterfaceにメソッドを追加します。<br>既に存在する識別子を指定すると、例外を投げます。<br><strong>指定した関数内では、<code>this</code>はGrimoireInterfaceにバインドされます</strong></p>
+<ul>
+<li><p><strong>定義</strong></p>
+<p><code>public extendGomlInterface(name:string, func:Function):void</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="extendNodeInterface"><a href="#extendNodeInterface" class="headerlink" title="extendNodeInterface"></a>extendNodeInterface</h4><p>NodeInterfaceにメソッドを追加します。<br>既に存在する識別子を指定すると、例外を投げます。<br><strong>指定した関数内では、<code>this</code>はGrimoireInterfaceにバインドされます</strong></p>
+<ul>
+<li><p><strong>定義</strong></p>
+<p><code>public extendNodeInterface(name:string, func:Function):void</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h2 id="GomlInterface"><a href="#GomlInterface" class="headerlink" title="GomlInterface"></a>GomlInterface</h2><p>複数、または単数のツリーを操作するためのインタフェースです。<br><code>GrimoireInterface</code>にクエリを渡して関数として呼び出すことで取得できます。</p>
+<h3 id="コンストラクタ"><a href="#コンストラクタ" class="headerlink" title="コンストラクタ"></a>コンストラクタ</h3><p>constructor(rootNodes: GomlNode[])</p>
+<h3 id="関数として呼び出し"><a href="#関数として呼び出し" class="headerlink" title="関数として呼び出し"></a>関数として呼び出し</h3><p><code>gomlInterface</code>は関数として呼び出して、<code>NodeInterface</code>を取得できます。<br>引数として、対象となるノードを指定するクエリを渡します。</p>
+<h4 id="gr-“selector”-query-string-NodeInterface"><a href="#gr-“selector”-query-string-NodeInterface" class="headerlink" title="gr(“selector”)(query: string): NodeInterface;"></a>gr(“selector”)(query: string): NodeInterface;</h4><ul>
+<li><p><strong>定義</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params">selector: <span class="built_in">string</span></span>): <span class="title">NodeInterface</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>パラメータ</strong></p>
+<ul>
+<li><p>selector</p>
+<p>対象となるノードを指定するセレクタ</p>
+</li>
+</ul>
+</li>
+<li><p><strong>使い方</strong></p>
+<p>セレクタで指定されたノードを、対象となるすべてのツリーからそれぞれ探索して返します。<br>たとえば、<code>goml</code>上で以下のように２つのノードが読み込まれていたとします。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mesh</span> <span class="attr">id</span>=<span class="string">"nodeId"</span> <span class="attr">class</span>=<span class="string">"nodeClass"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mesh</span> <span class="attr">class</span>=<span class="string">"nodeClass"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>この<code>goml</code>が<code>html</code>に以下のように埋め込まれていたとします。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">id</span>=<span class="string">"main"</span> <span class="attr">type</span>=<span class="string">"text/goml"</span> <span class="attr">src</span>=<span class="string">"path/to/goml"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>このとき、最初の<code>mesh</code>を以下のように指定できます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> node = gr(<span class="string">"#main"</span>)(<span class="string">"#nodeId"</span>);</span><br></pre></td></tr></table></figure>
+<p>また、以下のようにclassを指定するセレクタを渡して、複数の<code>mesh</code>を同時に対象にできます。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> nodes = gr(<span class="string">"#main"</span>)(<span class="string">".meshClass"</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><em>注意:</em><br>操作対象のNodeは一つとは限りません。セレクタで指定される複数の対象同時に操作できます。</p>
+</blockquote>
+<h3 id="プロパティ-1"><a href="#プロパティ-1" class="headerlink" title="プロパティ"></a>プロパティ</h3><h4 id="rootNodes-1"><a href="#rootNodes-1" class="headerlink" title="rootNodes"></a>rootNodes</h4><p>GomlInterfaceが対象とするツリー群のルートノードのリストです。</p>
+</li>
+<li><p><strong>型</strong></p>
+<p><code>GomlNode[]</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h3 id="メソッド-1"><a href="#メソッド-1" class="headerlink" title="メソッド"></a>メソッド</h3><h4 id="getNodeById"><a href="#getNodeById" class="headerlink" title="getNodeById"></a>getNodeById</h4><h4 id="queryFunc"><a href="#queryFunc" class="headerlink" title="queryFunc"></a>queryFunc</h4><h2 id="NodeInterface"><a href="#NodeInterface" class="headerlink" title="NodeInterface"></a>NodeInterface</h2><h3 id="コンストラクタ-1"><a href="#コンストラクタ-1" class="headerlink" title="コンストラクタ"></a>コンストラクタ</h3><p>constructor(public nodes: GomlNode[][])</p>
+<h3 id="プロパティ-2"><a href="#プロパティ-2" class="headerlink" title="プロパティ"></a>プロパティ</h3><h4 id="nodes"><a href="#nodes" class="headerlink" title="nodes"></a>nodes</h4><h4 id="count"><a href="#count" class="headerlink" title="count"></a>count</h4><h4 id="nodeDeclarations-1"><a href="#nodeDeclarations-1" class="headerlink" title="nodeDeclarations"></a>nodeDeclarations</h4><p><code>goml</code>上で利用可能なすべてのタグの定義を取得できます。</p>
+<ul>
+<li><p><strong>構文</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gr.nodeDeclarations</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>型</strong></p>
+<p>NSDictionary<nodedeclaration></nodedeclaration></p>
+</li>
+<li><strong>使い方</strong><h4 id="isEmpty"><a href="#isEmpty" class="headerlink" title="isEmpty"></a>isEmpty</h4><h3 id="メソッド-2"><a href="#メソッド-2" class="headerlink" title="メソッド"></a>メソッド</h3><h4 id="get"><a href="#get" class="headerlink" title="get"></a>get</h4><h4 id="getAttribute"><a href="#getAttribute" class="headerlink" title="getAttribute"></a>getAttribute</h4>属性を取得します。</li>
+<li><p><strong>定義</strong></p>
+<p><code>public queryRootNodes(query: string): GomlNode[]</code></p>
+</li>
+<li><strong>使い方</strong></li>
+</ul>
+<h4 id="setAttribute"><a href="#setAttribute" class="headerlink" title="setAttribute"></a>setAttribute</h4><p>属性を設定します。</p>
+<h4 id="on"><a href="#on" class="headerlink" title="on"></a>on</h4><p>イベントリスナを追加します</p>
+<ul>
+<li><strong>定義</strong></li>
+<li><strong>使い方</strong><h4 id="off"><a href="#off" class="headerlink" title="off"></a>off</h4>イベントリスナを削除します</li>
+<li><strong>定義</strong></li>
+<li><strong>使い方</strong><h4 id="append"><a href="#append" class="headerlink" title="append"></a>append</h4>対象となるノードそれぞれに、指定したタグをパースした結果を追加します。</li>
+<li><p><strong>定義</strong></p>
+<p><code>public append(tag: string): NodeInterface</code></p>
+</li>
+<li><strong>使い方</strong><h4 id="remove"><a href="#remove" class="headerlink" title="remove"></a>remove</h4>対象となるノードを、ツリーから削除します。</li>
+<li><strong>定義</strong></li>
+<li><strong>使い方</strong><h4 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a>forEach</h4>対象となるノードそれぞれに対して関数を適用します。</li>
+<li><strong>定義</strong></li>
+<li><strong>使い方</strong><h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4>述語を満たす最初のノードを取得します</li>
+<li><strong>定義</strong></li>
+<li><strong>使い方</strong><h4 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h4></li>
+<li><strong>定義</strong></li>
+<li><strong>使い方</strong><h4 id="setEnabled"><a href="#setEnabled" class="headerlink" title="setEnabled"></a>setEnabled</h4></li>
+<li><strong>定義</strong></li>
+<li><strong>使い方</strong><h4 id="children"><a href="#children" class="headerlink" title="children"></a>children</h4></li>
+<li><strong>定義</strong></li>
+<li><strong>使い方</strong><h4 id="addComponent"><a href="#addComponent" class="headerlink" title="addComponent"></a>addComponent</h4></li>
+<li><strong>定義</strong></li>
+<li><strong>使い方</strong><h4 id="first"><a href="#first" class="headerlink" title="first"></a>first</h4>最初のノードを取得します。</li>
+<li><strong>定義</strong></li>
+<li><strong>使い方</strong><h4 id="single"><a href="#single" class="headerlink" title="single"></a>single</h4>最初のノードを取得しますが、このインタフェースの対象が単一でなければ例外を投げます。</li>
+<li><strong>定義</strong></li>
+<li><strong>使い方</strong><h4 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h4></li>
+<li><strong>定義</strong></li>
+<li><strong>使い方</strong><h4 id="toArray"><a href="#toArray" class="headerlink" title="toArray"></a>toArray</h4>対象を配列にして返します。</li>
+<li><strong>定義</strong></li>
+<li><strong>使い方</strong><h4 id="addChildByName"><a href="#addChildByName" class="headerlink" title="addChildByName"></a>addChildByName</h4></li>
+<li><strong>定義</strong></li>
+<li><strong>使い方</strong><h4 id="sendMessage"><a href="#sendMessage" class="headerlink" title="sendMessage"></a>sendMessage</h4></li>
+<li><strong>定義</strong></li>
+<li><strong>使い方</strong><h4 id="broadcastMessage"><a href="#broadcastMessage" class="headerlink" title="broadcastMessage"></a>broadcastMessage</h4></li>
+<li><strong>定義</strong></li>
+<li><strong>使い方</strong></li>
+</ul>
+<h1 id="基本クラス"><a href="#基本クラス" class="headerlink" title="基本クラス"></a>基本クラス</h1><p>grimoirejs-coreでは、すべてのオブジェクトは<code>GomlNode</code>と<code>Component</code>,<code>Attribute</code>などの構造で表現されます。<br>もしプラグインの作成に挑戦するのであれば、それらのクラスの機能を理解していたほうが良いでしょう。<br>これらの設計指向については、<a href="">ガイド</a>を参照してください。</p>
+<h2 id="GomlNode"><a href="#GomlNode" class="headerlink" title="GomlNode"></a>GomlNode</h2><h2 id="Component"><a href="#Component" class="headerlink" title="Component"></a>Component</h2><h2 id="Attribute"><a href="#Attribute" class="headerlink" title="Attribute"></a>Attribute</h2><h2 id="Converter"><a href="#Converter" class="headerlink" title="Converter"></a>Converter</h2><h2 id="NSIdentity"><a href="#NSIdentity" class="headerlink" title="NSIdentity"></a>NSIdentity</h2><h2 id="NSDictionary"><a href="#NSDictionary" class="headerlink" title="NSDictionary"></a>NSDictionary</h2><h1 id="データ型"><a href="#データ型" class="headerlink" title="データ型"></a>データ型</h1><p>プラグインの登録の際に利用されるデータ形式です。</p>
+<h2 id="NodeDeclaration"><a href="#NodeDeclaration" class="headerlink" title="NodeDeclaration"></a>NodeDeclaration</h2><h2 id="ComponentDeclaration"><a href="#ComponentDeclaration" class="headerlink" title="ComponentDeclaration"></a>ComponentDeclaration</h2><h2 id="AttributeDeclaration"><a href="#AttributeDeclaration" class="headerlink" title="AttributeDeclaration"></a>AttributeDeclaration</h2><h1 id="その他"><a href="#その他" class="headerlink" title="その他"></a>その他</h1><p>これらはgrimoirejs-coreの内部実装に利用されているクラスで、通常触れる機会はありません。<br>しかし、Grimoire.jsの挙動を完全に制御するためにはこれらの仕組みを知る必要があります。</p>
+<h2 id="GomlLoader"><a href="#GomlLoader" class="headerlink" title="GomlLoader"></a>GomlLoader</h2><h2 id="GomlParser"><a href="#GomlParser" class="headerlink" title="GomlParser"></a>GomlParser</h2><h2 id="Constants"><a href="#Constants" class="headerlink" title="Constants"></a>Constants</h2><h1 id="標準プラグイン"><a href="#標準プラグイン" class="headerlink" title="標準プラグイン"></a>標準プラグイン</h1><p>grimoirejs-coreで定義される標準のノード、コンポーネント、コンバータです。</p>
+<h2 id="ノード"><a href="#ノード" class="headerlink" title="ノード"></a>ノード</h2><p>説明</p>
+<h3 id="コンポーネント"><a href="#コンポーネント" class="headerlink" title="コンポーネント"></a>コンポーネント</h3><h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><h3 id="親"><a href="#親" class="headerlink" title="親"></a>親</h3><h2 id="コンポーネント-1"><a href="#コンポーネント-1" class="headerlink" title="コンポーネント"></a>コンポーネント</h2><p>説明</p>
+<p>###コンポーネント名</p>
+<h4 id="属性-1"><a href="#属性-1" class="headerlink" title="属性"></a>属性</h4><p>説明</p>
+<h5 id="名前"><a href="#名前" class="headerlink" title="名前"></a>名前</h5><h5 id="コンバータ"><a href="#コンバータ" class="headerlink" title="コンバータ"></a>コンバータ</h5><h5 id="デフォルト"><a href="#デフォルト" class="headerlink" title="デフォルト"></a>デフォルト</h5><h4 id="親-1"><a href="#親-1" class="headerlink" title="親"></a>親</h4><h4 id="発行イベント"><a href="#発行イベント" class="headerlink" title="発行イベント"></a>発行イベント</h4><h2 id="コンバータ-1"><a href="#コンバータ-1" class="headerlink" title="コンバータ"></a>コンバータ</h2><h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><ul>
+<li><p><strong>出力型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>入力型</strong></p>
+<ul>
+<li>String ・・・ そのまま出力されます。</li>
+<li>Object ・・・ toString関数が存在する場合それが呼び出されます。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h3><ul>
+<li><p><strong>出力型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">number</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>入力</strong></p>
+<ul>
+<li>String・・・Number.parseNumberにより処理され出力されます。</li>
+<li>Number・・・そのまま出力されます。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Boolean"><a href="#Boolean" class="headerlink" title="Boolean"></a>Boolean</h3><ul>
+<li><p><strong>出力型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">boolean</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>入力</strong></p>
+<ul>
+<li>String・・・”true”もしくは”false”のみ</li>
+<li>Boolean・・・そのまま出力されます。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h3><ul>
+<li><p><strong>出力型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">any</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>入力</strong></p>
+<ul>
+<li>Object・・・そのまま出力されます。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Component-1"><a href="#Component-1" class="headerlink" title="Component"></a>Component</h3><ul>
+<li><p><strong>出力型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T&gt; where T extends Component</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>コンバーター引数</strong></p>
+<ul>
+<li>target・・・取得対象のコンポーネント名</li>
+</ul>
+</li>
+<li><p><strong>入力可能なもの</strong></p>
+<ul>
+<li>String・・・クエリとして解釈されます。属するツリーから該当する<strong>最初の一つ</strong>の<strong>ノード</strong>を見つけ出し、そこから<code>target</code>に合致するコンポーネントを取得します。</li>
+<li>GomlNode・・・対象となるノードの中から最初の<code>target</code>に合致するコンポーネントを取り出します。</li>
+<li>Component・・・そのまま渡されます(名称が<code>target</code>に指定されたものでない時例外がでます)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Enum"><a href="#Enum" class="headerlink" title="Enum"></a>Enum</h3><ul>
+<li><p><strong>出力型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">number</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>コンバーター引数</strong></p>
+<ul>
+<li>table・・・列挙する対象のハッシュテーブル。keyはString、値はnumberです。</li>
+</ul>
+</li>
+<li><p><strong>入力</strong></p>
+<ul>
+<li>String・・・テーブルのkeyとしてその値を返します。keyとして存在しないときは例外をなげます。</li>
+<li>number・・・そのまま通します</li>
+</ul>
+</li>
+</ul>
+<h3 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h3><ul>
+<li><p><strong>出力型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Array</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>コンバーター引数</strong></p>
+<ul>
+<li>type・・・配列の要素に適用されるコンバータ。存在しないと実行時に例外を投げます。</li>
+</ul>
+</li>
+<li><p><strong>入力</strong></p>
+<ul>
+<li>String・・・ <strong>半角スペース</strong> で区切り、コンバータ引数で指定されたコンバータに通されます。</li>
+<li>Array・・・要素をそれぞれコンバータに通した新しい配列を返します。</li>
+</ul>
+</li>
+</ul>
+<h3 id="NumberArray"><a href="#NumberArray" class="headerlink" title="NumberArray"></a>NumberArray</h3><ul>
+<li><p><strong>出力型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">number[]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>入力</strong></p>
+<ul>
+<li>String・・・ <strong>,</strong> (カンマ)で区切り、<code>Number.parseFloat</code>を通します。</li>
+<li>Array・・・そのまま返します。<h3 id="StringArray"><a href="#StringArray" class="headerlink" title="StringArray"></a>StringArray</h3></li>
+</ul>
+</li>
+<li><p><strong>出力型</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Array</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>入力</strong></p>
+<ul>
+<li>String・・・ <strong>半角スペース</strong> で区切って返します。</li>
+<li>Array・・・そのまま返します。</li>
+</ul>
+</li>
+</ul>
+<h2 id="AssetLoadingManager-コンポーネント"><a href="#AssetLoadingManager-コンポーネント" class="headerlink" title="AssetLoadingManager コンポーネント"></a>AssetLoadingManager コンポーネント</h2><!-- EDIT HERE(@Component)-->
+<p>非同期的な解決を必要とするようなリソース群のロードを管理しているコンポーネント。<br>このコンポーネントにより、初期時にロード画面を表示します。<br>また、ロード終了後に他のコンポーネントに処理の開始を通知してレンダリングループを開始します。<br><!-- /EDIT HERE--></p>
+<h3 id="属性-2"><a href="#属性-2" class="headerlink" title="属性"></a>属性</h3><!-- DO NOT EDIT -->
+<!-- ATTRS -->
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">その他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">loadingProgress</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">なし</td>
+</tr>
+<tr>
+<td style="text-align:center">autoStart</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">true</td>
+<td style="text-align:center">なし</td>
+</tr>
+</tbody>
+</table>
+<!-- /ATTRS -->
+<!-- /DO NOT EDIT -->
+<h3 id="loadingProgress-属性"><a href="#loadingProgress-属性" class="headerlink" title="loadingProgress 属性"></a>loadingProgress 属性</h3><ul>
+<li><code>converter</code>: number</li>
+<li><code>defaultValue</code>: 0</li>
+</ul>
+<!-- EDIT HERE(loadingProgress)-->
+<p>読み取り専用。現在のロード状況を100分率で返します。<br><!-- /EDIT HERE--></p>
+<h3 id="autoStart-属性"><a href="#autoStart-属性" class="headerlink" title="autoStart 属性"></a>autoStart 属性</h3><ul>
+<li><code>converter</code>: boolean</li>
+<li><code>defaultValue</code>: true</li>
+</ul>
+<!-- EDIT HERE(autoStart)-->
+<p>リソースのロード終了後に自動的にレンダリングループを開始するかどうか。<br>これがfalseの場合、ユーザーが自らLoopManagerに対してbeginメソッドを呼ばなければ、一切の描画処理は行われません。<br><!-- /EDIT HERE--></p>
+
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/api/grimoirejs-core.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

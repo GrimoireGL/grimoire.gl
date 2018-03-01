@@ -1,0 +1,680 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>カスタムマテリアルの仕様 | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="通常、Grimoire.jsのプログラムはWebGLによってcanvasに描画されます。このため、WebGLの仕様の一つに含まれるGLSLを用いてシェーダーをカスタマイズすることができます。直接GLSLをいじることも可能ですが、materialタグの整合性などを考慮すると、Grimoire.js用の拡張シェーダー記法(Sort(ソール、フランス語で呪文))を用いるとより良いでしょう。 この記事では">
+<meta property="og:type" content="article">
+<meta property="og:title" content="カスタムマテリアルの仕様">
+<meta property="og:url" content="https://grimoire.gl/guide/2_advanced/sort.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="通常、Grimoire.jsのプログラムはWebGLによってcanvasに描画されます。このため、WebGLの仕様の一つに含まれるGLSLを用いてシェーダーをカスタマイズすることができます。直接GLSLをいじることも可能ですが、materialタグの整合性などを考慮すると、Grimoire.js用の拡張シェーダー記法(Sort(ソール、フランス語で呪文))を用いるとより良いでしょう。 この記事では">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.402Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="カスタムマテリアルの仕様">
+<meta name="twitter:description" content="通常、Grimoire.jsのプログラムはWebGLによってcanvasに描画されます。このため、WebGLの仕様の一つに含まれるGLSLを用いてシェーダーをカスタマイズすることができます。直接GLSLをいじることも可能ですが、materialタグの整合性などを考慮すると、Grimoire.js用の拡張シェーダー記法(Sort(ソール、フランス語で呪文))を用いるとより良いでしょう。 この記事では">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+    <aside id="sidebar">
+  <div id="doc-title">GUIDE</div>
+  
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Essentials</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/1_essentials/01_installation.html">Installation</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/02_introduction.html">Getting started</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/03_goml.html">GOML</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/04_interface.html">Interfaces</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/05_componentsystem.html">ComponentSystem</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/06_plugin.html">Plugins</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/07_inspector.html">Devtool</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/08_tags.html">主なタグ</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Advanced</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/2_advanced/webgl-basics.html">WebGL concepts</a>
+            </li>
+          
+            <li class="active">
+              <a href="/guide/2_advanced/sort.html">カスタムマテリアルの仕様</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/plugin-specification.html">Plugin making</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/geometry-basic.html">Geometry basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-renderer.html">Renderer basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/material-basic.html">Material basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-core.html">grimoirejs-core</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/typescript.html">Use Typescript</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Meta</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/3_meta/community.html">Community</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+  
+</aside>
+
+  
+  <div id="content">
+    <h1 id="content-title">カスタムマテリアルの仕様</h1>
+    <p>通常、Grimoire.jsのプログラムはWebGLによってcanvasに描画されます。このため、WebGLの仕様の一つに含まれるGLSLを用いてシェーダーをカスタマイズすることができます。<br>直接GLSLをいじることも可能ですが、<code>materialタグ</code>の整合性などを考慮すると、Grimoire.js用の拡張シェーダー記法(Sort(ソール、フランス語で呪文))を用いるとより良いでしょう。</p>
+<p>この記事では、このfundamentalが実装しているGLSLの独自拡張<code>Sort</code>(<strong>ソール</strong>)について解説します。</p>
+<h1 id="マテリアルとは"><a href="#マテリアルとは" class="headerlink" title="マテリアルとは"></a>マテリアルとは</h1><p><code>.sort</code>ファイルがなんであるかを理解するためには、まず<code>マテリアル</code>とはなんであるかを理解する必要があります。<br><code>Grimoire.js</code>において、<code>マテリアル</code>とは<code>ジオメトリ</code>と同時に扱われる概念です。ジオメトリはその <strong>オリジナルの形状</strong> を意味する概念である一方で、マテリアルはジオメトリをどのように描画するかという、<code>描画手法</code>の組を扱うための概念です。</p>
+<p>一つのジオメトリは、カメラ一つであったとしても、一回のレンダリングで複数回の描画がされる可能性があります。例えば、ポストエフェクトの関係で、シーンの全体を描画する前にシーン中の物体すべての<code>法線</code>を書き出さなければならないかもしれません。この場合<code>色</code>を書き込むための手法と、<code>法線</code>を書き込むための手法が必要になります。</p>
+<p>この一つあたりの手法を<code>Technique</code>(テクニック)と呼びます。レンダラーが、法線の画像データが欲しい時は、すべてのマテリアルとジオメトリの組みに対して、法線の描画に対応したテクニックをもつマテリアルに対して描画命令を出します。</p>
+<p>一つの手法は複数個の手順によって成り立っているかもしれません。例えば、3Dグラフィクスでよくある手法の一つに、あらかじめ大きめに書いたものの上に小さくした物体を書いてエッジに見せるという手法があります。手書きで言えば、下地を描いてから、上の塗りをするように一つの手法が複数個の手順によって成り立っている可能性があるのです。この手順を<code>Pass</code>(パス)と呼びます。</p>
+<p>つまり、一つのマテリアル(あるジオメトリを描画するための複数個の描画手法の集合)は、一つ以上のテクニック(描画手法)からなり、一つのテクニックは、一つ以上のパス(描画手順)からなります。</p>
+<p>つまり、Material &gt; Technique &gt; Passの順番で包含関係があります。</p>
+<p>一つのマテリアルを表現するsortファイルは、<strong>Techniqueを省略して記述することは可能ですが、Passを省略して書くことはできません。</strong><br>まずは、カスタムマテリアルの第一歩としてパスを記述して見ましょう。</p>
+<h1 id="GOMLからのsortファイルの読み込み"><a href="#GOMLからのsortファイルの読み込み" class="headerlink" title="GOMLからのsortファイルの読み込み"></a>GOMLからのsortファイルの読み込み</h1><h2 id="import-material"><a href="#import-material" class="headerlink" title="import-material"></a>import-material</h2><p><code>&lt;import-material&gt;</code>を用いて、記述したカスタムマテリアルを読み込むことができます。(カスタムマテリアルの記述法については後述)</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">import-material</span> <span class="attr">typeName</span>=<span class="string">"test"</span> <span class="attr">src</span>=<span class="string">"something.sort"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>このように記述すると、<code>test</code>という名前を用いれば、<code>something.sort</code>に記述されたカスタムマテリアルを用いることができます。</p>
+<p>一度、importされたマテリアルは二つの方法で指定が可能です。</p>
+<h3 id="新しいマテリアルのインスタンスを作る場合"><a href="#新しいマテリアルのインスタンスを作る場合" class="headerlink" title="新しいマテリアルのインスタンスを作る場合"></a>新しいマテリアルのインスタンスを作る場合</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　<span class="tag">&lt;<span class="name">mesh</span> <span class="attr">material</span>=<span class="string">"new(test)"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>マテリアルを受け取りうる要素に対して、<code>new(マテリアル名)</code>のように記述すると、その指定先に対して新しいインスタンスが作られます。<br>マテリアルは読み込むマテリアルに応じて、 <strong>動的に</strong> 指定可能な属性が変化します(詳細は後述)。<br>例えば、あるマテリアル<code>test</code>が<code>color</code>属性を<code>Color3</code>コンバーターによって受け取るとすればいかのような記述をすることができるようになります。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mesh</span> <span class="attr">material</span>=<span class="string">"new(test)"</span> <span class="attr">color</span>=<span class="string">"yellow"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>マテリアルを受け取りうる要素に対して、<code>new(マテリアル名)</code>のように記述すると、その指定先に対して新しいインスタンスが作られます。<br>マテリアルは読み込むマテリアルに応じて、 <strong>動的に</strong> 指定可能な属性が変化します(詳細は後述)。<br>例えば、あるマテリアル<code>test</code>が<code>color</code>属性を<code>Color3</code>コンバーターによって受け取るとすればいかのような記述をすることができるようになります。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mesh</span> <span class="attr">material</span>=<span class="string">"new(test)"</span> <span class="attr">color</span>=<span class="string">"yellow"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="マテリアルタグによって共通のインスタンスを作成する場合"><a href="#マテリアルタグによって共通のインスタンスを作成する場合" class="headerlink" title="マテリアルタグによって共通のインスタンスを作成する場合"></a>マテリアルタグによって共通のインスタンスを作成する場合</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--GOML直下--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">material</span> <span class="attr">id</span>=<span class="string">"mat1"</span> <span class="attr">type</span>=<span class="string">"test"</span> <span class="attr">color</span>=<span class="string">"blue"</span>/&gt;</span></span><br><span class="line"><span class="comment">&lt;!--scene内--&gt;</span></span><br><span class="line">　<span class="tag">&lt;<span class="name">mesh</span> <span class="attr">material</span>=<span class="string">"#mat1"</span>/&gt;</span></span><br><span class="line">　<span class="tag">&lt;<span class="name">mesh</span> <span class="attr">material</span>=<span class="string">"#mat1"</span>/&gt;</span>　</span><br><span class="line"><span class="tag">&lt;<span class="name">mesh</span> <span class="attr">material</span>=<span class="string">"#mat1"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>このような記述をした場合、上記の3つのメッシュでは同じマテリアルが用いられます。<code>&lt;material&gt;</code>に指定されている<code>color</code>を変更すると3つすべての<code>color</code>変わります。<br>このような指定の際は、<code>&lt;mesh&gt;</code>自身が<code>color</code>を受け取ることはないことに注意してください。</p>
+<h3 id="メッシュのマテリアルの初期値"><a href="#メッシュのマテリアルの初期値" class="headerlink" title="メッシュのマテリアルの初期値"></a>メッシュのマテリアルの初期値</h3><p>ここで、一つ例としてmeshのマテリアルの初期値は<code>new(unlit)</code>となっています。また、<code>unlit</code>というマテリアルはデフォルトで読み込まれるシェーダーの一つです。<br>このマテリアルは、<code>color</code>と<code>texture</code>という値を受け取りうるため、普段、<code>&lt;mesh&gt;</code>はこれらの値を指定できます。</p>
+<p>つまり、マテリアルがこれ以外である時<code>color</code>や<code>texture</code>という属性は存在しません。</p>
+<p>また、<code>material</code>を初期値としたまま多くのメッシュを使う場合、それぞれのメッシュに対してマテリアルのインスタンスが作成されるため非効率です。<br>そのような際は、<strong>共通にできる部分は<code>&lt;material&gt;</code>タグを用いて共通化することを推奨します。</strong></p>
+<h1 id="パスの記述"><a href="#パスの記述" class="headerlink" title="パスの記述"></a>パスの記述</h1><p>まずは、パスを記述する方法を解説します。<br>パスは以下の要素によって成り立ちます。</p>
+<ul>
+<li>GLSLによって記述されたシェーダー</li>
+<li>パスの描画前に実行されるglのステートを示した宣言文</li>
+<li>その他Grimoire.jsとの相互運用性のために設けられた構文</li>
+</ul>
+<h2 id="シェーダー言語の記述"><a href="#シェーダー言語の記述" class="headerlink" title="シェーダー言語の記述"></a>シェーダー言語の記述</h2><h3 id="シェーダーとは"><a href="#シェーダーとは" class="headerlink" title="シェーダーとは"></a>シェーダーとは</h3><p>シェーダー言語はGPU上で動作する言語です。WebGLの本質は3Dをできることではなく、3D描画などを高速に行えるシェーダーという言語がGPU上で動かせることにあります。<br>マテリアルによる頂点の移動や各ピクセルの色の決定などを高速にするために用いられます。</p>
+<p>この特徴から、残念ながら <strong>javascriptのみではシェーダーを記述することはできません。</strong> 代わりに <strong>GLSLという言語を用いられます。</strong></p>
+<p>残念ながら、このページではシェーダー言語の仕様や入門について深く触れることはできません。しかし、これらは一般的にデスクトップ環境で動作する<code>OpenGL</code>で用いられるものと全く同じ仕様の<code>GLSL</code>が動作するため、既存の学習資料が幾らか存在します。<br>また、<a href="https://webgl.souhonzan.org/entry/?v=0600" target="_blank" rel="noopener">ShaderToy</a>や、<a href="http://qiita.com/doxas/items/b8221e92a2bfdc6fc211" target="_blank" rel="noopener">doxasさんの入門記事</a>などを参照すれば、入門することができるでしょう。</p>
+<h3 id="sort内のシェーダー"><a href="#sort内のシェーダー" class="headerlink" title="sort内のシェーダー"></a>sort内のシェーダー</h3><p>sortのパス内にはそのまま直接シェーダーを記述することができます。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Pass&#123;</span><br><span class="line">  <span class="comment">// ここにシェーダーを記述する</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>GLSLで記述されたシェーダーは必ず<code>@Pass</code>によって囲われなければなりません。</strong></p>
+<p>このSortによって読み込まれたシェーダーでは、頂点シェーダーとして用いる場合、<code>#define VS</code>が、フラグメントシェーダーとして用いる場合は<code>#define FS</code>が挿入されます。<br>これを用いることで同一ファイルで双方のシェーダーを用いることが可能になります。</p>
+<p>例</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#ifdef VS</span></span><br><span class="line">  <span class="type">void</span> main()&#123;</span><br><span class="line">    <span class="built_in">gl_Position</span> = ~~~</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">#endif</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#ifdef FS</span></span><br><span class="line">  <span class="type">void</span> main()&#123;</span><br><span class="line">    <span class="built_in">gl_FragColor</span> = ~~~</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">#endif</span></span><br></pre></td></tr></table></figure>
+<p>あくまで、GLSLのマクロを利用したものなので、これらの<code>VS</code>で区切られたセクションや<code>FS</code>で区切られたセクションは複数回登場することもできます。</p>
+<h3 id="デフォルト定数"><a href="#デフォルト定数" class="headerlink" title="デフォルト定数"></a>デフォルト定数</h3><p>また、いくつかの定数がデフォルトで定義されます。これらの定数はjavascriptの<code>Math.~~</code>でアクセスできる定数と全く同じものです。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// constants</span></span><br><span class="line"><span class="meta">#define PI 3.141592653589793</span></span><br><span class="line"><span class="meta">#define E 2.718281828459045</span></span><br><span class="line"><span class="meta">#define LN2 0.6931471805599453</span></span><br><span class="line"><span class="meta">#define LN10 2.302585092994046</span></span><br><span class="line"><span class="meta">#define LOG2E 1.4426950408889634</span></span><br><span class="line"><span class="meta">#define LOG10E 0.4342944819032518</span></span><br><span class="line"><span class="meta">#define SQRT2 1.4142135623730951</span></span><br><span class="line"><span class="meta">#define SQRT1_2 0.7071067811865476</span></span><br></pre></td></tr></table></figure>
+<h3 id="フラグメントシェーダー内でのprecision"><a href="#フラグメントシェーダー内でのprecision" class="headerlink" title="フラグメントシェーダー内でのprecision"></a>フラグメントシェーダー内でのprecision</h3><p>以下のような記述をするとフラグメントシェーダーでの精度修飾子がついていないためGLSLの仕様上問題が起きます。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">varying</span> <span class="type">vec2</span> vValue;</span><br><span class="line"></span><br><span class="line"><span class="meta">#ifdef VS</span></span><br><span class="line">  <span class="type">void</span> main()&#123;</span><br><span class="line">    <span class="built_in">gl_Position</span> = ~~~</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">#endif</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#ifdef FS</span></span><br><span class="line">  <span class="type">void</span> main()&#123;</span><br><span class="line">    <span class="built_in">gl_FragColor</span> = ~~~</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">#endif</span></span><br></pre></td></tr></table></figure>
+<p>これは、頂点シェーダー、フラグメントシェーダーともに使われる<code>varying vec2 vValue</code>が先頭にあるためにfloatの精度修飾がないため問題になるからです。<br>本来、フラグメントシェーダーの他のどの<code>float系</code>の変数宣言よりも前に<code>precision float mediump</code>などの記述が必要です。<br>しかし、単に<code>precision mediump float;</code>と先頭に記述してしまえば、VSでも読み込まれてしまうのでエラーになってしまう。<br>そこで、<code>FS_PRECマクロ</code>や<code>VS_PRECマクロ</code>があらかじめシェーダーの先頭に追加される。</p>
+<p>それぞれの定義は以下のようになっている。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#ifdef FS</span></span><br><span class="line">  <span class="meta">#define FS_PREC(prec,type) precision prec type;</span></span><br><span class="line">  <span class="meta">#define VS_PREC(prec,type)</span></span><br><span class="line"><span class="meta">#endif</span></span><br><span class="line"><span class="meta">#ifdef VS</span></span><br><span class="line">  <span class="meta">#define VS_PREC(prec,type) precision prec type;</span></span><br><span class="line">  <span class="meta">#define FS_PREC(prec,type)</span></span><br><span class="line"><span class="meta">#endif</span></span><br></pre></td></tr></table></figure>
+<p>すなわち、シェーダーファイルの先頭に<code>FS_PREC(mediump,float)</code>と記述しておけば、実際にはフラグメントシェーダーの時のみmediump精度が用いられるようになる。</p>
+<h3 id="uniform変数"><a href="#uniform変数" class="headerlink" title="uniform変数"></a>uniform変数</h3><p>uniform変数、attribute変数は共にアノテーションとセマンティクスを持ちます。<br>意味の解説はとりあえず置いておいて、例えば以下のような記述があります。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@MODELVIEWPROJECTION</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">mat4</span> matrixMVP;</span><br><span class="line"></span><br><span class="line">@HAS_TEXTURE&#123;sampler:"theTexture"&#125;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">bool</span> usingTexture;</span><br><span class="line"></span><br><span class="line"><span class="keyword">uniform</span> <span class="type">sampler2D</span> theTexture;</span><br><span class="line"></span><br><span class="line">@&#123;default:"yellow", type:"color"&#125;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec3</span> theColor;</span><br></pre></td></tr></table></figure>
+<p>つまり、文法としては以下の形式です。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@セマンティクス&#123;アノテーション&#125;</span><br><span class="line"><span class="keyword">uniform</span>または<span class="keyword">attribute</span> 型名 変数名; <span class="comment">// ここは通常のGLSLの変数定義</span></span><br></pre></td></tr></table></figure>
+<p><strong>セマンティクスとアノテーションを両方省略することができます。</strong> 省略した場合はセマンティクスは<code>USER_VALUE</code>(例外あり、詳しくは後述)、アノテーションは空になります。上記の例では、<code>theTexture</code>が両方省略されています。<br><strong>セマンティクスだけ省略することができます</strong> 省略した場合はセマンティクスは<code>USER_VALUE</code>(例外あり、詳しくは後述)、アノテーションは空になります。  上記の例では、<code>theColor</code>がセマンティクスのみ省略されています。<br><strong>アノテーションだけ省略することができます</strong> 省略された場合は空になります。上記の例では、<code>matrixMVP</code>のアノテーションだけ省略されています。</p>
+<h4 id="セマンティクス"><a href="#セマンティクス" class="headerlink" title="セマンティクス"></a>セマンティクス</h4><p>セマンティクスはその変数に何が代入されるべきかということを指します。<br>例えば、セマンティクスが<code>MODELVIEWPROJECTION</code>と記述されているときは、その変数には描画していようとしている対象のメッシュのModel - View - Projection行列が渡されます。<br>セマンティクスが<code>VIEWPORT</code>の時は、その変数には現在のビューポートの情報が渡されます。</p>
+<p>セマンティクスによってあらかじめ、変数の受け渡しを担当するレジスター関数が決定され、パスの描画前に実行されます。</p>
+<p>以下は、デフォルトの状態で定義されているセマンティクスのリストです。<br>(このうちのほとんどは、ランタイムモデルフォーマットの<code>glTF</code>の<a href="https://github.com/KhronosGroup/glTF/tree/master/specification/1.0#semantics" target="_blank" rel="noopener">仕様</a>そのものです。実は、内部的なマテリアルの保持形式はglTFの仕様にかなり近い形で保持されています。)</p>
+<h5 id="glTFと仕様が同じもの"><a href="#glTFと仕様が同じもの" class="headerlink" title="glTFと仕様が同じもの"></a>glTFと仕様が同じもの</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">Semantic</th>
+<th style="text-align:center">Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>LOCAL</code></td>
+<td style="text-align:center"><code>FLOAT_MAT4</code></td>
+<td>Transforms from the node’s coordinate system to its parent’s.  This is the node’s matrix property (or derived matrix from translation, rotation, and scale properties).</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>MODEL</code></td>
+<td style="text-align:center"><code>FLOAT_MAT4</code></td>
+<td>Transforms from model to world coordinates using the transform’s node and all of its ancestors.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>VIEW</code></td>
+<td style="text-align:center"><code>FLOAT_MAT4</code></td>
+<td>Transforms from world to view coordinates using the active camera node.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>PROJECTION</code></td>
+<td style="text-align:center"><code>FLOAT_MAT4</code></td>
+<td>Transforms from view to clip coordinates using the active camera node.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>MODELVIEW</code></td>
+<td style="text-align:center"><code>FLOAT_MAT4</code></td>
+<td>Combined <code>MODEL</code> and <code>VIEW</code>.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>MODELVIEWPROJECTION</code></td>
+<td style="text-align:center"><code>FLOAT_MAT4</code></td>
+<td>Combined <code>MODEL</code>, <code>VIEW</code>, and <code>PROJECTION</code>.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>MODELINVERSE</code></td>
+<td style="text-align:center"><code>FLOAT_MAT4</code></td>
+<td>Inverse of <code>MODEL</code>.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>VIEWINVERSE</code></td>
+<td style="text-align:center"><code>FLOAT_MAT4</code></td>
+<td>Inverse of <code>VIEW</code>.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>PROJECTIONINVERSE</code></td>
+<td style="text-align:center"><code>FLOAT_MAT4</code></td>
+<td>Inverse of <code>PROJECTION</code>.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>MODELVIEWINVERSE</code></td>
+<td style="text-align:center"><code>FLOAT_MAT4</code></td>
+<td>Inverse of <code>MODELVIEW</code>.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>MODELVIEWPROJECTIONINVERSE</code></td>
+<td style="text-align:center"><code>FLOAT_MAT4</code></td>
+<td>Inverse of <code>MODELVIEWPROJECTION</code>.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>MODELINVERSETRANSPOSE</code></td>
+<td style="text-align:center"><code>FLOAT_MAT3</code></td>
+<td>The inverse-transpose of <code>MODEL</code> without the translation.  This translates normals in model coordinates to world coordinates.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>MODELVIEWINVERSETRANSPOSE</code></td>
+<td style="text-align:center"><code>FLOAT_MAT3</code></td>
+<td>The inverse-transpose of <code>MODELVIEW</code> without the translation.  This translates normals in model coordinates to eye coordinates.</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>VIEWPORT</code></td>
+<td style="text-align:center"><code>FLOAT_VEC4</code></td>
+<td>The viewport’s x, y, width, and height properties stored in the <code>x</code>, <code>y</code>, <code>z</code>, and <code>w</code> components, respectively.  For example, this is used to scale window coordinates to [0, 1]: <code>vec2 v = gl_FragCoord.xy / viewport.zw;</code></td>
+</tr>
+</tbody>
+</table>
+<h5 id="それ以外のもの"><a href="#それ以外のもの" class="headerlink" title="それ以外のもの"></a>それ以外のもの</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">Semantic</th>
+<th style="text-align:center">Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>TIME</code></td>
+<td style="text-align:center"><code>FLOAT</code></td>
+<td>時間(ms単位)</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>HAS_TEXTURE</code></td>
+<td style="text-align:center"><code>BOOL</code></td>
+<td>有効なテクスチャが指定したsamplerに割り当てられているかどうか、詳細は後述</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>USER_VALUE</code></td>
+<td style="text-align:center"><code>ANY</code></td>
+<td>詳細は後述</td>
+</tr>
+</tbody>
+</table>
+<h4 id="アノテーション"><a href="#アノテーション" class="headerlink" title="アノテーション"></a>アノテーション</h4><p>セマンティクスによって、レジスター関数は決定されますが、その他に引数が必要な場合があります。<br>例えば、<code>HAS_TEXTURE</code>セマンティクスは、アノテーションの中に<code>sampler</code>という引数が必要です。この<code>HAS_TEXTURE</code>アノテーションは、  <code>sampler</code>に指定されている名前の変数に、有効なテクスチャが代入されているかどうかを判定した値が代入されます。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@HAS_TEXTURE&#123;sampler:"theTexture"&#125;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">bool</span> usingTexture;</span><br><span class="line"></span><br><span class="line"><span class="keyword">uniform</span> <span class="type">sampler2D</span> theTexture;</span><br></pre></td></tr></table></figure>
+<p>上記の例では、<code>theTexture</code>に有効なテクスチャが代入されている時のみ渡されることになります。</p>
+<p>このように、アノテーションはレジスター関数が実際の割り当て時に用いる引数のセットです。アノテーションは<code>JSON</code>の形式をとりますが、 <strong>キー名の<code>&quot;</code>は省略可能です</strong></p>
+<h3 id="USER-VALUEセマンティクス"><a href="#USER-VALUEセマンティクス" class="headerlink" title="USER_VALUEセマンティクス"></a>USER_VALUEセマンティクス</h3><p>このセマンティクスは、このuniform変数がGOMLに露出される変数であることを指します。<br>例えば、この記事の最初の方で記述した<code>color</code>の例がこれにあたります。<code>&lt;mesh&gt;</code>の<code>material</code>属性など、マテリアルにGOMLから値を渡されることを示します。</p>
+<p>例えば、<code>USER_VALUE</code>セマンティクスが指定されているuniform変数<code>test</code>が<code>float</code>型なら、つまり、</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@USER_VALUE</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">float</span> test;</span><br></pre></td></tr></table></figure>
+<p>の時、この値は<code>&lt;mesh&gt;</code>あるいは<code>&lt;material&gt;</code>に露出することになります。どちらが露出するかはどのような形で<code>material</code>を指定したかにより異なります。<br><code>new(~~)</code>の形式で指定したなら <strong>そのメッシュ自身</strong> 、クエリ形式で指定したなら <strong>materialタグ</strong> になります。</p>
+<h4 id="コンバーターとdefaultアノテーション"><a href="#コンバーターとdefaultアノテーション" class="headerlink" title="コンバーターとdefaultアノテーション"></a>コンバーターとdefaultアノテーション</h4><p>ほかのどの<code>GOML</code>内の<code>attribute</code>とも同じように、ユーザーが渡した値を<code>grimoire</code>が内部的に変換するため、コンバーターを介して実際の値は取得されます。<br>どのコンバーターが利用されるかは、 <strong>変数型</strong>　と <strong>アノテーション</strong>　と <strong>配列か否か</strong> によって確定します。</p>
+<p>また、<code>USER_VALUE</code>セマンティクスの指定されている変数は、<code>default</code>アノテーションを受け付けることができます。<br>GOML側から値が指定されない場合、この値が <strong>コンバーターを通ってから</strong> 渡されることになります。</p>
+<p>さらに、GOML側からも指定されず、<code>default</code>アノテーションによっても指定されない場合、<code>USER_VALUE</code>セマンティクスが指定されている場合は、それぞれの型によってきまるデフォルト値が渡されます。</p>
+<p>つまり、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GOMLによる指定値  &gt;  defaultアノテーション  &gt; 型によって決まるデフォルト値</span><br></pre></td></tr></table></figure>
+<p>によって値は解決されます。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">GLSL変数型</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">デフォルト値</th>
+<th style="text-align:center">　備考</th>
+<th>　</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">float</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">vec2</td>
+<td style="text-align:center">Vector2</td>
+<td style="text-align:center">(0,0)</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">vec3</td>
+<td style="text-align:center">Vector3</td>
+<td style="text-align:center">(0,0,0)</td>
+<td style="text-align:center"><code>type</code>アノテーションが<code>color</code>でない時</td>
+</tr>
+<tr>
+<td style="text-align:center">vec3</td>
+<td style="text-align:center">Color3</td>
+<td style="text-align:center">white</td>
+<td style="text-align:center"><code>type</code>アノテーションが<code>color</code>の時</td>
+</tr>
+<tr>
+<td style="text-align:center">vec4</td>
+<td style="text-align:center">Vector4</td>
+<td style="text-align:center">(0,0,0,0)</td>
+<td style="text-align:center"><code>type</code>アノテーションが<code>color</code>でないとき</td>
+</tr>
+<tr>
+<td style="text-align:center">vec4</td>
+<td style="text-align:center">Color4</td>
+<td style="text-align:center">white(a=1)</td>
+<td style="text-align:center"><code>type</code>アノテーションが<code>color</code>の時</td>
+</tr>
+<tr>
+<td style="text-align:center">bool</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center">false</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">int</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">ivec2</td>
+<td style="text-align:center">Vector2</td>
+<td style="text-align:center">(0,0)</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">ivec3</td>
+<td style="text-align:center">Vector3</td>
+<td style="text-align:center">(0,0,0)</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">ivec4</td>
+<td style="text-align:center">Vector4</td>
+<td style="text-align:center">(0,0,0,0)</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">sampler2D</td>
+<td style="text-align:center">Texture</td>
+<td style="text-align:center">白色 1*1 のテクスチャ</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">mat4[]</td>
+<td style="text-align:center">Object</td>
+<td style="text-align:center">[0…0]</td>
+<td style="text-align:center">型はFloat32ArrayもしくはNumberの配列を利用可能</td>
+</tr>
+</tbody>
+</table>
+<p>この一覧にない型は現在未対応です。ただし、必要なものも多いため対応幅は順次拡大します。</p>
+<h4 id="デフォルトセマンティクス"><a href="#デフォルトセマンティクス" class="headerlink" title="デフォルトセマンティクス"></a>デフォルトセマンティクス</h4><p>利便性のため、また<code>v0.10</code>未満のライブラリからのアップデートの容易性を保つため、以下の変数名はデフォルトで次のセマンティクスが用いられます。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">変数名</th>
+<th style="text-align:center">セマンティクス</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">_time</td>
+<td style="text-align:center">TIME</td>
+</tr>
+<tr>
+<td style="text-align:center">_viewportSize</td>
+<td style="text-align:center">VIEWPORT_SIZE</td>
+</tr>
+<tr>
+<td style="text-align:center">_matL</td>
+<td style="text-align:center">LOCAL</td>
+</tr>
+<tr>
+<td style="text-align:center">_matM</td>
+<td style="text-align:center">MODEL</td>
+</tr>
+<tr>
+<td style="text-align:center">_matV</td>
+<td style="text-align:center">VIEW</td>
+</tr>
+<tr>
+<td style="text-align:center">_matP</td>
+<td style="text-align:center">PROJECTION</td>
+</tr>
+<tr>
+<td style="text-align:center">_matVM</td>
+<td style="text-align:center">MODELVIEW</td>
+</tr>
+<tr>
+<td style="text-align:center">_matPVM</td>
+<td style="text-align:center">MODELVIEWPROJECTION</td>
+</tr>
+<tr>
+<td style="text-align:center">_matIM</td>
+<td style="text-align:center">MODELINVERSE</td>
+</tr>
+<tr>
+<td style="text-align:center">_matIV</td>
+<td style="text-align:center">VIEWINVERSE</td>
+</tr>
+<tr>
+<td style="text-align:center">_matIP</td>
+<td style="text-align:center">PROJECTIONINVERSE</td>
+</tr>
+<tr>
+<td style="text-align:center">_matIVM</td>
+<td style="text-align:center">MODELVIEWINVERSE</td>
+</tr>
+<tr>
+<td style="text-align:center">_matIPVM</td>
+<td style="text-align:center">MODELVIEWPROJECTIONINVERSE</td>
+</tr>
+<tr>
+<td style="text-align:center">_matITM</td>
+<td style="text-align:center">MODELINVERSETRANSPOSE</td>
+</tr>
+<tr>
+<td style="text-align:center">_matITVM</td>
+<td style="text-align:center">MODELVIEWINVERSETRANSPOSE</td>
+</tr>
+</tbody>
+</table>
+<h3 id="attribute変数"><a href="#attribute変数" class="headerlink" title="attribute変数"></a>attribute変数</h3><h4 id="attribute変数のセマンティクス"><a href="#attribute変数のセマンティクス" class="headerlink" title="attribute変数のセマンティクス"></a>attribute変数のセマンティクス</h4><p><code>uniform</code>変数と同様に、<code>attribute</code>変数もセマンティックスを持ちます。<br>このセマンティクスは、どの<code>attribute</code>変数にジオメトリ中のどのバッファを利用すればいいのか決定するために存在します。</p>
+<p>例えば、全てのプリミティブのジオメトリは<code>POSITION</code>,<code>NORMAL</code>,<code>TEXCOORD</code>というバッファを保持しています。(もしも、自分でジオメトリを作っている方がいたとしたら、この限りではありません。)</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@POSITION</span><br><span class="line"><span class="keyword">attribute</span> <span class="type">vec3</span> value;</span><br></pre></td></tr></table></figure>
+<p>と記述すれば、この<code>value</code>に、ジオメトリの<code>POSITION</code>バッファがバインドされることになります。</p>
+<h4 id="デフォルトセマンティクス-1"><a href="#デフォルトセマンティクス-1" class="headerlink" title="デフォルトセマンティクス"></a>デフォルトセマンティクス</h4><p>利便性のため、また<code>v0.10</code>未満のライブラリからのアップデートの容易性を保つため、以下の変数名はデフォルトで次のセマンティクスが用いられます。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">変数名</th>
+<th style="text-align:center">セマンティクス</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">position</td>
+<td style="text-align:center">POSITION</td>
+</tr>
+<tr>
+<td style="text-align:center">normal</td>
+<td style="text-align:center">NORMAL</td>
+</tr>
+<tr>
+<td style="text-align:center">texCoord</td>
+<td style="text-align:center">TEXCOORD</td>
+</tr>
+</tbody>
+</table>
+<p>つまり、以下の二つのコードは同一の意味になります。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@POSITION</span><br><span class="line"><span class="keyword">attribute</span> <span class="type">vec3</span> position;</span><br></pre></td></tr></table></figure>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">attribute</span> <span class="type">vec3</span> position;</span><br></pre></td></tr></table></figure>
+<h3 id="import文"><a href="#import文" class="headerlink" title="@import文"></a>@import文</h3><p>Sort内のシェーダーでは、外部ファイルの参照ができます。<br><code>@import</code>はC++で言えば<code>#include</code>のような存在です。しかし、特に特別なことはせず、単に参照先のスクリプトファイルを指定位置に挿入します。</p>
+<p><strong>文法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@import(&quot;ファイルパス&quot;)</span><br></pre></td></tr></table></figure>
+<p>ファイルパスとして受付可能なものは絶対パス及び相対パスです。一般的なURLとして動作します。<br>また、外部リクエストは増やしたくないが、共通のスクリプトが存在する場合は、特定のエイリアスをこのファイルパスに用いて実際にはプログラム中に既に含まれたコードないから<code>@import</code>を解決することができます。</p>
+<p>このような場合、<code>grimoirejs/lib/Material/ImportResolver</code>をrequireして、ImageResolverのコンストラクタへの参照を取得し以下のように記述することでこれを実現可能です。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImportResolver.addAliasToStatic(&quot;ThisIsAlias&quot;,&quot;何らかのコード&quot;);</span><br></pre></td></tr></table></figure>
+<p>このように記述すると、<code>@import(&quot;ThisIsAlias&quot;)</code>と言う表記に出くわすと、このコードが挿入されて外部に解決を試みません。</p>
+<h2 id="glステートの操作"><a href="#glステートの操作" class="headerlink" title="glステートの操作"></a>glステートの操作</h2><p>マテリアルによっては、glのステートを操作する必要があります。例えば、あるマテリアルで加算合成したい場合、本来描画する前に<code>gl.blendFunc(gl.ONE,gl.ONE)</code>と記述すると加算合成されます。<br>(ブレンディングについては<a href="http://www.andersriggelsen.dk/glblendfunc.php" target="_blank" rel="noopener">こちらのツール</a>を利用すれば理解が捗るでしょう。)</p>
+<p>このように、特定のglステートを操作する関数をパスの実行前に呼び出す場合、以下のような構文を記述することにより可能です。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Pass&#123;</span><br><span class="line">  @BlendFunc(ONE,ONE)</span><br><span class="line">  // ここにシェーダーを記述</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>利用可能なglの関数は以下の通りです。</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/blendFunc" target="_blank" rel="noopener">BlendFunc</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/blendFuncSeparate" target="_blank" rel="noopener">BlendFuncSeparate</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/blendEquation" target="_blank" rel="noopener">BlendEquation</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/blendEquationSeparate" target="_blank" rel="noopener">BlendEquationSeparate</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/blendColor" target="_blank" rel="noopener">BlendColor</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/colorMask" target="_blank" rel="noopener">ColorMask</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/cullFace" target="_blank" rel="noopener">CullFace</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/depthFunc" target="_blank" rel="noopener">DepthFunc</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/depthRange" target="_blank" rel="noopener">DepthRange</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/frontFace" target="_blank" rel="noopener">FrontFace</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/polygonOffset" target="_blank" rel="noopener">PolygonOffset</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/scissor" target="_blank" rel="noopener">Scissor</a></li>
+</ul>
+<p>また、これらを指定しなくとも初期値が読み込まれます。これらの初期値は以下の通りです。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  blendFuncSeparate: [WebGLRenderingContext.SRC_ALPHA, WebGLRenderingContext.ONE_MINUS_SRC_ALPHA, WebGLRenderingContext.SRC_ALPHA, WebGLRenderingContext.ONE_MINUS_SRC_ALPHA],</span><br><span class="line">  blendEquationSeparate: [WebGLRenderingContext.FUNC_ADD, WebGLRenderingContext.FUNC_ADD],</span><br><span class="line">  blendColor: [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">  cullFace: [WebGLRenderingContext.BACK],</span><br><span class="line">  lineWidth: [<span class="number">1</span>],</span><br><span class="line">  frontFace: [WebGLRenderingContext.CCW],</span><br><span class="line">  depthRange: [<span class="number">0</span>, <span class="number">1</span>],</span><br><span class="line">  depthFunc: [WebGLRenderingContext.LESS]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>また、有効になっていないGLの機能の有効、無効を切り替えることができます。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Pass&#123;</span><br><span class="line">  @Disable(CULL_FACE)</span><br><span class="line">  <span class="comment">// ここにシェーダーを記述</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>このように記述すると、カリングが無効になります。(<code>gl.disable(gl.CULL_FACE)</code>を行うのと同じ)<br>つまり、裏面も描画されるようになります。</p>
+<p>一方で、以下のように記述すればステンシルテストを有効にすることができます。(<code>gl.enable(gl.STENCIL_TEST)</code>を行うのと同じ)</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Pass&#123;</span><br><span class="line">  @Enable(STENCIL_TEST)</span><br><span class="line">  <span class="comment">// ここにシェーダーを記述</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>これらも、glのステートと同様に初期値が存在し以下がデフォルトでenabledとして指定されます。</p>
+<ul>
+<li>CULL_FACE</li>
+<li>DEPTH_TEST</li>
+<li>BLEND</li>
+</ul>
+<h2 id="その他の構文"><a href="#その他の構文" class="headerlink" title="その他の構文"></a>その他の構文</h2><h3 id="マクロ"><a href="#マクロ" class="headerlink" title="マクロ"></a>マクロ</h3><p>通常、GLSLでは<code>#define</code>や<code>#ifdef</code>などのC由来のプリプロセッサが用いれます。<br>Grimoire.jsではこのマクロを、GOML側の変化によって動的に変更することが可能です。</p>
+<p>例えば、以下のような宣言がパス中に存在すると、</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@ExposeMacro(<span class="type">bool</span>,useTexture,USE_TEXTURE,<span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+<p>シェーダーの文中に、<code>#define USE_TEXTURE false</code>や<code>#define USE_TEXTURE true</code>が、GOML側の<code>useTexture</code>属性によって挿入されます。<br>ユーザーにとって見かけ上、マテリアルの<code>USER_VALUE</code>変数と同一ですが、変更された時点でシェーダーをリコンパイルするので、あまり変更が多い変数には用いられません。<br>しかし、配列の大きさや、forループの数など、GLSL中で定数しか用いれない場所では効果を発揮します。</p>
+<p>また、<code>@ExposeMacro</code>の第一引数は型で、これによりGOML側のコンバーターが決定されますが、<code>bool</code>と<code>int</code>のみが、それぞれ<code>Boolean</code>コンバーター、<code>Number</code>コンバーターによって渡されることになります。これ以外のコンバーターに対応していないことに気をつけてください。</p>
+<h1 id="テクニックの記述"><a href="#テクニックの記述" class="headerlink" title="テクニックの記述"></a>テクニックの記述</h1><p>テクニックとは、マテリアルの中に複数の描画タイプを持っておくようにするための機構です。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Technique テクニック名&#123;</span><br><span class="line">  @Pass&#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Pass&#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>のような構文をとります。</p>
+<p><strong>Techniqueを省略してPassを記述すると、そのTechnique名はdefaultになります</strong></p>
+<p>例えば、以下のようなマテリアルがあったとします。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">@Technique T1&#123;</span><br><span class="line">  @Pass&#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">  @Pass&#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Technique T2&#123;</span><br><span class="line">  @Pass&#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">  @Pass&#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>この際、ある<code>&lt;renderer&gt;</code>タグで以下のように指定したとします。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">renderer</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">render-scene</span> <span class="attr">technique</span>=<span class="string">"T1"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">render-scene</span> <span class="attr">technique</span>=<span class="string">"T2"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">renderer</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>この場合、<code>T1</code>テクニックを持つ全てのシーン要素を描画した後、<code>T2</code>テクニックを持つ全てのシーン要素を描画します。<br>通常は、<code>default</code>テクニックが用いられるため、テクニックの指定がなくても問題ないのです。</p>
+<p>しかし、ディファードシェーディングなど、複数回の描画を同一のメッシュに対して繰り返す場合はこの記法によって大きな威力を発揮します。</p>
+<h2 id="描画順序"><a href="#描画順序" class="headerlink" title="描画順序"></a>描画順序</h2><p>背景にシェーダーを用いたい場合など、先に描画しておきたかったり、デプス値への書き込みをしないパーティクルなど、Grimoire.jsによる描画順序を操作したい場合があります。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Technique <span class="keyword">default</span>&#123;</span><br><span class="line">  @DrawOrder(NoAlpha)</span><br><span class="line">  @Pass&#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">  @Pass&#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>のように記述すれば、このテクニックが描画される順序は<code>NoAlpha</code>であると言えます。</p>
+<p><strong>パスそれぞれに指定することはできないことに気をつけてください</strong></p>
+<p>また、デフォルトで指定可能な描画順序は以下の通りです。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">描画順序名</th>
+<th style="text-align:center">優先度</th>
+<th style="text-align:center">遠くから描画</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Background</td>
+<td style="text-align:center">1000</td>
+<td style="text-align:center">しない</td>
+</tr>
+<tr>
+<td style="text-align:center">NoAlpha</td>
+<td style="text-align:center">2000</td>
+<td style="text-align:center">しない</td>
+</tr>
+<tr>
+<td style="text-align:center">UseAlpha</td>
+<td style="text-align:center">3000</td>
+<td style="text-align:center">する</td>
+</tr>
+<tr>
+<td style="text-align:center">NoDepth</td>
+<td style="text-align:center">4000</td>
+<td style="text-align:center">する</td>
+</tr>
+<tr>
+<td style="text-align:center">Overlay</td>
+<td style="text-align:center">5000</td>
+<td style="text-align:center">する</td>
+</tr>
+</tbody>
+</table>
+<p>つまり、あるテクニックが描画される際、同じテクニックを持つマテリアルは、この描画順序に基づいてレンダリングされます。<br>また、遠くから描画する描画順序の場合は、同じ描画順序の時、遠い方を優先し、そうでないときは近い方から描画されます。</p>
+<p>通常、アルファ値を使う場合、遠くから描画しないと透けて見えなくなってしまいますが、使わない場合、近くから描画した方が深度テストで落ちるピクセルが多いため通常パフォーマンスが向上するはずです。</p>
+<h1 id="拡張"><a href="#拡張" class="headerlink" title="拡張"></a>拡張</h1><p>この項では、以上で定義されたデフォルトの扱いについてそれぞれの拡張の方法について議論する。</p>
+<h2 id="新しいUniform変数のセマンティクスを追加する"><a href="#新しいUniform変数のセマンティクスを追加する" class="headerlink" title="新しいUniform変数のセマンティクスを追加する"></a>新しいUniform変数のセマンティクスを追加する</h2><p>新しいUniform変数のセマンティクスを追加するには、<code>UniformResolverRegistry</code>クラスを用います。</p>
+<p>以下のようにインポートします。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> UniformResolverRegistry <span class="keyword">from</span> <span class="string">"grimoirejs-fundamental/ref/Material/UniformResolverRegistry"</span>;</span><br></pre></td></tr></table></figure>
+<p>あるいは、</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> UniformResolverRegistry = gr.lib.fundamental.Material.UniformResolverRegistry;</span><br></pre></td></tr></table></figure>
+<p>さらに、<code>UniformResolverRegistry.add</code>メソッドを用います。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UniformResolverRegistry.add(<span class="string">"新しいセマンティクス名"</span>,変数レジスターを返す関数);</span><br></pre></td></tr></table></figure>
+<p>例えば、</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">UniformResolverRegistry.add(<span class="string">"新しいセマンティクス名"</span>,(valInfo)=&gt;&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">proxy,args</span>)=&gt;</span>&#123;</span><br><span class="line">    proxy.uniformFloat(valInfo.name,<span class="number">0</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>のようなことを記述すれば、このセマンティクスに対しては0が代入されることになります。</p>
+<p>例えば、オーディオの変数を取れるようにしたりなど、この拡張性は非常に便利です。<br>実際には以下のコードが非常に参考になるでしょう。</p>
+<p><a href="https://github.com/GrimoireGL/grimoirejs-fundamental/tree/master/src/Material/Uniforms" target="_blank" rel="noopener">https://github.com/GrimoireGL/grimoirejs-fundamental/tree/master/src/Material/Uniforms</a></p>
+
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/guide/2_advanced/sort.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

@@ -1,0 +1,12 @@
+<goml>
+  <scene>
+    <camera position="0,0.2,0"></camera>
+    <mesh color="red" geometry="cube" position="0,0,-9">
+      <mesh.components>
+        <Wave amp="2" speed="3"/>
+      </mesh.components>
+    </mesh>
+    <wave-mesh geometry="cube" color="blue" position="4,0,-9"/>
+    <wave-mesh geometry="cube" color="green" speed="5" position="-4,0,-9"/>
+  </scene>
+</goml>

@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>Interfaces | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="You can write javascript to coop with the other web UIs or make expression more dynamic. This is example to change mesh color when mouse hover on the mesh. 123456&amp;lt;goml&amp;gt;  &amp;lt;scene&amp;gt;    &amp;lt;cam">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Interfaces">
+<meta property="og:url" content="https://grimoire.gl/guide/1_essentials/04_interface.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="You can write javascript to coop with the other web UIs or make expression more dynamic. This is example to change mesh color when mouse hover on the mesh. 123456&amp;lt;goml&amp;gt;  &amp;lt;scene&amp;gt;    &amp;lt;cam">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.398Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Interfaces">
+<meta name="twitter:description" content="You can write javascript to coop with the other web UIs or make expression more dynamic. This is example to change mesh color when mouse hover on the mesh. 123456&amp;lt;goml&amp;gt;  &amp;lt;scene&amp;gt;    &amp;lt;cam">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+    <aside id="sidebar">
+  <div id="doc-title">GUIDE</div>
+  
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Essentials</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/1_essentials/01_installation.html">Installation</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/02_introduction.html">Getting started</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/03_goml.html">GOML</a>
+            </li>
+          
+            <li class="active">
+              <a href="/guide/1_essentials/04_interface.html">Interfaces</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/05_componentsystem.html">ComponentSystem</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/06_plugin.html">Plugins</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/07_inspector.html">Devtool</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/08_tags.html">主なタグ</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Advanced</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/2_advanced/webgl-basics.html">WebGL concepts</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/sort.html">カスタムマテリアルの仕様</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/plugin-specification.html">Plugin making</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/geometry-basic.html">Geometry basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-renderer.html">Renderer basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/material-basic.html">Material basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-core.html">grimoirejs-core</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/typescript.html">Use Typescript</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Meta</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/3_meta/community.html">Community</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+  
+</aside>
+
+  
+  <div id="content">
+    <h1 id="content-title">Interfaces</h1>
+    <p>You can write javascript to coop with the other web UIs or make expression more dynamic.</p>
+<p>This is example to change mesh color when mouse hover on the mesh.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">goml</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">camera</span> <span class="attr">position</span>=<span class="string">"0,0,-10"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">geometry</span>=<span class="string">"cube"</span> <span class="attr">color</span>=<span class="string">"red"</span> <span class="attr">position</span>=<span class="string">"0,0,0"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gr(<span class="string">"*"</span>)(<span class="string">"mesh"</span>).on(<span class="string">"mouse-enter"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  gr(<span class="string">"*"</span>)(<span class="string">"mesh"</span>).setAttribute(<span class="string">"color"</span>,<span class="string">"green"</span>);</span><br><span class="line">&#125;);</span><br><span class="line">gr(<span class="string">"*"</span>)(<span class="string">"mesh"</span>).on(<span class="string">"mouse-leave"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  gr(<span class="string">"*"</span>)(<span class="string">"mesh"</span>).setAttribute(<span class="string">"color"</span>,<span class="string">"red"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>You can query node of Grimoire by calling <code>gr(&quot;script tag query&quot;)(&quot;node tag query&quot;)</code> like jQuery.<br>But there might be multiple GOML files in a single HTML file. Therefore, you need to specify which goml file should be operated with query.<br>The first query is script tag query. This is query for <code>&lt;script type=&quot;text/goml&quot;&gt;</code> in your HTML. In this example, all GOML file in the HTML is target of the query. This return value is named as <code>GOMLInterface</code> because it limit which GOML should be affected by later API call.<br>The secound query is node tag query. This is query for GOML nodes. You can use class,id or node name for querying.<br>You can not use attribute value for querying like <code>mesh[position=&quot;0,0,0&quot;]</code>.<br>This return value is named as <code>NodeInterface</code> in same way.</p>
+<p>You can create and assign script queried interface to use them easily. This is same code with the example.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> all = gr(<span class="string">"*"</span>); <span class="comment">// This is GOML interface</span></span><br><span class="line">all(<span class="string">"mesh"</span>).on(<span class="string">"mouse-enter"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  all(<span class="string">"mesh"</span>).setAttribute(<span class="string">"color"</span>,<span class="string">"green"</span>);</span><br><span class="line">&#125;);</span><br><span class="line">all(<span class="string">"mesh"</span>).on(<span class="string">"mouse-leave"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  all(<span class="string">"mesh"</span>).setAttribute(<span class="string">"color"</span>,<span class="string">"red"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>gr(&quot;*&quot;)(&quot;mesh&quot;).on</code> method register event handler to specified node. All nodes have event emitter to register handlers.<br>Several components attached to node can fire some events from these nodes.</p>
+<p><code>gr</code> is a global variable registered by Grimoire.js and it is called <code>GrimoireInterface</code>.<br><code>GrimoireInterface</code>,<code>GOMLInterface</code> and <code>NodeInterface</code> are the most fundamental API of Grimoire.<br>By understanding these APIs, you would be able to operate Grimoire objects and coop with the other your Web stuff.</p>
+<blockquote>
+<p><code>gr.noConflict()</code></p>
+<p>If your script need to use <code>gr</code> in global variable, you can prevent Grimoire to use <code>gr</code> as interface.<br>There is the other global variable <code>GrimoireJS</code> is also same reference of <code>gr</code>.<br>By calling <code>gr.noConflict()</code>, value of <code>gr</code> is restored if there was some values before Grimoire.js was loaded.<br>This feature similar to <code>jQuery.noConflict()</code>.</p>
+</blockquote>
+<h1 id="GrimoireInterface"><a href="#GrimoireInterface" class="headerlink" title="GrimoireInterface"></a>GrimoireInterface</h1><p>You can acccess configuration of Grimoire.js through GrimoireInterface.<br>For instance, you can dismiss console logging for debugging that is generated by Grimoire default by this code.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gr.debug=<span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+<p>GrimoireInterface is functional object. You can call gr as a function.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gr(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"Grimoire.js is loaded!"</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>When string argument was passed to GrimoireInterface, this function works for querying GOML script as described previous section.<br>This function also accepts function as an argument, Grimoire will call the function as a callback when node construction of GOML was completed. Be careful that this is not called after all resource loaded.</p>
+<p>This feature is commonly used for operating objects in the scene initially since these object must be operated after GOML script loaded. This is very similar to <code>DOMContentLoaded</code> event on HTML.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Arrange 10 cubes</span></span><br><span class="line">gr(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line">    <span class="keyword">var</span> x = i<span class="number">-5</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Add mesh tag inside of scene</span></span><br><span class="line">    gr(<span class="string">"*"</span>)(<span class="string">"scene"</span>).addChildByName(<span class="string">"mesh"</span>,&#123;<span class="attr">geometry</span>:<span class="string">"cube"</span>,<span class="attr">position</span>:[x,<span class="number">0</span>,<span class="number">0</span>]&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// If you wrote the code here, it would not works since scene node is not loaded yet.</span></span><br><span class="line"><span class="comment">//gr("*")("scene").addChildByName("mesh",&#123;geometry:"cube",position:[0,0,0]&#125;);</span></span><br></pre></td></tr></table></figure>
+<h2 id="GrimoireInterface-lib"><a href="#GrimoireInterface-lib" class="headerlink" title="GrimoireInterface.lib"></a>GrimoireInterface.lib</h2><p><code>lib</code> field of GrimoireInterface is important field. You can access internal class definitions of Grimoire from this reference.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> lib = gr.lib;</span><br></pre></td></tr></table></figure>
+<p>For example if you loaded <code>grimoirejs-fundamental</code> plugin that is basic renderer of Grimoire, you can access internal classes of the plugin from <code>gr.lib.fundamental</code>. This is a example for fetching <code>Material</code> class of <code>grimoirejs-fundamental</code> and <code>Vector3</code> of <code>grimoirejs-math</code>.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Material = gr.lib.fundamental.Material.Material;</span><br><span class="line"><span class="keyword">var</span> Vector3 = gr.lib.math.Vector3;</span><br></pre></td></tr></table></figure>
+<p>This references are automatically generated from folder structures of these plugins. If you need to access internal classes of Grimoire plugins, you would need to know which folder containing these references. (But several classes are so common to use that you can know these references from tutorials).</p>
+<p>This feature is for accessing internal classes from pure javascript codes. If you are used to require external javascript, you can do same thing in following way.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Material <span class="keyword">from</span> <span class="string">"grimoirejs-fundamental/ref/Material/Material"</span>;</span><br><span class="line"><span class="keyword">import</span> Vector3 <span class="keyword">from</span> <span class="string">"grimoirejs-math/ref/Vector3"</span>;</span><br></pre></td></tr></table></figure>
+<p>You can know folder structures from github repository or API references.</p>
+<h1 id="GomlInterface"><a href="#GomlInterface" class="headerlink" title="GomlInterface"></a>GomlInterface</h1><p>GomlInterface is returned value of querying GOML script via GrimoireInterface.</p>
+<p>Let assume there was 3 goml files like below.<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">id</span>=<span class="string">"first-goml"</span> <span class="attr">class</span>=<span class="string">"goml-class"</span> <span class="attr">type</span>=<span class="string">"text/goml"</span> <span class="attr">src</span>=<span class="string">"first.goml"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">id</span>=<span class="string">"second-goml"</span> <span class="attr">class</span>=<span class="string">"goml-class"</span> <span class="attr">type</span>=<span class="string">"text/goml"</span> <span class="attr">src</span>=<span class="string">"second.goml"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">id</span>=<span class="string">"third-goml"</span> <span class="attr">type</span>=<span class="string">"text/goml"</span> <span class="attr">src</span>=<span class="string">"third.goml"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>You can fetch GomlInterface by querying these scripts.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> thirdGomlInterface = gr(<span class="string">"#third-goml"</span>);</span><br><span class="line"><span class="keyword">var</span> multiGomlInterface = gr(<span class="string">".goml-class"</span>);</span><br></pre></td></tr></table></figure>
+<p>GomlInterface can operate multiple or single GOML files.<br>You can inspect how many script nodes are queried in following way.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(thirdGomlInterface.rootNodes.length);<span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(multiGomlInterface.rootNodes.length);<span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<p>GomlInterface don’t contains so much interfaces like GrimoireInterface.<br>Generally it is used for <strong>fetching NodeInterface</strong> by calling GomlInterface as a function.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">thirdNodeInterface = thirdGomlInterface(<span class="string">"mesh"</span>);</span><br></pre></td></tr></table></figure>
+<p>Make sure the queried objects are <strong>GOML nodes</strong> not HTML tags like GrimoireInterface.</p>
+<h1 id="NodeInterface"><a href="#NodeInterface" class="headerlink" title="NodeInterface"></a>NodeInterface</h1><p>NodeInterface is used for operating nodes. There are many APIs to operate GOML nodes.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Display count of meshes</span></span><br><span class="line"><span class="built_in">console</span>.log(gr(<span class="string">"*"</span>)(<span class="string">"mesh"</span>).count);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get attribute of the mesh. If there was multiple selected nodes, returned value is first one.</span></span><br><span class="line"><span class="keyword">var</span> pos = gr(<span class="string">"*"</span>)(<span class="string">"mesh"</span>).getAttribute(<span class="string">"position"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Set attributes of selected mesh.</span></span><br><span class="line">gr(<span class="string">"*"</span>)(<span class="string">"mesh"</span>).setAttribute(<span class="string">"position"</span>,[pox.x,pox.y+<span class="number">1</span>,pos.z]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Append mesh to selected mesh.</span></span><br><span class="line">gr(<span class="string">"*"</span>)(<span class="string">"mesh"</span>).append(<span class="string">'&lt;mesh geometry="cube" color="red"/&gt;'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add component to selected nodes.</span></span><br><span class="line">gr(<span class="string">"*"</span>)(<span class="string">"camera"</span>).addComponent(<span class="string">"MouseCameraControl"</span>);</span><br></pre></td></tr></table></figure>
+<p>NodeInterface is capable of operating multiple nodes by one call.<br>If you want to get actual reference of single node from selector, you can use <code>first()</code> interface to get first one of the selected nodes.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mesh = gr(<span class="string">"*"</span>)(<span class="string">"mesh"</span>).first();</span><br></pre></td></tr></table></figure>
+<p>The instance selected by <code>first()</code> is instance of <code>GomlNode</code>. GomlNode is actual instance of element in GOML.<br>GomlNode also contains similar interfaces like <code>getAttribute</code> or <code>setAttribute</code>. But these are completely different objects.</p>
+
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/guide/1_essentials/04_interface.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

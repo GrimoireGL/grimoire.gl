@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>Grimorie.jsを使ってみる | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概要Grimoire.jsはWeb3Dライブラリです。Grimoire.jsではWeb開発フローにマッチした形で、3D表現を作ることができます。3D表現はHTML5のCanvasを使用することにより表示されます。 学べること Grimoire.jsの読み込み GOMLの読み込み  Grimoire.jsを使ってみるには使用方法は簡単です。Grimoire.jsの本体のscriptと3Dの表現を行う">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Grimorie.jsを使ってみる">
+<meta property="og:url" content="https://grimoire.gl/tutorial/01-getting-started.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="概要Grimoire.jsはWeb3Dライブラリです。Grimoire.jsではWeb開発フローにマッチした形で、3D表現を作ることができます。3D表現はHTML5のCanvasを使用することにより表示されます。 学べること Grimoire.jsの読み込み GOMLの読み込み  Grimoire.jsを使ってみるには使用方法は簡単です。Grimoire.jsの本体のscriptと3Dの表現を行う">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.406Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Grimorie.jsを使ってみる">
+<meta name="twitter:description" content="概要Grimoire.jsはWeb3Dライブラリです。Grimoire.jsではWeb開発フローにマッチした形で、3D表現を作ることができます。3D表現はHTML5のCanvasを使用することにより表示されます。 学べること Grimoire.jsの読み込み GOMLの読み込み  Grimoire.jsを使ってみるには使用方法は簡単です。Grimoire.jsの本体のscriptと3Dの表現を行う">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+    <aside id="sidebar">
+  <div id="doc-title">TUTORIAL</div>
+  
+    <ul id="list">
+      
+        <li class="">
+          <a href="/tutorial/index.html">目次</a>
+        </li>
+      
+        <li class="active">
+          <a href="/tutorial/01-getting-started.html">Grimorie.jsを使ってみる</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/02-handle-goml.html">GOMLを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/03-handle-goml-with-js.html">JavascriptでGOMLを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/04-handle-component.html">コンポーネントを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/05-handle-component-with-js.html">javascriptでコンポーネントを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/06-node-and-component.html">ノードとコンポーネントの本質</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/07-create-component.html">コンポーネントの作成</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/10-create-node.html">ノードの作成</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/11-create-material.html">マテリアルの自作</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/12-create-post-effect.html">ポストエフェクトを作成する</a>
+        </li>
+      
+    </ul>
+  
+</aside>
+
+  
+  <div id="content">
+    <h1 id="content-title">Grimorie.jsを使ってみる</h1>
+    <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>Grimoire.jsはWeb3Dライブラリです。Grimoire.jsではWeb開発フローにマッチした形で、3D表現を作ることができます。3D表現はHTML5のCanvasを使用することにより表示されます。</p>
+<h2 id="学べること"><a href="#学べること" class="headerlink" title="学べること"></a>学べること</h2><ul>
+<li>Grimoire.jsの読み込み</li>
+<li>GOMLの読み込み</li>
+</ul>
+<h3 id="Grimoire-jsを使ってみるには"><a href="#Grimoire-jsを使ってみるには" class="headerlink" title="Grimoire.jsを使ってみるには"></a>Grimoire.jsを使ってみるには</h3><p>使用方法は簡単です。Grimoire.jsの本体のscriptと3Dの表現を行うGOML(Grimorie Object Markup Language)をHTML内で読み込むことにより使用することができます。Grimoire.jsでは必要な機能だけをライブラリに取り込んで使用することができます。</p>
+<p>では、<code>index.html</code>に<code>grimoire.js</code>と<code>index.goml</code>を読み込んでみます。</p>
+<blockquote>
+<p>このgrimoire.jsはGrimoire.jsとgrimoirejs-fundamental、grimoirejs-mathを一つにバンドリングしたものです。ユーザーはこれをプリセットとしてダウンロードすることもできます。</p>
+</blockquote>
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t01-01"></iframe>
+
+<p>Grimoire.jsを使用するために必要な準備はこれだけです。それでは、これからGrimoire.jsを使って様々なweb3D表現を始めましょう。</p>
+<p>またGrimoire.jsではGOMLを読み込んだ数に応じて、canvasが生成されることになっています。</p>
+<!-- <iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t01-02"></iframe> -->
+<p>次の章で行いますが、ユーザはセレクタを用いて、各キャンバスに存在するGrimorieインターフェースを取得することができます。これにより対象のGOMLに対してのみGOMLのタグを操作することが可能になっています。</p>
+<blockquote>
+<p>次は読み込んだGOMLの使い方を学びます。</p>
+<p><a href="/tutorial/02-handle-goml.html">GOMLを扱う</a></p>
+</blockquote>
+
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/tutorial/01-getting-started.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

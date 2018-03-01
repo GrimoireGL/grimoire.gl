@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>GOMLを扱う | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概要Grimoire.jsでは扱う3D空間をXML記法を用いて宣言的に記述することが可能です。ここでは基本的な3D空間の描画に必要なタグを含んでいるgrimoirejs-fundamentalプラグインを用いて、GOMLの基本的に記述について学びましょう。基本的にはユーザーはこのgrimoirejs-fundamentalプラグインを用いてWeb3Dの表現を組み立てることになります。grimoir">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GOMLを扱う">
+<meta property="og:url" content="https://grimoire.gl/tutorial/02-handle-goml.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="概要Grimoire.jsでは扱う3D空間をXML記法を用いて宣言的に記述することが可能です。ここでは基本的な3D空間の描画に必要なタグを含んでいるgrimoirejs-fundamentalプラグインを用いて、GOMLの基本的に記述について学びましょう。基本的にはユーザーはこのgrimoirejs-fundamentalプラグインを用いてWeb3Dの表現を組み立てることになります。grimoir">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.406Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GOMLを扱う">
+<meta name="twitter:description" content="概要Grimoire.jsでは扱う3D空間をXML記法を用いて宣言的に記述することが可能です。ここでは基本的な3D空間の描画に必要なタグを含んでいるgrimoirejs-fundamentalプラグインを用いて、GOMLの基本的に記述について学びましょう。基本的にはユーザーはこのgrimoirejs-fundamentalプラグインを用いてWeb3Dの表現を組み立てることになります。grimoir">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+    <aside id="sidebar">
+  <div id="doc-title">TUTORIAL</div>
+  
+    <ul id="list">
+      
+        <li class="">
+          <a href="/tutorial/index.html">目次</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/01-getting-started.html">Grimorie.jsを使ってみる</a>
+        </li>
+      
+        <li class="active">
+          <a href="/tutorial/02-handle-goml.html">GOMLを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/03-handle-goml-with-js.html">JavascriptでGOMLを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/04-handle-component.html">コンポーネントを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/05-handle-component-with-js.html">javascriptでコンポーネントを扱う</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/06-node-and-component.html">ノードとコンポーネントの本質</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/07-create-component.html">コンポーネントの作成</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/10-create-node.html">ノードの作成</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/11-create-material.html">マテリアルの自作</a>
+        </li>
+      
+        <li class="">
+          <a href="/tutorial/12-create-post-effect.html">ポストエフェクトを作成する</a>
+        </li>
+      
+    </ul>
+  
+</aside>
+
+  
+  <div id="content">
+    <h1 id="content-title">GOMLを扱う</h1>
+    <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>Grimoire.jsでは扱う3D空間をXML記法を用いて宣言的に記述することが可能です。ここでは基本的な3D空間の描画に必要なタグを含んでいる<code>grimoirejs-fundamental</code>プラグインを用いて、GOMLの基本的に記述について学びましょう。基本的にはユーザーはこの<code>grimoirejs-fundamental</code>プラグインを用いてWeb3Dの表現を組み立てることになります。<br><code>grimoirejs-fundamental</code>プラグインは<a href="https://grimoire.gl/api/grimoirejs-fundamental.html">リファレンス</a>を参照することで詳細を知ることができます。今回はこのプラグインの中から基本的な3D表現に必要なタグの使い方を学びます。</p>
+<h2 id="学べること"><a href="#学べること" class="headerlink" title="学べること"></a>学べること</h2><ul>
+<li>GOMLとは何か</li>
+<li>GOMLタグの扱い方</li>
+<li>GOMLタグの属性の扱い方</li>
+<li><code>grimoire-fundamental</code>プラグインを用いたシーンの記述方法</li>
+</ul>
+<p>以下に示すのが、基本的な3D表現を行うために必要な機能を記述したGOMLです。</p>
+<iframe class="editor" src="https://grimoiregl.github.io/grimoire.gl-example#t02-01"></iframe>
+
+<p>GOMLはGrimoire Object Markup Languageの略であり、描画するキャンバス内の状態をXMLで記述するための言語です。Grimoire.jsが定義しています。これから上記のサンプルを例にGOMLのタグについて確認してみましょう。</p>
+<p><code>&lt;goml&gt;</code>タグは一番基本となるタグです。キャンバス自体の状態に関わります。<code>width</code>や<code>height</code>属性でキャンバスの大きさを指定できます。また、<code>fullscreen</code>にも対応しています。セレクタにも対応しており、</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">goml</span> <span class="attr">containerId</span>=<span class="string">"main"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>とすることでGOMLに対応するキャンバスを囲む<code>&lt;div&gt;</code>要素が取得されます。</p>
+<p><code>&lt;geometry&gt;</code>タグはジオメトリを定義します。<code>name</code>属性でジオメトリの識別子を設定し、それらを<code>&lt;mesh&gt;</code>タグの<code>geometry</code>属性で指定することで、使うことができます。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">geometry</span> <span class="attr">name</span>=<span class="string">"cone"</span> <span class="attr">type</span>=<span class="string">"cone"</span> <span class="attr">divide</span>=<span class="string">"30"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>name</code>属性 - 識別子</li>
+<li><code>type</code>属性 - ジオメトリの種類。<code>cube</code>, <code>quad</code>, <code>triangle</code>, <code>sphere</code>, <code>corn</code>などがデフォルトで用意されています。<br>その他にも各プリミティブ型ではそれに応じて、属性を持つことがあります。<code>cone</code>型では<code>divide</code>属性を持つことができます。これはメッシュの分割数を指定します。これはジオメトリの種類に依存した属性であり、各ジオメトリーに応じた属性を設定することが可能です。</li>
+</ul>
+<p><code>&lt;render&gt;</code>タグは描画に関するタグです。sceneを描写する際に必要です。基本的な3Dの空間を描画する際には、この<code>&lt;render&gt;</code>のタグは省略することが可能です。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">renderer</span> <span class="attr">camera</span>=<span class="string">".camera"</span> <span class="attr">viewport</span>=<span class="string">"0,0,100%,100%"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">render-scene</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">renderer</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>シーンの全容は<code>&lt;scene&gt;</code>タグの以下に記述します。3Dのループの処理はこのタグの内部のノードに対して行われることになります。基本的に<code>&lt;scene&gt;</code>には<code>&lt;camera&gt;</code>が存在します。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">camera</span> <span class="attr">class</span>=<span class="string">"camera"</span> <span class="attr">near</span>=<span class="string">"0.01"</span> <span class="attr">far</span>=<span class="string">"40.0"</span> <span class="attr">aspect</span>=<span class="string">"1.5"</span> <span class="attr">fovy</span>=<span class="string">"45d"</span> <span class="attr">position</span>=<span class="string">"0,0,10"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>&lt;camera&gt;</code>タグはカメラを配置します。<code>&lt;camera&gt;</code>タグには<code>near,far,fovy,aspect</code>の属性を設定できます。</p>
+<p>これらはgrimoirejs-fundamentalプラグインを利用することにより、使用することができます。grimoirejs-fundamentalプラグインは多くのユーザーが利用することになるでしょう。</p>
+<p>grimoirejs-fundamentalがサポートしているタグには他にも、</p>
+<ul>
+<li><code>&lt;mesh&gt;</code></li>
+<li><code>&lt;render-quad&gt;</code></li>
+<li><code>&lt;texture&gt;</code></li>
+</ul>
+<p>などがあります。</p>
+<h3 id="円錐を表示してみる"><a href="#円錐を表示してみる" class="headerlink" title="円錐を表示してみる"></a>円錐を表示してみる</h3><p>それでは実際にgrimoire-fundamentalで定められたタグを使用してみましょう。<br>円錐(cone)を表示するためにはジオメトリを<code>&lt;geometry&gt;</code>タグを用いて読み込む必要があります。ジオメトリの定義は<code>&lt;scene&gt;</code>の外に書きましょう。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">geometry</span> <span class="attr">name</span>=<span class="string">"cone"</span> <span class="attr">type</span>=<span class="string">"cone"</span> <span class="attr">divide</span>=<span class="string">"30"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>ジオメトリを読み込んだら実際に表示するために<code>&lt;mesh&gt;</code>タグが必要です。<code>&lt;geometry&gt;</code>タグにconeが指定して、下のようにタグを<code>&lt;scene&gt;</code>以下に追加してみましょう。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mesh</span> <span class="attr">geometry</span>=<span class="string">"cone"</span> <span class="attr">position</span>=<span class="string">"1,1,0"</span> <span class="attr">color</span>=<span class="string">"#99f"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="テクスチャを表示してみる"><a href="#テクスチャを表示してみる" class="headerlink" title="テクスチャを表示してみる"></a>テクスチャを表示してみる</h3><p>次は画像をキャンバス内に表示してみます。下記のように<code>texture</code>属性に画像へのパスを指定することで、メッシュに画像を貼り付ける事ができます。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mesh</span> <span class="attr">geometry</span>=<span class="string">"cube"</span> <span class="attr">position</span>=<span class="string">"0,0,0"</span> <span class="attr">texture</span>=<span class="string">"t02-01/img1.jpg"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>このようにGrimorire.jsを利用することにより、キャンバス内の3D表現を宣言的に記述できます。</p>
+<blockquote>
+<p>次は読み込んだGOMLをJavaScriptから操作する方法を学びます。これによりGOMLで記述したタグやその属性を動的に変更することが可能になります。イベントハンドラを利用して、特定のタイミングで動作させることも可能です。</p>
+<p><a href="/tutorial/03-handle-goml-with-js.html">JavaScriptからGOMLを扱う</a></p>
+</blockquote>
+
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/tutorial/02-handle-goml.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

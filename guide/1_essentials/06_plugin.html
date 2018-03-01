@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>Plugins | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="What is plugins?One of good aspect of Grimoire feature is their high extensibility.All of features can be extended and all of features we provide is implemented as the other users can do.In the contra">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Plugins">
+<meta property="og:url" content="https://grimoire.gl/guide/1_essentials/06_plugin.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="What is plugins?One of good aspect of Grimoire feature is their high extensibility.All of features can be extended and all of features we provide is implemented as the other users can do.In the contra">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.398Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Plugins">
+<meta name="twitter:description" content="What is plugins?One of good aspect of Grimoire feature is their high extensibility.All of features can be extended and all of features we provide is implemented as the other users can do.In the contra">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+    <aside id="sidebar">
+  <div id="doc-title">GUIDE</div>
+  
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Essentials</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/1_essentials/01_installation.html">Installation</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/02_introduction.html">Getting started</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/03_goml.html">GOML</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/04_interface.html">Interfaces</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/05_componentsystem.html">ComponentSystem</a>
+            </li>
+          
+            <li class="active">
+              <a href="/guide/1_essentials/06_plugin.html">Plugins</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/07_inspector.html">Devtool</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/08_tags.html">主なタグ</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Advanced</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/2_advanced/webgl-basics.html">WebGL concepts</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/sort.html">カスタムマテリアルの仕様</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/plugin-specification.html">Plugin making</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/geometry-basic.html">Geometry basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-renderer.html">Renderer basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/material-basic.html">Material basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-core.html">grimoirejs-core</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/typescript.html">Use Typescript</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Meta</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/3_meta/community.html">Community</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+  
+</aside>
+
+  
+  <div id="content">
+    <h1 id="content-title">Plugins</h1>
+    <h1 id="What-is-plugins"><a href="#What-is-plugins" class="headerlink" title="What is plugins?"></a>What is plugins?</h1><p>One of good aspect of Grimoire feature is their high extensibility.<br>All of features can be extended and all of features we provide is implemented as the other users can do.<br>In the contrary, features provided by core of Grimoire is minimum. Even WebGL features are not included in core features.<br>Therefore, you will need to use plugins for using Grimoire.js for your application.</p>
+<p>Previously we introduced some of easy samples, there were version information about Grimoire.js on console of your browser like this.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Grimoire.js v0.14.1-beta4</span><br><span class="line">plugins:</span><br><span class="line"></span><br><span class="line">  1 : grimoirejs-math@1.8.0</span><br><span class="line">  2 : grimoirejs-fundamental@0.12.6</span><br><span class="line">  3 : grimoirejs-preset-basic@1.8.6</span><br><span class="line"></span><br><span class="line">To suppress this message,please inject a line &quot;gr.debug = false;&quot; on the initializing timing.</span><br></pre></td></tr></table></figure>
+<p>Most of our samples are using <code>grimoirejs-preset-basic</code> plugin. This plugin contains 3 packages to bundle. <code>grimoirejs</code>,<code>grimoirejs-math</code> and <code>grimoirejs-fundamental</code> is content of preset basic.</p>
+<p>You can notice this fact via your log on your console.</p>
+<ul>
+<li><code>grimoirejs-math</code></li>
+<li><code>grimoirejs-fundamental</code></li>
+</ul>
+<p><code>grimoirejs-math</code> contains several math related classes such as Vector3, Matrix and so on. This plugin also register several converters like <code>Vector3Converter</code> for using in <code>grimoirejs-fundamental</code> or your applications.<br><code>grimoirejs-fundamental</code> contains many components used for rendering with WebGL. This plugin depends on <code>grimoirejs-math</code>.</p>
+<h1 id="How-can-I-create-plugins"><a href="#How-can-I-create-plugins" class="headerlink" title="How can I create plugins?"></a>How can I create plugins?</h1><p>Our plugins are just set of registering components, converters and nodes. These can contain the other classes used on components.<br>Users can create plugins with javascript simply. But, Grimoire provides good tools for scaffolding environment for plugins.</p>
+<p>Our official packages are written in Typescript basically. This means users can receive tons of benefits if he use Typescript for development. Our scaffolding environment is providing Typescript environment.</p>
+<p><code>grimoirejs-couldron</code> is our scaffolder for plugin environment. This package is scaffolder and also is build tool for Grimoire.<br>You can install <code>grimoirejs-couldron</code> with the following command.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install grimoirejs-cauldron -g</span><br></pre></td></tr></table></figure>
+<p>After installation of the command, you can call <code>cauldron</code> command on CLI.</p>
+<h2 id="Scaffolding-your-project"><a href="#Scaffolding-your-project" class="headerlink" title="Scaffolding your project"></a>Scaffolding your project</h2><p>You can run <code>cauldron init</code> command for scaffolding in empty folder.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cauldron init -n <span class="string">"grimoirejs-&lt;your package name&gt;"</span></span><br></pre></td></tr></table></figure>
+<p>All of grimoire plugin should have name which is beginning with <code>grimoirejs-</code>. Therefore, cauldron will show warning if you provides the name that is not matching our suggested name format. This command will clone our template project and rewrite some configurations on package.json.</p>
+<p>After generating the folder, you need to install dependency from npm. Please execute <code>npm install</code> for collecting dependencies.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+<p>Then all preparations are done.</p>
+<h2 id="Build-your-projects"><a href="#Build-your-projects" class="headerlink" title="Build your projects"></a>Build your projects</h2><p>Our template contains some scripts on package.json initially. You can build or watch project with following commands.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm run build</span><br></pre></td></tr></table></figure>
+<p>Bundled scripts will be generated on <code>register</code> folder on the project root. And several files used when the package was required from the other package is included in <code>ref</code> folder.<br><strong>Do not rename these folder. These name is clearly defined in our plugin specification.</strong></p>
+<p>There are several flags to use build command.</p>
+<ul>
+<li>env.browser・・・Generate only for browser(<plugin name="">.js and map file will be generated)</plugin></li>
+<li>env.npm ・・・Generate only for npm publishing to be required from the other packages(index.js and map will be generated)</li>
+<li>env.prod・・・This should be executed when you publish your package. This will produce the files produced by <code>env.browser</code> and <code>env.npm</code>. And minified javascript for browser environment will be generated also.</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm run build -- --env.browser</span><br></pre></td></tr></table></figure>
+<h2 id="Watch-your-projects"><a href="#Watch-your-projects" class="headerlink" title="Watch your projects"></a>Watch your projects</h2><p>If you are used to modern web development environment, you would need to watch the files to bundle them immediately.<br>You can just call <code>npm start</code>. Watching also can accept all flags cited on <code>build</code> command.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm start -- --env.prod</span><br></pre></td></tr></table></figure>
+<h1 id="Scaffolding-source-codes"><a href="#Scaffolding-source-codes" class="headerlink" title="Scaffolding source codes"></a>Scaffolding source codes</h1><p><code>cauldron</code> command also provides feature to scaffold components or converters.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cauldron scaffold -t component -n Foo</span><br><span class="line">$ cauldron scaffold -t converter -n Var</span><br></pre></td></tr></table></figure>
+<p><code>src/Components/FooComponent.ts</code> will be generated by the command on first line.<br><code>src/Converter/VarConverter.ts</code> will be generated by secound line command.</p>
+<p>These commands are just generating file. You probably need to add <code>registerComponent</code> from <code>registerConverter</code> in <code>src/main.ts</code>.</p>
+<h2 id="How-to-publish-plugin"><a href="#How-to-publish-plugin" class="headerlink" title="How to publish plugin?"></a>How to publish plugin?</h2><p>You can publish your own package with <code>npm publish</code>.<br>Your package should contain <code>src</code>,<code>ref</code> and <code>register</code> folder. These folder is necessary for our plugins.</p>
+<p>We highly recommend to use CI to check the packages are valid. Our official packages are basically managed with CircleCI.<br>These configurations must be helpful for you to grow your packages.</p>
+
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/guide/1_essentials/06_plugin.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

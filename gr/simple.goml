@@ -1,0 +1,10 @@
+<goml height="160" width="160">
+  <scene>
+    <camera position="0,0,5" far="20"/>
+    <mesh geometry="cube" texture="gr/logo.png">
+      <mesh.components>
+        <Rotate />
+      </mesh.components>
+    </mesh>
+  </scene>
+</goml>

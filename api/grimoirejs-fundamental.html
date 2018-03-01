@@ -1,0 +1,1064 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>grimoirejs-fundamental | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概要インストール1$ npm install grimoirejs-fundamental --save unpkg.comによるCDNも利用可能。  CDN - grimoirejs-fundamental -   一覧ノード   ノード名 説明     &amp;lt;goml&amp;gt; GOMLファイルのルートノード   &amp;lt;scene&amp;gt; ある3D空間上のモデルの配置やカメラの設定などの場面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="grimoirejs-fundamental">
+<meta property="og:url" content="https://grimoire.gl/api/grimoirejs-fundamental.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="概要インストール1$ npm install grimoirejs-fundamental --save unpkg.comによるCDNも利用可能。  CDN - grimoirejs-fundamental -   一覧ノード   ノード名 説明     &amp;lt;goml&amp;gt; GOMLファイルのルートノード   &amp;lt;scene&amp;gt; ある3D空間上のモデルの配置やカメラの設定などの場面">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.394Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="grimoirejs-fundamental">
+<meta name="twitter:description" content="概要インストール1$ npm install grimoirejs-fundamental --save unpkg.comによるCDNも利用可能。  CDN - grimoirejs-fundamental -   一覧ノード   ノード名 説明     &amp;lt;goml&amp;gt; GOMLファイルのルートノード   &amp;lt;scene&amp;gt; ある3D空間上のモデルの配置やカメラの設定などの場面">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+  <div id="content">
+    <h1 id="content-title">grimoirejs-fundamental</h1>
+    <h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><h1 id="インストール"><a href="#インストール" class="headerlink" title="インストール"></a>インストール</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install grimoirejs-fundamental --save</span><br></pre></td></tr></table></figure>
+<p><a href="https://unpkg.com" target="_blank" rel="noopener">unpkg.com</a>によるCDNも利用可能。</p>
+<p><strong> <a href="https://unpkg.com/grimoirejs-fundamental/register/grimoire-fundamental.js" target="_blank" rel="noopener">CDN - grimoirejs-fundamental - </a> </strong></p>
+<h1 id="一覧"><a href="#一覧" class="headerlink" title="一覧"></a>一覧</h1><h2 id="ノード"><a href="#ノード" class="headerlink" title="ノード"></a>ノード</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">ノード名</th>
+<th style="text-align:center">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a href="#gomlノード"><code>&lt;goml&gt;</code></a></td>
+<td style="text-align:center">GOMLファイルのルートノード</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#sceneノード"><code>&lt;scene&gt;</code></a></td>
+<td style="text-align:center">ある3D空間上のモデルの配置やカメラの設定などの場面の設定を含むためのノード</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#objectノード"><code>&lt;object&gt;</code></a></td>
+<td style="text-align:center">3D空間上の物体を意味するノード</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#cameraノード"><code>&lt;camera&gt;</code></a></td>
+<td style="text-align:center">3D空間を撮影するためのカメラのノード</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#meshノード"><code>&lt;mesh&gt;</code></a></td>
+<td style="text-align:center">3D空間上のモデルなど、 <strong>映るもの</strong> を表すためのノード</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#rendererノード"><code>&lt;renderer&gt;</code></a></td>
+<td style="text-align:center">キャンバスの描画手法を指定するためのノード</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#geometryノード"><code>&lt;geometry&gt;</code></a></td>
+<td style="text-align:center">新しい形状を生成するためのノード</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#textureノード"><code>&lt;texture&gt;</code></a></td>
+<td style="text-align:center">テクスチャを明示的に読み込むためのノード</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#materialノード"><code>&lt;material&gt;</code></a></td>
+<td style="text-align:center">マテリアルを明示的に読み込むためのノード</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#import-materialノード"><code>&lt;import-material&gt;</code></a></td>
+<td style="text-align:center">新しいマテリアルを外部から読み込むためのノード</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#texture-bufferノード"><code>&lt;texture-buffer&gt;</code></a></td>
+<td style="text-align:center">カラーバッファ用のテクスチャを生成するためのノード</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#render-bufferノード"><code>&lt;render-buffer&gt;</code></a></td>
+<td style="text-align:center">深度バッファ/ステンシルバッファ用の<code>renderbuffer</code>を生成するためのノード</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#render-sceneノード"><code>&lt;render-scene&gt;</code></a></td>
+<td style="text-align:center">シーンを描画するレンダリング手順を表すためのノード</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#render-quadノード"><code>&lt;render-quad&gt;</code></a></td>
+<td style="text-align:center">四角形単体を特定のマテリアルで描画するためのノード</td>
+</tr>
+</tbody>
+</table>
+<h2 id="コンポーネント"><a href="#コンポーネント" class="headerlink" title="コンポーネント"></a>コンポーネント</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">コンポーネント名</th>
+<th style="text-align:center">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a href="#AssetLoadingManagerComponentコンポーネント"><code>&lt;AssetLoadingManagerComponent&gt;</code></a></td>
+<td style="text-align:center">アセットの読み込みを司るコンポーネント。ローダーの表示などを司る。</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#CameraComponentコンポーネント"><code>&lt;CameraComponent&gt;</code></a></td>
+<td style="text-align:center">シーンを描画するカメラのコンポーネント</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#CanvasInitializerComponentコンポーネント"><code>&lt;CanvasInitializerComponent&gt;</code></a></td>
+<td style="text-align:center">キャンバスの初期化及び設定を司るコンポーネント</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#ClickableMeshComponentコンポーネント"><code>&lt;ClickableMeshComponent&gt;</code></a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#FullscreenComponentコンポーネント"><code>&lt;FullscreenComponent&gt;</code></a></td>
+<td style="text-align:center">フルスクリーン状態を管理するコンポーネント</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#GeometryComponentコンポーネント"><code>&lt;GeometryComponent&gt;</code></a></td>
+<td style="text-align:center">ジオメトリを生成するためのコンポーネント</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#GeometryRegistoryComponentコンポーネント"><code>&lt;GeometryRegistoryComponent&gt;</code></a></td>
+<td style="text-align:center">ジオメトリを管理するコンポーネント</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#HTMLBinderComponentコンポーネント"><code>&lt;HTMLBinderComponent&gt;</code></a></td>
+<td style="text-align:center">(Deprecated)DOM要素とTransformを同期させるためのコンポーネント</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#LoopManagerComponentコンポーネント"><code>&lt;LoopManagerComponent&gt;</code></a></td>
+<td style="text-align:center">全体のループを管理しているコンポーネント。あまり直接ユーザーがいじることはありません。</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#MaterialComponentコンポーネント"><code>&lt;MaterialComponent&gt;</code></a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#MaterialContainerComponentコンポーネント"><code>&lt;MaterialContainerComponent&gt;</code></a></td>
+<td style="text-align:center">マテリアルとマテリアルへの属性を管理するためのコンポーネント</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#MaterialImporterComponentコンポーネント"><code>&lt;MaterialImporterComponent&gt;</code></a></td>
+<td style="text-align:center">マテリアル設定ファイルを読み込むためのコンポーネント</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#MouseCameraControlComponentコンポーネント"><code>&lt;MouseCameraControlComponent&gt;</code></a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#RenderBufferComponentコンポーネント"><code>&lt;RenderBufferComponent&gt;</code></a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#RendererComponentコンポーネント"><code>&lt;RendererComponent&gt;</code></a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#RendererManagerComponentコンポーネント"><code>&lt;RendererManagerComponent&gt;</code></a></td>
+<td style="text-align:center">全レンダラーを管理するためのコンポーネント</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#RenderHitareaComponentコンポーネント"><code>&lt;RenderHitareaComponent&gt;</code></a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#RenderQuadComponentコンポーネント"><code>&lt;RenderQuadComponent&gt;</code></a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#RenderSceneComponentコンポーネント"><code>&lt;RenderSceneComponent&gt;</code></a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#SceneComponentコンポーネント"><code>&lt;SceneComponent&gt;</code></a></td>
+<td style="text-align:center">特定のシーン内に関連する処理を行うためのコンポーネント</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#TextureBufferComponentコンポーネント"><code>&lt;TextureBufferComponent&gt;</code></a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#TextureComponentコンポーネント"><code>&lt;TextureComponent&gt;</code></a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#TimeComponentコンポーネント"><code>&lt;TimeComponent&gt;</code></a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#TransformComponentコンポーネント"><code>&lt;TransformComponent&gt;</code></a></td>
+<td style="text-align:center">シーン中に存在する物体の変形を司るコンポーネント</td>
+</tr>
+</tbody>
+</table>
+<h2 id="コンバーター"><a href="#コンバーター" class="headerlink" title="コンバーター"></a>コンバーター</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">コンバーター名</th>
+<th style="text-align:center">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a href="#CanvasSizeConverterコンバーター"><code>CanvasSizeConverter</code></a></td>
+<td style="text-align:center">キャンバスのサイズ用のコンバーター</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#GeometryConverterコンバーター"><code>GeometryConverter</code></a></td>
+<td style="text-align:center">ジオメトリを指定するためのコンバーター</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#MaterialConverterコンバーター"><code>MaterialConverter</code></a></td>
+<td style="text-align:center">マテリアルを指定するためのコンバーター</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#NodeConverterコンバーター"><code>NodeConverter</code></a></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#TextureConverterコンバーター"><code>TextureConverter</code></a></td>
+<td style="text-align:center">テクスチャへの参照を取得するためのコンバーター</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="#ViewportConverterコンバーター"><code>ViewportConverter</code></a></td>
+<td style="text-align:center">ビューポートサイズを設定するためのコンバーター</td>
+</tr>
+</tbody>
+</table>
+<h1 id="ノード詳細"><a href="#ノード詳細" class="headerlink" title="ノード詳細"></a>ノード詳細</h1><h2 id="gomlノード"><a href="#gomlノード" class="headerlink" title="gomlノード"></a>gomlノード</h2><p>GOMLファイルのルートノード<br>ツリーに唯一一つ必要なコンポーネントなどをつけておくためのノード。<br>特に、<code>&lt;canvas&gt;</code>の初期化やループの管理など、最初の初期化時のパラメーターを受け取るためのコンポーネントとともに、<br><code>&lt;canvas&gt;</code>の設定(<code>width</code>や<code>height</code>)またはフルスクリーンなどのコンポーネントを含む。</p>
+<h3 id="コンポーネント-1"><a href="#コンポーネント-1" class="headerlink" title="コンポーネント"></a>コンポーネント</h3><ul>
+<li>CanvasInitializer</li>
+<li>LoopManager</li>
+<li>AssetLoadingManager</li>
+<li>GeometryRegistory</li>
+<li>RendererManager</li>
+<li>Fullscreen</li>
+</ul>
+<h2 id="sceneノード"><a href="#sceneノード" class="headerlink" title="sceneノード"></a>sceneノード</h2><p>ある3D空間上のモデルの配置やカメラの設定などの場面の設定を含むためのノード<br>カメラや、ライト、メッシュなど空間に配置するためのノードです。<br>全ての場面に存在する座標を持ちうるノード(<code>TransformComponent</code>を含むノード)は必ずこのノードの子ノードのとして存在する必要があります。</p>
+<h3 id="コンポーネント-2"><a href="#コンポーネント-2" class="headerlink" title="コンポーネント"></a>コンポーネント</h3><ul>
+<li>Scene</li>
+</ul>
+<h2 id="objectノード"><a href="#objectノード" class="headerlink" title="objectノード"></a>objectノード</h2><p>3D空間上の物体を意味するノード<br>メッシュやカメラなどのベースとなるノードです。このノードの子要素には親要素の変型量(<code>position</code>や<code>rotation</code>)などが伝搬します。<br>詳しくは<code>TransformComponent</code>を参照すると良いでしょう。</p>
+<h3 id="コンポーネント-3"><a href="#コンポーネント-3" class="headerlink" title="コンポーネント"></a>コンポーネント</h3><ul>
+<li>Transform</li>
+</ul>
+<h2 id="cameraノード"><a href="#cameraノード" class="headerlink" title="cameraノード"></a>cameraノード</h2><p><strong>継承元:&lt;object&gt;</strong></p>
+<p>3D空間を撮影するためのカメラのノード<br>3D空間を撮影するためのカメラを意味するノードです。シーンをレンダリングするには最低一つのカメラがシーンに属していなければなりません。</p>
+<h3 id="コンポーネント-4"><a href="#コンポーネント-4" class="headerlink" title="コンポーネント"></a>コンポーネント</h3><ul>
+<li>Camera</li>
+</ul>
+<h2 id="meshノード"><a href="#meshノード" class="headerlink" title="meshノード"></a>meshノード</h2><p><strong>継承元:&lt;object&gt;</strong></p>
+<p>3D空間上のモデルなど、 <strong>映るもの</strong> を表すためのノード<br>3D空間上に存在する映るものを意味するノードです。シーンに何かを写すには最低一つのメッシュがシーンに属していなければなりません。<br>メッシュは、マテリアル(材質)とジオメトリ(形状)からなります。この2つの指定を変えることで、様々な表現が3D空間上で可能になります。</p>
+<h3 id="コンポーネント-5"><a href="#コンポーネント-5" class="headerlink" title="コンポーネント"></a>コンポーネント</h3><ul>
+<li>MaterialContainer</li>
+<li>MeshRenderer</li>
+</ul>
+<h2 id="rendererノード"><a href="#rendererノード" class="headerlink" title="rendererノード"></a>rendererノード</h2><p>キャンバスの描画手法を指定するためのノード<br>キャンバス上の領域をどのように描画するかを示すためのノードです。gomlの読み込み時に一つも存在しない場合は、自動的にgoml直下に生成されます。<br>1つ以上のレンダラーを含むことで、キャンバスの複数の領域をレンダリングしたりすることができるようになります。<br>また、この子要素に指定する<code>&lt;render-XXX&gt;</code>ノードなどによって、どのようにその領域を描画するかが決定されます。<br>通常、<code>&lt;renderer&gt;</code>の子ノードに何も存在しない場合、自動的に<code>&lt;render-scene&gt;</code>タグが生成されます。</p>
+<h3 id="コンポーネント-6"><a href="#コンポーネント-6" class="headerlink" title="コンポーネント"></a>コンポーネント</h3><ul>
+<li>Renderer</li>
+</ul>
+<h2 id="geometryノード"><a href="#geometryノード" class="headerlink" title="geometryノード"></a>geometryノード</h2><p>新しい形状を生成するためのノード<br>単純な変形(<code>scale</code>、<code>position</code>、<code>rotation</code>だけで表せない)、例えば円の分割数などを指定したい別の形状を明示的に生成するためのノードです。</p>
+<h3 id="コンポーネント-7"><a href="#コンポーネント-7" class="headerlink" title="コンポーネント"></a>コンポーネント</h3><ul>
+<li>Geometry</li>
+</ul>
+<h2 id="textureノード"><a href="#textureノード" class="headerlink" title="textureノード"></a>textureノード</h2><p>テクスチャを明示的に読み込むためのノード<br>テクスチャを読み込むためのノードです。通常、テクスチャはurlをマテリアルに指定するなどして読み込まれますが、<br>サンプラの指定などをしたい場合、このタグで明示的に読み込むことにより読み込むことができます。</p>
+<h3 id="コンポーネント-8"><a href="#コンポーネント-8" class="headerlink" title="コンポーネント"></a>コンポーネント</h3><ul>
+<li>Texture</li>
+</ul>
+<h2 id="materialノード"><a href="#materialノード" class="headerlink" title="materialノード"></a>materialノード</h2><p>マテリアルを明示的に読み込むためのノード<br>マテリアルを生成するためのノードです。メッシュからこのノードを参照して利用することにより、複数のメッシュで共通のマテリアルのインスタンスを参照させることができます。<br>これは、同時にマテリアルの値が編集できるだけでなく、パフォーマンス的にも大きな利点をもたらします。</p>
+<h3 id="コンポーネント-9"><a href="#コンポーネント-9" class="headerlink" title="コンポーネント"></a>コンポーネント</h3><ul>
+<li>Material</li>
+</ul>
+<h2 id="import-materialノード"><a href="#import-materialノード" class="headerlink" title="import-materialノード"></a>import-materialノード</h2><p>新しいマテリアルを外部から読み込むためのノード<br>Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテリアルを読み込むためのノードです。</p>
+<h3 id="コンポーネント-10"><a href="#コンポーネント-10" class="headerlink" title="コンポーネント"></a>コンポーネント</h3><ul>
+<li>MaterialImporter</li>
+</ul>
+<h2 id="texture-bufferノード"><a href="#texture-bufferノード" class="headerlink" title="texture-bufferノード"></a>texture-bufferノード</h2><p>カラーバッファ用のテクスチャを生成するためのノード<br><code>&lt;renderer&gt;</code>ノードの直下に含まれうるノードの一つです。<br>このノードによってレンダリングに用いるカラーバッファを生成することができます。<br>カラーバッファはオフスクリーンレンダリングなどへの利用など様々な面で利用することができます。</p>
+<h3 id="コンポーネント-11"><a href="#コンポーネント-11" class="headerlink" title="コンポーネント"></a>コンポーネント</h3><ul>
+<li>TextureBuffer</li>
+</ul>
+<h2 id="render-bufferノード"><a href="#render-bufferノード" class="headerlink" title="render-bufferノード"></a>render-bufferノード</h2><p>深度バッファ/ステンシルバッファ用の<code>renderbuffer</code>を生成するためのノード<br><code>&lt;renderer&gt;</code>ノードの直下に含まれうるノードの一つです。<br>このノードによってレンダリングに用いる深度バッファやステンシルバッファを生成することができます。</p>
+<h3 id="コンポーネント-12"><a href="#コンポーネント-12" class="headerlink" title="コンポーネント"></a>コンポーネント</h3><ul>
+<li>RenderBuffer</li>
+</ul>
+<h2 id="render-sceneノード"><a href="#render-sceneノード" class="headerlink" title="render-sceneノード"></a>render-sceneノード</h2><p>シーンを描画するレンダリング手順を表すためのノード<br><code>&lt;renderer&gt;</code>ノードの直下に含まれうるノードの一つです。<br>このノードは<code>out</code>に指定されたテクスチャ(デフォルトではキャンバス自身)に対して、シーンの内容を描画します。</p>
+<h3 id="コンポーネント-13"><a href="#コンポーネント-13" class="headerlink" title="コンポーネント"></a>コンポーネント</h3><ul>
+<li>RenderScene</li>
+<li>RenderHitArea</li>
+</ul>
+<h2 id="render-quadノード"><a href="#render-quadノード" class="headerlink" title="render-quadノード"></a>render-quadノード</h2><p>四角形単体を特定のマテリアルで描画するためのノード<br><code>&lt;renderer&gt;</code>ノードの直下に含まれうるノードの一つです。<br>このノードは<code>out</code>に指定されたテクスチャ(デフォルトではキャンバス自身)に対して、単純な四角形(<code>quad</code>)を指定されたマテリアルで描画します。</p>
+<h3 id="コンポーネント-14"><a href="#コンポーネント-14" class="headerlink" title="コンポーネント"></a>コンポーネント</h3><ul>
+<li>MaterialContainer</li>
+<li>RenderQuad</li>
+</ul>
+<h1 id="コンポーネント詳細"><a href="#コンポーネント詳細" class="headerlink" title="コンポーネント詳細"></a>コンポーネント詳細</h1><h2 id="AssetLoadingManagerComponentコンポーネント"><a href="#AssetLoadingManagerComponentコンポーネント" class="headerlink" title="AssetLoadingManagerComponentコンポーネント"></a>AssetLoadingManagerComponentコンポーネント</h2><p>アセットの読み込みを司るコンポーネント。ローダーの表示などを司る。</p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">loadingProgress</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:center">現在の読み込み状況を0-1で表す。</td>
+</tr>
+<tr>
+<td style="text-align:center">autoStart</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center">リソースの読み込み完了後に、自動的にレンダリングループを開始するかどうか</td>
+</tr>
+<tr>
+<td style="text-align:center">enableLoader</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center">リソースのロード時にローディング画面を表示するかどうか</td>
+</tr>
+</tbody>
+</table>
+<h4 id="loadingProgress属性"><a href="#loadingProgress属性" class="headerlink" title="loadingProgress属性"></a>loadingProgress属性</h4><p><strong>初期値</strong> ・・・ <code>0</code><br><strong>コンバーター</strong> ・・・ <code>Number</code></p>
+<p>現在の読み込み状況を0-1で表す。</p>
+<h4 id="autoStart属性"><a href="#autoStart属性" class="headerlink" title="autoStart属性"></a>autoStart属性</h4><p><strong>初期値</strong> ・・・ <code>true</code><br><strong>コンバーター</strong> ・・・ <code>Boolean</code></p>
+<p>リソースの読み込み完了後に、自動的にレンダリングループを開始するかどうか</p>
+<h4 id="enableLoader属性"><a href="#enableLoader属性" class="headerlink" title="enableLoader属性"></a>enableLoader属性</h4><p><strong>初期値</strong> ・・・ <code>true</code><br><strong>コンバーター</strong> ・・・ <code>Boolean</code></p>
+<p>リソースのロード時にローディング画面を表示するかどうか</p>
+<h2 id="CameraComponentコンポーネント"><a href="#CameraComponentコンポーネント" class="headerlink" title="CameraComponentコンポーネント"></a>CameraComponentコンポーネント</h2><p>シーンを描画するカメラのコンポーネント<br>このコンポーネントによって、透視射影や正方射影などの歪みを調整します。<br>また、このコンポーネントの付属するノードに属する<code>Transoform</code>によって、カメラの位置や向きが確定されます。</p>
+<h3 id="属性-1"><a href="#属性-1" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">fovy</td>
+<td style="text-align:center">Angle2D</td>
+<td style="text-align:center">カメラの視野角。</td>
+</tr>
+<tr>
+<td style="text-align:center">near</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:center">カメラに映るもっとも近い距離です。</td>
+</tr>
+<tr>
+<td style="text-align:center">far</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:center">far - nearの値があまりにも大きいと、Z-fighting(手前の物体が奥に表示されたように見えたりする)現象が起きる可能性があります。</td>
+</tr>
+<tr>
+<td style="text-align:center">aspect</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:center">カメラのアスペクト比</td>
+</tr>
+<tr>
+<td style="text-align:center">autoAspect</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center">アスペクト比の自動調整が有効か否か</td>
+</tr>
+<tr>
+<td style="text-align:center">orthoSize</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:center">正射影時の横の基準サイズ</td>
+</tr>
+<tr>
+<td style="text-align:center">orthogonal</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center">この属性がfalseである場合、カメラは透視射影としてシーンをレンダリングします。この場合、レンダリング結果にパース(奥行き感)が出ます。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="fovy属性"><a href="#fovy属性" class="headerlink" title="fovy属性"></a>fovy属性</h4><p><strong>初期値</strong> ・・・ <code>45d</code><br><strong>コンバーター</strong> ・・・ <code>Angle2D</code></p>
+<p>カメラの視野角。<br>orthogonal属性がtrueである場合この属性は無視されます。</p>
+<h4 id="near属性"><a href="#near属性" class="headerlink" title="near属性"></a>near属性</h4><p><strong>初期値</strong> ・・・ <code>0.01</code><br><strong>コンバーター</strong> ・・・ <code>Number</code></p>
+<p>カメラに映るもっとも近い距離です。<br>0よりも大きく、far属性よりも小さい必要があります。</p>
+<h4 id="far属性"><a href="#far属性" class="headerlink" title="far属性"></a>far属性</h4><p><strong>初期値</strong> ・・・ <code>100</code><br><strong>コンバーター</strong> ・・・ <code>Number</code></p>
+<p>far - nearの値があまりにも大きいと、Z-fighting(手前の物体が奥に表示されたように見えたりする)現象が起きる可能性があります。<br>この差があまりに大きい時、カメラに映る物体の座標の小さいz座標の値の差は0に近似されます。<br>逆にこの値が小さい時は、カメラに映る物体はある程度小さいz座標の差でも問題なく表示されます。<br><strong>大切なのは、写したい空間よりも無駄に大きくしないこと。常に適切な値を設定するべきです</strong></p>
+<h4 id="aspect属性"><a href="#aspect属性" class="headerlink" title="aspect属性"></a>aspect属性</h4><p><strong>初期値</strong> ・・・ <code>1.6</code><br><strong>コンバーター</strong> ・・・ <code>Number</code></p>
+<p>カメラのアスペクト比<br>カメラの横の大きさと縦の大きさの比率を指定します。autoAspect属性がtrueである時、毎回のレンダリング時にこの値を自動調整します。</p>
+<h4 id="autoAspect属性"><a href="#autoAspect属性" class="headerlink" title="autoAspect属性"></a>autoAspect属性</h4><p><strong>初期値</strong> ・・・ <code>true</code><br><strong>コンバーター</strong> ・・・ <code>Boolean</code></p>
+<p>アスペクト比の自動調整が有効か否か<br>レンダリング時にそのビューポートの大きさに応じて比率を自動調整するかどうかを示します。</p>
+<h4 id="orthoSize属性"><a href="#orthoSize属性" class="headerlink" title="orthoSize属性"></a>orthoSize属性</h4><p><strong>初期値</strong> ・・・ <code>100</code><br><strong>コンバーター</strong> ・・・ <code>Number</code></p>
+<p>正射影時の横の基準サイズ<br>正射影時はfovy属性を用いて自動的に写す領域を決定できません。<br>そのため、横の一片のサイズをこの属性で指定します。<strong>アスペクト比は計算に用いられることに注意してください。</strong></p>
+<h4 id="orthogonal属性"><a href="#orthogonal属性" class="headerlink" title="orthogonal属性"></a>orthogonal属性</h4><p><strong>初期値</strong> ・・・ <code>false</code><br><strong>コンバーター</strong> ・・・ <code>Boolean</code></p>
+<p>この属性がfalseである場合、カメラは透視射影としてシーンをレンダリングします。この場合、レンダリング結果にパース(奥行き感)が出ます。<br>一方、この属性がtrueである場合、カメラは正射影としてシーンをレンダリングします。この場合、レンダリング結果には奥行き感は出ません。</p>
+<h2 id="CanvasInitializerComponentコンポーネント"><a href="#CanvasInitializerComponentコンポーネント" class="headerlink" title="CanvasInitializerComponentコンポーネント"></a>CanvasInitializerComponentコンポーネント</h2><p>キャンバスの初期化及び設定を司るコンポーネント<br>このコンポーネントによって、適切な位置に<code>&lt;canvas&gt;</code>を初期化してWebGLコンテキストを初期化します。</p>
+<h3 id="属性-2"><a href="#属性-2" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">width</td>
+<td style="text-align:center">CanvasSize</td>
+<td style="text-align:center">キャンバスタグの横幅を指定します。</td>
+</tr>
+<tr>
+<td style="text-align:center">height</td>
+<td style="text-align:center">CanvasSize</td>
+<td style="text-align:center">キャンバスタグの縦幅を指定します。</td>
+</tr>
+<tr>
+<td style="text-align:center">containerId</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center">キャンバス要素の直接の親要素のコンテナに割り当てるidを指定します。</td>
+</tr>
+<tr>
+<td style="text-align:center">containerClass</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center">キャンバス要素の直接の親要素のコンテナに割り当てるクラス名を指定します。</td>
+</tr>
+<tr>
+<td style="text-align:center">preserveDrawingBuffer</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center">描画結果をdataURLに変換する際などはこの属性がtrueでないと正常にレンダリング結果を取得できません。</td>
+</tr>
+<tr>
+<td style="text-align:center">antialias</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center">この属性は、途中で動的に変更することができません。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="width属性"><a href="#width属性" class="headerlink" title="width属性"></a>width属性</h4><p><strong>初期値</strong> ・・・ <code>fit</code><br><strong>コンバーター</strong> ・・・ <code>CanvasSize</code></p>
+<p>キャンバスタグの横幅を指定します。</p>
+<h4 id="height属性"><a href="#height属性" class="headerlink" title="height属性"></a>height属性</h4><p><strong>初期値</strong> ・・・ <code>fit</code><br><strong>コンバーター</strong> ・・・ <code>CanvasSize</code></p>
+<p>キャンバスタグの縦幅を指定します。</p>
+<h4 id="containerId属性"><a href="#containerId属性" class="headerlink" title="containerId属性"></a>containerId属性</h4><p><strong>初期値</strong> ・・・ <code>(Empty string)</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<p>キャンバス要素の直接の親要素のコンテナに割り当てるidを指定します。</p>
+<h4 id="containerClass属性"><a href="#containerClass属性" class="headerlink" title="containerClass属性"></a>containerClass属性</h4><p><strong>初期値</strong> ・・・ <code>gr-container</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<p>キャンバス要素の直接の親要素のコンテナに割り当てるクラス名を指定します。</p>
+<h4 id="preserveDrawingBuffer属性"><a href="#preserveDrawingBuffer属性" class="headerlink" title="preserveDrawingBuffer属性"></a>preserveDrawingBuffer属性</h4><p><strong>初期値</strong> ・・・ <code>true</code><br><strong>コンバーター</strong> ・・・ <code>Boolean</code></p>
+<p>描画結果をdataURLに変換する際などはこの属性がtrueでないと正常にレンダリング結果を取得できません。</p>
+<h4 id="antialias属性"><a href="#antialias属性" class="headerlink" title="antialias属性"></a>antialias属性</h4><p><strong>初期値</strong> ・・・ <code>true</code><br><strong>コンバーター</strong> ・・・ <code>Boolean</code></p>
+<p>この属性は、途中で動的に変更することができません。</p>
+<h2 id="ClickableMeshComponentコンポーネント"><a href="#ClickableMeshComponentコンポーネント" class="headerlink" title="ClickableMeshComponentコンポーネント"></a>ClickableMeshComponentコンポーネント</h2><h3 id="属性-3"><a href="#属性-3" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="FullscreenComponentコンポーネント"><a href="#FullscreenComponentコンポーネント" class="headerlink" title="FullscreenComponentコンポーネント"></a>FullscreenComponentコンポーネント</h2><p>フルスクリーン状態を管理するコンポーネント<br>Grimoire.jsによって管理されているキャンバス(正確にはその親のコンテナ)のフルスクリーン状態等を管理します。<br>(他の要素をフルスクリーン化することも可能ですが、通常このGrimoire.jsによって生成されるキャンバスを含むDOM要素に対して用いられます。)<br>また、一部の古いブラウザでは動作しない機能であることに注意してください。<br>また、<code>fullscreen</code>属性は必ず マウスのイベントなどのユーザーのインタラクションを伴うイベントからの呼び出しで <strong>動的に</strong> trueにされる必要があります。<br>最初からtrueに設定して初期状態でキャンバスをフルスクリーン状態にすることはWebAPIの制約上できません。</p>
+<h3 id="属性-4"><a href="#属性-4" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">fullscreen</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center">このフラグをtrueにする際は、<strong>必ず</strong>、マウスイベントなどのユーザーのインタラクションを伴うイベントからの呼び出しで変更されなければなりません。</td>
+</tr>
+<tr>
+<td style="text-align:center">fullscreenTarget</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center">nullが指定された場合、キャンバスの親要素が用いられます。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="fullscreen属性"><a href="#fullscreen属性" class="headerlink" title="fullscreen属性"></a>fullscreen属性</h4><p><strong>初期値</strong> ・・・ <code>false</code><br><strong>コンバーター</strong> ・・・ <code>Boolean</code></p>
+<p>このフラグをtrueにする際は、<strong>必ず</strong>、マウスイベントなどのユーザーのインタラクションを伴うイベントからの呼び出しで変更されなければなりません。  </p>
+<p>したがって、GOMLで初期状態からこのフラグをtrueにすることはできません。</p>
+<h4 id="fullscreenTarget属性"><a href="#fullscreenTarget属性" class="headerlink" title="fullscreenTarget属性"></a>fullscreenTarget属性</h4><p><strong>初期値</strong> ・・・ <code>null</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<p>nullが指定された場合、キャンバスの親要素が用いられます。</p>
+<h2 id="GeometryComponentコンポーネント"><a href="#GeometryComponentコンポーネント" class="headerlink" title="GeometryComponentコンポーネント"></a>GeometryComponentコンポーネント</h2><p>ジオメトリを生成するためのコンポーネント<br><code>type</code>属性に指定されたタイプのジオメトリを生成して、<code>name</code>属性に指定された名前で利用できる形にして登録します。<br>このコンポーネントは<code>type</code>属性に応じて、<strong>動的</strong> に属性が増えることに気をつけてください。</p>
+<h3 id="属性-5"><a href="#属性-5" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">type</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center"><code>GeometryFactory</code>に登録されたプリミティブのジェネレーターの名前を指します。</td>
+</tr>
+<tr>
+<td style="text-align:center">name</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center"><code>GeometryConverter</code>によって取得される際に利用されるジオメトリ名です。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="type属性"><a href="#type属性" class="headerlink" title="type属性"></a>type属性</h4><p><strong>初期値</strong> ・・・ <code>null</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<p><code>GeometryFactory</code>に登録されたプリミティブのジェネレーターの名前を指します。<br>この指定する名前によって、動的に属性が増えることに気をつけてください。<br>また、増えたジオメトリの属性は動的に操作できないことに気をつけてください。</p>
+<h4 id="name属性"><a href="#name属性" class="headerlink" title="name属性"></a>name属性</h4><p><strong>初期値</strong> ・・・ <code>null</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<p><code>GeometryConverter</code>によって取得される際に利用されるジオメトリ名です。<br>もし、<code>quad</code>など事前に登録されたジオメトリを指定した場合、そのジオメトリを上書きすることができます。</p>
+<h2 id="GeometryRegistoryComponentコンポーネント"><a href="#GeometryRegistoryComponentコンポーネント" class="headerlink" title="GeometryRegistoryComponentコンポーネント"></a>GeometryRegistoryComponentコンポーネント</h2><p>ジオメトリを管理するコンポーネント<br>あまりユーザーが直接操作することはありません。</p>
+<h3 id="属性-6"><a href="#属性-6" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">defaultGeometry</td>
+<td style="text-align:center">StringArray</td>
+<td style="text-align:center">デフォルトで生成するジオメトリの種類</td>
+</tr>
+</tbody>
+</table>
+<h4 id="defaultGeometry属性"><a href="#defaultGeometry属性" class="headerlink" title="defaultGeometry属性"></a>defaultGeometry属性</h4><p><strong>初期値</strong> ・・・ <code>quad,cube,sphere</code><br><strong>コンバーター</strong> ・・・ <code>StringArray</code></p>
+<p>デフォルトで生成するジオメトリの種類</p>
+<h2 id="HTMLBinderComponentコンポーネント"><a href="#HTMLBinderComponentコンポーネント" class="headerlink" title="HTMLBinderComponentコンポーネント"></a>HTMLBinderComponentコンポーネント</h2><p>(Deprecated)DOM要素とTransformを同期させるためのコンポーネント<br>このコンポーネントはfundamentalからは削除されます。(別のパッケージとして分離予定)</p>
+<h3 id="属性-7"><a href="#属性-7" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">htmlQuery</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">targetRenderer</td>
+<td style="text-align:center">String</td>
+</tr>
+</tbody>
+</table>
+<h4 id="htmlQuery属性"><a href="#htmlQuery属性" class="headerlink" title="htmlQuery属性"></a>htmlQuery属性</h4><p><strong>初期値</strong> ・・・ <code>null</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<h4 id="targetRenderer属性"><a href="#targetRenderer属性" class="headerlink" title="targetRenderer属性"></a>targetRenderer属性</h4><p><strong>初期値</strong> ・・・ <code>render-scene</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<h2 id="LoopManagerComponentコンポーネント"><a href="#LoopManagerComponentコンポーネント" class="headerlink" title="LoopManagerComponentコンポーネント"></a>LoopManagerComponentコンポーネント</h2><p>全体のループを管理しているコンポーネント。あまり直接ユーザーがいじることはありません。</p>
+<h3 id="属性-8"><a href="#属性-8" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">loopEnabled</td>
+<td style="text-align:center">Boolean</td>
+</tr>
+</tbody>
+</table>
+<h4 id="loopEnabled属性"><a href="#loopEnabled属性" class="headerlink" title="loopEnabled属性"></a>loopEnabled属性</h4><p><strong>初期値</strong> ・・・ <code>false</code><br><strong>コンバーター</strong> ・・・ <code>Boolean</code></p>
+<h2 id="MaterialComponentコンポーネント"><a href="#MaterialComponentコンポーネント" class="headerlink" title="MaterialComponentコンポーネント"></a>MaterialComponentコンポーネント</h2><h3 id="属性-9"><a href="#属性-9" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">type</td>
+<td style="text-align:center">String</td>
+</tr>
+</tbody>
+</table>
+<h4 id="type属性-1"><a href="#type属性-1" class="headerlink" title="type属性"></a>type属性</h4><p><strong>初期値</strong> ・・・ <code>null</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<h2 id="MaterialContainerComponentコンポーネント"><a href="#MaterialContainerComponentコンポーネント" class="headerlink" title="MaterialContainerComponentコンポーネント"></a>MaterialContainerComponentコンポーネント</h2><p>マテリアルとマテリアルへの属性を管理するためのコンポーネント<br>このコンポーネントは将来的に<code>MeshRenderer</code>と統合されます。<br>指定されたマテリアルの初期化の管理や、マテリアルによって動的に追加される属性の管理を行います、</p>
+<h3 id="属性-10"><a href="#属性-10" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">material</td>
+<td style="text-align:center">Material</td>
+<td style="text-align:center">対象のマテリアル</td>
+</tr>
+<tr>
+<td style="text-align:center">drawOrder</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center">デフォルトの状態では、マテリアルから読み込んだ描画順序設定を用います</td>
+</tr>
+</tbody>
+</table>
+<h4 id="material属性"><a href="#material属性" class="headerlink" title="material属性"></a>material属性</h4><p><strong>初期値</strong> ・・・ <code>new(unlit)</code><br><strong>コンバーター</strong> ・・・ <code>Material</code></p>
+<p>対象のマテリアル</p>
+<h4 id="drawOrder属性"><a href="#drawOrder属性" class="headerlink" title="drawOrder属性"></a>drawOrder属性</h4><p><strong>初期値</strong> ・・・ <code>null</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<p>デフォルトの状態では、マテリアルから読み込んだ描画順序設定を用います</p>
+<h2 id="MaterialImporterComponentコンポーネント"><a href="#MaterialImporterComponentコンポーネント" class="headerlink" title="MaterialImporterComponentコンポーネント"></a>MaterialImporterComponentコンポーネント</h2><p>マテリアル設定ファイルを読み込むためのコンポーネント</p>
+<h3 id="属性-11"><a href="#属性-11" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">typeName</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center">マテリアル名として登録される名前</td>
+</tr>
+<tr>
+<td style="text-align:center">src</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center">読み込み先のファイルパス</td>
+</tr>
+</tbody>
+</table>
+<h4 id="typeName属性"><a href="#typeName属性" class="headerlink" title="typeName属性"></a>typeName属性</h4><p><strong>初期値</strong> ・・・ <code>null</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<p>マテリアル名として登録される名前</p>
+<h4 id="src属性"><a href="#src属性" class="headerlink" title="src属性"></a>src属性</h4><p><strong>初期値</strong> ・・・ <code>null</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<p>読み込み先のファイルパス</p>
+<h2 id="MouseCameraControlComponentコンポーネント"><a href="#MouseCameraControlComponentコンポーネント" class="headerlink" title="MouseCameraControlComponentコンポーネント"></a>MouseCameraControlComponentコンポーネント</h2><h3 id="属性-12"><a href="#属性-12" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">rotateSpeed</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">zoomSpeed</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">moveSpeed</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">center</td>
+<td style="text-align:center">Position</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">distance</td>
+<td style="text-align:center">Number</td>
+</tr>
+</tbody>
+</table>
+<h4 id="rotateSpeed属性"><a href="#rotateSpeed属性" class="headerlink" title="rotateSpeed属性"></a>rotateSpeed属性</h4><p><strong>初期値</strong> ・・・ <code>1</code><br><strong>コンバーター</strong> ・・・ <code>Number</code></p>
+<h4 id="zoomSpeed属性"><a href="#zoomSpeed属性" class="headerlink" title="zoomSpeed属性"></a>zoomSpeed属性</h4><p><strong>初期値</strong> ・・・ <code>1</code><br><strong>コンバーター</strong> ・・・ <code>Number</code></p>
+<h4 id="moveSpeed属性"><a href="#moveSpeed属性" class="headerlink" title="moveSpeed属性"></a>moveSpeed属性</h4><p><strong>初期値</strong> ・・・ <code>1</code><br><strong>コンバーター</strong> ・・・ <code>Number</code></p>
+<h4 id="center属性"><a href="#center属性" class="headerlink" title="center属性"></a>center属性</h4><p><strong>初期値</strong> ・・・ <code>0,0,0</code><br><strong>コンバーター</strong> ・・・ <code>Position</code></p>
+<h4 id="distance属性"><a href="#distance属性" class="headerlink" title="distance属性"></a>distance属性</h4><p><strong>初期値</strong> ・・・ <code>null</code><br><strong>コンバーター</strong> ・・・ <code>Number</code></p>
+<h2 id="RenderBufferComponentコンポーネント"><a href="#RenderBufferComponentコンポーネント" class="headerlink" title="RenderBufferComponentコンポーネント"></a>RenderBufferComponentコンポーネント</h2><h3 id="属性-13"><a href="#属性-13" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">name</td>
+<td style="text-align:center">String</td>
+</tr>
+</tbody>
+</table>
+<h4 id="name属性-1"><a href="#name属性-1" class="headerlink" title="name属性"></a>name属性</h4><p><strong>初期値</strong> ・・・ <code>null</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<h2 id="RendererComponentコンポーネント"><a href="#RendererComponentコンポーネント" class="headerlink" title="RendererComponentコンポーネント"></a>RendererComponentコンポーネント</h2><h3 id="属性-14"><a href="#属性-14" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">camera</td>
+<td style="text-align:center">Component</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">viewport</td>
+<td style="text-align:center">Viewport</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">handleMouse</td>
+<td style="text-align:center">Boolean</td>
+</tr>
+</tbody>
+</table>
+<h4 id="camera属性"><a href="#camera属性" class="headerlink" title="camera属性"></a>camera属性</h4><p><strong>初期値</strong> ・・・ <code>camera</code><br><strong>コンバーター</strong> ・・・ <code>Component</code></p>
+<h4 id="viewport属性"><a href="#viewport属性" class="headerlink" title="viewport属性"></a>viewport属性</h4><p><strong>初期値</strong> ・・・ <code>auto</code><br><strong>コンバーター</strong> ・・・ <code>Viewport</code></p>
+<h4 id="handleMouse属性"><a href="#handleMouse属性" class="headerlink" title="handleMouse属性"></a>handleMouse属性</h4><p><strong>初期値</strong> ・・・ <code>true</code><br><strong>コンバーター</strong> ・・・ <code>Boolean</code></p>
+<h2 id="RendererManagerComponentコンポーネント"><a href="#RendererManagerComponentコンポーネント" class="headerlink" title="RendererManagerComponentコンポーネント"></a>RendererManagerComponentコンポーネント</h2><p>全レンダラーを管理するためのコンポーネント</p>
+<h3 id="属性-15"><a href="#属性-15" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="RenderHitareaComponentコンポーネント"><a href="#RenderHitareaComponentコンポーネント" class="headerlink" title="RenderHitareaComponentコンポーネント"></a>RenderHitareaComponentコンポーネント</h2><h3 id="属性-16"><a href="#属性-16" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="RenderQuadComponentコンポーネント"><a href="#RenderQuadComponentコンポーネント" class="headerlink" title="RenderQuadComponentコンポーネント"></a>RenderQuadComponentコンポーネント</h2><h3 id="属性-17"><a href="#属性-17" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">out</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">depthBuffer</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">targetBuffer</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">clearColor</td>
+<td style="text-align:center">Color4</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">clearColorEnabled</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">clearDepthEnabled</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">clearDepth</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">technique</td>
+<td style="text-align:center">String</td>
+</tr>
+</tbody>
+</table>
+<h4 id="out属性"><a href="#out属性" class="headerlink" title="out属性"></a>out属性</h4><p><strong>初期値</strong> ・・・ <code>default</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<h4 id="depthBuffer属性"><a href="#depthBuffer属性" class="headerlink" title="depthBuffer属性"></a>depthBuffer属性</h4><p><strong>初期値</strong> ・・・ <code>null</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<h4 id="targetBuffer属性"><a href="#targetBuffer属性" class="headerlink" title="targetBuffer属性"></a>targetBuffer属性</h4><p><strong>初期値</strong> ・・・ <code>default</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<h4 id="clearColor属性"><a href="#clearColor属性" class="headerlink" title="clearColor属性"></a>clearColor属性</h4><p><strong>初期値</strong> ・・・ <code>#0000</code><br><strong>コンバーター</strong> ・・・ <code>Color4</code></p>
+<h4 id="clearColorEnabled属性"><a href="#clearColorEnabled属性" class="headerlink" title="clearColorEnabled属性"></a>clearColorEnabled属性</h4><p><strong>初期値</strong> ・・・ <code>true</code><br><strong>コンバーター</strong> ・・・ <code>Boolean</code></p>
+<h4 id="clearDepthEnabled属性"><a href="#clearDepthEnabled属性" class="headerlink" title="clearDepthEnabled属性"></a>clearDepthEnabled属性</h4><p><strong>初期値</strong> ・・・ <code>true</code><br><strong>コンバーター</strong> ・・・ <code>Boolean</code></p>
+<h4 id="clearDepth属性"><a href="#clearDepth属性" class="headerlink" title="clearDepth属性"></a>clearDepth属性</h4><p><strong>初期値</strong> ・・・ <code>1</code><br><strong>コンバーター</strong> ・・・ <code>Number</code></p>
+<h4 id="technique属性"><a href="#technique属性" class="headerlink" title="technique属性"></a>technique属性</h4><p><strong>初期値</strong> ・・・ <code>default</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<h2 id="RenderSceneComponentコンポーネント"><a href="#RenderSceneComponentコンポーネント" class="headerlink" title="RenderSceneComponentコンポーネント"></a>RenderSceneComponentコンポーネント</h2><h3 id="属性-18"><a href="#属性-18" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">layer</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">depthBuffer</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">out</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">clearColor</td>
+<td style="text-align:center">Color4</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">clearColorEnabled</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">clearDepthEnabled</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">clearDepth</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">camera</td>
+<td style="text-align:center">Component</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">technique</td>
+<td style="text-align:center">String</td>
+</tr>
+</tbody>
+</table>
+<h4 id="layer属性"><a href="#layer属性" class="headerlink" title="layer属性"></a>layer属性</h4><p><strong>初期値</strong> ・・・ <code>default</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<h4 id="depthBuffer属性-1"><a href="#depthBuffer属性-1" class="headerlink" title="depthBuffer属性"></a>depthBuffer属性</h4><p><strong>初期値</strong> ・・・ <code>null</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<h4 id="out属性-1"><a href="#out属性-1" class="headerlink" title="out属性"></a>out属性</h4><p><strong>初期値</strong> ・・・ <code>default</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<h4 id="clearColor属性-1"><a href="#clearColor属性-1" class="headerlink" title="clearColor属性"></a>clearColor属性</h4><p><strong>初期値</strong> ・・・ <code>#0000</code><br><strong>コンバーター</strong> ・・・ <code>Color4</code></p>
+<h4 id="clearColorEnabled属性-1"><a href="#clearColorEnabled属性-1" class="headerlink" title="clearColorEnabled属性"></a>clearColorEnabled属性</h4><p><strong>初期値</strong> ・・・ <code>true</code><br><strong>コンバーター</strong> ・・・ <code>Boolean</code></p>
+<h4 id="clearDepthEnabled属性-1"><a href="#clearDepthEnabled属性-1" class="headerlink" title="clearDepthEnabled属性"></a>clearDepthEnabled属性</h4><p><strong>初期値</strong> ・・・ <code>true</code><br><strong>コンバーター</strong> ・・・ <code>Boolean</code></p>
+<h4 id="clearDepth属性-1"><a href="#clearDepth属性-1" class="headerlink" title="clearDepth属性"></a>clearDepth属性</h4><p><strong>初期値</strong> ・・・ <code>1</code><br><strong>コンバーター</strong> ・・・ <code>Number</code></p>
+<h4 id="camera属性-1"><a href="#camera属性-1" class="headerlink" title="camera属性"></a>camera属性</h4><p><strong>初期値</strong> ・・・ <code>null</code><br><strong>コンバーター</strong> ・・・ <code>Component</code></p>
+<h4 id="technique属性-1"><a href="#technique属性-1" class="headerlink" title="technique属性"></a>technique属性</h4><p><strong>初期値</strong> ・・・ <code>default</code><br><strong>コンバーター</strong> ・・・ <code>String</code></p>
+<h2 id="SceneComponentコンポーネント"><a href="#SceneComponentコンポーネント" class="headerlink" title="SceneComponentコンポーネント"></a>SceneComponentコンポーネント</h2><p>特定のシーン内に関連する処理を行うためのコンポーネント<br>このコンポーネントには属性が存在しません。</p>
+<h3 id="属性-19"><a href="#属性-19" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="TextureBufferComponentコンポーネント"><a href="#TextureBufferComponentコンポーネント" class="headerlink" title="TextureBufferComponentコンポーネント"></a>TextureBufferComponentコンポーネント</h2><h3 id="属性-20"><a href="#属性-20" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="TextureComponentコンポーネント"><a href="#TextureComponentコンポーネント" class="headerlink" title="TextureComponentコンポーネント"></a>TextureComponentコンポーネント</h2><h3 id="属性-21"><a href="#属性-21" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="TimeComponentコンポーネント"><a href="#TimeComponentコンポーネント" class="headerlink" title="TimeComponentコンポーネント"></a>TimeComponentコンポーネント</h2><h3 id="属性-22"><a href="#属性-22" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">time</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">timeDelta</td>
+<td style="text-align:center">Number</td>
+</tr>
+</tbody>
+</table>
+<h4 id="time属性"><a href="#time属性" class="headerlink" title="time属性"></a>time属性</h4><p><strong>初期値</strong> ・・・ <code>0</code><br><strong>コンバーター</strong> ・・・ <code>Number</code></p>
+<h4 id="timeDelta属性"><a href="#timeDelta属性" class="headerlink" title="timeDelta属性"></a>timeDelta属性</h4><p><strong>初期値</strong> ・・・ <code>0</code><br><strong>コンバーター</strong> ・・・ <code>Number</code></p>
+<h2 id="TransformComponentコンポーネント"><a href="#TransformComponentコンポーネント" class="headerlink" title="TransformComponentコンポーネント"></a>TransformComponentコンポーネント</h2><p>シーン中に存在する物体の変形を司るコンポーネント<br>このコンポーネントによって物体の座標や回転量、拡大料などが定義されます。<br>シーン中の全ての物体は必ずこのコンポーネントを含まなければなりません。</p>
+<h3 id="属性-23"><a href="#属性-23" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名前</th>
+<th style="text-align:center">コンバーター</th>
+<th style="text-align:center">詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">position</td>
+<td style="text-align:center">Vector3</td>
+<td style="text-align:center">この物体の座標</td>
+</tr>
+<tr>
+<td style="text-align:center">rotation</td>
+<td style="text-align:center">Rotation3</td>
+<td style="text-align:center">この物体の回転量</td>
+</tr>
+<tr>
+<td style="text-align:center">scale</td>
+<td style="text-align:center">Vector3</td>
+<td style="text-align:center">この物体の拡大率</td>
+</tr>
+<tr>
+<td style="text-align:center">rawMatrix</td>
+<td style="text-align:center">Object</td>
+<td style="text-align:center">利用されません</td>
+</tr>
+</tbody>
+</table>
+<h4 id="position属性"><a href="#position属性" class="headerlink" title="position属性"></a>position属性</h4><p><strong>初期値</strong> ・・・ <code>0,0,0</code><br><strong>コンバーター</strong> ・・・ <code>Vector3</code></p>
+<p>この物体の座標</p>
+<h4 id="rotation属性"><a href="#rotation属性" class="headerlink" title="rotation属性"></a>rotation属性</h4><p><strong>初期値</strong> ・・・ <code>0,0,0,1</code><br><strong>コンバーター</strong> ・・・ <code>Rotation3</code></p>
+<p>この物体の回転量</p>
+<h4 id="scale属性"><a href="#scale属性" class="headerlink" title="scale属性"></a>scale属性</h4><p><strong>初期値</strong> ・・・ <code>1,1,1</code><br><strong>コンバーター</strong> ・・・ <code>Vector3</code></p>
+<p>この物体の拡大率</p>
+<h4 id="rawMatrix属性"><a href="#rawMatrix属性" class="headerlink" title="rawMatrix属性"></a>rawMatrix属性</h4><p><strong>初期値</strong> ・・・ <code>null</code><br><strong>コンバーター</strong> ・・・ <code>Object</code></p>
+<p>利用されません</p>
+<h1 id="コンバーター詳細"><a href="#コンバーター詳細" class="headerlink" title="コンバーター詳細"></a>コンバーター詳細</h1><h2 id="CanvasSizeConverterコンバーター"><a href="#CanvasSizeConverterコンバーター" class="headerlink" title="CanvasSizeConverterコンバーター"></a>CanvasSizeConverterコンバーター</h2><p>キャンバスのサイズ用のコンバーター<br>数値を指定した場合(<code>100</code>など)はその値をそのまま返す。<br><code>aspect(1.6)</code>などと記述する時、キャンバスのアスペクト比を1.6にするようにリサイズする。<br><code>fit</code>と指定した時、親要素にちょうどマッチするサイズを返す。<br>もし、親要素の高さが0である時かつ、親がbodyである際で<code>fit</code>が指定されていると、bodyへの高さ属性が指定されていないものと判断して、<br>自動的にbodyに<code>height:100%</code>を割り当てる。</p>
+<h2 id="GeometryConverterコンバーター"><a href="#GeometryConverterコンバーター" class="headerlink" title="GeometryConverterコンバーター"></a>GeometryConverterコンバーター</h2><p>ジオメトリを指定するためのコンバーター<br><code>quad</code>など、ジオメトリ名を指定するか、Geometry型のインスタンスを渡す。</p>
+<h2 id="MaterialConverterコンバーター"><a href="#MaterialConverterコンバーター" class="headerlink" title="MaterialConverterコンバーター"></a>MaterialConverterコンバーター</h2><p>マテリアルを指定するためのコンバーター<br><code>&lt;material&gt;へのクエリ</code>が指定された場合は、そのクエリによって検索された先頭の<code>&lt;material&gt;</code>を用いる。<br><code>new(マテリアル名)</code>が指定された場合は、新しいマテリアルのインスタンスを生成して用いる。<br>通常、マテリアルを指定するコンポーネントはマテリアルによって、そのコンポーネントが所持する属性が置き換わる。<br><code>new(マテリアル)</code>名で指定した場合、そのコンポーネント自身がマテリアルの属性を管理することになるので注意が必要。</p>
+<h2 id="NodeConverterコンバーター"><a href="#NodeConverterコンバーター" class="headerlink" title="NodeConverterコンバーター"></a>NodeConverterコンバーター</h2><h2 id="TextureConverterコンバーター"><a href="#TextureConverterコンバーター" class="headerlink" title="TextureConverterコンバーター"></a>TextureConverterコンバーター</h2><p>テクスチャへの参照を取得するためのコンバーター<br>渡すものが文字列である場合、4つの方法がある。<br><code>url</code>・・・指定したアドレスから画像を解決して取得する<br><code>backbuffer(バックバッファ名)</code>・・・名前付きバックバッファのリストから取得する<br><code>video(ビデオファイルへのURL)</code>・・・指定したアドレスからビデオを取得してテクスチャとして再生する(Buggy)<br><code>query(&lt;texture&gt;へのクエリ)</code>・・・指定したクエリで<code>&lt;texture&gt;</code>を探索して利用する。<br>渡すものがオブジェクトである場合、5つの方法がある。<br><code>Texture2D型</code>・・・そのまま利用される<br><code>HTMLImageElement</code>・・・必要がある場合リサイズされた上で利用される。(自動的に2の累乗に変換される)<br><code>HTMLCanvasElement</code>・・・必要がある場合リサイズされた上で利用される。(自動的に2の累乗に変換される)<br><code>HTMLVideoElement</code>・・・必要がある場合リサイズされた上で、自動的に再生される(自動的に2の累乗に変換される)</p>
+<h2 id="ViewportConverterコンバーター"><a href="#ViewportConverterコンバーター" class="headerlink" title="ViewportConverterコンバーター"></a>ViewportConverterコンバーター</h2><p>ビューポートサイズを設定するためのコンバーター<br><code>auto</code>・・・親のキャンバスのサイズにあったビューポートサイズを返す<br><code>左端,上端,幅,高さ</code>・・・キャンバスのサイズを具体的に指定する。<br>数値を指定するとピクセル単位になるが、数値に%をつければ親のキャンバス基準での比率指定ができる。</p>
+
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/api/grimoirejs-fundamental.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

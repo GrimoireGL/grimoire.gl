@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>Utility | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="AttributeManager属性の管理をするクラスです。属性値の遅延set、遅延watch,属性のマルチキャストの実装を持ちます。 コンストラクタ1new AttributeManager(tag:string);  tag 識別のための文字列。内部からの警告に付加されます。methodaddAttribute1public addAttribute(attr:Attribute):Attri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Utility">
+<meta property="og:url" content="https://grimoire.gl/api/Utility.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="AttributeManager属性の管理をするクラスです。属性値の遅延set、遅延watch,属性のマルチキャストの実装を持ちます。 コンストラクタ1new AttributeManager(tag:string);  tag 識別のための文字列。内部からの警告に付加されます。methodaddAttribute1public addAttribute(attr:Attribute):Attri">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.394Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Utility">
+<meta name="twitter:description" content="AttributeManager属性の管理をするクラスです。属性値の遅延set、遅延watch,属性のマルチキャストの実装を持ちます。 コンストラクタ1new AttributeManager(tag:string);  tag 識別のための文字列。内部からの警告に付加されます。methodaddAttribute1public addAttribute(attr:Attribute):Attri">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+  <div id="content">
+    <h1 id="content-title">Utility</h1>
+    <h1 id="AttributeManager"><a href="#AttributeManager" class="headerlink" title="AttributeManager"></a>AttributeManager</h1><p>属性の管理をするクラスです。<br>属性値の遅延set、遅延watch,属性のマルチキャストの実装を持ちます。</p>
+<h2 id="コンストラクタ"><a href="#コンストラクタ" class="headerlink" title="コンストラクタ"></a>コンストラクタ</h2><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> AttributeManager(tag:<span class="built_in">string</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>tag</code> 識別のための文字列。内部からの警告に付加されます。<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><h3 id="addAttribute"><a href="#addAttribute" class="headerlink" title="addAttribute"></a>addAttribute</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> addAttribute(attr:Attribute):Attribute</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>属性を追加し、追加した属性を返します。<br>追加した属性名が既に存在しているときは警告します。<br>この属性に対する遅延set,遅延watchがあれば処理します。</p>
+<h3 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> watch(attrName:<span class="built_in">string</span>|NSIdentity,watcher: <span class="function">(<span class="params">newValue: <span class="built_in">any</span>, oldValue: <span class="built_in">any</span>, attr: Attribute</span>) =&gt;</span> <span class="built_in">void</span>, immediate = <span class="literal">false</span>):<span class="built_in">void</span></span><br></pre></td></tr></table></figure>
+<p>属性をwatchします。<br>属性をNSIdentityで指定した場合、該当の属性すべてをwatchします。<br>属性名で指定した場合、該当する属性が全て同じ名前空間のものであれば、それら全てをwatchします。<br>異なる名前空間のものがあれば、例外を投げます。</p>
+<h3 id="setAttribute"><a href="#setAttribute" class="headerlink" title="setAttribute"></a>setAttribute</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> setAttribute(attrName: <span class="built_in">string</span> | NSIdentity, value: <span class="built_in">any</span>): <span class="built_in">void</span></span><br></pre></td></tr></table></figure>
+<p>属性を設定します。<br>属性をNSIdentityで指定した場合、該当の属性すべてに設定します。<br>属性名で指定した場合、該当する属性が全て同じ名前空間のものであれば、それら全てに設定します。<br>異なる名前空間のものがあれば、例外を投げます。</p>
+<h3 id="getAttribute"><a href="#getAttribute" class="headerlink" title="getAttribute"></a>getAttribute</h3><p>属性を取得します。<br>指定した属性名やNSIdentityに該当する属性が複数であれば、例外を投げます。</p>
+<h3 id="remove-Attribute"><a href="#remove-Attribute" class="headerlink" title="remove Attribute"></a>remove Attribute</h3><p>属性を削除します。<br>属性が存在して削除に成功したらtrue,存在しなければfalseを返します。</p>
+<h1 id="Constants"><a href="#Constants" class="headerlink" title="Constants"></a>Constants</h1><p>定数を管理します</p>
+<h2 id="static定数"><a href="#static定数" class="headerlink" title="static定数"></a>static定数</h2><h3 id="defaultNamespace"><a href="#defaultNamespace" class="headerlink" title="defaultNamespace"></a>defaultNamespace</h3><p>デフォルトの名前空間.<br>“HTTP://GRIMOIRE.GL/NS/DEFAULT”</p>
+<h3 id="x-gr-id"><a href="#x-gr-id" class="headerlink" title="x_gr_id"></a>x_gr_id</h3><p>“x-gr-id”</p>
+<h1 id="Ensure"><a href="#Ensure" class="headerlink" title="Ensure"></a>Ensure</h1><p>値を正しい形式に統一します。</p>
+<h2 id="staticメソッド"><a href="#staticメソッド" class="headerlink" title="staticメソッド"></a>staticメソッド</h2><h3 id="tobeString"><a href="#tobeString" class="headerlink" title="tobeString"></a>tobeString</h3><p>stringかnumberを文字列に変換します。</p>
+<h3 id="tobeNumber"><a href="#tobeNumber" class="headerlink" title="tobeNumber"></a>tobeNumber</h3><h3 id="tobeNSIdentity"><a href="#tobeNSIdentity" class="headerlink" title="tobeNSIdentity"></a>tobeNSIdentity</h3><h3 id="tobeNSIdentityArray"><a href="#tobeNSIdentityArray" class="headerlink" title="tobeNSIdentityArray"></a>tobeNSIdentityArray</h3><h3 id="tobeNSDictionary"><a href="#tobeNSDictionary" class="headerlink" title="tobeNSDictionary"></a>tobeNSDictionary</h3><h3 id="tobeMessage"><a href="#tobeMessage" class="headerlink" title="tobeMessage"></a>tobeMessage</h3><h3 id="tobeComponentConstructor"><a href="#tobeComponentConstructor" class="headerlink" title="tobeComponentConstructor"></a>tobeComponentConstructor</h3><h1 id="NSDictionary"><a href="#NSDictionary" class="headerlink" title="NSDictionary"></a>NSDictionary</h1><h1 id="NSIdentity"><a href="#NSIdentity" class="headerlink" title="NSIdentity"></a>NSIdentity</h1>
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/api/Utility.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>ComponentSystem | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="What is component?This is simple GOML to show just a red cube. 123456&amp;lt;goml&amp;gt;  &amp;lt;scene&amp;gt;    &amp;lt;camera position=&quot;0,0,-10&quot;/&amp;gt;    &amp;lt;mesh geometry=&quot;cube&quot; color=&quot;red&quot; position=&quot;0,0,0&quot;/&amp;gt;  &amp;l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ComponentSystem">
+<meta property="og:url" content="https://grimoire.gl/guide/1_essentials/05_componentsystem.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="What is component?This is simple GOML to show just a red cube. 123456&amp;lt;goml&amp;gt;  &amp;lt;scene&amp;gt;    &amp;lt;camera position=&quot;0,0,-10&quot;/&amp;gt;    &amp;lt;mesh geometry=&quot;cube&quot; color=&quot;red&quot; position=&quot;0,0,0&quot;/&amp;gt;  &amp;l">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.398Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ComponentSystem">
+<meta name="twitter:description" content="What is component?This is simple GOML to show just a red cube. 123456&amp;lt;goml&amp;gt;  &amp;lt;scene&amp;gt;    &amp;lt;camera position=&quot;0,0,-10&quot;/&amp;gt;    &amp;lt;mesh geometry=&quot;cube&quot; color=&quot;red&quot; position=&quot;0,0,0&quot;/&amp;gt;  &amp;l">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+    <aside id="sidebar">
+  <div id="doc-title">GUIDE</div>
+  
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Essentials</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/1_essentials/01_installation.html">Installation</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/02_introduction.html">Getting started</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/03_goml.html">GOML</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/04_interface.html">Interfaces</a>
+            </li>
+          
+            <li class="active">
+              <a href="/guide/1_essentials/05_componentsystem.html">ComponentSystem</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/06_plugin.html">Plugins</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/07_inspector.html">Devtool</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/08_tags.html">主なタグ</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Advanced</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/2_advanced/webgl-basics.html">WebGL concepts</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/sort.html">カスタムマテリアルの仕様</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/plugin-specification.html">Plugin making</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/geometry-basic.html">Geometry basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-renderer.html">Renderer basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/material-basic.html">Material basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-core.html">grimoirejs-core</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/typescript.html">Use Typescript</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Meta</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/3_meta/community.html">Community</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+  
+</aside>
+
+  
+  <div id="content">
+    <h1 id="content-title">ComponentSystem</h1>
+    <h1 id="What-is-component"><a href="#What-is-component" class="headerlink" title="What is component?"></a>What is component?</h1><p>This is simple GOML to show just a red cube.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">goml</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">camera</span> <span class="attr">position</span>=<span class="string">"0,0,-10"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">geometry</span>=<span class="string">"cube"</span> <span class="attr">color</span>=<span class="string">"red"</span> <span class="attr">position</span>=<span class="string">"0,0,0"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>You can make camera accepting user interactions. By adding <code>MouseCameraControl</code> like following way, user can controls camera by mouse.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">goml</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">camera</span> <span class="attr">position</span>=<span class="string">"0,0,-10"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">camera.components</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">MouseCameraControl</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">camera.components</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">camera</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">geometry</span>=<span class="string">"cube"</span> <span class="attr">color</span>=<span class="string">"red"</span> <span class="attr">position</span>=<span class="string">"0,0,0"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>This syntax is described in <a href="/guide/1_essentials/03_goml.html">GOML</a> in detail. By this code, camera has a feature to be controlled by mouse. This is <strong>component</strong>.</p>
+<p>In Grimoire, users can add features to nodes as component.</p>
+<blockquote>
+<p>What is differences between node?</p>
+<p><code>component</code> and <code>node</code> can be written as <code>tag</code> in GOML. But these are completely different things.<br><code>node</code> is structure like HTML elements or Gameobject in Unity.<br><code>component</code> is features appended to nodes or MonoBehaviour in Unity.<br>All <code>nodes</code> contains <code>component</code>.</p>
+<p>In grimoire, all tags are <code>component</code> or <code>node</code> while there is an exception.<br>The exception is <code>.component</code> tag such as <code>&lt;camera.components&gt;</code>.</p>
+</blockquote>
+<p>You can make feature of Grimoire by adding components by using following API.<br>To create component, you can use <code>registerComponent</code> method of GrimoireInterface.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">gr.registerComponent(<span class="string">"MouseColor"</span>,&#123;</span><br><span class="line">  attribute:&#123;</span><br><span class="line">    onColor:&#123;</span><br><span class="line">      converter:<span class="string">"color"</span>,</span><br><span class="line">      <span class="keyword">default</span>:<span class="string">"red"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    offColor:&#123;</span><br><span class="line">      converter:<span class="string">"color"</span>,</span><br><span class="line">      <span class="keyword">default</span>:<span class="string">"green"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  $mount:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.node.on(<span class="string">"mouseenter"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.node.setAttribute(<span class="string">"color"</span>,<span class="keyword">this</span>.getAttribute(<span class="string">"onColor"</span>));</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">this</span>.node.on(<span class="string">"mouseleave"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.node.setAttribute(<span class="string">"color"</span>,<span class="keyword">this</span>.getAttribute(<span class="string">"offColor"</span>));</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>This is example component to change color of mesh by hovering mouse. After executing this javascript, you can use <code>&lt;MouseColorComponent/&gt;</code> tag on GOML.<br>Now you can append this component to meshes like below.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">goml</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">camera</span> <span class="attr">position</span>=<span class="string">"0,0,-10"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">camera.components</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">MouseCameraControl</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">camera.components</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">camera</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mesh</span> <span class="attr">geometry</span>=<span class="string">"cube"</span> <span class="attr">color</span>=<span class="string">"red"</span> <span class="attr">position</span>=<span class="string">"0,0,0"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mesh.components</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">MouseColorComponent</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">mesh.components</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mesh</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>The cubes now have feature to change color if the mouses are hovering the meshes.<br>All features can be modular and reusable as components in same way.</p>
+<h2 id="Registering-components-in-ES6-syntax"><a href="#Registering-components-in-ES6-syntax" class="headerlink" title="Registering components in ES6 syntax"></a>Registering components in ES6 syntax</h2><p>If your development environment supports ES6 syntax, extending component is better way to registering components.<br>This is example code which behaviour is completely same as I sited above.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Component <span class="keyword">from</span> <span class="string">"grimoirejs/ref/Node/Component"</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MouseColor</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">  attribute:&#123;</span><br><span class="line">    onColor:&#123;</span><br><span class="line">      converter:<span class="string">"color"</span>,</span><br><span class="line">      <span class="keyword">default</span>:<span class="string">"red"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    offColor:&#123;</span><br><span class="line">      converter:<span class="string">"color"</span>,</span><br><span class="line">      <span class="keyword">default</span>:<span class="string">"green"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  $mount()&#123;</span><br><span class="line">    <span class="keyword">this</span>.node.on(<span class="string">"mouseenter"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.node.setAttribute(<span class="string">"color"</span>,<span class="keyword">this</span>.getAttribute(<span class="string">"onColor"</span>));</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">this</span>.node.on(<span class="string">"mouseleave"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.node.setAttribute(<span class="string">"color"</span>,<span class="keyword">this</span>.getAttribute(<span class="string">"offColor"</span>));</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">gr.registerComponent(<span class="string">"MouseColor"</span>,MouseColor);</span><br></pre></td></tr></table></figure>
+<h1 id="GomlNode"><a href="#GomlNode" class="headerlink" title="GomlNode"></a>GomlNode</h1><p><code>GomlNode</code> is our virtual DOM instance. You can access GomlNode to which current component is attached from component via <code>this.node</code>.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.node <span class="comment">// &lt;- Instance of GomlNode</span></span><br></pre></td></tr></table></figure>
+<p>There are several useful interfaces in GomlNode to make component.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Transform <span class="keyword">from</span> <span class="string">"grimoirejs-fundamental/ref/Components/TransformComponent"</span>;</span><br><span class="line"><span class="keyword">const</span> trans = <span class="keyword">this</span>.node.getComponent(<span class="string">"Transform"</span>); <span class="comment">// you can get other components attached to the node</span></span><br><span class="line"><span class="keyword">const</span> trans2 = <span class="keyword">this</span>.node.getComponent(Transform); <span class="comment">// You can fetch them by string or constructor function</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.node.getAttribute(<span class="string">"position"</span>);</span><br><span class="line"><span class="keyword">this</span>.node.setAttribute(<span class="string">"position"</span>,<span class="string">"10,0,0"</span>);</span><br></pre></td></tr></table></figure>
+<p>When you query <code>getComponent</code> with constructor function, this will consider inheritance of the constructor.<br>For example, if you call <code>this.node.getComponent(A)</code>, it can return instance of B which inherits A.</p>
+<p><code>getAttribute</code> and <code>setAttribute</code> exists on component instance also. But, <code>getAttribute</code> and <code>setAttribute</code> of component is only works for themselves. Therefore, even if the node contains Transform component having <code>position</code> attribute, you cannnot access this attribute by <code>this.getAttribute(&quot;position&quot;)</code>. You should use <code>this.node.getAttribute(&quot;position&quot;)</code> instead.</p>
+<h2 id="GomlNode-companion"><a href="#GomlNode-companion" class="headerlink" title="GomlNode#companion"></a>GomlNode#companion</h2><p>Several fields are bound to tree of a GOML file. If you load 2 GOML file, there should be 2 canvases.<br>Therefore, Grimoire need to manage 2 gl instance one time. There are good abstraction not to consider which canvas containing the components in Grimoire.</p>
+<p><code>GomlNode#companion</code> is a reference of hash table that can exist single instance in one GOML tree.<br>This is example javascript code to fetch WebGLRenderingContext that is managed by current GOML tree.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.node.companion.get(<span class="string">"gl"</span>);</span><br></pre></td></tr></table></figure>
+<p>You can also set companion from <code>this.node.companion.set(&quot;name&quot;,instance)</code>.<br>This is commonly used companions.</p>
+<ul>
+<li>gl ・・・ WebGLRenderingContext</li>
+<li>canvasElement・・・HTMLCanvasElement generated by Grimoire</li>
+</ul>
+<h1 id="Message-function"><a href="#Message-function" class="headerlink" title="Message function"></a>Message function</h1><p>You can notice there are several functions of which names begin with <code>$</code> in the component registering codes.<br>These are called <code>message functions</code>. As the <code>Start</code> or <code>Update</code> methods of Unity, Grimoire will call these functions in ideal timings.</p>
+<h2 id="Messages-commonly-used"><a href="#Messages-commonly-used" class="headerlink" title="Messages commonly used"></a>Messages commonly used</h2><p>This is message list called by core of Grimoire.</p>
+<ul>
+<li>$awake ・・・ Called when the component was instanciated.</li>
+<li>$mount ・・・ Called when the component was attached to nodes.</li>
+<li>$unmount・・・Called when the component was detached from nodes.</li>
+<li>$dispose・・・Called when the component was destroyed.</li>
+</ul>
+<p>And there are messages called by plugins also. <code>$update</code> is the most commonly used message function defined by plugins.<br><code>$update</code> is registered by <code>grimoirejs-fundamental</code> to update scene.</p>
+<ul>
+<li>$update ・・・ Called when objects should be updated in active scene.</li>
+</ul>
+<p>There are more message functions you can use. However, these 5 messages are enough to know in basic usage.</p>
+<h2 id="Message-functions-in-deep"><a href="#Message-functions-in-deep" class="headerlink" title="Message functions in deep"></a>Message functions in deep</h2><p>New message functions can be defined by user also. If you need  to call specific methods in the other component, this feature would be helpful to build such feature.</p>
+<p>There are 2 API to call message functions manually.</p>
+<h3 id="GomlNode-sendMessage"><a href="#GomlNode-sendMessage" class="headerlink" title="GomlNode#sendMessage"></a>GomlNode#sendMessage</h3><p><code>sendMessage</code> is the method of GomlNode to call every matched message functions in the components attached to the node.<br>This is an example to call sendMessage in a component.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.node.sendMessage(<span class="string">"newMessage"</span>,args);</span><br></pre></td></tr></table></figure>
+<p>By this example code, <code>$newMessage</code> message methods of the other components of attached node will be called with the arguments. Make sure called method is not <code>newMessage</code> but <code>$newMessage</code>.</p>
+<h3 id="GomlNode-broadcastMessage"><a href="#GomlNode-broadcastMessage" class="headerlink" title="GomlNode#broadcastMessage"></a>GomlNode#broadcastMessage</h3><p><code>broadcastMessage</code> is the method to call <code>sendMessage</code> recursively in every children(and self) of the node.<br>This is an example to call broadcastMessage in a component.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.node.broadcastMessage(<span class="string">"newMessage"</span>,args);</span><br></pre></td></tr></table></figure>
+<p>This argument list is completely same as sendMessage. But, make sure the message functions of node called by this API is in  every nodes of children of the node and self node.</p>
+<h1 id="Attributes"><a href="#Attributes" class="headerlink" title="Attributes"></a>Attributes</h1><p>We have wrote <code>&lt;mesh geometry=&quot;cube&quot; color=&quot;red&quot; position=&quot;0,0,0&quot;/&gt;</code> in GOML.<br>Actual <strong>attributes</strong> are managed by components.</p>
+<p>Every components can contain attributes by adding <code>attributes</code> field on component declaration.<br>Attributes of nodes are assigned to attributes of components having same name automatically.</p>
+<p>Attributes is defined with <code>converter</code> and <code>default</code>.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">attributes:&#123;</span><br><span class="line">  onColor:&#123;</span><br><span class="line">    converter:<span class="string">"Color4"</span>,</span><br><span class="line">    <span class="keyword">default</span>:<span class="string">"red"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  offColor:&#123;</span><br><span class="line">    converter:<span class="string">"Color4"</span>,</span><br><span class="line">    <span class="keyword">default</span>:<span class="string">"green"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Let see <code>attributes</code> field of <code>MouseColor</code> component in previous example.<br>In this examples, there are <code>onColor</code> and <code>offColor</code> as attributes.</p>
+<p>When attributes values are assigned, Grimoire will call converter to cast assigned values into ideal type to use in components.<br>For example, if <code>Color4</code> converter was used, a string “red” can be converted into Color4 class instance containing #FF0000.<br><code>default</code> is default value of attributes.</p>
+<h2 id="Attribute-instance"><a href="#Attribute-instance" class="headerlink" title="Attribute instance"></a>Attribute instance</h2><p>You can simply use <code>getAttribute</code> or <code>setAttribute</code> if you only need to get or set attribute in your logic.<br>However, you sometimes need to watch them to know the attribute was changed.<br>You sometimes need to get instance of Attributes for doing complex things about attributes.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> attribute = <span class="keyword">this</span>.getAttributeRaw(<span class="string">"onColor"</span>); <span class="comment">// instance of Attribute</span></span><br><span class="line"><span class="built_in">console</span>.log(attribute.Value === <span class="keyword">this</span>.getAttribute(<span class="string">"onColor"</span>)); <span class="comment">// Always true</span></span><br></pre></td></tr></table></figure>
+<h3 id="Watch-attribute"><a href="#Watch-attribute" class="headerlink" title="Watch attribute"></a>Watch attribute</h3><p><code>Attribute#watch</code> method enables users to watch changed timing of specified attribute.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> attribute = <span class="keyword">this</span>.getAttributeRaw(<span class="string">"onColor"</span>);</span><br><span class="line">attribute.watch(<span class="function">(<span class="params">newValue,oldValue,attribute</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="comment">// Logic for changed values</span></span><br><span class="line">&#125;,<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+<p>Specified event handler will be passed newValue, oldValue and attribute instance as arguments.<br><code>newValue</code> and <code>oldValue</code> is the value already converted by converters described last of this document.<br>Secound argument of watch method is immediate flag.<br>If this value is true, Grimoire will call the event handler immediately.</p>
+<h3 id="Binding-with-class-fields"><a href="#Binding-with-class-fields" class="headerlink" title="Binding with class fields"></a>Binding with class fields</h3><p>Assigning attribute values to field when attribute value was changed is good for caching.<br>This can be done with this code.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> attribute = <span class="keyword">this</span>.getAttributeRaw(<span class="string">"onColor"</span>);</span><br><span class="line">attribute.watch(<span class="function">(<span class="params">newValue,oldValue,attribute</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.onColorValue = newValue;</span><br><span class="line">&#125;,<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+<p>If you need to access the attribute frequently and the attribute won’t be updated so much, this solution is good for performance. But sometimes local field should be synced with attribute.<br>If you are familiar with ES6 javascript, you can notice that can be done with getter/setter syntax.</p>
+<p>Grimoire provides better API for this situation.</p>
+<p><code>Attribute#boundTo</code> is method to bind values of attribute. This is example usage of this field.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.getAttributeRaw(<span class="string">"onColor"</span>).boundTo(<span class="string">"onColorValue"</span>);</span><br><span class="line"><span class="comment">// This code will show content of attribute by calling getAttribute</span></span><br><span class="line"><span class="comment">// if the value was changed after last calling.</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span>.onColorValue);</span><br><span class="line"><span class="comment">// This code will trigger setAttribute and call converter to assign.</span></span><br><span class="line"><span class="keyword">this</span>.onColorValue = SOMETHING;</span><br></pre></td></tr></table></figure>
+<p>In this situation, Grimoire created getter/setter of the field of which name was specified with boundTo in the component.<br>However, sometimes you want to generate this getter/setter in the other object.<br>You can achieve such things with 2nd argument of boundTo like this code.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bounded = &#123;&#125;;</span><br><span class="line"><span class="keyword">this</span>.getAttributeRaw(<span class="string">"onColor"</span>).boundTo(<span class="string">"onColorValue"</span>,bounded);</span><br><span class="line"><span class="built_in">console</span>.log(bounded.onColorValue);</span><br><span class="line">bounded.onColorValue = SOMETHING;</span><br></pre></td></tr></table></figure>
+<p>This is very useful feature to create component. There are the other good solution to bind fields and every attributes.</p>
+<p><code>this.__bindAttributes()</code> is good helper function defined in Component base class.<br>When this called in the component, Grimoire will bind all attributes in component with fields of which name is same as attribute name.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.__bindAttributes();</span><br><span class="line"><span class="keyword">this</span>.outColor = SOMETHING;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Protected methods and Private methods</p>
+<p>When you inspect our compiled javascript codes in your javascript inspector, you can see there are fields of which name begin with <code>_</code> or <code>__</code>.<br>A field of which name begin with <code>_</code> is intended to be private. This shouldn’t use hence that can be changed in future without notification about changing.<br>A field of which name begin with <code>__</code> is intended to be protected. This is the method users can access. But, this should be accessed from the instance extends base class. In grimoire, there are some protected methods on components.<br>These should be accessed from the instance self. Shouldn’t be accessed from outside of the instance.</p>
+</blockquote>
+<h1 id="What-was-node"><a href="#What-was-node" class="headerlink" title="What was node?"></a>What was node?</h1><p>We have used nodes in guides. But what was node?<br>As the previous section, node is just a container of components and have structures.</p>
+<p>User can add nodes like component with using <code>registerNode</code> method of GrimoireInterface.<br><code>registerNode</code> method accepts node name, list of components, default values of attribute and node name to inherit as arguments.<br>The specified component list is the set of components that will be attached to the node initially when the node was instanciated.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gr.registerNode(<span class="string">"color-cube"</span>, [<span class="string">"MouseColorComponent"</span>], &#123;</span><br><span class="line">  geometry: <span class="string">"cube"</span>,</span><br><span class="line">  onColor:<span class="string">"red"</span>,</span><br><span class="line">  offColor:<span class="string">"green"</span></span><br><span class="line">&#125;, <span class="string">"mesh"</span>);</span><br></pre></td></tr></table></figure>
+<p>This code is adding <code>color-cube</code> that extends <code>mesh</code> tag and adding <code>MouseColorComponent</code>.<br>Nodes can inherit containing components and default attributes from ancestor nodes inherited.<br>If there was no default value was presented on node on <code>registerNode</code>, default value written in components are used.</p>
+<p>By using this node, the previous example can be rewritten like below.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">goml</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">scene</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">camera</span> <span class="attr">position</span>=<span class="string">"0,0,-10"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">camera.components</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">MouseCameraControl</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">camera.components</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">camera</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">color-mesh</span> <span class="attr">position</span>=<span class="string">"0,0,0"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">scene</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">goml</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>All nodes and plugins are defined in same way. Actually, <code>grimoirejs-fundamental</code> is registering nodes in following way.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GrimoireInterface.registerNode(<span class="string">"goml"</span>, [</span><br><span class="line">  <span class="string">"CanvasInitializer"</span>, <span class="string">"LoopManager"</span>, <span class="string">"AssetLoadingManager"</span>,</span><br><span class="line">  <span class="string">"GeometryRegistory"</span>, <span class="string">"RendererManager"</span>, <span class="string">"Fullscreen"</span>]);</span><br><span class="line">    GrimoireInterface.registerNode(<span class="string">"scene"</span>, [<span class="string">"Scene"</span>]);</span><br><span class="line">    GrimoireInterface.registerNode(<span class="string">"object"</span>, [<span class="string">"Transform"</span>]);</span><br><span class="line">    GrimoireInterface.registerNode(<span class="string">"camera"</span>, [<span class="string">"Camera"</span>], &#123; <span class="attr">position</span>: <span class="string">"0,0,10"</span> &#125;, <span class="string">"object"</span>);</span><br><span class="line">    GrimoireInterface.registerNode(<span class="string">"mesh"</span>, [<span class="string">"MaterialContainer"</span>, <span class="string">"MeshRenderer"</span>], &#123;&#125;, <span class="string">"object"</span>);</span><br><span class="line">    GrimoireInterface.registerNode(<span class="string">"renderer"</span>, [<span class="string">"Renderer"</span>]);</span><br></pre></td></tr></table></figure>
+<p>All nodes are created with <code>registerNode</code> even in implementation of basic plugins. There are no exception.</p>
+<h2 id="grimoire-node-base"><a href="#grimoire-node-base" class="headerlink" title="grimoire-node-base"></a>grimoire-node-base</h2><p>There is special node in Grimoire. <code>grimoire-node-base</code> is inherited when there was no node name to inherit was passed to <code>registerNode</code>. This is base node of every nodes.</p>
+<p>Every nodes have <code>grimoire-node-base</code> as ancestor.</p>
+<h2 id="overriding-node-declaration"><a href="#overriding-node-declaration" class="headerlink" title="overriding node declaration"></a>overriding node declaration</h2><p>In some cases, you want to override declaration of nodes defined in plugin. Grimoire provides <code>GrimoireInterface#overrideDeclaration</code> for this usage.<br>This is an example usage used in <code>grimoirejs-forward-shading</code> plugin that will override <code>scene</code> node to contain <code>SceneLightManager</code> component.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gr.overrideDeclaration(<span class="string">"scene"</span>,[<span class="string">"SceneLightManager"</span>]);</span><br></pre></td></tr></table></figure>
+<p>In the situation above, scene default components are rewritten to have SceneLightManager. Adding default components of specified nodes is allowed with this method. But, removing default component is prohibited for causing bugs with conflicting plugins.</p>
+<p><code>overrideDeclaration</code> also provides a feature to change default value of node attributes.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gr.overrideDeclaration(<span class="string">"mesh"</span>,[],&#123;</span><br><span class="line">  material:<span class="string">"new(basic)"</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>This is example how we rewrite default value of mesh by adding forward shading plugin. By this code, meshes that have not specified material attribute will use <code>new(basic)</code> as default value.</p>
+<h1 id="Converter"><a href="#Converter" class="headerlink" title="Converter"></a>Converter</h1><p>Converter is a function to convert attribute values.<br>Users are also able to add new Converter with <code>registerConverter</code> method of <code>GrimoireInterface</code>.</p>
+<p>This is definition of <code>Number</code> converter defined in basic plugins.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gr.registerConverter(<span class="string">"Number"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> val === <span class="string">"number"</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> val === <span class="string">"string"</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Number</span>.parseFloat(val);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (val === <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>This <code>Number</code> converter will convert values if value are passed as string by calling <code>Number.parseFloat</code>.<br>Make sure there is possibility that non-string value can be passed to converter. This can be happen <code>setAttribute</code> was called for example.<br>Converter function must return <code>undefined</code> when passed values are non convertible.<br>Converter argument can accept null but there is no possibility to accept <code>undefined</code>.<br>If user assigned <code>undefined</code> to attribute by calling <code>setAttribute</code> API, Grimoire will throw exception.</p>
+
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/guide/1_essentials/05_componentsystem.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>Plugin making | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Boiler plate for pluginsYou can simply fork or copy the project to make plugins. Boiler plate for typescripthttps://github.com/GrimoireGL/ts-boilerplate Boiler plate for javascripthttps://github.com/G">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Plugin making">
+<meta property="og:url" content="https://grimoire.gl/guide/2_advanced/plugin-specification.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="Boiler plate for pluginsYou can simply fork or copy the project to make plugins. Boiler plate for typescripthttps://github.com/GrimoireGL/ts-boilerplate Boiler plate for javascripthttps://github.com/G">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.402Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Plugin making">
+<meta name="twitter:description" content="Boiler plate for pluginsYou can simply fork or copy the project to make plugins. Boiler plate for typescripthttps://github.com/GrimoireGL/ts-boilerplate Boiler plate for javascripthttps://github.com/G">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+    <aside id="sidebar">
+  <div id="doc-title">GUIDE</div>
+  
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Essentials</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/1_essentials/01_installation.html">Installation</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/02_introduction.html">Getting started</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/03_goml.html">GOML</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/04_interface.html">Interfaces</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/05_componentsystem.html">ComponentSystem</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/06_plugin.html">Plugins</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/07_inspector.html">Devtool</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/08_tags.html">主なタグ</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Advanced</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/2_advanced/webgl-basics.html">WebGL concepts</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/sort.html">カスタムマテリアルの仕様</a>
+            </li>
+          
+            <li class="active">
+              <a href="/guide/2_advanced/plugin-specification.html">Plugin making</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/geometry-basic.html">Geometry basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-renderer.html">Renderer basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/material-basic.html">Material basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-core.html">grimoirejs-core</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/typescript.html">Use Typescript</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Meta</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/3_meta/community.html">Community</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+  
+</aside>
+
+  
+  <div id="content">
+    <h1 id="content-title">Plugin making</h1>
+    <h1 id="Boiler-plate-for-plugins"><a href="#Boiler-plate-for-plugins" class="headerlink" title="Boiler plate for plugins"></a>Boiler plate for plugins</h1><p>You can simply fork or copy the project to make plugins.</p>
+<h2 id="Boiler-plate-for-typescript"><a href="#Boiler-plate-for-typescript" class="headerlink" title="Boiler plate for typescript"></a>Boiler plate for typescript</h2><p><a href="https://github.com/GrimoireGL/ts-boilerplate" target="_blank" rel="noopener">https://github.com/GrimoireGL/ts-boilerplate</a></p>
+<h2 id="Boiler-plate-for-javascript"><a href="#Boiler-plate-for-javascript" class="headerlink" title="Boiler plate for javascript"></a>Boiler plate for javascript</h2><p><a href="https://github.com/GrimoireGL/js-boilerplate" target="_blank" rel="noopener">https://github.com/GrimoireGL/js-boilerplate</a></p>
+<h1 id="Specification"><a href="#Specification" class="headerlink" title="Specification"></a>Specification</h1><p>To make any plugins are able to be worked with the other plugins fine, any plugins should match the specification below.<br>If you can use template projects, you should use them. But, if you need to use your own development environments, read this specification to follow.</p>
+<h1 id="Terms"><a href="#Terms" class="headerlink" title="Terms"></a>Terms</h1><p>This specification refer some words described here.</p>
+<h2 id="Plugin-name"><a href="#Plugin-name" class="headerlink" title="Plugin name"></a>Plugin name</h2><p>Same as NPM package name.</p>
+<h2 id="Short-plugin-name"><a href="#Short-plugin-name" class="headerlink" title="Short plugin name"></a>Short plugin name</h2><p>To make plugin name can be accessed in easy way, short plugin name is NPM package name transformed following way.</p>
+<ul>
+<li>Remove head of <code>grimoirejs-</code></li>
+<li>Replace <code>-</code> with <code>_</code></li>
+</ul>
+<p>Assume a plugin <code>grimoirejs-A-B-C</code>, the short plugin name of this plugin is <code>A_B_C</code>.</p>
+<h1 id="Directory-structure"><a href="#Directory-structure" class="headerlink" title="Directory structure"></a>Directory structure</h1><p>Grimoire.js plugin of NPM package must include these directories.</p>
+<ul>
+<li>ref</li>
+<li>register</li>
+<li>src</li>
+</ul>
+<h1 id="File-structures-and-purposes"><a href="#File-structures-and-purposes" class="headerlink" title="File structures and purposes"></a>File structures and purposes</h1><h2 id="register-index-js"><a href="#register-index-js" class="headerlink" title="register/index.js"></a>register/index.js</h2><p>This is the file loaded with <code>require(&quot;&lt;Plugin package name&gt;/register&quot;)</code>.<br>This file must contains all javascript entire bundled plugin project.</p>
+<h3 id="Exported-object"><a href="#Exported-object" class="headerlink" title="Exported object"></a>Exported object</h3><p>Assume a plugin have these files below.</p>
+<ul>
+<li>src/A.js</li>
+<li>src/B/C.js</li>
+<li>src/B/D.js</li>
+</ul>
+<p>The <code>export</code> object must be below.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  A:<span class="built_in">require</span>(<span class="string">"./A.js"</span>),</span><br><span class="line">  B:&#123;</span><br><span class="line">    C:<span class="built_in">require</span>(<span class="string">"./B.js"</span>),</span><br><span class="line">    D:<span class="built_in">require</span>(<span class="string">"./C.js"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>When the code required, plugin must assign the object above into <code>window.GrimoireJS.lib.{Plugin package name}</code>.</p>
+<p><strong>Note</strong></p>
+<ul>
+<li>Bundled <code>index.js</code> must not contain any other plugins code that the plugin depend to.<br>(Do not call <code>require(&quot;&lt;Plugin name of dependency&gt;/register&quot;)</code>in your library code. But,<code>require(&quot;&lt;Plugin name of dependency&gt;/ref/PATH/TO/MODULE&quot;)</code> is ok to include since that is just referencing the other object.)</li>
+<li>Directory named <code>A</code> and a js file named <code>A.js</code> cannot exist in same time because of this specification.</li>
+</ul>
+<h2 id="ref-directory"><a href="#ref-directory" class="headerlink" title="ref directory"></a><code>ref</code> directory</h2><p>The files to fetch reference of exported object inside of plugin should be included in this directory.</p>
+<p>For instance,<code>ref/B/C.js</code> should be generated with following code for <code>src/B/C.js</code>.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.GrimoireJS.lib.&lt;short plugin name <span class="keyword">of</span> dependency&gt;.B.C;</span><br></pre></td></tr></table></figure>
+<p>Furthermore, plugins need to generate <code>ref/B/C.d.ts</code> with following way for the users want to use them with <code>Typescript</code>.</p>
+<p><strong>When src/B/C.ts exists(When plugin use typescript for development)</strong></p>
+<p>Copy the <code>d.ts</code> file generated from <code>src/B/C.d.ts</code> to <code>ref/B/C.d.ts</code>.</p>
+<p><strong>When src/B/C.ts doesn’t exists(When plugins pure javascript for development)</strong></p>
+<p>Generate <code>d.ts</code> file like following code.</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> v:<span class="built_in">any</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> v;</span><br></pre></td></tr></table></figure>
+<h2 id="ref-index-js"><a href="#ref-index-js" class="headerlink" title="ref/index.js"></a>ref/index.js</h2><p>The following code must be exported.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.GrimoireJS.lib.&#123;short-plugin-name&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="Helper-commands-in-grimoirejs-cauldron"><a href="#Helper-commands-in-grimoirejs-cauldron" class="headerlink" title="Helper commands in grimoirejs-cauldron"></a>Helper commands in grimoirejs-cauldron</h1><p><code>grimoirejs-cauldron</code> would generate codes following the specification above.</p>
+<h2 id="generate-exposure-command"><a href="#generate-exposure-command" class="headerlink" title="generate-exposure command"></a>generate-exposure command</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$  cauldron generate-exposure --src ./src --dest ./src/index.ts --ts --main ./src/main.ts</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">parameter</th>
+<th style="text-align:center">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">src</td>
+<td style="text-align:center">Directory of source folder</td>
+</tr>
+<tr>
+<td style="text-align:center">dest</td>
+<td style="text-align:center"><code>.ts</code> or <code>.js</code> file path exporting all objects to expose.</td>
+</tr>
+<tr>
+<td style="text-align:center">ts</td>
+<td style="text-align:center">Use typescript or not</td>
+</tr>
+<tr>
+<td style="text-align:center">main</td>
+<td style="text-align:center">Entry point of plugin</td>
+</tr>
+</tbody>
+</table>
+<h2 id="generate-reference-command"><a href="#generate-reference-command" class="headerlink" title="generate-reference command"></a>generate-reference command</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$  cauldron generate-reference --src ./src --dest ./src/index.ts --ts --main ./src/main.ts --dts ./ref</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">parameter</th>
+<th style="text-align:center">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">src</td>
+<td style="text-align:center">Directory of source folder</td>
+</tr>
+<tr>
+<td style="text-align:center">dest</td>
+<td style="text-align:center"><code>.ts</code> or <code>.js</code> file path exporting all objects to expose.</td>
+</tr>
+<tr>
+<td style="text-align:center">ts</td>
+<td style="text-align:center">Use typescript or not</td>
+</tr>
+<tr>
+<td style="text-align:center">main</td>
+<td style="text-align:center">Entry point of plugin</td>
+</tr>
+<tr>
+<td style="text-align:center">dts</td>
+<td style="text-align:center">Directory of <code>d.ts</code> files</td>
+</tr>
+</tbody>
+</table>
+
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/guide/2_advanced/plugin-specification.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>

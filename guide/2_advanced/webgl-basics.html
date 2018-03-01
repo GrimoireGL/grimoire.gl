@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="utf-8">
+  
+  <title>WebGL concepts | Grimoire.js - WebGL framework for Web development -</title>
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Learn WebGL basicsThis document is not only for Grimoire.js. All javascript library using WebGL take care of everything written in this section.Even Grimoire.js provides easy interfaces for users, it">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebGL concepts">
+<meta property="og:url" content="https://grimoire.gl/guide/2_advanced/webgl-basics.html">
+<meta property="og:site_name" content="Grimoire.js - WebGL framework for Web development -">
+<meta property="og:description" content="Learn WebGL basicsThis document is not only for Grimoire.js. All javascript library using WebGL take care of everything written in this section.Even Grimoire.js provides easy interfaces for users, it">
+<meta property="og:locale" content="ja-jp">
+<meta property="og:image" content="https://grimoire.gl/logo-ogp.png">
+<meta property="og:updated_time" content="2018-03-01T20:25:14.402Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WebGL concepts">
+<meta name="twitter:description" content="Learn WebGL basicsThis document is not only for Grimoire.js. All javascript library using WebGL take care of everything written in this section.Even Grimoire.js provides easy interfaces for users, it">
+<meta name="twitter:image" content="https://grimoire.gl/logo-ogp.png">
+<meta name="twitter:creator" content="@grimoire_js">
+  
+    <link rel="alternate" href="/atom.xml" title="Grimoire.js - WebGL framework for Web development -" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80429415-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/baloon.js"></script>
+  
+
+</head>
+
+<body>
+  
+    <header id="header">
+  <div id="left-wrap">
+    <button class="hamburger hamburger-cancel">
+      <span class="icon"></span>
+    </button>
+    <a id="logo-wrap" href="/">
+      <div id="logo-icon"></div>
+      <div id="logo-font"></div>
+    </a>
+  </div>
+  <nav id="menu-wrap">
+    <ul id="menu">
+      <li class="bar"><a href="/guide/1_essentials/02_introduction.html">Guide</a></li>
+<li class="bar"><a href="/api/">API</a></li>
+<li class="bar"><a href="http://jsdo.it/tag/Grimoire.js">Example</a></li>
+<li class="bar"><a href="https://github.com/GrimoireGL/GrimoireJS">GitHub</a></li>
+
+    </ul>
+  </nav>
+</header>
+
+    <div id="baloons">
+
+</div>
+
+    <div id="main">
+      
+<div id="column-wrap">
+  
+    <aside id="sidebar">
+  <div id="doc-title">GUIDE</div>
+  
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Essentials</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/1_essentials/01_installation.html">Installation</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/02_introduction.html">Getting started</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/03_goml.html">GOML</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/04_interface.html">Interfaces</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/05_componentsystem.html">ComponentSystem</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/06_plugin.html">Plugins</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/07_inspector.html">Devtool</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/1_essentials/08_tags.html">主なタグ</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Advanced</div>
+        <ul id="list">
+          
+            <li class="active">
+              <a href="/guide/2_advanced/webgl-basics.html">WebGL concepts</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/sort.html">カスタムマテリアルの仕様</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/plugin-specification.html">Plugin making</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/geometry-basic.html">Geometry basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-renderer.html">Renderer basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/material-basic.html">Material basics</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/grimoirejs-core.html">grimoirejs-core</a>
+            </li>
+          
+            <li class="">
+              <a href="/guide/2_advanced/typescript.html">Use Typescript</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+      
+      <div id="doc-section">
+        <div id="doc-sub-title">Meta</div>
+        <ul id="list">
+          
+            <li class="">
+              <a href="/guide/3_meta/community.html">Community</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+  
+</aside>
+
+  
+  <div id="content">
+    <h1 id="content-title">WebGL concepts</h1>
+    <h1 id="Learn-WebGL-basics"><a href="#Learn-WebGL-basics" class="headerlink" title="Learn WebGL basics"></a>Learn WebGL basics</h1><p>This document is not only for Grimoire.js. All javascript library using WebGL take care of everything written in this section.<br>Even Grimoire.js provides easy interfaces for users, it is good to know what WebGL actually do and how Grimoire.js use them.</p>
+<p>This document is short summary of concept of WebGL for users to understand our library easily.</p>
+<h2 id="What-is-actually-WebGL-do"><a href="#What-is-actually-WebGL-do" class="headerlink" title="What is actually WebGL do?"></a>What is actually WebGL do?</h2><p>Most of engineers who don’t know WebGL would answer me <code>That is interface for using 3D on browser</code>.<br>But, that is incorrect. Most important part of WebGL is <code>That is interface for using GPU on browser</code>.</p>
+<p>Of course, GPU is mostly used for graphics stuff including 3D. But, the possibility is not so limited.</p>
+<h2 id="Graphics-stuff"><a href="#Graphics-stuff" class="headerlink" title="Graphics stuff"></a>Graphics stuff</h2><p>Today, we have good user friendly GUI applications including browsers. All of them are using display.<br>If that was in game, contents shown on display would be refreshed 60 times or more per second.</p>
+<p>That mean 1920*1080(HD) display should calculate <code>1920*1080*60 = 124,416,000</code> pixels per second.<br>And resolutions are growing day by day. Some people have 4K display requiring more computation power.</p>
+<h2 id="GPU-vs-CPU"><a href="#GPU-vs-CPU" class="headerlink" title="GPU vs CPU"></a>GPU vs CPU</h2><p>So, determining each pixel on entire pixels are pretty heavy work for computers. In algorithm contest field, it is sometimes said that <code>O(10^8)</code> is the maximum of the algorithm to calculate per one second.</p>
+<p>Therefore human made GPU for calculate each pixel independently.<br>Most of CPU may have only have 4 cores or 8 cores. But GPU can have 1000 cores or more.<br>When it come to say about power of single core, core of CPU have better clock than core of GPU.</p>
+<p><img src="./images/gpuvscpu.svg" alt="GPU vs CPU"></p>
+<p>Parallel computation is not always good solution. It is not working for the task that cannot be calculated independently.<br>But, in graphics field, there are a lot of tasks can be computed independently in same time.</p>
+<p>For example, calculating position of vertices can be done independently. Each vertices should be independent from the other vertices basically.<br>Calculating color of pixels is also able to be calculated independently.</p>
+<p>By using power of GPU for specific calculation, renderer can have great performance. That why we should know summary of GPU not to use renderer wrong way and make decreasing of performances.</p>
+<h2 id="Rendering-pipelines"><a href="#Rendering-pipelines" class="headerlink" title="Rendering pipelines"></a>Rendering pipelines</h2><p>Making sure rendering tasks being able to calculated independently, WebGL has specification that make sure how a polygons are calculated, what kind of arguments should be passed to GPU.<br>And the calculation order and what should do in each stage is called <code>Rendering pipeline</code>.<br>We need to know how to calculated a polygon to be displayed.</p>
+<p><img src="./images/polygon.svg" alt=""></p>
+<p>First of all, our renderer pass some information about vertices to GPU. In the figure above, each vertices have positions as argument.</p>
+<p>Then, GPU would calculate vertices positions by a program working on GPU(Sometimes called as <code>shader</code>. And the shader works on this stage is especially called <code>vertex shader</code>)</p>
+<p>In this time, some transform would be applied to vertices. If the model have skinning property to move joints, each joint positions and rotations must be considered in this time.</p>
+<p>After that, GPU execute the task named <code>rasterize</code> which means split each polygons by pixels.</p>
+<p><img src="./images/rasterizer.svg" alt=""></p>
+<p>Then we need to calculate each color of pixels. And this task is also using a shader called <code>fragment shader</code> to determine colors for each.</p>
+<p><img src="./images/fragment.svg" alt=""></p>
+<p>Then the polygon would appear on display by writing the result of rendering into screen buffer.</p>
+<h2 id="Rendering-arguments"><a href="#Rendering-arguments" class="headerlink" title="Rendering arguments"></a>Rendering arguments</h2><p>In the rendering pipeline, we have passed some arguments needed for calculating color of pixels or position of vertices.<br>GPU can accept 2 types of argument. These are <code>uniform variable</code> and <code>attribute variable</code>.</p>
+<p><code>attribute variable</code> can be differed by each vertices. For example, position is different for each vertices. And normals is one of example of this.</p>
+<p><code>uniform variable</code> is the argument cannot be differed by each vertices. For example, if you need texture, in the most of cases, same texture would be used for each vertices.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Variable type</th>
+<th style="text-align:center">Differ by</th>
+<th style="text-align:center">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">uniform</td>
+<td style="text-align:center">by Mesh(group of polygons)</td>
+<td style="text-align:center">Color,Texture, some cofficients</td>
+</tr>
+<tr>
+<td style="text-align:center">attribute</td>
+<td style="text-align:center">by vertices</td>
+<td style="text-align:center">Position, normal, texture coordinate</td>
+</tr>
+</tbody>
+</table>
+<p>The example is only in typically use case. Most important fact is there are 2 types of arguments and 1 of them is for entire mesh and 1 of them is for each vertices.</p>
+<h2 id="Rendering-states"><a href="#Rendering-states" class="headerlink" title="Rendering states"></a>Rendering states</h2><p>In sometimes, we might need to configure GPU to render correctly. For example, after rendering meshes, GPU would blend pixels if the alpha value of the pixel is not 1 and there was another pixel that intersect. We might need to configure rendering state for specifying how to blend each pixels.</p>
+<p>There are several configurations(We won’t describe deeply about this section), but this is few example of them.</p>
+<ul>
+<li>Culling</li>
+<li>Depth test</li>
+<li>Blends</li>
+<li>Stencil test</li>
+</ul>
+<h2 id="And…"><a href="#And…" class="headerlink" title="And…?"></a>And…?</h2><p>If you have not used GPU stuff yet, this section might be difficult. But, most important things are what should we input to gain output. And these description can be useful to understand what actually <code>Material</code> or <code>Geometry</code> do.</p>
+<p>This is summary of inputs I described above. Only 4 types of them is needed for rendering.</p>
+<ul>
+<li>attribute variables</li>
+<li>uniform variables</li>
+<li>shaders(fragment shader and vertex shader)</li>
+<li>rendering states</li>
+</ul>
+<p>Especially for Grimoire, We call set of <code>attribute variables</code> as <code>Geometry</code>.<br>And the other inputs are <code>Material</code>.</p>
+<p>So, if you need to operate input related to <code>attribute variables</code>, you might need to operate Geometry API.<br>If you need to operate the other input, you might need to operate Material API.</p>
+
+    <div id="edit-page">
+      <a href="https://github.com/GrimoireGL/grimoire.gl/blob/master/source/guide/2_advanced/webgl-basics.md" target="_blank">Edit this page on Github</a>
+    </div>
+  </div>
+</div>
+
+    </div>
+  
+</body>
+</html>
